@@ -1,0 +1,4 @@
+Attr.IDBlacklist
+TYPE: list
+DEFAULT: array()
+DESCRIPTION: Array of IDs not allowed in the document.

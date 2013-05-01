@@ -1,0 +1,2 @@
+Output
+DESCRIPTION: Configuration relating to the generation of (X)HTML.

@@ -1,0 +1,18 @@
+<project name="PHPIDS" default="info">
+	<target name="info"/>
+
+	<target name="docs">
+		<phpdoc
+			title="PHPIDS documentation"
+			destdir="docs"
+			quiet="true"
+			sourcecode="true"
+			output="Html:frames:default"
+			defaultpackagename="PHPIDS"
+			defaultcategoryname="PHPIDS">
+			<fileset dir="lib">
+				<include name="**/*.php"/>
+			</fileset>
+		</phpdoc>
+	</target>
+</project>

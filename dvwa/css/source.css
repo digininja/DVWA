@@ -1,0 +1,22 @@
+body {
+	background-color: #e7e7e7;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+
+h1 {
+	font-size: 25px;
+}
+
+
+div#container {
+}
+
+
+div#code {
+	background-color: #ffffff;
+}
+
+div#area {
+	margin-left: 30px;
+}

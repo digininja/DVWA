@@ -1,0 +1,1 @@
+"local/unknown",2010-03-15T23:07:01+00:00,72,"xss csrf id rfe lfi sqli","REQUEST.test=%22%3E%3Cscript%3Eeval%28window.name%29%3C%2Fscript%3E GET.test=%22%3E%3Cscript%3Eeval%28window.name%29%3C%2Fscript%3E","%2Fdvwa%2Fsecurity.php%3Ftest%3D%2522%253E%253Cscript%253Eeval%28window.name%29%253C%2Fscript%253E","127.0.0.1"

@@ -1,0 +1,12 @@
+AutoFormatParam.PurifierLinkifyDocURL
+TYPE: string
+VERSION: 2.0.1
+DEFAULT: '#%s'
+--DESCRIPTION--
+
+<p>
+  Location of configuration documentation to link to, let %s substitute
+  into the configuration's namespace and directive names sans the percent
+  sign. 
+</p>
+
