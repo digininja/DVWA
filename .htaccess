@@ -1,0 +1,20 @@
+# Only set these if PHP 5 is loaded as an apache module
+<IfModule mod_php5.c>
+php_flag magic_quotes_gpc Off
+#php_flag allow_url_fopen on
+#php_flag allow_url_include on
+</IfModule>
+
+# Only set these if PHP 4 is loaded as an apache module
+<IfModule mod_php4.c>
+php_flag magic_quotes_gpc Off
+#php_flag allow_url_fopen on
+#php_flag allow_url_include on
+</IfModule>
+
+# Limit access to localhost
+#<Limit GET POST PUT>
+# order deny,allow
+# deny from all
+# allow from 127.0.0.1
+#</Limit>
