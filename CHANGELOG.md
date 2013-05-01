@@ -1,8 +1,8 @@
 DAMN VULNERABLE WEB APP
 =======================
 
-Change Log v1.0.7
-=================
+v1.0.7
+======
 
 Re-designed the login page + made some other slight cosmetic changes. 06/06/2010 (ethicalhack3r)  
 Started PostgreSQL implementation. 15/03/2010 (ethicalhack3r)  
@@ -15,8 +15,8 @@ Added 'SQL Injection (Blind)'. 04/02/2010 (ethicalhack3r)
 Added official documentation. 21/11/2009 (ethicalhack3r)  
 Implemented view all source functionality. 16/10/2009 (tmacuk, craig, ethicalhack3r)  
 
-Change Log v1.0.6
-=================
+v1.0.6
+======
 
 Fixed a bug where the logo would not show on first time use. 03/09/2009 (ethicalhack3r)  
 Removed 'current password' input box for low+med CSRF security. 03/09/2009 (ethicalhack3r)  
@@ -29,8 +29,8 @@ Fixed a command execution vulnerability in exec high. 17/09/09 (ethicalhack3r)
 Added some troubleshooting info for PHP 5.2.6 in readme.txt. 17/09/09 (ethicalhack3r)  
 Added the upload directory to the upload help. 17/09/09 (ethicalhack3r)  
 
-Change Log v1.0.5
-=================
+v1.0.5
+======
 
 Made IE friendly as much as possible. 30/08/2009 (ethicalhack3r)  
 Removed the acunetix scan report. 30/08/2009 (ethicalhack3r)  
@@ -46,8 +46,8 @@ Delimited 'dvwa' in session- minimising the risk of clash with other projects ru
 Integrated PHPIDS v0.6. 01/08/2009 (jamesr)  
 Streamlined login functionality. 01/08/2009 (jamesr)
 
-Change Log v1.0.4
-=================
+v1.0.4
+======
 
 Added acunetix scan report. 24/06/2009  
 All links use http://hiderefer.com to hide referrer header. 23/06/2009  
@@ -64,22 +64,22 @@ Fixed typos on the welcome page. 03/06/2009
 Improved README.txt and fixed typos. 03/06/2009  
 Made SQL injection possible in sqli_med.php. Thanks to Teodor Lupan. 03/06/2009  
 
-Change Log v1.0.3
-=================
+v1.0.3
+======
 
 Changed XAMPP link in index.php. 25/05/2009  
 Set default security to low. 25/05/2009  
 Improved output in setup.php. 25/05/2009  
 
-Change Log v1.0.2
-=================
+v1.0.2
+======
 
 Removed phpinfo on higher security levels. 24/05/2009  
 Moved all vulnerable code to /source/. 24/05/2009  
 Added viewsource. 24/05/2009  
 
-Change Log v1.0.1
-=================
+v1.0.1
+======
 
 Implemented different security levels. 24/05/2009  
 Changed XSS from POST to GET. 22/05/2009  
@@ -92,8 +92,8 @@ Combined RFI + LFI to make 'File Inclusion'. 21/05/2009
 More realism to Local File Inclusion. 21/05/2009  
 Better error output on upload script. 21/05/2009  
 
-Change Log v1.0
-===============
+v1.0
+====
 
 Made command execution more realistic. 20/05/2009  
 Added help buttons. 20/05/2009  
