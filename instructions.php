@@ -10,8 +10,8 @@ $page[ 'title' ] .= $page[ 'title_separator' ].'Instructions';
 $page[ 'page_id' ] = 'instructions';
 
 $docs = array(
-	'readme' => array( 'legend' => 'Read Me', 'file' => 'README.txt' ),
-	'changelog' => array( 'legend' => 'Change Log', 'file' => 'CHANGELOG.txt' ),
+	'readme' => array( 'legend' => 'Read Me', 'file' => 'README.md' ),
+	'changelog' => array( 'legend' => 'Change Log', 'file' => 'CHANGELOG.md' ),
 	'copying' => array( 'legend' => 'Copying', 'file' => 'COPYING.txt' ),
 	'PHPIDS-license' => array( 'legend' => 'PHPIDS License', 'file' => DVWA_WEB_PAGE_TO_PHPIDS.'LICENSE' ),
 );
