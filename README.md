@@ -1,4 +1,4 @@
-![alt text](http://www.randomstorm.com/images/dvwa_grey.png "DVWA")
+![alt text](https://www.randomstorm.com/images/tools/dvwa.png "DVWA")
 
 DAMN VULNERABLE WEB APP
 =======================
