@@ -1,0 +1,72 @@
+<project name="PHPIDS" default="tests">
+	<target name="tests" unless="tests.disabled">
+        <exec executable="phpunit" failonerror="true">
+            <arg line="--verbose"/>
+            <arg line="tests/allTests.php"/>
+        </exec>
+    </target>
+
+	<target name="docs">
+		<phpdoc
+			title="PHPIDS documentation"
+			destdir="docs"
+			quiet="true"
+			sourcecode="true"
+			output="Html:frames:default"
+			defaultpackagename="PHPIDS"
+			defaultcategoryname="PHPIDS">
+			<fileset dir="lib">
+				<include name="**/*.php"/>
+			</fileset>
+		</phpdoc>
+	</target>
+
+    <target name="revert">
+        <exec executable="svn">
+            <arg value="revert"/>
+            <arg value="-R"/>
+            <arg value="${basedir}"/>
+        </exec>
+    </target>
+
+    <target
+        name="release"
+        if="release.version"
+        depends="revert,tests,release.version,release.tarball,release.checksum"
+        description="Create release tarball and checksums. Use -Drelease.version=&lt;version&gt;"/>
+
+    <target name="release.version" if="release.version">
+        <replace dir="lib/IDS" value="${release.version}">
+            <include name="**/*.php"/>
+            <replacetoken>@@phpIdsVersion@@</replacetoken>
+        </replace>
+    </target>
+
+    <target name="release.tarball" if="release.version">
+        <property name="release.name" value="phpids-${release.version}"/>
+        <property name="release.tarball.bzip2" value="${release.name}.tar.bz2"/>
+        <property name="release.tarball.gzip" value="${release.name}.tar.gz"/>
+        <property name="release.tarball.zip" value="${release.name}.zip"/>
+        <property name="release.excludes" value="phpids-*"/>
+        <tar destfile="${release.tarball.bzip2}" compression="bzip2" excludes="${release.excludes}" longfile="gnu">
+            <tarfileset dir="${basedir}" prefix="${release.name}" excludes="${release.excludes}"/>
+        </tar>
+        <tar destfile="${release.tarball.gzip}" compression="gzip" longfile="gnu">
+            <tarfileset dir="${basedir}" prefix="${release.name}" excludes="${release.excludes}"/>
+        </tar>
+        <zip destfile="${release.tarball.zip}" excludes="${release.excludes}">
+            <zipfileset dir="${basedir}" prefix="${release.name}" excludes="${release.excludes}"/>
+        </zip>
+    </target>
+
+    <target name="release.checksum">
+        <checksum file="${release.tarball.bzip2}" algorithm="sha1"/>
+        <checksum file="${release.tarball.bzip2}" algorithm="md5"/>
+
+        <checksum file="${release.tarball.gzip}" algorithm="sha1"/>
+        <checksum file="${release.tarball.gzip}" algorithm="md5"/>
+
+        <checksum file="${release.tarball.zip}" algorithm="sha1"/>
+        <checksum file="${release.tarball.zip}" algorithm="md5"/>
+    </target>
+</project>

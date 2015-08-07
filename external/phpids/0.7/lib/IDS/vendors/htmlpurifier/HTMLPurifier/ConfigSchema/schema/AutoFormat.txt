@@ -1,0 +1,3 @@
+AutoFormat
+DESCRIPTION: Configuration for activating auto-formatting functionality (also known as <code>Injector</code>s)
+--# vim: et sw=4 sts=4
