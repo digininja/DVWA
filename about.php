@@ -43,7 +43,7 @@ $page[ 'body' ] .= "
 	</ul>
 
 	<ul>
-		<li>PHPIDS - Copyright (c) 2007 ".dvwaExternalLinkUrlGet( 'https://github.com/PHPIDS/PHPIDS', 'PHPIDS group' )."</li>
+		<li>PHPIDS - Copyright (c) 2007 ".dvwaExternalLinkUrlGet( 'http://php-ids.org/', 'PHPIDS group' )."</li>
 	</ul>
 
 	<h2>License</h2>
