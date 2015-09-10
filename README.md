@@ -36,7 +36,7 @@ Download
 
 DVWA is available either as a package that will run on your own web server or as a Live CD
 
-  + DVWA v1.0.8 (latest) - (1.3MB) [Download](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip)
+  + DVWA v1.8 (latest) - (1.3MB) [Download](https://github.com/RandomStorm/DVWA/acurrent.zip)
   + DVWA v1.0.7 LiveCD - (480MB) [Download](http://www.dvwa.co.uk/DVWA-1.0.7.iso)
 
 Installation

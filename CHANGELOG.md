@@ -1,10 +1,10 @@
 DAMN VULNERABLE WEB APP
 =======================
 
-v1.0.8
+v1.8
 ======
 
-Versioning change: Version numbers now follow Major.Minor (e.g. 1.8) removing the middle digit.  
+Versioning change: Version numbers now follow Major.Minor (e.g. v1.8) removing the middle digit.
 Moved default security level setting to the config file.  
 Fixed a bug which prevented setup when a database name other than 'dvwa' was used.  
 Added a logic challenge involving an insecure CAPTCHA (requires external internet access)

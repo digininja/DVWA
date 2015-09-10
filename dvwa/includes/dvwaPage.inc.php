@@ -37,7 +37,7 @@ if(!isset($_COOKIE['security']) || !in_array($_COOKIE['security'], $security_lev
 
 // DVWA version
 function dvwaVersionGet() {
-	return '1.0.8';
+	return '1.8';
 }
 
 // DVWA release date
