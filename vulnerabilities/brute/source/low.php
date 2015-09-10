@@ -2,13 +2,13 @@
 
 if( isset( $_GET['Login'] ) ) {
 
-	$user = $_GET['username'];
+	$user = $_GET[ 'username' ];
 
-	$pass = $_GET['password'];
-	$pass = md5($pass);
+	$pass = $_GET[ 'password' ];
+	$pass = md5( $pass );
 
-	$qry = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
-	$result = mysql_query( $qry ) or die( '<pre>' . mysql_error() . '</pre>' );
+	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
+	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 	if( $result && mysql_num_rows( $result ) == 1 ) {
 		// Get users details
@@ -20,7 +20,7 @@ if( isset( $_GET['Login'] ) ) {
 		$html .= '<img src="' . $avatar . '" />';
 	}
 	else {
-		//Login failed
+		// Login failed
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
 	}
 
