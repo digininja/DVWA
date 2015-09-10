@@ -24,7 +24,7 @@ function dvwaReadIdsLog() {
 
 	$data = '';
 
-	foreach ($file_array as $line_number => $line){
+	foreach ($file_array as $line_number => $line) {
 		$line = explode(",", $line);
 		$line = str_replace("\""," ",$line);
 
@@ -42,7 +42,7 @@ return $data;
 
 // Clear PHPIDS log
 function dvwaClearIdsLog()	{
-	if (isset($_GET['clear_log'])) {
+	if(isset($_GET['clear_log'])) {
 		$fp = fopen(DVWA_WEB_PAGE_TO_PHPIDS_LOG, w);
 		fclose($fp);
 		dvwaMessagePush( "PHPIDS log cleared" );
@@ -70,7 +70,7 @@ function dvwaPhpIdsTrap() {
 		$ids = new IDS_Monitor( $request, $init );
 		$result = $ids->run();
 
-		if (!$result->isEmpty()) {
+		if(!$result->isEmpty()) {
 			require_once 'IDS/Log/File.php';
 			require_once 'IDS/Log/Composite.php';
 

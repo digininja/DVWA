@@ -1,8 +1,6 @@
 <?php
 
-if(isset($_POST['btnSign']))
-{
-
+if(isset($_POST['btnSign'])) {
    $message = trim($_POST['mtxMessage']);
    $name    = trim($_POST['txtName']);
 
@@ -16,9 +14,7 @@ if(isset($_POST['btnSign']))
    $name = mysql_real_escape_string($name);
 
    $query = "INSERT INTO guestbook (comment,name) VALUES ('$message','$name');";
-
    $result = mysql_query($query) or die('<pre>' . mysql_error() . '</pre>' );
-
 }
 
 ?>

@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Vulnerability: File Inclusion';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: File Inclusion';
 $page[ 'page_id' ] = 'fi';
 
 dvwaDatabaseConnect();
@@ -29,7 +29,7 @@ switch( $_COOKIE['security'] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/fi/source/{$vulnerabilityFile}";
 
-$page[ 'help_button' ] = 'fi';
+$page[ 'help_button' ]   = 'fi';
 $page[ 'source_button' ] = 'fi';
 
 include($file);

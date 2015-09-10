@@ -27,7 +27,6 @@ if( isset( $_POST['seclev_submit'] ) ) {
 	dvwaPageReload();
 }
 
-
 if( isset( $_GET['phpids'] ) ) {
 	switch( $_GET[ 'phpids' ] ) {
 		case 'on':
@@ -43,7 +42,6 @@ if( isset( $_GET['phpids'] ) ) {
 	dvwaPageReload();
 }
 
-
 $securityOptionsHtml = '';
 $securityLevelHtml = '';
 foreach( array( 'low', 'medium', 'high' ) as $securityLevel ) {
@@ -58,7 +56,8 @@ foreach( array( 'low', 'medium', 'high' ) as $securityLevel ) {
 $phpIdsHtml = 'PHPIDS is currently ';
 if( dvwaPhpIdsIsEnabled() ) {
 	$phpIdsHtml .= '<em>enabled</em>. [<a href="?phpids=off">disable PHPIDS</a>]';
-} else {
+}
+else {
 	$phpIdsHtml .= '<em>disabled</em>. [<a href="?phpids=on">enable PHPIDS</a>]';
 }
 
@@ -69,9 +68,7 @@ $page[ 'body' ] .= "
 	<br />
 
 	<h2>Script Security</h2>
-
 	{$securityHtml}
-
 	<form action=\"#\" method=\"POST\">
 		{$securityLevelHtml}
 		<p>You can set the security level to low, medium or high.</p>
@@ -88,17 +85,14 @@ $page[ 'body' ] .= "
 	<br />
 
 	<h2>PHPIDS</h2>
-
-	<p>".dvwaExternalLinkUrlGet( 'http://php-ids.org/', 'PHPIDS' )." v.".dvwaPhpIdsVersionGet()." (PHP-Intrusion Detection System) is a security layer for PHP based web applications. </p>
+	<p>".dvwaExternalLinkUrlGet( 'http://php-ids.org/', 'PHPIDS' )." v.".dvwaPhpIdsVersionGet()." (PHP-Intrusion Detection System) is a security layer for PHP based web applications.</p>
 	<p>You can enable PHPIDS across this site for the duration of your session.</p>
 
 	<p>{$phpIdsHtml}</p>
 	[<a href=\"?test=%22><script>eval(window.name)</script>\">Simulate attack</a>] -
 	[<a href=\"ids_log.php\">View IDS log</a>]
-
 </div>
 ";
-
 
 dvwaHtmlEcho( $page );
 

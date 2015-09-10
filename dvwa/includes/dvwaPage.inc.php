@@ -7,9 +7,7 @@ if( !defined( 'DVWA_WEB_PAGE_TO_ROOT' ) ) {
 
 }
 
-
 session_start(); // Creates a 'Full Path Disclosure' vuln.
-
 
 // Include configs
 require_once DVWA_WEB_PAGE_TO_ROOT.'config/config.inc.php';
@@ -17,7 +15,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'config/config.inc.php';
 require_once( 'dvwaPhpIds.inc.php' );
 
 // Declare the $html variable
-if(!isset($html)){
+if(!isset($html)) {
 
 	$html = "";
 
@@ -26,27 +24,25 @@ if(!isset($html)){
 // Valid security levels
 $security_levels = array('low', 'medium', 'high');
 
-if (!isset($_COOKIE['security']) || !in_array($_COOKIE['security'], $security_levels))
+if(!isset($_COOKIE['security']) || !in_array($_COOKIE['security'], $security_levels))
 {
     // Set security cookie to high if no cookie exists
-    if (in_array($_DVWA['default_security_level'], $security_levels))
-    {
+    if(in_array($_DVWA['default_security_level'], $security_levels)) {
         setcookie( 'security', $_DVWA['default_security_level'] );
-    } else setcookie('security', 'high');
+    }
+    else {
+		setcookie('security', 'high');
+	}
 }
 
 // DVWA version
 function dvwaVersionGet() {
-
-	return '1.8';
-
+	return '1.0.8';
 }
 
 // DVWA release date
 function dvwaReleaseDateGet() {
-
 	return '11/01/2011';
-
 }
 
 
@@ -68,7 +64,7 @@ function dvwaPageStartup( $pActions ) {
 
 	if( in_array( 'authenticated', $pActions ) ) {
 
-		if( !dvwaIsLoggedIn()){
+		if( !dvwaIsLoggedIn()) {
 
 			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT.'login.php' );
 
@@ -91,13 +87,10 @@ function dvwaPhpIdsEnabledSet( $pEnabled ) {
 	$dvwaSession =& dvwaSessionGrab();
 
 	if( $pEnabled ) {
-
 		$dvwaSession[ 'php_ids' ] = 'enabled';
-
-	} else {
-
+	}
+	else {
 		unset( $dvwaSession[ 'php_ids' ] );
-
 	}
 }
 
@@ -139,9 +132,7 @@ function dvwaLogout() {
 
 
 function dvwaPageReload() {
-
 	dvwaRedirect( $_SERVER[ 'PHP_SELF' ] );
-
 }
 
 function dvwaCurrentUser() {
@@ -170,17 +161,13 @@ function &dvwaPageNewGrab() {
 
 
 function dvwaSecurityLevelGet() {
-
 	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'low';
-
 }
 
 
 
 function dvwaSecurityLevelSet( $pSecurityLevel ) {
-
 	setcookie( 'security', $pSecurityLevel );
-
 }
 
 
@@ -300,35 +287,27 @@ function dvwaHtmlEcho( $pPage ) {
 	}
 	// -- END
 
-	$phpIdsHtml = '<b>PHPIDS:</b> '.( dvwaPhpIdsIsEnabled() ? 'enabled' : 'disabled' );
-
+	$phpIdsHtml   = '<b>PHPIDS:</b> '.( dvwaPhpIdsIsEnabled() ? 'enabled' : 'disabled' );
 	$userInfoHtml = '<b>Username:</b> '.( dvwaCurrentUser() );
 
 	$messagesHtml = messagesPopAllToHtml();
 
 	if( $messagesHtml ) {
-
 		$messagesHtml = "<div class=\"body_padded\">{$messagesHtml}</div>";
-
 	}
 
 	$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br /><b>Security Level:</b> {$securityLevelHtml}<br />{$phpIdsHtml}</div>";
 
 	if( $pPage[ 'source_button' ] ) {
-
 		$systemInfoHtml = dvwaButtonSourceHtmlGet( $pPage[ 'source_button' ] )." $systemInfoHtml";
-
 	}
 
 	if( $pPage[ 'help_button' ] ) {
-
 		$systemInfoHtml = dvwaButtonHelpHtmlGet( $pPage[ 'help_button' ] )." $systemInfoHtml";
-
 	}
 
-
 	// Send Headers + main HTML code
-	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
+	Header( 'Cache-Control: no-cache, must-revalidate');	// HTTP/1.1
 	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
 	Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
 
@@ -399,7 +378,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 function dvwaHelpHtmlEcho( $pPage ) {
 	// Send Headers
-	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
+	Header( 'Cache-Control: no-cache, must-revalidate');	// HTTP/1.1
 	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
 	Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
 
@@ -436,7 +415,7 @@ function dvwaHelpHtmlEcho( $pPage ) {
 
 function dvwaSourceHtmlEcho( $pPage ) {
 	// Send Headers
-	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
+	Header( 'Cache-Control: no-cache, must-revalidate');	// HTTP/1.1
 	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
 	Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
 
@@ -473,16 +452,12 @@ function dvwaSourceHtmlEcho( $pPage ) {
 // To be used on all external links --
 function dvwaExternalLinkUrlGet( $pLink,$text=null ) {
 
-	if (is_null($text)){
-
+	if(is_null($text)) {
 		return '<a href="http://hiderefer.com/?'.$pLink.'" target="_blank">'.$pLink.'</a>';
-
 	}
 
 	else {
-
 		return '<a href="http://hiderefer.com/?'.$pLink.'" target="_blank">'.$text.'</a>';
-
 	}
 }
 // -- END
@@ -506,14 +481,14 @@ function dvwaButtonSourceHtmlGet( $pId ) {
 
 // Database Management --
 
-if ($DBMS == 'MySQL') {
+if($DBMS == 'MySQL') {
 
  $DBMS = htmlspecialchars(strip_tags($DBMS));
 
  $DBMS_errorFunc = 'mysql_error()';
 
 }
-elseif ($DBMS == 'PGSQL') {
+elseif($DBMS == 'PGSQL') {
 
  $DBMS = htmlspecialchars(strip_tags($DBMS));
 
@@ -530,7 +505,7 @@ else {
 
 $DBMS_connError = '<div align="center">
 		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png">
-		<pre>Unable to connect to the database.<br>'.$DBMS_errorFunc.'<br /><br /></pre>
+		<pre>Unable to connect to the database.<br />'.$DBMS_errorFunc.'<br /><br /></pre>
 		Click <a href="'.DVWA_WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
 		</div>';
 
@@ -540,7 +515,7 @@ function dvwaDatabaseConnect() {
 	global $DBMS;
 	global $DBMS_connError;
 
-	if ($DBMS == 'MySQL') {
+	if($DBMS == 'MySQL') {
 
 		if( !@mysql_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ] )
 		|| !@mysql_select_db( $_DVWA[ 'db_database' ] ) ) {
@@ -549,7 +524,7 @@ function dvwaDatabaseConnect() {
 
 	}
 
-	elseif ($DBMS == 'PGSQL') {
+	elseif($DBMS == 'PGSQL') {
 
 		$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
 		or die( $DBMS_connError );
@@ -569,16 +544,16 @@ function dvwaRedirect( $pLocation ) {
 }
 
 // XSS Stored guestbook function --
-function dvwaGuestbook(){
+function dvwaGuestbook() {
 
 	$query  = "SELECT name, comment FROM guestbook";
 	$result = mysql_query($query);
 
 	$guestbook = '';
 
-	while($row = mysql_fetch_row($result)){
+	while($row = mysql_fetch_row($result)) {
 
-		if (dvwaSecurityLevelGet() == 'high'){
+		if(dvwaSecurityLevelGet() == 'high') {
 
 			$name    = htmlspecialchars($row[0]);
 			$comment = htmlspecialchars($row[1]);
@@ -598,6 +573,5 @@ function dvwaGuestbook(){
 return $guestbook;
 }
 // -- END
-
 
 ?>

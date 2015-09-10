@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Vulnerability: SQL Injection';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: SQL Injection';
 $page[ 'page_id' ] = 'sqli';
 
 dvwaDatabaseConnect();
@@ -29,7 +29,7 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli/source/{$vulnerabilityFile}";
 
-$page[ 'help_button' ] = 'sqli';
+$page[ 'help_button' ]   = 'sqli';
 $page[ 'source_button' ] = 'sqli';
 
 $magicQuotesWarningHtml = '';
@@ -42,20 +42,14 @@ if( ini_get( 'magic_quotes_gpc' ) == true ) {
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: SQL Injection</h1>
-
 	{$magicQuotesWarningHtml}
-
 	<div class=\"vulnerable_code_area\">
-
 		<h3>User ID:</h3>
-
 		<form action=\"#\" method=\"GET\">
 			<input type=\"text\" name=\"id\">
 			<input type=\"submit\" name=\"Submit\" value=\"Submit\">
 		</form>
-
 		{$html}
-
 	</div>
 
 	<h2>More info</h2>

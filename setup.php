@@ -11,10 +11,10 @@ $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
 
-	if ($DBMS == 'MySQL') {
+	if($DBMS == 'MySQL') {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
 	}
-	elseif ($DBMS == 'PGSQL') {
+	elseif($DBMS == 'PGSQL') {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/PGSQL.php';
 	}
 	else {
@@ -23,7 +23,6 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 	}
 
 }
-
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -45,7 +44,6 @@ $page[ 'body' ] .= "
 	</form>
 </div>
 ";
-
 
 dvwaHtmlEcho( $page );
 

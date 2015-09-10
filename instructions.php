@@ -10,9 +10,9 @@ $page[ 'title' ] .= $page[ 'title_separator' ].'Instructions';
 $page[ 'page_id' ] = 'instructions';
 
 $docs = array(
-	'readme' => array( 'legend' => 'Read Me', 'file' => 'README.md' ),
-	'changelog' => array( 'legend' => 'Change Log', 'file' => 'CHANGELOG.md' ),
-	'copying' => array( 'legend' => 'Copying', 'file' => 'COPYING.txt' ),
+	'readme'         => array( 'legend' => 'Read Me', 'file' => 'README.md' ),
+	'changelog'      => array( 'legend' => 'Change Log', 'file' => 'CHANGELOG.md' ),
+	'copying'        => array( 'legend' => 'Copying', 'file' => 'COPYING.txt' ),
 	'PHPIDS-license' => array( 'legend' => 'PHPIDS License', 'file' => DVWA_WEB_PAGE_TO_PHPIDS.'LICENSE' ),
 );
 
@@ -40,18 +40,17 @@ $instructions = nl2br( $instructions );
 $docMenuHtml = '';
 foreach( array_keys( $docs ) as $docId ) {
 	$selectedClass = ( $docId == $selectedDocId ) ? ' selected' : '';
-	$docMenuHtml .= "<span class=\"submenu_item{$selectedClass}\"><a href=\"?doc={$docId}\">{$docs[$docId]['legend']}</a></span>";
+	$docMenuHtml  .= "<span class=\"submenu_item{$selectedClass}\"><a href=\"?doc={$docId}\">{$docs[$docId]['legend']}</a></span>";
 }
 $docMenuHtml = "<div class=\"submenu\">{$docMenuHtml}</div>";
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>Instructions</h2>
-
+	<h1>Instructions</h1>
 	{$docMenuHtml}
 
 	<span class=\"fixed\">
-	{$instructions}
+	  {$instructions}
 	</span>
 </div>
 ";

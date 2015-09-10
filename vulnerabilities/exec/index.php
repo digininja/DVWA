@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Vulnerability: Brute Force';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Brute Force';
 $page[ 'page_id' ] = 'exec';
 
 dvwaDatabaseConnect();
@@ -29,25 +29,20 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/exec/source/{$vulnerabilityFile}";
 
-$page[ 'help_button' ] = 'exec';
+$page[ 'help_button' ]   = 'exec';
 $page[ 'source_button' ] = 'exec';
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: Command Execution</h1>
-
 	<div class=\"vulnerable_code_area\">
-
 		<h2>Ping for FREE</h2>
-
 		<p>Enter an IP address below:</p>
 		<form name=\"ping\" action=\"#\" method=\"post\">
 			<input type=\"text\" name=\"ip\" size=\"30\">
 			<input type=\"submit\" value=\"submit\" name=\"submit\">
 		</form>
-
 		{$html}
-
 	</div>
 
 	<h2>More info</h2>

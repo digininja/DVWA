@@ -8,41 +8,40 @@ dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 $page = dvwaPageNewGrab();
 $page[ 'title' ] .= $page[ 'title_separator' ].'Source';
 
-$id = $_GET[ 'id' ];
+$id       = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];
 
 
-if ($id == 'fi'){
+if($id == 'fi') {
 	$vuln = 'File Inclusion';
 }
-elseif ($id == 'brute'){
+elseif($id == 'brute') {
 	$vuln = 'Brute Force';
 }
-elseif ($id == 'csrf'){
+elseif($id == 'csrf') {
 	$vuln = 'CSRF';
 }
-elseif ($id == 'exec'){
+elseif($id == 'exec') {
 	$vuln = 'Command Execution';
 }
-elseif ($id == 'sqli'){
+elseif($id == 'sqli') {
 	$vuln = 'SQL Injection';
 }
-elseif ($id == 'sqli_blind'){
+elseif($id == 'sqli_blind') {
 	$vuln = 'SQL Injection (Blind)';
 }
-elseif ($id == 'upload'){
+elseif($id == 'upload') {
 	$vuln = 'File Upload';
 }
-elseif ($id == 'xss_r'){
+elseif($id == 'xss_r') {
 	$vuln = 'Reflected XSS';
 }
-elseif ($id == 'captcha'){
+elseif($id == 'captcha') {
 	$vuln = 'Insecure CAPTCHA';
 }
 else {
 	$vuln = 'Stored XSS';
 }
-
 
 $source = @file_get_contents( DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/{$id}/source/{$security}.php" );
 $source = str_replace( array( '$html .=' ), array( 'echo' ), $source );

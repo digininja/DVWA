@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Vulnerability: Brute Force';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Brute Force';
 $page[ 'page_id' ] = 'brute';
 
 dvwaDatabaseConnect();
@@ -29,25 +29,20 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/brute/source/{$vulnerabilityFile}";
 
-$page[ 'help_button' ] = 'brute';
+$page[ 'help_button' ]   = 'brute';
 $page[ 'source_button' ] = 'brute';
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: Brute Force</h1>
-
 	<div class=\"vulnerable_code_area\">
-
 		<h2>Login</h2>
-
 		<form action=\"#\" method=\"GET\">
-			Username:<br><input type=\"text\" name=\"username\"><br>
-			Password:<br><input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password\"><br>
+			Username:<br /><input type=\"text\" name=\"username\"><br />
+			Password:<br /><input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password\"><br />
 			<input type=\"submit\" value=\"Login\" name=\"Login\">
 		</form>
-
 		{$html}
-
 	</div>
 
 	<h2>More info</h2>

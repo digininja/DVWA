@@ -10,7 +10,6 @@ dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
 
-
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
 	$user = mysql_real_escape_string( $user );

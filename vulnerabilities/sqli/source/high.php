@@ -1,21 +1,20 @@
 <?php
 
-if (isset($_GET['Submit'])) {
+if(isset($_GET['Submit'])) {
 
 	// Retrieve data
-
 	$id = $_GET['id'];
 	$id = stripslashes($id);
 	$id = mysql_real_escape_string($id);
 
-	if (is_numeric($id)){
+	if(is_numeric($id)) {
 
 		$getid = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
 		$result = mysql_query($getid) or die('<pre>' . mysql_error() . '</pre>' );
 
 		$num = mysql_numrows($result);
 
-		$i=0;
+		$i = 0;
 
 		while ($i < $num) {
 
@@ -23,11 +22,12 @@ if (isset($_GET['Submit'])) {
 			$last = mysql_result($result,$i,"last_name");
 
 			$html .= '<pre>';
-			$html .= 'ID: ' . $id . '<br>First name: ' . $first . '<br>Surname: ' . $last;
+			$html .= 'ID: ' . $id . '<br />First name: ' . $first . '<br />Surname: ' . $last;
 			$html .= '</pre>';
 
 			$i++;
 		}
 	}
 }
+
 ?>
