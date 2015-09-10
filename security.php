@@ -67,7 +67,7 @@ $page[ 'body' ] .= "
 	<h1>DVWA Security <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/lock.png\"></h1>
 
 	<br />
-	
+
 	<h2>Script Security</h2>
 
 	{$securityHtml}
@@ -95,7 +95,7 @@ $page[ 'body' ] .= "
 	<p>{$phpIdsHtml}</p>
 	[<a href=\"?test=%22><script>eval(window.name)</script>\">Simulate attack</a>] -
 	[<a href=\"ids_log.php\">View IDS log</a>]
-	
+
 </div>
 ";
 

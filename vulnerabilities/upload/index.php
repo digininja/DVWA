@@ -50,7 +50,7 @@ $page[ 'body' ] .= "
 		{$html}
 
 	</div>
-	
+
 	<h2>More info</h2>
 	<ul>
 		<li>".dvwaExternalLinkUrlGet( 'http://www.owasp.org/index.php/Unrestricted_File_Upload')."</li>

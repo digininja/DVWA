@@ -11,7 +11,7 @@ $page[ 'title' ] .= $page[ 'title_separator' ].'Vulnerability: Insecure CAPTCHA'
 $page[ 'page_id' ] = 'captcha';
 
 // ReCAPTCHA Key configuration
-// Global Keys provided by 
+// Global Keys provided by
 
 dvwaDatabaseConnect();
 

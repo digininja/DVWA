@@ -38,7 +38,7 @@ $page[ 'body' ] .= "
 	Backend Database: <b>".$DBMS."</b>
 
 	<br /><br /><br />
-	
+
 	<!-- Create db button -->
 	<form action=\"#\" method=\"post\">
 		<input name=\"create_db\" type=\"submit\" value=\"Create / Reset Database\">

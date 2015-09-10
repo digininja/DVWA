@@ -11,12 +11,12 @@ All code related to database management should be kept in here.
 if ($DBMS == 'MySQL') {
  $DBMS = htmlspecialchars(strip_tags($DBMS));
  $DBMS_errorFunc = mysql_error();
- 
+
  function escapeString( $var ) {
   $var = mysql_real_escape_string( $var );
   return $var;
  }
- 
+
  function db_login( $user,$pass )  {
   $login = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
 
@@ -35,17 +35,17 @@ if ($DBMS == 'MySQL') {
 elseif ($DBMS == 'PGSQL') {
  $DBMS = htmlspecialchars(strip_tags($DBMS));
  $DBMS_errorFunc = @pg_last_error();
- 
+
  function escapeString( $var ) {
   $var = pg_escape_string( $var );
   return $var;
  }
- 
+
  function db_login( $user,$pass ) {
     $login = "SELECT * FROM users WHERE username='$user' AND password='$pass';";
-  
+
   $result = @pg_query( $login ) or die('<pre>' . pg_last_error() . '</pre>');
-  
+
   if($result && pg_num_rows( $result ) == 1) {	// Login Successful...
    dvwaMessagePush( "You have logged in as '".$user."'" );
    dvwaLogin( $user );
@@ -67,7 +67,7 @@ $DBMS_connError = '<div align="center">
 		<pre>Unable to connect to the database.<br>'.$DBMS_errorFunc.'<br /><br /></pre>
 		Click <a href="'.DVWA_WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
 		</div>';
-		
+
 function dvwaDatabaseConnect() {
 	global $_DVWA;
 	global $DBMS;
@@ -79,9 +79,9 @@ function dvwaDatabaseConnect() {
 			die( $DBMS_connError );
 		}
 	}
-	
+
 	elseif ($DBMS == 'PGSQL') {
-		$dbconn = @pg_connect("host=".$_DVWA[ 'db_server' ]." port=".$_DVWA[ 'db_port' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ]) 
+		$dbconn = @pg_connect("host=".$_DVWA[ 'db_server' ]." port=".$_DVWA[ 'db_port' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
 		or die( $DBMS_connError );
 	}
 }

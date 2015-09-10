@@ -32,8 +32,8 @@ dvwaMessagePush( "Database has been created." );
 
 // Connect to server AND connect to the database
 $dbconn = @pg_connect("host=".$_DVWA[ 'db_server' ]." port=".$_DVWA[ 'db_port' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ]);
-	
-	
+
+
 // Create table 'users'
 
 $drop_table = "DROP TABLE IF EXISTS users;";
@@ -80,7 +80,7 @@ if( !@pg_query($drop_table) ) {
 }
 
 $create_tb_guestbook = "CREATE TABLE guestbook (comment text, name text, comment_id SERIAL PRIMARY KEY);";
-	
+
 if( !pg_query( $create_tb_guestbook ) ){
 	dvwaMessagePush( "guestbook table could not be created<br />SQL: " . pg_last_error() );
 	dvwaPageReload();

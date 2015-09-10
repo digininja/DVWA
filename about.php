@@ -58,7 +58,7 @@ $page[ 'body' ] .= "
 	<h2>Development</h2>
 
 	<p>Everyone is welcome to contribute and help make DVWA as successful as it can be. All contributors can have their name and link (if they wish) placed in the credits section. To contribute pick an Issue from the Project Home to work on or submit a patch to the Issues list.</p>
-	
+
 
 </div>
 ";

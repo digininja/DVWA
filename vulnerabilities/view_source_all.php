@@ -51,48 +51,48 @@ elseif ($id == 'xss_s'){
 
 
 
-$page[ 'body' ] .= " 
+$page[ 'body' ] .= "
 
 	<div class=\"body_padded\">
 	<h1>".$vuln."</h1>
-	
+
 	<br />
-	
+
 	<h3>High ".$vuln." Source</h3>
-	
+
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 	<tr>
 	<td><div id=\"code\">".$highsrc."</div></td>
 	</tr>
 	</table>
-	
+
 	<br />
-	
+
 	<h3>Medium ".$vuln." Source</h3>
-	
+
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 	<tr>
 	<td><div id=\"code\">".$medsrc."</div></td>
 	</tr>
 	</table>
-	
+
 	<br />
-	
+
 	<h3>Low ".$vuln." Source</h3>
-	
+
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 	<tr>
 	<td><div id=\"code\">".$lowsrc."</div></td>
 	</tr>
 	</table>
-	
+
 	<br />
 	<br />
-	
-	<FORM><INPUT TYPE=\"button\" VALUE=\"<-- Back\" onClick=\"history.go(-1);return true;\"> </FORM> 
-	
+
+	<FORM><INPUT TYPE=\"button\" VALUE=\"<-- Back\" onClick=\"history.go(-1);return true;\"> </FORM>
+
 	</div>
-	
+
 ";
 
 dvwaSourceHtmlEcho( $page );

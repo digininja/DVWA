@@ -59,21 +59,21 @@ if( !mysql_query( $insert ) ){
 	dvwaPageReload();
 }
 dvwaMessagePush( "Data inserted into 'users' table." );
-	
+
 // Create guestbook table
 $create_tb_guestbook = "CREATE TABLE guestbook (comment_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT, comment varchar(300), name varchar(100), PRIMARY KEY (comment_id));";
-	
+
 if( !mysql_query( $create_tb_guestbook ) ){
 	dvwaMessagePush( "Table could not be created<br />SQL: ".mysql_error() );
 	dvwaPageReload();
 }
-	
+
 dvwaMessagePush( "'guestbook' table was created." );
-	
+
 // Insert data into 'guestbook'
 $insert = "INSERT INTO guestbook VALUES
 ('1','This is a test comment.','test');";
-	
+
 if( !mysql_query( $insert ) ){
 	dvwaMessagePush( "Data could not be inserted into 'guestbook' table<br />SQL: ".mysql_error() );
 	dvwaPageReload();

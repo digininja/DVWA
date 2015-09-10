@@ -15,4 +15,3 @@ dvwaMessagePush( "You have logged out" );
 dvwaRedirect( 'login.php' );
 
 ?>
-

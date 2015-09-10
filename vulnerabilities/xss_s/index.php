@@ -57,14 +57,14 @@ $page[ 'body' ] .= "
 		</form>
 
 		{$html}
-		
+
 	</div>
-	
+
 	<br />
-	
+
 	".dvwaGuestbook()."
 	<br />
-	
+
 	<h2>More info</h2>
 
 	<ul>

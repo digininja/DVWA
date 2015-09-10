@@ -16,18 +16,18 @@ $page[ 'page_id' ] = 'log';
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>PHPIDS Log</h1>
-	
+
 	<p>". dvwaReadIdsLog() ."</p>
-	
+
 	<br />
 	<br />
-	
+
 	<form action=\"#\" method=\"GET\">
     <input type=\"submit\" value=\"Clear Log\" name=\"clear_log\">
     </form>
-	
+
 	".dvwaClearIdsLog()."
-	
+
 </div>
 ";
 

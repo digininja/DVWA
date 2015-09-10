@@ -1,7 +1,7 @@
 <?php
-				
+
 	if (isset($_GET['Change'])) {
-	
+
 		// Turn requests into variables
 		$pass_new = $_GET['password_new'];
 		$pass_conf = $_GET['password_conf'];
@@ -13,13 +13,13 @@
 
 			$insert="UPDATE `users` SET password = '$pass_new' WHERE user = 'admin';";
 			$result=mysql_query($insert) or die('<pre>' . mysql_error() . '</pre>' );
-						
-			$html .= "<pre> Password Changed </pre>";		
+
+			$html .= "<pre> Password Changed </pre>";
 			mysql_close();
 		}
-	
-		else{		
-			$html .= "<pre> Passwords did not match. </pre>";			
+
+		else{
+			$html .= "<pre> Passwords did not match. </pre>";
 		}
 
 	}

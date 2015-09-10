@@ -50,7 +50,7 @@ function dvwaReleaseDateGet() {
 }
 
 
-// Start session functions -- 
+// Start session functions --
 
 function &dvwaSessionGrab() {
 
@@ -185,7 +185,7 @@ function dvwaSecurityLevelSet( $pSecurityLevel ) {
 
 
 
-// Start message functions -- 
+// Start message functions --
 function dvwaMessagePush( $pMessage ) {
 
 	$dvwaSession =& dvwaSessionGrab();
@@ -277,7 +277,7 @@ function dvwaHtmlEcho( $pPage ) {
 		$menuHtml .= "<ul>{$menuBlockHtml}</ul>";
 	}
 
-	
+
 	// Get security cookie --
 	$securityLevelHtml = '';
 
@@ -299,7 +299,7 @@ function dvwaHtmlEcho( $pPage ) {
 			break;
 	}
 	// -- END
-	
+
 	$phpIdsHtml = '<b>PHPIDS:</b> '.( dvwaPhpIdsIsEnabled() ? 'enabled' : 'disabled' );
 
 	$userInfoHtml = '<b>Username:</b> '.( dvwaCurrentUser() );
@@ -311,7 +311,7 @@ function dvwaHtmlEcho( $pPage ) {
 		$messagesHtml = "<div class=\"body_padded\">{$messagesHtml}</div>";
 
 	}
-	
+
 	$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br /><b>Security Level:</b> {$securityLevelHtml}<br />{$phpIdsHtml}</div>";
 
 	if( $pPage[ 'source_button' ] ) {
@@ -325,8 +325,8 @@ function dvwaHtmlEcho( $pPage ) {
 		$systemInfoHtml = dvwaButtonHelpHtmlGet( $pPage[ 'help_button' ] )." $systemInfoHtml";
 
 	}
-	
-	
+
+
 	// Send Headers + main HTML code
 	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
 	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
@@ -421,7 +421,7 @@ function dvwaHelpHtmlEcho( $pPage ) {
 	</head>
 
 	<body>
-	
+
 	<div id=\"container\">
 
 			{$pPage['body']}
@@ -548,7 +548,7 @@ function dvwaDatabaseConnect() {
 		}
 
 	}
-	
+
 	elseif ($DBMS == 'PGSQL') {
 
 		$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
@@ -575,14 +575,14 @@ function dvwaGuestbook(){
 	$result = mysql_query($query);
 
 	$guestbook = '';
-	
-	while($row = mysql_fetch_row($result)){	
-		
+
+	while($row = mysql_fetch_row($result)){
+
 		if (dvwaSecurityLevelGet() == 'high'){
 
 			$name    = htmlspecialchars($row[0]);
 			$comment = htmlspecialchars($row[1]);
-	
+
 		}
 
 		else {
@@ -591,10 +591,10 @@ function dvwaGuestbook(){
 			$comment = $row[1];
 
 		}
-		
+
 		$guestbook .= "<div id=\"guestbook_comments\">Name: {$name} <br />" . "Message: {$comment} <br /></div>";
-	} 
-	
+	}
+
 return $guestbook;
 }
 // -- END

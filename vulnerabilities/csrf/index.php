@@ -37,16 +37,16 @@ $page[ 'body' ] .= "
 	<h1>Vulnerability: Cross Site Request Forgery (CSRF)</h1>
 
 	<div class=\"vulnerable_code_area\">
-	
+
 	<h3>Change your admin password:</h3>
     <br>
     <form action=\"#\" method=\"GET\">";
-	
+
 	if (dvwaSecurityLevelGet() == 'high'){
 		$page[ 'body' ] .= "Current password:<br>
 		<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_current\"><br>";
 	}
-    
+
 $page[ 'body' ] .= "    New password:<br>
     <input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_new\"><br>
     Confirm new password: <br>
@@ -54,7 +54,7 @@ $page[ 'body' ] .= "    New password:<br>
     <br>
     <input type=\"submit\" value=\"Change\" name=\"Change\">
     </form>
-	
+
 	{$html}
 
 	</div>
