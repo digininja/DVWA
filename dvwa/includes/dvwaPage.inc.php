@@ -247,8 +247,8 @@ function dvwaHtmlEcho( $pPage ) {
 	$menuBlocks['vulnerabilities'][] = array( 'id' => 'sqli', 'name' => 'SQL Injection', 'url' => 'vulnerabilities/sqli/.' );
 	$menuBlocks['vulnerabilities'][] = array( 'id' => 'sqli_blind', 'name' => 'SQL Injection (Blind)', 'url' => 'vulnerabilities/sqli_blind/.' );
 	$menuBlocks['vulnerabilities'][] = array( 'id' => 'upload', 'name' => 'Upload', 'url' => 'vulnerabilities/upload/.' );
-	$menuBlocks['vulnerabilities'][] = array( 'id' => 'xss_r', 'name' => 'XSS reflected', 'url' => 'vulnerabilities/xss_r/.' );
-	$menuBlocks['vulnerabilities'][] = array( 'id' => 'xss_s', 'name' => 'XSS stored', 'url' => 'vulnerabilities/xss_s/.' );
+	$menuBlocks['vulnerabilities'][] = array( 'id' => 'xss_r', 'name' => 'XSS Reflected', 'url' => 'vulnerabilities/xss_r/.' );
+	$menuBlocks['vulnerabilities'][] = array( 'id' => 'xss_s', 'name' => 'XSS Stored', 'url' => 'vulnerabilities/xss_s/.' );
 
 	$menuBlocks['meta'] = array();
 	$menuBlocks['meta'][] = array( 'id' => 'security', 'name' => 'DVWA Security', 'url' => 'security.php' );
