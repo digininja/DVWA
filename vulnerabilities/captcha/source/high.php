@@ -25,7 +25,7 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '1' ) ) {
 		return;
 	} else {
                 // Check that the current password is correct
-		$qry = "SELECT password FROM `users` WHERE user='admin' AND password='$pass_curr';";
+		$qry = "SELECT password FROM `users` WHERE user='" . dvwaCurrentUser() . "' AND password='$pass_curr';";
 		$result = mysql_query($qry) or die('<pre>' . mysql_error() . '</pre>' );
 
                 if (($pass_new == $pass_conf)  && ( $result && mysql_num_rows( $result ) == 1 )){

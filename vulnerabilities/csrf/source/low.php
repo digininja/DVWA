@@ -11,7 +11,7 @@
 			$pass_new = mysql_real_escape_string($pass_new);
 			$pass_new = md5($pass_new);
 
-			$insert="UPDATE `users` SET password = '$pass_new' WHERE user = 'admin';";
+			$insert="UPDATE `users` SET password = '$pass_new' WHERE user = '" . dvwaCurrentUser() . "';";
 			$result=mysql_query($insert) or die('<pre>' . mysql_error() . '</pre>' );
 
 			$html .= "<pre> Password Changed </pre>";
