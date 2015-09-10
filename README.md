@@ -1,4 +1,4 @@
-![alt text](https://www.randomstorm.com/images/tools/dvwa.png "DVWA")
+![DVWA](https://www.randomstorm.com/images/tools/dvwa.png "DVWA")
 
 DAMN VULNERABLE WEB APP
 =======================
@@ -7,6 +7,7 @@ Damn Vulnerable Web App (DVWA) is a PHP/MySQL web application that is damn vulne
 
 WARNING!
 ========
+
 Damn Vulnerable Web App is damn vulnerable! Do not upload it to your hosting provider's public html folder or any working web
 server as it will be hacked. I recommend downloading and installing XAMPP onto a local machine inside your LAN which is used solely for testing.
 
@@ -35,15 +36,15 @@ Download
 
 DVWA is available either as a package that will run on your own web server or as a Live CD
 
- - DVWA v1.0.8 (latest) - (1.3MB) [Download](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip)
- - DVWA v1.0.7 LiveCD - (480MB) [Download](http://www.dvwa.co.uk/DVWA-1.0.7.iso)
+  + DVWA v1.0.8 (latest) - (1.3MB) [Download](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip)
+  + DVWA v1.0.7 LiveCD - (480MB) [Download](http://www.dvwa.co.uk/DVWA-1.0.7.iso)
 
 Installation
 ============
 
-*Default username = admin*
+**Default username = `admin`**
 
-*Default password = password*
+**Default password = `password`**
 
 Installation video:
 https://www.youtube.com/watch?v=GzIj07jt8rM
@@ -55,7 +56,7 @@ XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows 
 XAMPP can be downloaded from:
 https://www.apachefriends.org/en/xampp.html
 
-Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to http://127.0.0.1/dvwa/index.php
+Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: http://127.0.0.1/dvwa/index.php
 
 Database Setup
 ==============
@@ -65,10 +66,11 @@ To set up the database, simply click on the Setup button in the main menu, then 
 If you receive an error while trying to create your database, make sure your database credentials are correct within /config/config.inc.php
 
 The variables are set to the following by default:
+
 ```
-$_DVWA[ 'db_user' ] = 'root';
-$_DVWA[ 'db_password' ] = '';
-$_DVWA[ 'db_database' ] = 'dvwa';
+$_DVWA['db_user'] = 'root';
+$_DVWA['db_password'] = '';
+$_DVWA['db_database'] = 'dvwa';
 ```
 
 Troubleshooting
@@ -83,7 +85,7 @@ https://github.com/RandomStorm/DVWA/issues
 
 In .htaccess:
 
-  Replace:
+Replace:
 ```
   <IfModule mod_php5.c>
     php_flag magic_quotes_gpc off
@@ -91,7 +93,8 @@ In .htaccess:
     #php_flag allow_url_include on
   </IfModule>
 ```
-  With:
+
+With:
 ```
   <IfModule mod_php5.c>
     magic_quotes_gpc = Off
@@ -99,6 +102,7 @@ In .htaccess:
     allow_url_include = On
   </IfModule>
 ```
+
 +Q. Command execution won't work.
 
 -A. Apache may not have high enough priviledges to run commands on the web server. If you are running DVWA under linux make sure you are logged in as root. Under Windows log in as Administrator.
