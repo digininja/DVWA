@@ -23,5 +23,5 @@
 
 	<br />
 
-	<p>Reference: http://www.owasp.org/index.php/SQL_Injection</p>
+	<p>Reference: https://www.owasp.org/index.php/SQL_Injection</p>
 </div>

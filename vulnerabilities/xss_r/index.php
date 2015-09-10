@@ -46,7 +46,7 @@ $page[ 'body' ] .= "
 
 	<h2>More info</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'http://ha.ckers.org/xss.html')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)')."</li>
 		<li>".dvwaExternalLinkUrlGet( 'http://en.wikipedia.org/wiki/Cross-site_scripting')."</li>
 		<li>".dvwaExternalLinkUrlGet( 'http://www.cgisecurity.com/xss-faq.html')."</li>
 	</ul>

@@ -49,9 +49,9 @@ $page[ 'body' ] .= "
 
 	<h2>More info</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.owasp.org/index.php/Unrestricted_File_Upload')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://blogs.securiteam.com/index.php/archives/1268')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.acunetix.com/websitesecurity/upload-forms-threat.htm')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Unrestricted_File_Upload')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://blogs.securiteam.com/index.php/archives/1268')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.acunetix.com/websitesecurity/upload-forms-threat/')."</li>
 	</ul>
 </div>
 ";

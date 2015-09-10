@@ -85,7 +85,7 @@ $page[ 'body' ] .= "
 	<br />
 
 	<h2>PHPIDS</h2>
-	<p>".dvwaExternalLinkUrlGet( 'http://php-ids.org/', 'PHPIDS' )." v.".dvwaPhpIdsVersionGet()." (PHP-Intrusion Detection System) is a security layer for PHP based web applications.</p>
+	<p>".dvwaExternalLinkUrlGet( 'https://github.com/PHPIDS/PHPIDS', 'PHPIDS' )." v.".dvwaPhpIdsVersionGet()." (PHP-Intrusion Detection System) is a security layer for PHP based web applications.</p>
 	<p>You can enable PHPIDS across this site for the duration of your session.</p>
 
 	<p>{$phpIdsHtml}</p>

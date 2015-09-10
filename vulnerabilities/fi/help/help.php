@@ -22,5 +22,5 @@
 
 	<br />
 
-	<p>Reference: http://www.owasp.org/index.php/Top_10_2007-A3</p>
+	<p>Reference: https://www.owasp.org/index.php/Top_10_2007-A3</p>
 </div>

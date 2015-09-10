@@ -22,5 +22,5 @@
 
 	<br />
 
-	<p>Reference: http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)</p>
+	<p>Reference: https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)</p>
 </div>

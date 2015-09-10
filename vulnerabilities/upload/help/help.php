@@ -20,6 +20,6 @@
 
 	<br />
 
-	<p>Reference: http://www.owasp.org/index.php/Unrestricted_File_Upload</p>
+	<p>Reference: https://www.owasp.org/index.php/Unrestricted_File_Upload</p>
 </div>
 

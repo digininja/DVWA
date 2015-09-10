@@ -8,7 +8,7 @@ Damn Vulnerable Web App (DVWA) is a PHP/MySQL web application that is damn vulne
 WARNING!
 ========
 Damn Vulnerable Web App is damn vulnerable! Do not upload it to your hosting provider's public html folder or any working web
-server as it will be hacked. I recommend downloading and installing XAMPP onto a local machine inside your LAN which is used solely for testing. 
+server as it will be hacked. I recommend downloading and installing XAMPP onto a local machine inside your LAN which is used solely for testing.
 
 We do not take responsibility for the way in which any one uses Damn Vulnerable Web App (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA it is not our responsibility it is the responsibility of the person/s who uploaded and installed it.
 
@@ -46,14 +46,14 @@ Installation
 *Default password = password*
 
 Installation video:
-http://www.youtube.com/watch?v=GzIj07jt8rM
+https://www.youtube.com/watch?v=GzIj07jt8rM
 
-The easiest way to install DVWA is to download and install 'XAMPP' if you do not already have a web server setup. 
+The easiest way to install DVWA is to download and install 'XAMPP' if you do not already have a web server setup.
 
 XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows and Mac OS X. The package includes the Apache web server, MySQL, PHP, Perl, a FTP server and phpMyAdmin.
 
 XAMPP can be downloaded from:
-http://www.apachefriends.org/en/xampp.html
+https://www.apachefriends.org/en/xampp.html
 
 Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to http://127.0.0.1/dvwa/index.php
 
@@ -64,7 +64,7 @@ To set up the database, simply click on the Setup button in the main menu, then 
 
 If you receive an error while trying to create your database, make sure your database credentials are correct within /config/config.inc.php
 
-The variables are set to the following by default: 
+The variables are set to the following by default:
 ```
 $_DVWA[ 'db_user' ] = 'root';
 $_DVWA[ 'db_password' ] = '';
@@ -75,7 +75,7 @@ Troubleshooting
 ===============
 
 For the latest troubleshooting information please visit:
-http://code.google.com/p/dvwa/issues/list
+https://github.com/RandomStorm/DVWA/issues
 
 +Q. SQL Injection wont work on PHP version 5.2.6.
 

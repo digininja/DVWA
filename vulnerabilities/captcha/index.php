@@ -41,7 +41,8 @@ $page[ 'source_button' ] = 'captcha';
 # deal with an empty captcha key
 if($_DVWA['recaptcha_public_key'] != "") {
 	 $heading = "<h3>Change your password:</h3>";
-} else {
+}
+else {
 	$heading = "reCAPTCHA API key NULL in config file. Please register for a key from reCAPTCHA. ".dvwaExternalLinkUrlGet('https://www.google.com/recaptcha/admin/create');
 }
 
@@ -78,7 +79,7 @@ $page[ 'body' ] .= ">
 	<h2>More info</h2>
 	<ul>
 		<li>".dvwaExternalLinkUrlGet( 'http://www.captcha.net/')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.google.com/recaptcha/')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.google.com/recaptcha/')."</li>
 	</ul>
 </div>
 ";

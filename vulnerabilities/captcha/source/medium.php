@@ -15,7 +15,8 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '1' ) ) {
 	$html .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 	$hide_form = false;
 	return;
-    } else {
+    }
+    else {
 	if(($pass_new == $pass_conf)) {
 	    $html .= "<pre><br />You passed the CAPTCHA! Click the button to confirm your changes. <br /></pre>";
 	    $html .= "
@@ -26,7 +27,8 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '1' ) ) {
 		    <input type=\"hidden\" name=\"passed_captcha\" value=\"true\" />
 		    <input type=\"submit\" name=\"Change\" value=\"Change\" />
 	    </form>";
-	} else {
+	}
+	else {
 	    $html .= "<pre>Both passwords must match</pre>";
 	    $hide_form = false;
 	}
@@ -50,7 +52,8 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '2' ) ) {
 
        $html .= "<pre>Password Changed</pre>";
        mysql_close();
-    } else {
+    }
+    else {
        $html .= "<pre>Passwords did not match.</pre>";
     }
 }

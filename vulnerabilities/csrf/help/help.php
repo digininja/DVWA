@@ -16,5 +16,5 @@
 
 	<br />
 
-	<p>Reference: http://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)</p>
+	<p>Reference: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)</p>
 </div>

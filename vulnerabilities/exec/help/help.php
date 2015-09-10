@@ -19,5 +19,5 @@
 
 	<br />
 
-	<p>Reference: http://www.owasp.org/index.php/Command_Injection</p>
+	<p>Reference: https://www.owasp.org/index.php/Command_Injection</p>
 </div>

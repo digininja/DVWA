@@ -47,8 +47,8 @@ $page[ 'body' ] .= "
 
 	<h2>More info</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.owasp.org/index.php/Testing_for_Brute_Force_%28OWASP-AT-004%29')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.securityfocus.com/infocus/1192')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Testing_for_Brute_Force_%28OWASP-AT-004%29')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://www.symantec.com/connect/articles/password-crackers-ensuring-security-your-password')."</li>
 		<li>".dvwaExternalLinkUrlGet( 'http://www.sillychicken.co.nz/Security/how-to-brute-force-http-forms-in-windows.html')."</li>
 	</ul>
 </div>

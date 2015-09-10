@@ -57,9 +57,9 @@ $page[ 'body' ] .= "    New password:<br />
 
     <h2>More info</h2>
     <ul>
-	<li>".dvwaExternalLinkUrlGet( 'http://www.owasp.org/index.php/Cross-Site_Request_Forgery')."</li>
+	<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Cross-Site_Request_Forgery')."</li>
 	<li>".dvwaExternalLinkUrlGet( 'http://www.cgisecurity.com/csrf-faq.html')."</li>
-	<li>".dvwaExternalLinkUrlGet( 'http://en.wikipedia.org/wiki/Cross-site_request_forgery')."</li>
+	<li>".dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/Cross-site_request_forgery')."</li>
     </ul>
 </div>
 ";
