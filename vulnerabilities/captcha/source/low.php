@@ -36,6 +36,8 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 
 if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '2' ) ) {
     $hide_form = true;
+    $pass_new  = $_POST[ 'password_new' ];
+    $pass_conf = $_POST[ 'password_conf' ];
     if($pass_new != $pass_conf) {
 	$html .= "<pre><br />Both passwords must match.</pre>";
 	$hide_form = false;

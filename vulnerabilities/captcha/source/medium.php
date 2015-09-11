@@ -37,6 +37,9 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '1' ) ) {
 
 if( isset( $_POST['Change'] ) && ( $_POST['step'] == '2' ) ) {
     $hide_form = true;
+    $pass_new  = $_POST[ 'password_new' ];
+    $pass_conf = $_POST[ 'password_conf' ];
+
     if(!$_POST['passed_captcha']) {
 	$html .= "<pre><br />You have not passed the CAPTCHA. Bad hacker, no doughnut.</pre>";
 	$hide_form = false;
