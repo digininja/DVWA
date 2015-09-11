@@ -32,7 +32,13 @@ require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/fi/source/{$vulnerabilityFil
 $page[ 'help_button' ]   = 'fi';
 $page[ 'source_button' ] = 'fi';
 
-include($file);
+//if(count($_GET))
+if( isset( $file ) )
+	include($file);
+else {
+	header( 'Location:?page=include.php' );
+	exit;
+}
 
 dvwaHtmlEcho( $page );
 
