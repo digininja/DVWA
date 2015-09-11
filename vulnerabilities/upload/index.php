@@ -38,10 +38,8 @@ $page[ 'body' ] .= "
 	<div class=\"vulnerable_code_area\">
 		<form enctype=\"multipart/form-data\" action=\"#\" method=\"POST\" />
 			<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"100000\" />
-			Choose an image to upload:
-			<br />
+			Choose an image to upload:<br />
 			<input name=\"uploaded\" type=\"file\" /><br />
-			<br />
 			<input type=\"submit\" name=\"Upload\" value=\"Upload\" />
 		</form>
 		{$html}
@@ -49,9 +47,9 @@ $page[ 'body' ] .= "
 
 	<h2>More info</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Unrestricted_File_Upload')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://blogs.securiteam.com/index.php/archives/1268')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://www.acunetix.com/websitesecurity/upload-forms-threat/')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Unrestricted_File_Upload' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://blogs.securiteam.com/index.php/archives/1268' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.acunetix.com/websitesecurity/upload-forms-threat/' )."</li>
 	</ul>
 </div>
 ";

@@ -41,15 +41,16 @@ $page[ 'body' ] .= "
 	<form action=\"#\" method=\"GET\">";
 
 if(dvwaSecurityLevelGet() == 'high') {
-	$page[ 'body' ] .= "Current password:<br />
-	<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_current\"><br />";
+	$page[ 'body' ] .= "
+	    Current password:<br />
+	    <input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_current\"><br />";
 }
 
-$page[ 'body' ] .= "    New password:<br />
+$page[ 'body' ] .= "
+	    New password:<br />
 	    <input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_new\"><br />
-	    Confirm new password: <br />
-	    <input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_conf\">
-	    <br />
+	    Confirm new password:<br />
+	    <input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_conf\"><br />
 	    <input type=\"submit\" value=\"Change\" name=\"Change\">
 	</form>
 	{$html}
@@ -57,9 +58,9 @@ $page[ 'body' ] .= "    New password:<br />
 
     <h2>More info</h2>
     <ul>
-	<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Cross-Site_Request_Forgery')."</li>
-	<li>".dvwaExternalLinkUrlGet( 'http://www.cgisecurity.com/csrf-faq.html')."</li>
-	<li>".dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/Cross-site_request_forgery')."</li>
+	<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Cross-Site_Request_Forgery' )."</li>
+	<li>".dvwaExternalLinkUrlGet( 'http://www.cgisecurity.com/csrf-faq.html' )."</li>
+	<li>".dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/Cross-site_request_forgery ' )."</li>
     </ul>
 </div>
 ";

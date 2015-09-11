@@ -46,8 +46,8 @@ $page[ 'body' ] .= "
 	{$magicQuotesWarningHtml}
 
 	<div class=\"vulnerable_code_area\">
-		<h3>User ID:</h3>
 		<form action=\"#\" method=\"GET\">
+			<p>User ID:</p>
 			<input type=\"text\" name=\"id\">
 			<input type=\"submit\" name=\"Submit\" value=\"Submit\">
 		</form>
@@ -56,10 +56,12 @@ $page[ 'body' ] .= "
 
 	<h2>More info</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.securiteam.com/securityreviews/5DP0N1P76E.html')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/SQL_injection')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://www.securiteam.com/securityreviews/5DP0N1P76E.html' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/SQL_injection' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Blind_SQL_Injection' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://bobby-tables.com/' )."</li>
 	</ul>
 </div>
 ";

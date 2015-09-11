@@ -1,11 +1,11 @@
 <?php
 
-if( isset( $_POST['Change'] ) && ( $_POST['step'] == '1' ) ) {
+if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
     $hide_form = true;
 
     $pass_new  = $_POST[ 'password_new' ];
     $pass_conf = $_POST[ 'password_conf' ];
-    $resp = recaptcha_check_answer($_DVWA['recaptcha_private_key'],
+    $resp = recaptcha_check_answer( $_DVWA[ 'recaptcha_private_key' ],
 	    $_SERVER[ 'REMOTE_ADDR' ],
 	    $_POST[ 'recaptcha_challenge_field' ],
 	    $_POST[ 'recaptcha_response_field' ]);
@@ -34,7 +34,7 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '1' ) ) {
     }
 }
 
-if( isset( $_POST['Change'] ) && ( $_POST['step'] == '2' ) ) {
+if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '2' ) ) {
     $hide_form = true;
     if($pass_new != $pass_conf) {
 	$html .= "<pre><br />Both passwords must match.</pre>";
@@ -42,7 +42,7 @@ if( isset( $_POST['Change'] ) && ( $_POST['step'] == '2' ) ) {
 	return;
     }
 
-    $pass = md5($pass_new);
+    $pass = md5( $pass_new );
     if(($pass_new == $pass_conf)) {
 	$pass_new = mysql_real_escape_string( $pass_new );
 	$pass_new = md5( $pass_new );

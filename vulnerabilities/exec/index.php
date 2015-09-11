@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Brute Force';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Command Execution';
 $page[ 'page_id' ] = 'exec';
 
 dvwaDatabaseConnect();
@@ -37,8 +37,8 @@ $page[ 'body' ] .= "
 	<h1>Vulnerability: Command Execution</h1>
 	<div class=\"vulnerable_code_area\">
 		<h2>Ping for FREE</h2>
-		<p>Enter an IP address below:</p>
 		<form name=\"ping\" action=\"#\" method=\"post\">
+			<p>Enter an IP address:</p>
 			<input type=\"text\" name=\"ip\" size=\"30\">
 			<input type=\"submit\" value=\"submit\" name=\"submit\">
 		</form>
@@ -47,9 +47,10 @@ $page[ 'body' ] .= "
 
 	<h2>More info</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.scribd.com/doc/2530476/Php-Endangers-Remote-Code-Execution')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.ss64.com/bash/')."</li>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.ss64.com/nt/')."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://www.scribd.com/doc/2530476/Php-Endangers-Remote-Code-Execution' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://www.ss64.com/bash/' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'http://www.ss64.com/nt/' )."</li>
+		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Command_Injection' )."</li>
 	</ul>
 </div>
 ";
