@@ -261,7 +261,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 		}
 
-		$menuHtml .= "<ul>{$menuBlockHtml}</ul>";
+		$menuHtml .= "<ul class=\"menuBlocks\">{$menuBlockHtml}</ul>";
 	}
 
 
