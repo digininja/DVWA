@@ -2,7 +2,6 @@
 
 if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
     $hide_form = true;
-
     $pass_new  = $_POST[ 'password_new' ];
     $pass_conf = $_POST[ 'password_conf' ];
     $resp = recaptcha_check_answer( $_DVWA[ 'recaptcha_private_key' ],
@@ -52,7 +51,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '2' ) ) {
 	$insert = "UPDATE `users` SET password = '$pass_new' WHERE user = '" . dvwaCurrentUser() . "';";
 	$result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
-	$html .= "<pre>Password Changed</pre>";
+	$html .= "<pre>Password Changed.</pre>";
 	mysql_close();
     }
     else {

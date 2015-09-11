@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_GET['Change'])) {
+if(isset($_GET[ 'Change' ])) {
 
 	// Turn requests into variables
 	$pass_new  = $_GET[ 'password_new' ];

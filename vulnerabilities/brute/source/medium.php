@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_GET['Login'] ) ) {
+if( isset( $_GET[ 'Login' ] ) ) {
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
 	$user = mysql_real_escape_string( $user );

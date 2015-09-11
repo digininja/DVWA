@@ -38,7 +38,7 @@ $page[ 'help_button' ]  = 'captcha';
 $page[ 'source_button' ] = 'captcha';
 
 # deal with an empty captcha key
-if($_DVWA['recaptcha_public_key'] != "") {
+if($_DVWA[ 'recaptcha_public_key' ] != "") {
 	$heading = "<h3>Change your password:</h3>";
 }
 else {
@@ -71,7 +71,7 @@ $page[ 'body' ] .= ">
 			Confirm new password:<br />
 			<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_conf\"><br />
 
-			" . recaptcha_get_html($_DVWA['recaptcha_public_key']) . "
+			" . recaptcha_get_html($_DVWA[ 'recaptcha_public_key' ]) . "
 			<br />
 
 			<input type=\"submit\" value=\"Change\" name=\"Change\">

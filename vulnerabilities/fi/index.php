@@ -12,7 +12,7 @@ $page[ 'page_id' ] = 'fi';
 dvwaDatabaseConnect();
 
 $vulnerabilityFile = '';
-switch( $_COOKIE['security'] ) {
+switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;

@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_GET['Login'] ) ) {
+if( isset( $_GET[ 'Login' ] ) ) {
 
 	$user = $_GET[ 'username' ];
 
