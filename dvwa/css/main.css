@@ -84,7 +84,7 @@ ul.menuBlocks {
 }
 
 
-ul + ul, ul + h1, ul + h2, ul + p {
+ul + ul, ul + ul.menuBlocks, ul + h1, ul + h2, ul + p {
 	margin-top: 20px;
 }
 
