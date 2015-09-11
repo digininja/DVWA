@@ -4,7 +4,11 @@ $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: File Inclusion</h1>
 	<div class=\"vulnerable_code_area\">
-		[<em><a href=\"?page=file1.php\">file1.php</a></em>] - [<em><a href=\"?page=file2.php\">file2.php</a></em>] - [<em><a href=\"?page=file3.php\">file3.php</a></em>]
+		<h3>File 1</h3>
+		<hr />
+		Hello <em>".dvwaCurrentUser()."</em><br />
+		Your IP address is: <em>".$_SERVER[ 'REMOTE_ADDR' ]."</em><br /><br />
+		[<em><a href=\"?page=include.php\">back</a></em>]
 	</div>
 
 	<h2>More info</h2>
