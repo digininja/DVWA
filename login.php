@@ -10,7 +10,6 @@ dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
 
-
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
 	$user = mysql_real_escape_string( $user );
@@ -62,30 +61,30 @@ echo "
 	<body>
 
 	<div align=\"center\">
-	
+
 	<br />
 
 	<p><img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/login_logo.png\" /></p>
 
 	<br />
-	
+
 	<form action=\"login.php\" method=\"post\">
-	
+
 	<fieldset>
 
 			<label for=\"user\">Username</label> <input type=\"text\" class=\"loginInput\" size=\"20\" name=\"username\"><br />
-	
-			
+
+
 			<label for=\"pass\">Password</label> <input type=\"password\" class=\"loginInput\" AUTOCOMPLETE=\"off\" size=\"20\" name=\"password\"><br />
-			
-			
+
+
 			<p class=\"submit\"><input type=\"submit\" value=\"Login\" name=\"Login\"></p>
 
 	</fieldset>
 
 	</form>
 
-	
+
 	<br />
 
 	{$messagesHtml}
@@ -97,12 +96,12 @@ echo "
 	<br />
 	<br />
 	<br />
-	<br />	
+	<br />
 
 	<!-- <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/RandomStorm.png\" /> -->
-	
+
 	<p>Damn Vulnerable Web Application (DVWA) is a RandomStorm OpenSource project</p>
-	
+
 	</div> <!-- end align div -->
 
 	</body>

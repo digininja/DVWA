@@ -8,7 +8,7 @@ body{
 }
 
 body.home{
-	background: #e7e7e7;	
+	background: #e7e7e7;
 }
 
 div.clear {
@@ -75,7 +75,7 @@ hr {
 }
 
 
-ul {
+ul.menuBlocks {
 	list-style-type: none;
 	padding-left: 0px;
 	margin-top: 0px;
@@ -84,7 +84,7 @@ ul {
 }
 
 
-ul + ul, ul + h1, ul + h2, ul + p {
+ul + ul, ul + ul.menuBlocks, ul + h1, ul + h2, ul + p {
 	margin-top: 20px;
 }
 
