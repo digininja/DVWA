@@ -10,16 +10,12 @@ if(isset($_GET[ 'Submit' ])) {
 	$result = mysql_query( $getid ); // Removed 'or die' to suppres mysql errors
 
 	$num = @mysql_numrows( $result ); // The '@' character suppresses errors making the injection 'blind'
-	$i = 0;
-	while ($i < $num) {
-		$first = mysql_result($result, $i, "first_name");
-		$last  = mysql_result($result, $i, "last_name");
-
-		$html .= '<pre>';
-		$html .= 'ID: ' . $id . '<br />First name: ' . $first . '<br />Surname: ' . $last;
-		$html .= '</pre>';
-
-		$i++;
+	if($num > 0) {
+		$html .= '<pre>User ID exists in the database.</pre>';
+	}
+	else {
+		//header($_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 Not Found' );
+		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}
 }
 
