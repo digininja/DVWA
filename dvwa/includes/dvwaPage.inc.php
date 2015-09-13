@@ -437,7 +437,8 @@ function dvwaDatabaseConnect() {
 	if( $DBMS == 'MySQL' ) {
 		if( !@mysql_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ] )
 		|| !@mysql_select_db( $_DVWA[ 'db_database' ] ) ) {
-			die( $DBMS_connError );
+			//die( $DBMS_connError );
+			dvwaRedirect( 'setup.php' );
 		}
 	}
 	elseif ( $DBMS == 'PGSQL' ) {
