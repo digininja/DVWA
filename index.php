@@ -10,7 +10,6 @@ $page[ 'title' ]  .= $page[ 'title_separator' ].'Welcome';
 $page[ 'page_id' ] = 'home';
 
 $page[ 'body' ] .= "
-
 <div class=\"body_padded\">
 	<h1>Welcome to Damn Vulnerable Web App!</h1>
 	<p>Damn Vulnerable Web App (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goals are to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and aid teachers/students to teach/learn web application security in a class room environment.</p>

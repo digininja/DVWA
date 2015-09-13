@@ -34,13 +34,13 @@ elseif($id == 'upload') {
 	$vuln = 'File Upload';
 }
 elseif($id == 'xss_r') {
-	$vuln = 'Reflected XSS';
+	$vuln = 'XSS (Reflected)';
 }
 elseif($id == 'captcha') {
 	$vuln = 'Insecure CAPTCHA';
 }
 else {
-	$vuln = 'Stored XSS';
+	$vuln = 'XSS (Stored)';
 }
 
 $source = @file_get_contents( DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/{$id}/source/{$security}.php" );
@@ -51,20 +51,17 @@ $page[ 'body' ] .= "
 	<h1>".$vuln." Source</h1>
 
 	<div id=\"code\">
-	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
-	<tr>
-	<td><div id=\"code\">".highlight_string( $source, true )."</div></td>
-	</tr>
-	</table>
-
+		<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
+			<tr>
+				<td><div id=\"code\">".highlight_string( $source, true )."</div></td>
+			</tr>
+		</table>
 	</div>
+	<br /> <br />
 
-	<br />
-	<br />
-
-	<FORM><INPUT TYPE=\"BUTTON\" VALUE=\"Compare\" ONCLICK=\"window.location.href='view_source_all.php?id=$id'\">
-</FORM>
-
+	<form>
+		<input type=\"button\" value=\"Compare Levels\" onclick=\"window.location.href='view_source_all.php?id=$id'\">
+	</form>
 </div>
 ";
 

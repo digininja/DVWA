@@ -6,15 +6,15 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'About';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'About';
 $page[ 'page_id' ] = 'about';
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>About</h1>
 	<p>Version ".dvwaVersionGet()." (Release date: ".dvwaReleaseDateGet().")</p>
-    <p>Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goals are to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and aid teachers/students to teach/learn web application security in a class room environment</p>
-    <p>The official documentation for DVWA can be found <a href=\"docs/DVWA_v1.3.pdf\">here</a>.</p>
+	<p>Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goals are to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and aid teachers/students to teach/learn web application security in a class room environment</p>
+	<p>The official documentation for DVWA can be found <a href=\"docs/DVWA_v1.3.pdf\">here</a>.</p>
 	<p>DVWA is a RandomStorm OpenSource project. All material is copyright 2008-2011 RandomStorm & Ryan Dewhurst.</p>
 
 	<h2>Links</h2>
@@ -37,7 +37,6 @@ $page[ 'body' ] .= "
 		<li>Jason Jones: ".dvwaExternalLinkUrlGet( 'http://www.linux-ninja.com/','www.linux-ninja.com' )."</li>
 		<li>Brooks Garrett: ".dvwaExternalLinkUrlGet( 'http://brooksgarrett.com/','www.brooksgarrett.com' )."</li>
 	</ul>
-
 	<ul>
 		<li>PHPIDS - Copyright (c) 2007 ".dvwaExternalLinkUrlGet( 'http://github.com/PHPIDS/PHPIDS', 'PHPIDS group' )."</li>
 	</ul>
@@ -47,7 +46,6 @@ $page[ 'body' ] .= "
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.</p>
-
 	<p>The PHPIDS library is included, in good faith, with this DVWA distribution. The operation of PHPIDS is provided without support from the DVWA team. It is licensed under <a href=\"".DVWA_WEB_PAGE_TO_ROOT."instructions.php?doc=PHPIDS-license\">separate terms</a> to the DVWA code.</p>
 
 	<h2>Development</h2>

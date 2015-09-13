@@ -81,7 +81,7 @@ function dvwaPhpIdsTrap() {
 
 			echo 'Hacking attempt detected and logged.';
 
-			//echo $result;
+			// echo $result;
 			exit;
 		}
 	} catch (Exception $e) {

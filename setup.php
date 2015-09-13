@@ -26,16 +26,14 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>Database setup <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/spanner.png\"></h1>
+	<h1>Database Setup <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/spanner.png\" /></h1>
 
-	<p>Click on the 'Create / Reset Database' button below to create or reset your database. If you get an error make sure you have the correct user credentials in /config/config.inc.php</p>
-
+	<p>Click on the 'Create / Reset Database' button below to create or reset your database.</br>
+	If you get an error make sure you have the correct user credentials in: <em>" . realpath(  getcwd()  ) . "/config/config.inc.php</em></p>
 	<p>If the database already exists, it will be cleared and the data will be reset.</p>
-
 	<br />
 
-	Backend Database: <b>".$DBMS."</b>
-
+	Backend Database: <en>".$DBMS."</en>
 	<br /><br /><br />
 
 	<!-- Create db button -->

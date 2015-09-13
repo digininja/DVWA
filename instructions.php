@@ -47,6 +47,7 @@ $docMenuHtml = "<div class=\"submenu\">{$docMenuHtml}</div>";
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Instructions</h1>
+
 	{$docMenuHtml}
 
 	<span class=\"fixed\">
