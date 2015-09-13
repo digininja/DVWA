@@ -23,10 +23,10 @@ $security_levels = array('low', 'medium', 'high');
 if(!isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $security_levels )) {
     // Set security cookie to high if no cookie exists
     if(in_array( $_DVWA[ 'default_security_level' ], $security_levels)) {
-        setcookie( 'security', $_DVWA[ 'default_security_level' ] );
+		dvwaSecurityLevelSet( $_DVWA[ 'default_security_level' ] );
     }
     else {
-		setcookie('security', 'high');
+		dvwaSecurityLevelSet( 'high' );
 	}
 }
 
@@ -126,12 +126,19 @@ function &dvwaPageNewGrab() {
 
 
 function dvwaSecurityLevelGet() {
-	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'low';
+	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'high';
 }
 
 
 function dvwaSecurityLevelSet( $pSecurityLevel ) {
-	setcookie( 'security', $pSecurityLevel );
+	if( $pSecurityLevel == 'high' ) {
+		$httponly = true;
+	}
+	else {
+		$httponly = false;
+	}
+	setcookie( session_name(), session_id(), null, '/', null, null, $httponly );
+	setcookie( 'security', $pSecurityLevel, NULL, NULL, NULL, NULL, $httponly );
 }
 
 
