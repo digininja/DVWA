@@ -8,7 +8,7 @@ This file contains all of the code to setup the initial PostgreSQL database. (se
 
 // Connect to server
 if( !@pg_connect("host=".$_DVWA[ 'db_server' ]." port=".$_DVWA[ 'db_port' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ]) ) {
-	dvwaMessagePush( "Could not connect to the database - please check the config file." );
+	dvwaMessagePush( "Could not connect to the database.<br/>Please check the config file." );
 	dvwaPageReload();
 }
 

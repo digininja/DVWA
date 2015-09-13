@@ -7,8 +7,8 @@ if(isset($_GET[ 'Submit' ])) {
 	$id = mysql_real_escape_string( $id );
 
 	if(is_numeric( $id )) {
-		$getid  = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
-		$result = mysql_query( $getid ) or die( '<pre>' . mysql_error() . '</pre>' );
+		$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
+		$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 		$num = mysql_numrows( $result );
 		$i = 0;

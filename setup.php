@@ -10,7 +10,6 @@ $page[ 'title' ] .= $page[ 'title_separator' ].'Setup';
 $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
-
 	if($DBMS == 'MySQL') {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
 	}
@@ -21,7 +20,6 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 		dvwaMessagePush( "ERROR: Invalid database selected. Please review the config file syntax." );
 		dvwaPageReload();
 	}
-
 }
 
 $page[ 'body' ] .= "
@@ -33,7 +31,7 @@ $page[ 'body' ] .= "
 	<p>If the database already exists, it will be cleared and the data will be reset.</p>
 	<br />
 
-	Backend Database: <en>".$DBMS."</en>
+	Backend Database: <em>".$DBMS."</em>
 	<br /><br /><br />
 
 	<!-- Create db button -->

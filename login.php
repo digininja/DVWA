@@ -9,7 +9,6 @@ dvwaPageStartup( array( 'phpids' ) );
 dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
-
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
 	$user = mysql_real_escape_string( $user );
@@ -19,28 +18,24 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	$pass = mysql_real_escape_string( $pass );
 	$pass = md5( $pass );
 
-	$qry = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
-
-	$result = @mysql_query($qry) or die('<pre>' . mysql_error() . '</pre>' );
-
-	if( $result && mysql_num_rows( $result ) == 1 ) {	// Login Successful...
-
+	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
+	$result = @mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
+	if( $result && mysql_num_rows( $result ) == 1 ) {    // Login Successful...
 		dvwaMessagePush( "You have logged in as '".$user."'" );
 		dvwaLogin( $user );
 		dvwaRedirect( 'index.php' );
-
 	}
 
-	// Login failed
-	dvwaMessagePush( "Login failed" );
+    // Login failed
+	dvwaMessagePush( 'Login failed' );
 	dvwaRedirect( 'login.php' );
 }
 
 $messagesHtml = messagesPopAllToHtml();
 
-Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
-Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
-Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
+Header( 'Cache-Control: no-cache, must-revalidate');    // HTTP/1.1
+Header( 'Content-Type: text/html;charset=utf-8' );	    // TODO- proper XHTML headers...
+Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );	    // Date in the past
 
 echo "
 
