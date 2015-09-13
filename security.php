@@ -63,17 +63,19 @@ else {
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>DVWA Security <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/lock.png\"></h1>
+	<h1>DVWA Security <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/lock.png\" /></h1>
 	<br />
 
 	<h2>Script Security</h2>
+
 	{$securityHtml}
+
 	<form action=\"#\" method=\"POST\">
 		{$securityLevelHtml}
 		<p>You can set the security level to low, medium or high. The security level changes the vulnerability level of DVWA:</p>
 		<ol>
 			<li> Low - This security level is completely vulnerable and <em>has no security measures at all</em>. It's use is to be as an example of how web application vulnerabilities manifest through bad coding practices and to serve as a platform to teach or learn basic exploitation techniques.</li>
-			<li >Medium - This setting is mainly to give an example to the user of <em>bad security practices</em>, where the developer has tried but failed to secure an application. It also acts as a challenge to users to refine their exploitation techniques.</li>
+			<li> Medium - This setting is mainly to give an example to the user of <em>bad security practices</em>, where the developer has tried but failed to secure an application. It also acts as a challenge to users to refine their exploitation techniques.</li>
 			<li> High - This level should be <em>secure against all vulnerabilities</em>. It is used to compare the vulnerable source code to the secure source code.</li>
 		</ol>
 		<select name=\"security\">

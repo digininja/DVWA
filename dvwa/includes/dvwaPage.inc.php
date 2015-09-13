@@ -178,11 +178,11 @@ function dvwaHtmlEcho( $pPage ) {
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'brute', 'name' => 'Brute Force', 'url' => 'vulnerabilities/brute/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'exec', 'name' => 'Command Execution', 'url' => 'vulnerabilities/exec/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'csrf', 'name' => 'CSRF', 'url' => 'vulnerabilities/csrf/.' );
-	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'captcha', 'name' => 'Insecure CAPTCHA', 'url' => 'vulnerabilities/captcha/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'fi', 'name' => 'File Inclusion', 'url' => 'vulnerabilities/fi/.?page=include.php' );
+	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'upload', 'name' => 'File Upload', 'url' => 'vulnerabilities/upload/.' );
+	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'captcha', 'name' => 'Insecure CAPTCHA', 'url' => 'vulnerabilities/captcha/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'sqli', 'name' => 'SQL Injection', 'url' => 'vulnerabilities/sqli/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'sqli_blind', 'name' => 'SQL Injection (Blind)', 'url' => 'vulnerabilities/sqli_blind/.' );
-	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'upload', 'name' => 'Upload', 'url' => 'vulnerabilities/upload/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'xss_r', 'name' => 'XSS (Reflected)', 'url' => 'vulnerabilities/xss_r/.' );
 	$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'xss_s', 'name' => 'XSS (Stored)', 'url' => 'vulnerabilities/xss_s/.' );
 
@@ -285,8 +285,7 @@ function dvwaHtmlEcho( $pPage ) {
 			<div id=\"main_body\">
 
 				{$pPage[ 'body' ]}
-				<br />
-				<br />
+				<br /><br />
 				{$messagesHtml}
 
 			</div>
@@ -424,7 +423,7 @@ else {
 }
 
 $DBMS_connError = '<div align="center">
-		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png">
+		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png" />
 		<pre>Unable to connect to the database.<br />'.$DBMS_errorFunc.'<br /><br /></pre>
 		Click <a href="'.DVWA_WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
 		</div>';
@@ -472,7 +471,7 @@ function dvwaGuestbook() {
 			$comment = $row[1];
 		}
 
-		$guestbook .= "<div id=\"guestbook_comments\">Name: {$name} <br />" . "Message: {$comment} <br /></div>";
+		$guestbook .= "<div id=\"guestbook_comments\">Name: {$name}<br />" . "Message: {$comment}<br /></div>\n";
 	}
 	return $guestbook;
 }

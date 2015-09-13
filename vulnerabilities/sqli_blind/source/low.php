@@ -1,7 +1,6 @@
 <?php
 
 if(isset($_GET[ 'Submit' ])) {
-
 	// Retrieve data
 	$id = $_GET[ 'id' ];
 

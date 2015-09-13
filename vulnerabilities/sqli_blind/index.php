@@ -8,6 +8,8 @@ dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 $page = dvwaPageNewGrab();
 $page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: SQL Injection (Blind)';
 $page[ 'page_id' ] = 'sqli_blind';
+$page[ 'help_button' ]   = 'sqli_blind';
+$page[ 'source_button' ] = 'sqli_blind';
 
 dvwaDatabaseConnect();
 
@@ -29,14 +31,11 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli_blind/source/{$vulnerabilityFile}";
 
-$page[ 'help_button' ]   = 'sqli_blind';
-$page[ 'source_button' ] = 'sqli_blind';
-
 $magicQuotesWarningHtml = '';
 
 // Check if Magic Quotes are on or off
 if( ini_get( 'magic_quotes_gpc' ) == true ) {
-	$magicQuotesWarningHtml = "	<div class=\"warning\">Magic Quotes are on, you will not be able to inject SQL.</div>";
+	$magicQuotesWarningHtml = "<div class=\"warning\">Magic Quotes are on, you will not be able to inject SQL.</div>";
 }
 
 $page[ 'body' ] .= "
@@ -47,14 +46,16 @@ $page[ 'body' ] .= "
 
 	<div class=\"vulnerable_code_area\">
 		<form action=\"#\" method=\"GET\">
-			<p>User ID:</p>
-			<input type=\"text\" name=\"id\">
-			<input type=\"submit\" name=\"Submit\" value=\"Submit\">
+			<p>
+				User ID:
+				<input type=\"text\" size=\"15\" name=\"id\">
+				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
+			</p>
 		</form>
 		{$html}
 	</div>
 
-	<h2>More info</h2>
+	<h2>More Information</h2>
 	<ul>
 		<li>".dvwaExternalLinkUrlGet( 'http://www.securiteam.com/securityreviews/5DP0N1P76E.html' )."</li>
 		<li>".dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/SQL_injection' )."</li>

@@ -63,7 +63,7 @@ else {
 ### END INVALID ###
 
 $DBMS_connError = '<div align="center">
-		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png">
+		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png" />
 		<pre>Unable to connect to the database.<br />'.$DBMS_errorFunc.'<br /><br /></pre>
 		Click <a href="'.DVWA_WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
 		</div>';
