@@ -513,6 +513,30 @@ function dvwaGuestbook() {
 // -- END (XSS Stored guestbook)
 
 
+// Token functions --
+function generateTokens() {  # Generate a brand new TOKEN
+	destroyTokens( $_SESSION[ 'user_token' ] );
+	$_SESSION[ 'user_token' ] = md5( uniqid() );
+}
+
+function checkTokens( $token , $returnURL ) {  # Validate the Given TOKEN
+	if( $token !== $_SESSION[ 'user_token' ] ) {
+		dvwaRedirect( $returnURL );
+	}
+}
+
+function destroyTokens( $token ) {  # Destroy any session with the name 'User_token'
+	if( isset( $_SESSION[ 'user_token' ] ) ) {
+		unset( $_SESSION['user_token'] );
+	}
+}
+
+function tokenField() {  # Return a field for the token
+	return "<input type='hidden' name='token' value='" . $_SESSION[ 'user_token' ] . "' />";
+}
+// -- END (Token functions)
+
+
 $phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';
 $phpDisplayErrors = 'PHP display errors: <em>'.( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );
 $phpURLInclude    = 'PHP allow URL Include: <em>'.( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>';

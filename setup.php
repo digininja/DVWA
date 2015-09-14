@@ -10,6 +10,9 @@ $page[ 'title' ]  .= $page[ 'title_separator' ].'Setup';
 $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "setup.php");
+
 	if($DBMS == 'MySQL') {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
 	}
@@ -24,6 +27,8 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 	}
 }
 
+// Anti-CSRF
+generateTokens();
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -59,6 +64,7 @@ $page[ 'body' ] .= "
 	<!-- Create db button -->
 	<form action=\"#\" method=\"post\">
 		<input name=\"create_db\" type=\"submit\" value=\"Create / Reset Database\">
+		".tokenField()."
 	</form>
 </div>
 ";
