@@ -3,15 +3,10 @@
 if(isset($_GET[ 'Submit' ])) {
 	// Retrieve data
 	$id = $_GET[ 'id' ];
-	$id = stripslashes( $id );
-	$id = mysql_real_escape_string( $id );
 
 	if(is_numeric( $id )) {
-		$getid  = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
-		$result = mysql_query( $getid ); // Removed 'or die' to suppres mysql errors
-
-		$num = @mysql_numrows( $result ); // The '@' character suppresses errors making the injection 'blind'
-		if($num > 0) {
+		$data = $db->query( 'SELECT first_name, last_name FROM users WHERE user_id = ' . $db->quote( $id ) );
+		if( count($data->fetchAll()) > 0 ) {
 			$html .= '<pre>User ID exists in the database.</pre>';
 		}
 		else {

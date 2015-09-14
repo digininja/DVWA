@@ -440,6 +440,7 @@ function dvwaDatabaseConnect() {
 	global $_DVWA;
 	global $DBMS;
 	global $DBMS_connError;
+	global $db;
 
 	if( $DBMS == 'MySQL' ) {
 		if( !@mysql_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ] )
@@ -447,6 +448,10 @@ function dvwaDatabaseConnect() {
 			//die( $DBMS_connError );
 			dvwaRedirect( 'setup.php' );
 		}
+		// MySQL PDO Prepared Statements (high levels)
+		$db = new PDO('mysql:host='.$_DVWA[ 'db_server' ].';dbname='.$_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	}
 	elseif ( $DBMS == 'PGSQL' ) {
 		$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
