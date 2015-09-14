@@ -11,6 +11,7 @@ $page[ 'page_id' ] = 'instructions';
 
 $docs = array(
 	'readme'         => array( 'legend' => 'Read Me', 'file' => 'README.md' ),
+	'PDF'            => array( 'legend' => 'PDF Guide', 'file' => 'docs/pdf.html' ),
 	'changelog'      => array( 'legend' => 'Change Log', 'file' => 'CHANGELOG.md' ),
 	'copying'        => array( 'legend' => 'Copying', 'file' => 'COPYING.txt' ),
 	'PHPIDS-license' => array( 'legend' => 'PHPIDS License', 'file' => DVWA_WEB_PAGE_TO_PHPIDS.'LICENSE' ),
