@@ -8,7 +8,7 @@ if(isset($_GET[ 'Submit' ])) {
 	$result = mysql_query( $getid ); // Removed 'or die' to suppres mysql errors
 
 	$num = @mysql_numrows( $result ); // The '@' character suppresses errors making the injection 'blind'
-	if($num > 0) {
+	if( $num > 0 ) {
 		$html .= '<pre>User ID exists in the database.</pre>';
 	}
 	else {

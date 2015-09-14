@@ -448,8 +448,8 @@ function dvwaDatabaseConnect() {
 			//die( $DBMS_connError );
 			dvwaRedirect( 'setup.php' );
 		}
-		// MySQL PDO Prepared statements
-		$db = new PDO('mysql:host=localhost;dbname=dvwa;charset=utf8', 'root', 'p@ssw0rd');
+		// MySQL PDO Prepared Statements (high levels)
+		$db = new PDO('mysql:host='.$_DVWA[ 'db_server' ].';dbname='.$_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	}
