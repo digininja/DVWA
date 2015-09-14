@@ -8,8 +8,8 @@ Damn Vulnerable Web App (DVWA) is a PHP/MySQL web application that is damn vulne
 WARNING!
 ========
 
-Damn Vulnerable Web App is damn vulnerable! Do not upload it to your hosting provider's public html folder or any working web
-server as it will be hacked. I recommend downloading and installing XAMPP onto a local machine inside your LAN which is used solely for testing.
+Damn Vulnerable Web App is damn vulnerable! Do not upload it to your hosting provider's public html folder or any Internet facing servers, as they will be compromised. Its recommend using a virtual machine (such as VirtualBox), which is set to NAT networking mode. Inside a guest machine, you can downloading and install XAMPP for the web server and database.
+Please note, there are both documented and undocumented vulnerability with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
 
 We do not take responsibility for the way in which any one uses Damn Vulnerable Web App (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA it is not our responsibility it is the responsibility of the person/s who uploaded and installed it.
 
@@ -63,7 +63,7 @@ Database Setup
 
 To set up the database, simply click on the Setup button in the main menu, then click on the 'Create / Reset Database' button. This will create / reset the database for you with some data in.
 
-If you receive an error while trying to create your database, make sure your database credentials are correct within /config/config.inc.php
+If you receive an error while trying to create your database, make sure your database credentials are correct within `./config/config.inc.php`.
 
 The variables are set to the following by default:
 

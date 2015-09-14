@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Setup';
+$page[ 'title' ]  .= $page[ 'title_separator' ].'Setup';
 $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
@@ -17,7 +17,7 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/PGSQL.php';
 	}
 	else {
-		dvwaMessagePush( "ERROR: Invalid database selected. Please review the config file syntax." );
+		dvwaMessagePush( 'ERROR: Invalid database selected. Please review the config file syntax.' );
 		dvwaPageReload();
 	}
 }
