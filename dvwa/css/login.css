@@ -1,8 +1,8 @@
 body {
 	background: #fefffe;
 	font: 12px/15px Arial, Helvetica, sans-serif;
-	line-height:20px;
-	color:#6b6b6b;
+	line-height: 20px;
+	color: #6b6b6b;
 }
 
 label {
@@ -15,7 +15,7 @@ label {
 	font-weight: bold;
 }
 
-.loginInput{
+.loginInput {
 	float: left;
 	color: #6B6B6B;
 	width: 320px;
@@ -31,7 +31,7 @@ fieldset {
 	width: 350px;
 	padding: 10px 20px 10px 20px;
 	overflow: hidden;
-	border-style:none;
+	border-style: none;
 }
 
 p {
