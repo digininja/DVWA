@@ -13,7 +13,7 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 	// Anti-CSRF
 	checkTokens( $_POST[ 'token' ] , "setup.php");
 
-	if($DBMS == 'MySQL') {
+	if( $DBMS == 'MySQL' ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
 	}
 	elseif($DBMS == 'PGSQL') {

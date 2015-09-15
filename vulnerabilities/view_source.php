@@ -12,31 +12,31 @@ $id       = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];
 
 
-if($id == 'fi') {
+if( $id == 'fi' ) {
 	$vuln = 'File Inclusion';
 }
-elseif($id == 'brute') {
+elseif( $id == 'brute' ) {
 	$vuln = 'Brute Force';
 }
-elseif($id == 'csrf') {
+elseif( $id == 'csrf' ) {
 	$vuln = 'CSRF';
 }
-elseif($id == 'exec') {
+elseif( $id == 'exec' ) {
 	$vuln = 'Command Execution';
 }
-elseif($id == 'sqli') {
+elseif( $id == 'sqli' ) {
 	$vuln = 'SQL Injection';
 }
-elseif($id == 'sqli_blind') {
+elseif( $id == 'sqli_blind' ) {
 	$vuln = 'SQL Injection (Blind)';
 }
-elseif($id == 'upload') {
+elseif( $id == 'upload' ) {
 	$vuln = 'File Upload';
 }
-elseif($id == 'xss_r') {
+elseif( $id == 'xss_r' ) {
 	$vuln = 'XSS (Reflected)';
 }
-elseif($id == 'captcha') {
+elseif( $id == 'captcha' ) {
 	$vuln = 'Insecure CAPTCHA';
 }
 else {

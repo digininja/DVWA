@@ -22,31 +22,31 @@ $highsrc = @file_get_contents("./{$id}/source/high.php");
 $highsrc = str_replace( array( '$html .=' ), array( 'echo' ), $highsrc);
 $highsrc = highlight_string($highsrc, true);
 
-if($id == 'fi') {
+if( $id == 'fi' ) {
 	$vuln = 'File Inclusion';
 }
-elseif($id == 'brute') {
+elseif( $id == 'brute' ) {
 	$vuln = 'Brute Force';
 }
-elseif($id == 'csrf') {
+elseif( $id == 'csrf' ) {
 	$vuln = 'CSRF';
 }
-elseif($id == 'exec') {
+elseif( $id == 'exec' ) {
 	$vuln = 'Command Execution';
 }
-elseif($id == 'sqli') {
+elseif( $id == 'sqli' ) {
 	$vuln = 'SQL Injection';
 }
-elseif($id == 'sqli_blind') {
+elseif( $id == 'sqli_blind' ) {
 	$vuln = 'SQL Injection (Blind)';
 }
-elseif($id == 'upload') {
+elseif( $id == 'upload' ) {
 	$vuln = 'File Upload';
 }
-elseif($id == 'xss_r') {
+elseif( $id == 'xss_r' ) {
 	$vuln = 'Reflected XSS';
 }
-elseif($id == 'xss_s') {
+elseif( $id == 'xss_s' ) {
 	$vuln = 'Stored XSS';
 }
 
