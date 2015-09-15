@@ -8,8 +8,8 @@ Damn Vulnerable Web App (DVWA) is a PHP/MySQL web application that is damn vulne
 WARNING!
 ========
 
-Damn Vulnerable Web App is damn vulnerable! Do not upload it to your hosting provider's public html folder or any Internet facing servers, as they will be compromised. Its recommend using a virtual machine (such as VirtualBox), which is set to NAT networking mode. Inside a guest machine, you can downloading and install XAMPP for the web server and database.
-Please note, there are both documented and undocumented vulnerability with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
+Damn Vulnerable Web App is damn vulnerable! **Do not upload it to your hosting provider's public html folder or any Internet facing servers**, as they will be compromised. Its recommend using a virtual machine (such as [VirtualBox](http://hiderefer.com/?https://www.virtualbox.org/)), which is set to NAT networking mode. Inside a guest machine, you can downloading and install [XAMPP](http://hiderefer.com/?https://www.apachefriends.org/en/xampp.html) for the web server and database.
+Please note, there are **both documented and undocumented vulnerability** with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
 
 We do not take responsibility for the way in which any one uses Damn Vulnerable Web App (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA it is not our responsibility it is the responsibility of the person/s who uploaded and installed it.
 
