@@ -42,8 +42,11 @@ $page[ 'body' ] .= "
 	{$DVWAOS}<br />
 	Backend Database: <em>".$DBMS."</em><br />
 	<br />
+	PHP Version: v<em>".phpversion()."</em><br />
 	{$phpSafeMode}<br/ >
 	{$phpDisplayErrors}<br />
+	{$phpURLInclude}<br/ >
+	{$phpURLFopen}<br />
 	<br />
 	{$DVWARecaptcha}<br />
 	<br />

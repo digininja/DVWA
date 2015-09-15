@@ -513,11 +513,13 @@ function dvwaGuestbook() {
 // -- END (XSS Stored guestbook)
 
 
-$phpSafeMode      = 'PHP Safe Mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';
-$phpDisplayErrors = 'PHP Display Errors: <em>'.( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );
-$DVWARecaptcha    = 'reCAPTCHA Key: <em>' . ( $_DVWA[ 'recaptcha_public_key' ] ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
+$phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';
+$phpDisplayErrors = 'PHP display errors: <em>'.( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );
+$phpURLInclude    = 'PHP allow URL Include: <em>'.( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>';
+$phpURLFopen      = 'PHP allow URL fopen: <em>'.( ini_get( 'allow_url_fopen' )  ? 'Enabled' : 'Disabled' ) . '</em>';
+$DVWARecaptcha    = 'reCAPTCHA key: <em>' . ( isset ( $_DVWA[ 'recaptcha_public_key' ] ) ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
 $DVWAUploadsWrite = 'Writable "/hackable/uploads/": <em>' . ( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/" ) ? 'Yes' : 'No(*)' ) . '</em>';
 $DVWAPHPWrite     = 'Writable "/external/phpids/0.6/lib/IDS/tmp": <em>' . ( is_writable( realpath( dirname( dirname( getcwd() ) ) )."external/phpids/0.6/lib/IDS/tmp" ) ? 'Yes' : 'No(*)' ) . '</em>';
-$DVWAOS           = 'Operating System: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
+$DVWAOS           = 'Operating system: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
 
 ?>
