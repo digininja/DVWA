@@ -470,8 +470,10 @@ function dvwaDatabaseConnect() {
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	}
 	elseif ( $DBMS == 'PGSQL' ) {
-		$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
-		or die( $DBMS_connError );
+		//$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
+		//or die( $DBMS_connError );
+		dvwaMessagePush( 'PostgreSQL is not yet fully supported.' );
+		dvwaPageReload();
 	}
 	else {
 		die ( 'Unknown $DBMS selected' );

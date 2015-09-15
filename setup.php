@@ -14,7 +14,9 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
 	}
 	elseif($DBMS == 'PGSQL') {
-		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/PGSQL.php';
+		// include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/PGSQL.php';
+		dvwaMessagePush( 'PostgreSQL is not yet fully supported.' );
+		dvwaPageReload();
 	}
 	else {
 		dvwaMessagePush( 'ERROR: Invalid database selected. Please review the config file syntax.' );
