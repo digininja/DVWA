@@ -515,7 +515,9 @@ function dvwaGuestbook() {
 
 // Token functions --
 function generateTokens() {  # Generate a brand new TOKEN
-	destroyTokens( $_SESSION[ 'user_token' ] );
+	if( isset( $_SESSION[ 'user_token' ] ) ) {
+		destroyTokens( $_SESSION[ 'user_token' ] );
+	}
 	$_SESSION[ 'user_token' ] = md5( uniqid() );
 }
 
@@ -526,9 +528,7 @@ function checkTokens( $token , $returnURL ) {  # Validate the Given TOKEN
 }
 
 function destroyTokens( $token ) {  # Destroy any session with the name 'User_token'
-	if( isset( $_SESSION[ 'user_token' ] ) ) {
-		unset( $_SESSION['user_token'] );
-	}
+	unset( $_SESSION['user_token'] );
 }
 
 function tokenField() {  # Return a field for the token
