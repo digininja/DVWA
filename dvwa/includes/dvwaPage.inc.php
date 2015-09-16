@@ -470,8 +470,10 @@ function dvwaDatabaseConnect() {
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	}
 	elseif ( $DBMS == 'PGSQL' ) {
-		$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
-		or die( $DBMS_connError );
+		//$dbconn = pg_connect("host=".$_DVWA[ 'db_server' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ])
+		//or die( $DBMS_connError );
+		dvwaMessagePush( 'PostgreSQL is not yet fully supported.' );
+		dvwaPageReload();
 	}
 	else {
 		die ( 'Unknown $DBMS selected' );
@@ -509,5 +511,15 @@ function dvwaGuestbook() {
 	return $guestbook;
 }
 // -- END (XSS Stored guestbook)
+
+
+$phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';
+$phpDisplayErrors = 'PHP display errors: <em>'.( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );
+$phpURLInclude    = 'PHP allow URL Include: <em>'.( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>';
+$phpURLFopen      = 'PHP allow URL fopen: <em>'.( ini_get( 'allow_url_fopen' )  ? 'Enabled' : 'Disabled' ) . '</em>';
+$DVWARecaptcha    = 'reCAPTCHA key: <em>' . ( isset ( $_DVWA[ 'recaptcha_public_key' ] ) ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
+$DVWAUploadsWrite = 'Writable "/hackable/uploads/": <em>' . ( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/" ) ? 'Yes' : 'No(*)' ) . '</em>';
+$DVWAPHPWrite     = 'Writable "/external/phpids/0.6/lib/IDS/tmp": <em>' . ( is_writable( realpath( dirname( dirname( getcwd() ) ) )."external/phpids/0.6/lib/IDS/tmp" ) ? 'Yes' : 'No(*)' ) . '</em>';
+$DVWAOS           = 'Operating system: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
 
 ?>
