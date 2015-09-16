@@ -1,7 +1,6 @@
 <?php
 
 if( isset( $_POST[ 'submit' ] ) ) {
-
 	$target = $_REQUEST[ 'ip' ];
 
 	// Determine OS and execute the ping command.

@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_GET[ 'Change' ])) {
+if( isset( $_GET[ 'Change' ] ) ) {
 	// Anti-CSRF
 	checkTokens( $_POST[ 'token' ] , "index.php");
 

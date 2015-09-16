@@ -1,7 +1,6 @@
 <?php
 
 if( isset( $_POST[ 'submit' ] ) ) {
-
 	$target = $_REQUEST[ 'ip' ];
 
 	// Remove any of the charactars in the array (blacklist).
