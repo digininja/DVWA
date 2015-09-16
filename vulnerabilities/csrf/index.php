@@ -16,21 +16,21 @@ dvwaDatabaseConnect();
 $vulnerabilityFile = '';
 switch( $_COOKIE[ 'security' ] ) {
     case 'low':
-	$vulnerabilityFile = 'low.php';
-	break;
-
+		$vulnerabilityFile = 'low.php';
+		break;
     case 'medium':
-	$vulnerabilityFile = 'medium.php';
-	break;
-
+		$vulnerabilityFile = 'medium.php';
+		break;
     case 'high':
-    default:
-	$vulnerabilityFile = 'high.php';
-	break;
+		$vulnerabilityFile = 'high.php';
+		break;
+	default:
+		$vulnerabilityFile = 'impossible.php';
+		break;
 }
 
 // Anti-CSRF
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/csrf/source/{$vulnerabilityFile}";
@@ -45,7 +45,7 @@ $page[ 'body' ] .= "
 
 		<form action=\"#\" method=\"GET\">";
 
-if(dvwaSecurityLevelGet() == 'high') {
+if( $vulnerabilityFile == 'impossible.php' ) {
 	$page[ 'body' ] .= "
 			Current password:<br />
 			<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_current\"><br />";
@@ -59,7 +59,7 @@ $page[ 'body' ] .= "
 			<br />
 			<input type=\"submit\" value=\"Change\" name=\"Change\">";
 
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

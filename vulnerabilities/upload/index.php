@@ -18,19 +18,19 @@ switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;
-
 	case 'medium':
 		$vulnerabilityFile = 'medium.php';
 		break;
-
 	case 'high':
-	default:
 		$vulnerabilityFile = 'high.php';
+		break;
+	default:
+		$vulnerabilityFile = 'impossible.php';
 		break;
 }
 
 // Anti-CSRF
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/upload/source/{$vulnerabilityFile}";
@@ -49,7 +49,7 @@ if( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/"
 			<br />
 			<input type=\"submit\" name=\"Upload\" value=\"Upload\" />";
 
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

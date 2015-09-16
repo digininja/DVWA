@@ -18,14 +18,14 @@ switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;
-
 	case 'medium':
 		$vulnerabilityFile = 'medium.php';
 		break;
-
 	case 'high':
-	default:
 		$vulnerabilityFile = 'high.php';
+		break;
+	default:
+		$vulnerabilityFile = 'impossible.php';
 		break;
 }
 

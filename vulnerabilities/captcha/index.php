@@ -22,19 +22,19 @@ switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;
-
 	case 'medium':
 		$vulnerabilityFile = 'medium.php';
 		break;
-
 	case 'high':
-	default:
 		$vulnerabilityFile = 'high.php';
+		break;
+	default:
+		$vulnerabilityFile = 'impossible.php';
 		break;
 }
 
 // Anti-CSRF
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
 
 $hide_form = false;
@@ -63,7 +63,7 @@ if( ( $hide_form ) || $_DVWA[ 'recaptcha_public_key' ] == "" ) $page[ 'body' ] .
 $page[ 'body' ] .= ">
 			<input type=\"hidden\" name=\"step\" value=\"1\" />";
 
-if(dvwaSecurityLevelGet() == 'high') {
+if( $vulnerabilityFile == 'impossible.php' ) {
 	$page[ 'body' ] .= "
 			Current password:<br />
 			<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_current\"><br />";
@@ -80,7 +80,7 @@ $page[ 'body' ] .= "
 
 			<input type=\"submit\" value=\"Change\" name=\"Change\">";
 
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

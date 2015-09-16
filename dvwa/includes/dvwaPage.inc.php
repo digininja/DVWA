@@ -18,15 +18,14 @@ if(!isset( $html )) {
 }
 
 // Valid security levels
-$security_levels = array('low', 'medium', 'high');
-
+$security_levels = array('low', 'medium', 'high', 'impossible');
 if(!isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $security_levels )) {
-    // Set security cookie to high if no cookie exists
+    // Set security cookie to impossible if no cookie exists
     if(in_array( $_DVWA[ 'default_security_level' ], $security_levels)) {
 		dvwaSecurityLevelSet( $_DVWA[ 'default_security_level' ] );
     }
     else {
-		dvwaSecurityLevelSet( 'high' );
+		dvwaSecurityLevelSet( 'impossible' );
 	}
 }
 
@@ -126,12 +125,12 @@ function &dvwaPageNewGrab() {
 
 
 function dvwaSecurityLevelGet() {
-	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'high';
+	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'impossible';
 }
 
 
 function dvwaSecurityLevelSet( $pSecurityLevel ) {
-	if( $pSecurityLevel == 'high' ) {
+	if( $pSecurityLevel == 'impossible' ) {
 		$httponly = true;
 	}
 	else {
@@ -232,16 +231,14 @@ function dvwaHtmlEcho( $pPage ) {
 		case 'low':
 			$securityLevelHtml = 'low';
 			break;
-
 		case 'medium':
 			$securityLevelHtml = 'medium';
 			break;
-
 		case 'high':
 			$securityLevelHtml = 'high';
 			break;
 		default:
-			$securityLevelHtml = 'high';
+			$securityLevelHtml = 'impossible';
 			break;
 	}
     // -- END (security cookie)
@@ -464,7 +461,7 @@ function dvwaDatabaseConnect() {
 			dvwaMessagePush( $DBMS_connError );
 			dvwaRedirect( 'setup.php' );
 		}
-		// MySQL PDO Prepared Statements (high levels)
+		// MySQL PDO Prepared Statements (for impossible levels)
 		$db = new PDO('mysql:host='.$_DVWA[ 'db_server' ].';dbname='.$_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -497,7 +494,7 @@ function dvwaGuestbook() {
 	$guestbook = '';
 
 	while( $row = mysql_fetch_row( $result ) ) {
-		if( dvwaSecurityLevelGet() == 'high' ) {
+		if( dvwaSecurityLevelGet() == 'impossible' ) {
 			$name    = htmlspecialchars( $row[0] );
 			$comment = htmlspecialchars( $row[1] );
 		}

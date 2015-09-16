@@ -2,7 +2,7 @@
 
 # If you are having problems connecting to the MySQL database and all of the variables below are correct
 # try changing the 'db_server' variable from localhost to 127.0.0.1. Fixes a problem due to sockets.
-#   Thanks to digininja for the fix.
+#   Thanks to @digininja for the fix.
 
 # Database management system to use
 $DBMS = 'MySQL';
@@ -20,14 +20,14 @@ $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 # Only used for PostgreSQL/PGSQL
 $_DVWA[ 'db_port '] = '5432';
 
-# ReCAPTCHA Settings
+# ReCAPTCHA settings
 #   Get your keys at https://www.google.com/recaptcha/admin/create
 $_DVWA[ 'recaptcha_public_key' ]  = '';
 $_DVWA[ 'recaptcha_private_key' ] = '';
 
-# Default Security Level
-#   The default is high, you may wish to set this to either low or medium.
-#   If you specify an invalid level, DVWA will default to high.
-$_DVWA[ 'default_security_level' ] = 'high';
+# Default security level
+#   The default is impossible, you may wish to set this to either low, medium or high.
+#   If you specify an invalid level, DVWA will default to impossible.
+$_DVWA[ 'default_security_level' ] = 'impossible';
 
 ?>
