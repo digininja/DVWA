@@ -19,7 +19,6 @@ function dvwaPhpIdsVersionGet() {
 
 // PHPIDS Log parsing function
 function dvwaReadIdsLog() {
-
 	$file_array = file(DVWA_WEB_PAGE_TO_PHPIDS_LOG);
 
 	$data = '';
@@ -34,7 +33,7 @@ function dvwaReadIdsLog() {
 		$request = urldecode($line[5]);
 		$ip = $line[6];
 
-		$data .= "<div id=\"idslog\"><b>Date/Time:</b> " . $datetime . "<br /><b>Vulnerability:</b> " . $vulnerability . "<br /><b>Request:</b> " . htmlspecialchars($request) . "<br /><b>Variable:</b> " . htmlspecialchars($variable) . "<br /><b>IP:</b> " . $ip . "</div>";
+		$data .= "<div id=\"idslog\">\n<em>Date/Time:</em> {$datetime}<br />\n<em>Vulnerability:</em> {$vulnerability}<br />\n<em>Request:</em> " . htmlspecialchars($request) . "<br />\n<em>Variable:</em> " . htmlspecialchars($variable) . "<br />\n<em>IP:</em> {$ip}</div>";
 	}
 
 return $data;

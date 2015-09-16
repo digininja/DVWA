@@ -7,20 +7,20 @@ This file contains all of the code to setup the initial PostgreSQL database. (se
 */
 
 // Connect to server
-if( !@pg_connect("host=".$_DVWA[ 'db_server' ]." port=".$_DVWA[ 'db_port' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ]) ) {
+if( !@pg_connect("host={$_DVWA[ 'db_server' ]} port={$_DVWA[ 'db_port' ]} user={$_DVWA[ 'db_user' ]} password={$_DVWA[ 'db_password' ]}") ) {
 	dvwaMessagePush( "Could not connect to the database.<br/>Please check the config file." );
 	dvwaPageReload();
 }
 
 // Create database
-$drop_db = "DROP DATABASE IF EXISTS ".$_DVWA[ 'db_database' ].";";
+$drop_db = "DROP DATABASE IF EXISTS {$_DVWA[ 'db_database' ]};";
 
 if( !@pg_query($drop_db) ) {
 	dvwaMessagePush( "Could not drop existing database<br />SQL: " . pg_last_error() );
 	dvwaPageReload();
 }
 
-$create_db = "CREATE DATABASE ".$_DVWA[ 'db_database' ].";";
+$create_db = "CREATE DATABASE {$_DVWA[ 'db_database' ]};";
 
 if( !@pg_query ( $create_db ) ) {
 	dvwaMessagePush( "Could not create database<br />SQL: " . pg_last_error() );
@@ -31,7 +31,7 @@ dvwaMessagePush( "Database has been created." );
 
 
 // Connect to server AND connect to the database
-$dbconn = @pg_connect("host=".$_DVWA[ 'db_server' ]." port=".$_DVWA[ 'db_port' ]." dbname=".$_DVWA[ 'db_database' ]." user=".$_DVWA[ 'db_user' ]." password=".$_DVWA[ 'db_password' ]);
+$dbconn = @pg_connect("host={$_DVWA[ 'db_server' ]} port={$_DVWA[ 'db_port' ]} dbname={$_DVWA[ 'db_database' ]} user={$_DVWA[ 'db_user' ]} password={$_DVWA[ 'db_password' ]}");
 
 
 // Create table 'users'

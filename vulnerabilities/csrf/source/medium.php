@@ -8,7 +8,7 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		$pass_new  = $_GET[ 'password_new' ];
 		$pass_conf = $_GET[ 'password_conf' ];
 
-		if($pass_new == $pass_conf) {
+		if( $pass_new == $pass_conf ) {
 			$pass_new = mysql_real_escape_string( $pass_new );
 			$pass_new = md5( $pass_new );
 

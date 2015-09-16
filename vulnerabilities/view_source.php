@@ -48,7 +48,7 @@ $source = str_replace( array( '$html .=' ), array( 'echo' ), $source );
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>".$vuln." Source</h1>
+	<h1>{$vuln} Source</h1>
 
 	<div id=\"code\">
 		<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">

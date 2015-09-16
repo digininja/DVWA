@@ -52,6 +52,7 @@ $page[ 'body' ] .= "
 	{$phpDisplayErrors}<br />
 	{$phpURLInclude}<br/ >
 	{$phpURLFopen}<br />
+	{$phpMagicQuotes}<br />
 	<br />
 	{$DVWARecaptcha}<br />
 	<br />

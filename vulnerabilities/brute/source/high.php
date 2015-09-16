@@ -24,7 +24,7 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		$avatar = mysql_result( $result, $i, "avatar" );
 
 		// Login Successful
-		$html .= "<p>Welcome to the password protected area " . $user . "</p>";
+		$html .= "<p>Welcome to the password protected area {$user}</p>";
 		$html .= '<img src="' . $avatar . '" />';
 	}
 	else {

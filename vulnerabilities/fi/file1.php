@@ -7,7 +7,7 @@ $page[ 'body' ] .= "
 		<h3>File 1</h3>
 		<hr />
 		Hello <em>".dvwaCurrentUser()."</em><br />
-		Your IP address is: <em>".$_SERVER[ 'REMOTE_ADDR' ]."</em><br /><br />
+		Your IP address is: <em>{$_SERVER[ 'REMOTE_ADDR' ]}</em><br /><br />
 		[<em><a href=\"?page=include.php\">back</a></em>]
 	</div>
 
