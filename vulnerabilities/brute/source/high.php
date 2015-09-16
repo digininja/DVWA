@@ -1,6 +1,9 @@
 <?php
 
 if( isset( $_GET[ 'Login' ] ) ) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "index.php");
+
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
 	$user = stripslashes( $user );

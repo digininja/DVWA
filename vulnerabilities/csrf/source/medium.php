@@ -1,7 +1,6 @@
 <?php
 
-if(isset($_GET[ 'Change' ])) {
-
+if( isset( $_GET[ 'Change' ] ) ) {
 	// Checks the http referer header
 	if( eregi ( "127.0.0.1", $_SERVER [ 'HTTP_REFERER' ] ) ) {
 

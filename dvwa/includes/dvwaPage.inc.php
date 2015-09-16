@@ -497,7 +497,7 @@ function dvwaGuestbook() {
 	$guestbook = '';
 
 	while( $row = mysql_fetch_row( $result ) ) {
-		if(dvwaSecurityLevelGet() == 'high') {
+		if( dvwaSecurityLevelGet() == 'high' ) {
 			$name    = htmlspecialchars( $row[0] );
 			$comment = htmlspecialchars( $row[1] );
 		}
@@ -511,6 +511,30 @@ function dvwaGuestbook() {
 	return $guestbook;
 }
 // -- END (XSS Stored guestbook)
+
+
+// Token functions --
+function generateTokens() {  # Generate a brand new TOKEN
+	if( isset( $_SESSION[ 'user_token' ] ) ) {
+		destroyTokens( $_SESSION[ 'user_token' ] );
+	}
+	$_SESSION[ 'user_token' ] = md5( uniqid() );
+}
+
+function checkTokens( $token , $returnURL ) {  # Validate the Given TOKEN
+	if( $token !== $_SESSION[ 'user_token' ] ) {
+		dvwaRedirect( $returnURL );
+	}
+}
+
+function destroyTokens( $token ) {  # Destroy any session with the name 'User_token'
+	unset( $_SESSION['user_token'] );
+}
+
+function tokenField() {  # Return a field for the token
+	return "<input type='hidden' name='token' value='" . $_SESSION[ 'user_token' ] . "' />";
+}
+// -- END (Token functions)
 
 
 $phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';

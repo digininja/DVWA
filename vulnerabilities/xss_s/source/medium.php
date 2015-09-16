@@ -1,6 +1,6 @@
 <?php
 
-if(isset( $_POST[ 'btnSign' ] )) {
+if( isset( $_POST[ 'btnSign' ] ) ) {
    $message = trim( $_POST[ 'mtxMessage' ] );
    $name    = trim( $_POST[ 'txtName' ] );
 

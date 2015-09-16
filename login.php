@@ -9,6 +9,9 @@ dvwaPageStartup( array( 'phpids' ) );
 dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "login.php");
+
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
 	$user = mysql_real_escape_string( $user );
@@ -46,6 +49,9 @@ $messagesHtml = messagesPopAllToHtml();
 Header( 'Cache-Control: no-cache, must-revalidate');    // HTTP/1.1
 Header( 'Content-Type: text/html;charset=utf-8' );	    // TODO- proper XHTML headers...
 Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );	    // Date in the past
+
+// Anti-CSRF
+generateTokens();
 
 echo "
 
@@ -86,6 +92,8 @@ echo "
 			<p class=\"submit\"><input type=\"submit\" value=\"Login\" name=\"Login\"></p>
 
 	</fieldset>
+
+	".tokenField()."
 
 	</form>
 

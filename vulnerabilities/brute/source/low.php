@@ -1,7 +1,6 @@
 <?php
 
 if( isset( $_GET[ 'Login' ] ) ) {
-
 	$user = $_GET[ 'username' ];
 
 	$pass = $_GET[ 'password' ];

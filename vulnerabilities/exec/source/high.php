@@ -1,6 +1,8 @@
 <?php
 
 if( isset( $_POST[ 'submit' ] ) ) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "index.php");
 
 	$target = $_REQUEST[ 'ip' ];
 	$target = stripslashes( $target );

@@ -29,6 +29,10 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' )
+	generateTokens();
+
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli/source/{$vulnerabilityFile}";
 
 $magicQuotesWarningHtml = '';
@@ -50,7 +54,12 @@ $page[ 'body' ] .= "
 				User ID:
 				<input type=\"text\" size=\"15\" name=\"id\">
 				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
-			</p>
+			</p>";
+
+if( $vulnerabilityFile == 'high.php' )
+	$page[ 'body' ] .= "			" . tokenField();
+
+$page[ 'body' ] .= "
 		</form>
 		{$html}
 	</div>

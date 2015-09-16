@@ -1,6 +1,9 @@
 <?php
 
-if(isset($_GET[ 'Submit' ])) {
+if( isset( $_GET[ 'Submit' ] ) ) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "index.php");
+
 	// Retrieve data
 	$id = $_GET[ 'id' ];
 

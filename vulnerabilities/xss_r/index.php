@@ -29,6 +29,10 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' )
+	generateTokens();
+
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/xss_r/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
@@ -41,7 +45,12 @@ $page[ 'body' ] .= "
 				What's your name?
 				<input type=\"text\" name=\"name\">
 				<input type=\"submit\" value=\"Submit\">
-			</p>
+			</p>";
+
+if( $vulnerabilityFile == 'high.php' )
+	$page[ 'body' ] .= "			" . tokenField();
+
+$page[ 'body' ] .= "
 		</form>
 		{$html}
 	</div>

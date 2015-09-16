@@ -29,6 +29,10 @@ switch( $_COOKIE[ 'security' ] ) {
 	break;
 }
 
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' )
+	generateTokens();
+
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/csrf/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
@@ -53,7 +57,12 @@ $page[ 'body' ] .= "
 			Confirm new password:<br />
 			<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_conf\"><br />
 			<br />
-			<input type=\"submit\" value=\"Change\" name=\"Change\">
+			<input type=\"submit\" value=\"Change\" name=\"Change\">";
+
+if( $vulnerabilityFile == 'high.php' )
+	$page[ 'body' ] .= "			" . tokenField();
+
+$page[ 'body' ] .= "
 		</form>
 		{$html}
     </div>

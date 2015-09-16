@@ -11,6 +11,9 @@ $page[ 'page_id' ] = 'security';
 
 $securityHtml = '';
 if( isset( $_POST['seclev_submit'] ) ) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "security.php");
+
 	$securityLevel = 'high';
 
 	switch( $_POST[ 'security' ] ) {
@@ -61,6 +64,9 @@ else {
 	$phpIdsHtml .= '<em>disabled</em>. [<a href="?phpids=on">Enable PHPIDS</a>]';
 }
 
+// Anti-CSRF
+generateTokens();
+
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>DVWA Security <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/lock.png\" /></h1>
@@ -82,6 +88,7 @@ $page[ 'body' ] .= "
 			{$securityOptionsHtml}
 		</select>
 		<input type=\"submit\" value=\"Submit\" name=\"seclev_submit\">
+		".tokenField()."
 	</form>
 
 	<br />

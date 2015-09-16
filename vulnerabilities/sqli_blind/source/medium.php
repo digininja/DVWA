@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_GET[ 'Submit' ])) {
+if( isset( $_GET[ 'Submit' ] ) ) {
 	// Retrieve data
 	$id = $_GET[ 'id' ];
 	$id = mysql_real_escape_string( $id );
