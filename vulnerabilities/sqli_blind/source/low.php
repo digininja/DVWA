@@ -1,6 +1,6 @@
 <?php
 
-if( isset($_GET[ 'Submit' ] ) ) {
+if( isset( $_GET[ 'Submit' ] ) ) {
 	// Retrieve data
 	$id = $_GET[ 'id' ];
 
@@ -12,7 +12,7 @@ if( isset($_GET[ 'Submit' ] ) ) {
 		$html .= '<pre>User ID exists in the database.</pre>';
 	}
 	else {
-		header($_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 Not Found' );
+		header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 Not Found' );
 		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}
 }

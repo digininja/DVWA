@@ -18,7 +18,7 @@ if( isset( $_GET[ 'Change' ] ) ) {
 	$query  = "SELECT password FROM `users` WHERE user='" . dvwaCurrentUser() . "' AND password='$pass_curr';";
 	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
-	if(($pass_new == $pass_conf) && ( $result && mysql_num_rows( $result ) == 1 )) {
+	if( ( $pass_new == $pass_conf ) && ( $result && mysql_num_rows( $result ) == 1 ) ) {
 		$pass_new = mysql_real_escape_string( $pass_new );
 		$pass_new = md5( $pass_new );
 

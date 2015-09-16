@@ -41,7 +41,7 @@ $hide_form = false;
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/captcha/source/{$vulnerabilityFile}";
 
 # deal with an empty captcha key
-if($_DVWA[ 'recaptcha_public_key' ] != "") {
+if( $_DVWA[ 'recaptcha_public_key' ] != "" ) {
 	$heading = "<h3>Change your password:</h3>";
 }
 else {
@@ -53,12 +53,12 @@ $page[ 'body' ] .= "
 	<h1>Vulnerability: Insecure CAPTCHA</h1>
 
 	<div class=\"vulnerable_code_area\">
-		" . $heading  . "
+		{$heading}
     	<br />
 
 		<form action=\"#\" method=\"POST\" ";
 
-if(($hide_form) || $_DVWA[ 'recaptcha_public_key' ] == "") $page[ 'body' ] .= "style=\"display:none;\"";
+if( ( $hide_form ) || $_DVWA[ 'recaptcha_public_key' ] == "" ) $page[ 'body' ] .= "style=\"display:none;\"";
 
 $page[ 'body' ] .= ">
 			<input type=\"hidden\" name=\"step\" value=\"1\" />";
@@ -75,7 +75,7 @@ $page[ 'body' ] .= "
 			Confirm new password:<br />
 			<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password_conf\"><br />
 
-			" . recaptcha_get_html($_DVWA[ 'recaptcha_public_key' ]) . "
+			" . recaptcha_get_html( $_DVWA[ 'recaptcha_public_key' ] ) . "
 			<br />
 
 			<input type=\"submit\" value=\"Change\" name=\"Change\">";

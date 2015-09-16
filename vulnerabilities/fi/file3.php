@@ -14,8 +14,8 @@ else
 	$page[ 'body' ] .= "**Missing Header**";
 $page[ 'body' ] .= "</em><br />
 		Your user-agent address is: <em>".$_SERVER[ 'HTTP_USER_AGENT' ]."</em><br />
-		You came form: <em>".$_SERVER[ 'HTTP_REFERER' ]."</em><br />
-		I'm hosted at: <em>".$_SERVER[ 'HTTP_HOST' ]."</em><br /><br />
+		You came form: <em>{$_SERVER[ 'HTTP_REFERER' ]}</em><br />
+		I'm hosted at: <em>{$_SERVER[ 'HTTP_HOST' ]}</em><br /><br />
 		[<em><a href=\"?page=include.php\">back</a></em>]
 	</div>
 

@@ -68,9 +68,9 @@ If you receive an error while trying to create your database, make sure your dat
 The variables are set to the following by default:
 
 ```
-$_DVWA['db_user'] = 'root';
-$_DVWA['db_password'] = '';
-$_DVWA['db_database'] = 'dvwa';
+$_DVWA[ 'db_user' ] = 'root';
+$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+$_DVWA[ 'db_database' ] = 'dvwa';
 ```
 
 Troubleshooting
@@ -87,20 +87,20 @@ In .htaccess:
 
 Replace:
 ```
-  <IfModule mod_php5.c>
+<IfModule mod_php5.c>
     php_flag magic_quotes_gpc off
     #php_flag allow_url_fopen on
     #php_flag allow_url_include on
-  </IfModule>
+</IfModule>
 ```
 
 With:
 ```
-  <IfModule mod_php5.c>
+<IfModule mod_php5.c>
     magic_quotes_gpc = Off
     allow_url_fopen = On
     allow_url_include = On
-  </IfModule>
+</IfModule>
 ```
 
 +Q. Command execution won't work.

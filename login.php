@@ -34,7 +34,7 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
 	$result = @mysql_query( $query ) or die( '<pre>' . mysql_error() . '.<br />Try <a href="setup.php">installing again</a>.</pre>' );
 	if( $result && mysql_num_rows( $result ) == 1 ) {    // Login Successful...
-		dvwaMessagePush( "You have logged in as '".$user."'" );
+		dvwaMessagePush( "You have logged in as '{$user}'" );
 		dvwaLogin( $user );
 		dvwaRedirect( 'index.php' );
 	}

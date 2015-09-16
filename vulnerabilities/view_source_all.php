@@ -12,15 +12,15 @@ $id = $_GET[ 'id' ];
 
 $lowsrc = @file_get_contents("./{$id}/source/low.php");
 $lowsrc = str_replace( array( '$html .=' ), array( 'echo' ), $lowsrc);
-$lowsrc = highlight_string($lowsrc, true);
+$lowsrc = highlight_string( $lowsrc, true );
 
 $medsrc = @file_get_contents("./{$id}/source/medium.php");
 $medsrc = str_replace( array( '$html .=' ), array( 'echo' ), $medsrc);
-$medsrc = highlight_string($medsrc, true);
+$medsrc = highlight_string( $medsrc, true );
 
 $highsrc = @file_get_contents("./{$id}/source/high.php");
 $highsrc = str_replace( array( '$html .=' ), array( 'echo' ), $highsrc);
-$highsrc = highlight_string($highsrc, true);
+$highsrc = highlight_string( $highsrc, true );
 
 if( $id == 'fi' ) {
 	$vuln = 'File Inclusion';
@@ -52,29 +52,29 @@ elseif( $id == 'xss_s' ) {
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>".$vuln."</h1>
+	<h1>{$vuln}</h1>
 	<br />
 
-	<h3>High ".$vuln." Source</h3>
+	<h3>High {$vuln} Source</h3>
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 		<tr>
-			<td><div id=\"code\">".$highsrc."</div></td>
+			<td><div id=\"code\">{$highsrc}</div></td>
 		</tr>
 	</table>
 	<br />
 
-	<h3>Medium ".$vuln." Source</h3>
+	<h3>Medium {$vuln} Source</h3>
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 		<tr>
-			<td><div id=\"code\">".$medsrc."</div></td>
+			<td><div id=\"code\">{$medsrc}</div></td>
 		</tr>
 	</table>
 	<br />
 
-	<h3>Low ".$vuln." Source</h3>
+	<h3>Low {$vuln} Source</h3>
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 		<tr>
-			<td><div id=\"code\">".$lowsrc."</div></td>
+			<td><div id=\"code\">{$lowsrc}</div></td>
 		</tr>
 	</table>
 	<br /> <br />
