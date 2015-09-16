@@ -29,6 +29,10 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' )
+	generateTokens();
+
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/exec/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
@@ -43,7 +47,12 @@ $page[ 'body' ] .= "
 				Enter an IP address:
 				<input type=\"text\" name=\"ip\" size=\"30\">
 				<input type=\"submit\" value=\"Submit\" name=\"submit\">
-			</p>
+			</p>";
+
+if( $vulnerabilityFile == 'high.php' )
+	$page[ 'body' ] .= "			" . tokenField();
+
+$page[ 'body' ] .= "
 		</form>
 		{$html}
 	</div>

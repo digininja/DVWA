@@ -33,6 +33,10 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' )
+	generateTokens();
+
 $hide_form = false;
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/captcha/source/{$vulnerabilityFile}";
 
@@ -74,7 +78,12 @@ $page[ 'body' ] .= "
 			" . recaptcha_get_html($_DVWA[ 'recaptcha_public_key' ]) . "
 			<br />
 
-			<input type=\"submit\" value=\"Change\" name=\"Change\">
+			<input type=\"submit\" value=\"Change\" name=\"Change\">";
+
+if( $vulnerabilityFile == 'high.php' )
+	$page[ 'body' ] .= "			" . tokenField();
+
+$page[ 'body' ] .= "
 		</form>
 		{$html}
 	</div>

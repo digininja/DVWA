@@ -29,6 +29,10 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' )
+	generateTokens();
+
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/upload/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
@@ -43,7 +47,12 @@ if( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/"
 			Choose an image to upload:<br /><br />
 			<input name=\"uploaded\" type=\"file\" /><br />
 			<br />
-			<input type=\"submit\" name=\"Upload\" value=\"Upload\" />
+			<input type=\"submit\" name=\"Upload\" value=\"Upload\" />";
+
+if( $vulnerabilityFile == 'high.php' )
+	$page[ 'body' ] .= "			" . tokenField();
+
+$page[ 'body' ] .= "
 		</form>
 		{$html}
 	</div>

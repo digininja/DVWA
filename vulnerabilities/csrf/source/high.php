@@ -1,6 +1,8 @@
 <?php
 
 if(isset($_GET[ 'Change' ])) {
+	// Anti-CSRF
+	checkTokens( $_POST[ 'token' ] , "index.php");
 
 	// Turn requests into variables
 	$pass_curr = $_GET[ 'password_current' ];
