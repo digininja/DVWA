@@ -173,7 +173,6 @@ function messagesPopAllToHtml() {
 // --END (message functions)
 
 function dvwaHtmlEcho( $pPage ) {
-
 	$menuBlocks = array();
 
 	$menuBlocks[ 'home' ] = array();
@@ -511,25 +510,25 @@ function dvwaGuestbook() {
 
 
 // Token functions --
-function generateTokens() {  # Generate a brand new TOKEN
+function generateTokens() {  # Generate a brand new (CSRF) token
 	if( isset( $_SESSION[ 'user_token' ] ) ) {
 		destroyTokens( $_SESSION[ 'user_token' ] );
 	}
-	$_SESSION[ 'user_token' ] = md5( uniqid() );
+	$_SESSION[ 'session_token' ] = md5( uniqid() );
 }
 
-function checkTokens( $token , $returnURL ) {  # Validate the Given TOKEN
-	if( $token !== $_SESSION[ 'user_token' ] ) {
+function checkTokens( $user_token , $returnURL ) {  # Validate the given (CSRF) token
+	if( $user_token !== $_SESSION[ 'session_token' ] ) {
 		dvwaRedirect( $returnURL );
 	}
 }
 
-function destroyTokens( $token ) {  # Destroy any session with the name 'User_token'
+function destroyTokens( $user_token ) {  # Destroy any session with the name 'user_token'
 	unset( $_SESSION['user_token'] );
 }
 
-function tokenField() {  # Return a field for the token
-	return "<input type='hidden' name='token' value='{$_SESSION[ 'user_token' ]}' />";
+function tokenField() {  # Return a field for the (CSRF) token
+	return "<input type='hidden' name='user_token' value='{$_SESSION[ 'session_token' ]}' />";
 }
 // -- END (Token functions)
 
