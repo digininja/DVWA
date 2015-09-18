@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: SQL Injection (Blind)';
+$page[ 'title' ]   = 'Vulnerability: SQL Injection (Blind)'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'sqli_blind';
 $page[ 'help_button' ]   = 'sqli_blind';
 $page[ 'source_button' ] = 'sqli_blind';
@@ -29,18 +29,21 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli_blind/source/{$vulnerabilityFile}";
+
 // Anti-CSRF
 if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
 
-require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli_blind/source/{$vulnerabilityFile}";
-
-$magicQuotesWarningHtml = '';
-
 // Check if Magic Quotes are on or off
+$magicQuotesWarningHtml = '';
 if( ini_get( 'magic_quotes_gpc' ) == true ) {
 	$magicQuotesWarningHtml = "<div class=\"warning\">Magic Quotes are on, you will not be able to inject SQL.</div>";
 }
+
+$method = 'GET';
+if( $vulnerabilityFile == 'medium.php' )
+	$method = 'POST';
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -48,19 +51,38 @@ $page[ 'body' ] .= "
 
 	{$magicQuotesWarningHtml}
 
-	<div class=\"vulnerable_code_area\">
-		<form action=\"#\" method=\"GET\">
+	<div class=\"vulnerable_code_area\">";
+if( $vulnerabilityFile == 'high.php' ){
+	$page[ 'body' ] .= "Click <a href=\"#\" onClick=\"javascript:popUp('session-input.php');return false;\">here to change your ID</a>.";
+}
+else {
+	$page[ 'body' ] .= "
+		<form action=\"#\" method=\"{$method}\">
 			<p>
-				User ID:
-				<input type=\"text\" size=\"15\" name=\"id\">
-				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
-			</p>";
+				User ID:";
+	if( $vulnerabilityFile == 'medium.php' ){
+		$page[ 'body' ] .= "				<select name=\"id\">";
+		$query  = "SELECT COUNT(*) FROM users;";
+		$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
+		$num    = mysql_result( $result, 0 );
+		$i      = 0;
+		while( $i < $num ) { $i++; $page[ 'body' ] .= "<option value=\"{$i}\">{$i}</option>"; }
+		$page[ 'body' ] .= "</select>";
+	}
+	else
+		$page[ 'body' ] .= "				<input type=\"text\" size=\"15\" name=\"id\">";
 
-if( $vulnerabilityFile == 'impossible.php' )
-	$page[ 'body' ] .= "			" . tokenField();
+	$page[ 'body' ] .= "				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
+			</p>"
+;
 
+	if( $vulnerabilityFile == 'impossible.php' )
+		$page[ 'body' ] .= "			" . tokenField();
+
+	$page[ 'body' ] .= "
+		</form>";
+}
 $page[ 'body' ] .= "
-		</form>
 		{$html}
 	</div>
 

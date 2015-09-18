@@ -9,7 +9,7 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 	$num = mysql_numrows( $result );
-	$i = 0;
+	$i   = 0;
 	while( $i < $num ) {
 		$first = mysql_result( $result, $i, "first_name" );
 		$last  = mysql_result( $result, $i, "last_name" );
