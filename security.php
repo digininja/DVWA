@@ -6,13 +6,13 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'DVWA Security';
+$page[ 'title' ]   = 'DVWA Security'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'security';
 
 $securityHtml = '';
 if( isset( $_POST['seclev_submit'] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "security.php");
+	checkTokens( $_REQUEST[ 'user_token' ] , 'index.php' );
 
 	$securityLevel = '';
 	switch( $_POST[ 'security' ] ) {

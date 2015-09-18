@@ -8,7 +8,9 @@ if( isset( $_POST[ 'Upload' ] ) ) {
 	$uploaded_size = $_FILES[ 'uploaded' ][ 'size' ];
 
 	$html .= '<pre>';
-	if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 100000 ) ) {
+	if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) &&
+		( $uploaded_size < 100000 ) ) {
+
 		if(!move_uploaded_file( $_FILES[ 'uploaded' ][ 'tmp_name' ], $target_path ) ) {
 			$html .= 'Your image was not uploaded.';
 		}

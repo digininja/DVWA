@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: File Inclusion';
+$page[ 'title' ]   = 'Vulnerability: File Inclusion'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'fi';
 $page[ 'help_button' ]   = 'fi';
 $page[ 'source_button' ] = 'fi';

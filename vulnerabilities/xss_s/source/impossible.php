@@ -2,7 +2,7 @@
 
 if( isset( $_POST[ 'btnSign' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
 
 	$message = trim( $_POST[ 'mtxMessage' ] );
 	$name    = trim( $_POST[ 'txtName' ] );

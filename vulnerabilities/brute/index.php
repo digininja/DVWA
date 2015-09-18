@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Brute Force';
+$page[ 'title' ]   = 'Vulnerability: Brute Force'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'brute';
 $page[ 'help_button' ]   = 'brute';
 $page[ 'source_button' ] = 'brute';
@@ -28,11 +28,11 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/brute/source/{$vulnerabilityFile}";
+
 // Anti-CSRF
 if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
-
-require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/brute/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -47,7 +47,8 @@ $page[ 'body' ] .= "
 			Password:<br />
 			<input type=\"password\" AUTOCOMPLETE=\"off\" name=\"password\"><br />
 			<br />
-			<input type=\"submit\" value=\"Login\" name=\"Login\">";
+			<input type=\"submit\" value=\"Login\" name=\"Login\">
+";
 
 if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();

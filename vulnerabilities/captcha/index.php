@@ -7,13 +7,10 @@ require_once DVWA_WEB_PAGE_TO_ROOT."external/recaptcha/recaptchalib.php";
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Insecure CAPTCHA';
+$page[ 'title' ]   = 'Vulnerability: Insecure CAPTCHA'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'captcha';
 $page[ 'help_button' ]   = 'captcha';
 $page[ 'source_button' ] = 'captcha';
-
-// ReCAPTCHA Key configuration
-// Global Keys provided by
 
 dvwaDatabaseConnect();
 
@@ -33,14 +30,14 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 $hide_form = false;
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/captcha/source/{$vulnerabilityFile}";
 
-# deal with an empty captcha key
+// Anti-CSRF
+if( $vulnerabilityFile == 'high.php' || $vulnerabilityFile == 'impossible.php' )
+	generateTokens();
+
+// Deal with an empty captcha key
 if( $_DVWA[ 'recaptcha_public_key' ] != "" ) {
 	$heading = "<h3>Change your password:</h3>";
 }
@@ -78,9 +75,10 @@ $page[ 'body' ] .= "
 			" . recaptcha_get_html( $_DVWA[ 'recaptcha_public_key' ] ) . "
 			<br />
 
-			<input type=\"submit\" value=\"Change\" name=\"Change\">";
+			<input type=\"submit\" value=\"Change\" name=\"Change\">
+";
 
-if( $vulnerabilityFile == 'impossible.php' )
+if( $vulnerabilityFile == 'high.php' || $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

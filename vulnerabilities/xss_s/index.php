@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Stored Cross Site Scripting (XSS)';
+$page[ 'title' ]   = 'Vulnerability: Stored Cross Site Scripting (XSS)'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'xss_s';
 $page[ 'help_button' ]   = 'xss_s';
 $page[ 'source_button' ] = 'xss_s';
@@ -29,11 +29,11 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/xss_s/source/{$vulnerabilityFile}";
+
 // Anti-CSRF
 if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
-
-require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/xss_s/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -54,7 +54,8 @@ $page[ 'body' ] .= "
 					<td width=\"100\">&nbsp;</td>
 					<td><input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onClick=\"return checkForm();\"></td>
 				</tr>
-			</table>";
+			</table>
+";
 
 if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();

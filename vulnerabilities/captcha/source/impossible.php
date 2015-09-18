@@ -2,7 +2,7 @@
 
 if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
 
 	$hide_form = true;
 
@@ -37,7 +37,6 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 		   $result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 		   $html .= "<pre>Password Changed.</pre>";
-		   mysql_close();
 		}
 		else {
 			$html .= "<pre>Either your current password is incorrect or the new passwords did not match. Please try again.</pre>";

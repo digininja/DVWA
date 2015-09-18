@@ -2,8 +2,10 @@
 
 if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 	$hide_form = true;
+
 	$pass_new  = $_POST[ 'password_new' ];
 	$pass_conf = $_POST[ 'password_conf' ];
+
 	$resp = recaptcha_check_answer( $_DVWA[ 'recaptcha_private_key' ],
 		$_SERVER[ 'REMOTE_ADDR' ],
 		$_POST[ 'recaptcha_challenge_field' ],
@@ -28,7 +30,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 				</form>";
 		}
 		else {
-			$html .= "<pre>Both passwords must match.</pre>";
+			$html     .= "<pre>Both passwords must match.</pre>";
 			$hide_form = false;
 		}
 	}
@@ -40,7 +42,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '2' ) ) {
 	$pass_conf = $_POST[ 'password_conf' ];
 
 	if(!$_POST[ 'passed_captcha' ]) {
-		$html .= "<pre><br />You have not passed the CAPTCHA.</pre>";
+		$html     .= "<pre><br />You have not passed the CAPTCHA.</pre>";
 		$hide_form = false;
 		return;
 	}
@@ -54,7 +56,6 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '2' ) ) {
 		$result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 		$html .= "<pre>Password Changed.</pre>";
-		mysql_close();
 	}
 	else {
 		$html .= "<pre>Passwords did not match.</pre>";

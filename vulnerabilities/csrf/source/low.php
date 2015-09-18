@@ -13,7 +13,6 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		$result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 		$html .= "<pre>Password Changed.</pre>";
-		mysql_close();
 	}
 	else {
 		$html .= "<pre>Passwords did not match.</pre>";

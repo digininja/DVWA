@@ -2,7 +2,7 @@
 
 if( isset( $_GET[ 'Submit' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
 
 	// Retrieve data
 	$id = $_GET[ 'id' ];

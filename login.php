@@ -10,7 +10,7 @@ dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "login.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
 
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
@@ -63,7 +63,7 @@ echo "
 
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
 
-		<title>Damn Vulnerable Web App (DVWA) - Login</title>
+		<title>Login :: Damn Vulnerable Web App (DVWA) v" . dvwaVersionGet() . "</title>
 
 		<link rel=\"stylesheet\" type=\"text/css\" href=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/css/login.css\" />
 

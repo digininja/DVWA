@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Reflected Cross Site Scripting (XSS)';
+$page[ 'title' ]   = 'Vulnerability: Reflected Cross Site Scripting (XSS)'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'xss_r';
 $page[ 'help_button' ]   = 'xss_r';
 $page[ 'source_button' ] = 'xss_r';
@@ -29,11 +29,11 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
+require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/xss_r/source/{$vulnerabilityFile}";
+
 // Anti-CSRF
 if( $vulnerabilityFile == 'impossible.php' )
 	generateTokens();
-
-require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/xss_r/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -45,7 +45,8 @@ $page[ 'body' ] .= "
 				What's your name?
 				<input type=\"text\" name=\"name\">
 				<input type=\"submit\" value=\"Submit\">
-			</p>";
+			</p>
+";
 
 if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();

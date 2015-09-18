@@ -2,7 +2,7 @@
 
 if( isset( $_GET[ 'Change' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
 
 	// Turn requests into variables
 	$pass_curr = $_GET[ 'password_current' ];
@@ -26,7 +26,6 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		$result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 		$html .= "<pre>Password Changed.</pre>";
-		mysql_close();
 	}
 	else {
 		$html .= "<pre>Passwords did not match or current password incorrect.</pre>";
