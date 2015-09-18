@@ -21,9 +21,9 @@ $page[ 'body' ] .= "
 	<ul>
 		<li>Homepage: ".dvwaExternalLinkUrlGet( 'http://www.dvwa.co.uk/' )."</li>
 		<li>Project Home: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA' )."</li>
-		<li>Issues: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/issues' )."</li>
-		<li>GIT: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/commits/master' )."</li>
-
+		<li>Bug Tracker: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/issues' )."</li>
+		<li>Souce Control: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/commits/master' )."</li>
+		<li>Wiki: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/wiki' )."</li>
 	</ul>
 
 	<h2>Credits</h2>
@@ -42,7 +42,7 @@ $page[ 'body' ] .= "
 	</ul>
 
 	<h2>License</h2>
-	<p>Damn Vulnerable Web App (DVWA) is free software: you can redistribute it and/or modify
+	<p>Damn Vulnerable Web Application (DVWA) is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.</p>

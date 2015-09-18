@@ -113,7 +113,7 @@ function dvwaCurrentUser() {
 
 function &dvwaPageNewGrab() {
 	$returnArray = array(
-		'title' => 'Damn Vulnerable Web App (DVWA) v'.dvwaVersionGet().'',
+		'title' => 'Damn Vulnerable Web Application (DVWA) v'.dvwaVersionGet().'',
 		'title_separator' => ' :: ',
 		'body' => '',
 		'page_id' => '',
@@ -288,7 +288,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 			<div id=\"header\">
 
-				<img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/logo.png\" alt=\"Damn Vulnerable Web App\" />
+				<img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/logo.png\" alt=\"Damn Vulnerable Web Application\" />
 
 			</div>
 
