@@ -2,7 +2,7 @@
 
 if( isset( $_GET[ 'Change' ] ) ) {
 	// Checks the http referer header
-	if( eregi ( "127.0.0.1", $_SERVER [ 'HTTP_REFERER' ] ) ) {
+	if( eregi( $_SERVER[ 'HOST' ], $_SERVER[ 'HTTP_REFERER' ] ) ) {
 
 		// Turn requests into variables
 		$pass_new  = $_GET[ 'password_new' ];
@@ -16,7 +16,6 @@ if( isset( $_GET[ 'Change' ] ) ) {
 			$result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 			$html .= "<pre>Password Changed.</pre>";
-			mysql_close();
 		}
 		else {
 			$html .= "<pre>Passwords did not match.</pre>";

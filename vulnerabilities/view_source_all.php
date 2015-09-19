@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Source';
+$page[ 'title' ] = 'Source'.$page[ 'title_separator' ].$page[ 'title' ];
 
 $id = $_GET[ 'id' ];
 
@@ -21,6 +21,10 @@ $medsrc = highlight_string( $medsrc, true );
 $highsrc = @file_get_contents("./{$id}/source/high.php");
 $highsrc = str_replace( array( '$html .=' ), array( 'echo' ), $highsrc);
 $highsrc = highlight_string( $highsrc, true );
+
+$impsrc = @file_get_contents("./{$id}/source/impossible.php");
+$impsrc = str_replace( array( '$html .=' ), array( 'echo' ), $impsrc);
+$impsrc = highlight_string( $impsrc, true );
 
 if( $id == 'fi' ) {
 	$vuln = 'File Inclusion';
@@ -53,6 +57,14 @@ elseif( $id == 'xss_s' ) {
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>{$vuln}</h1>
+	<br />
+
+	<h3>Impossible {$vuln} Source</h3>
+	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
+		<tr>
+			<td><div id=\"code\">{$imphsrc}</div></td>
+		</tr>
+	</table>
 	<br />
 
 	<h3>High {$vuln} Source</h3>

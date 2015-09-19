@@ -20,8 +20,7 @@ if( isset( $_GET[ 'Login' ] ) ) {
 
 	if( $result && mysql_num_rows( $result ) == 1 ) {
 		// Get users details
-		$i = 0; // Bug fix.
-		$avatar = mysql_result( $result, $i, "avatar" );
+		$avatar = mysql_result( $result, 0, "avatar" );
 
 		// Login Successful
 		$html .= "<p>Welcome to the password protected area {$user}</p>";
@@ -32,8 +31,6 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		sleep(3);
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
 	}
-
-	mysql_close();
 }
 
 ?>

@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= $page[ 'title_separator' ].'Help';
+$page[ 'title' ] = 'Help'.$page[ 'title_separator' ].$page[ 'title' ];
 
 $id = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];

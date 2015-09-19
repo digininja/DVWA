@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'About';
+$page[ 'title' ]   = 'About'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'about';
 
 $page[ 'body' ] .= "
@@ -15,15 +15,15 @@ $page[ 'body' ] .= "
 	<p>Version ".dvwaVersionGet()." (Release date: ".dvwaReleaseDateGet().")</p>
 	<p>Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goals are to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and aid teachers/students to teach/learn web application security in a class room environment</p>
 	<p>The official documentation for DVWA can be found <a href=\"docs/DVWA_v1.3.pdf\">here</a>.</p>
-	<p>DVWA is a RandomStorm OpenSource project. All material is copyright 2008-2011 RandomStorm & Ryan Dewhurst.</p>
+	<p>DVWA is a RandomStorm OpenSource project. All material is copyright 2008-2015 RandomStorm & Ryan Dewhurst.</p>
 
 	<h2>Links</h2>
 	<ul>
 		<li>Homepage: ".dvwaExternalLinkUrlGet( 'http://www.dvwa.co.uk/' )."</li>
 		<li>Project Home: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA' )."</li>
-		<li>Issues: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/issues' )."</li>
-		<li>GIT: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/commits/master' )."</li>
-
+		<li>Bug Tracker: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/issues' )."</li>
+		<li>Souce Control: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/commits/master' )."</li>
+		<li>Wiki: ".dvwaExternalLinkUrlGet( 'https://github.com/RandomStorm/DVWA/wiki' )."</li>
 	</ul>
 
 	<h2>Credits</h2>
@@ -36,13 +36,15 @@ $page[ 'body' ] .= "
 		<li>RandomStorm: ".dvwaExternalLinkUrlGet( 'https://www.randomstorm.com/','www.randomstorm.com' )."</li>
 		<li>Jason Jones: ".dvwaExternalLinkUrlGet( 'http://www.linux-ninja.com/','www.linux-ninja.com' )."</li>
 		<li>Brooks Garrett: ".dvwaExternalLinkUrlGet( 'http://brooksgarrett.com/','www.brooksgarrett.com' )."</li>
+		<li>g0tmi1k: ".dvwaExternalLinkUrlGet( 'https://blog.g0tmi1k.com/','g0tmi1k.com' )."</li>
+		<li>Shinkurt: ".dvwaExternalLinkUrlGet( 'http://www.paulosyibelo.com/','www.paulosyibelo.com' )."</li>
 	</ul>
 	<ul>
 		<li>PHPIDS - Copyright (c) 2007 ".dvwaExternalLinkUrlGet( 'http://github.com/PHPIDS/PHPIDS', 'PHPIDS group' )."</li>
 	</ul>
 
 	<h2>License</h2>
-	<p>Damn Vulnerable Web App (DVWA) is free software: you can redistribute it and/or modify
+	<p>Damn Vulnerable Web Application (DVWA) is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.</p>

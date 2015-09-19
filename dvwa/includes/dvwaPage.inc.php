@@ -18,26 +18,25 @@ if(!isset( $html )) {
 }
 
 // Valid security levels
-$security_levels = array('low', 'medium', 'high');
-
+$security_levels = array('low', 'medium', 'high', 'impossible');
 if(!isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $security_levels )) {
-    // Set security cookie to high if no cookie exists
+    // Set security cookie to impossible if no cookie exists
     if(in_array( $_DVWA[ 'default_security_level' ], $security_levels)) {
 		dvwaSecurityLevelSet( $_DVWA[ 'default_security_level' ] );
     }
     else {
-		dvwaSecurityLevelSet( 'high' );
+		dvwaSecurityLevelSet( 'impossible' );
 	}
 }
 
 // DVWA version
 function dvwaVersionGet() {
-	return '1.8';
+	return '1.9';
 }
 
 // DVWA release date
 function dvwaReleaseDateGet() {
-	return '11/01/2011';
+	return '2015-09-19';
 }
 
 
@@ -114,7 +113,7 @@ function dvwaCurrentUser() {
 
 function &dvwaPageNewGrab() {
 	$returnArray = array(
-		'title' => 'Damn Vulnerable Web App (DVWA) v'.dvwaVersionGet().'',
+		'title' => 'Damn Vulnerable Web Application (DVWA) v'.dvwaVersionGet().'',
 		'title_separator' => ' :: ',
 		'body' => '',
 		'page_id' => '',
@@ -126,12 +125,12 @@ function &dvwaPageNewGrab() {
 
 
 function dvwaSecurityLevelGet() {
-	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'high';
+	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'impossible';
 }
 
 
 function dvwaSecurityLevelSet( $pSecurityLevel ) {
-	if( $pSecurityLevel == 'high' ) {
+	if( $pSecurityLevel == 'impossible' ) {
 		$httponly = true;
 	}
 	else {
@@ -174,7 +173,6 @@ function messagesPopAllToHtml() {
 // --END (message functions)
 
 function dvwaHtmlEcho( $pPage ) {
-
 	$menuBlocks = array();
 
 	$menuBlocks[ 'home' ] = array();
@@ -232,16 +230,14 @@ function dvwaHtmlEcho( $pPage ) {
 		case 'low':
 			$securityLevelHtml = 'low';
 			break;
-
 		case 'medium':
 			$securityLevelHtml = 'medium';
 			break;
-
 		case 'high':
 			$securityLevelHtml = 'high';
 			break;
 		default:
-			$securityLevelHtml = 'high';
+			$securityLevelHtml = 'impossible';
 			break;
 	}
     // -- END (security cookie)
@@ -292,7 +288,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 			<div id=\"header\">
 
-				<img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/logo.png\" alt=\"Damn Vulnerable Web App\" />
+				<img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/logo.png\" alt=\"Damn Vulnerable Web Application\" />
 
 			</div>
 
@@ -464,7 +460,7 @@ function dvwaDatabaseConnect() {
 			dvwaMessagePush( $DBMS_connError );
 			dvwaRedirect( 'setup.php' );
 		}
-		// MySQL PDO Prepared Statements (high levels)
+		// MySQL PDO Prepared Statements (for impossible levels)
 		$db = new PDO('mysql:host='.$_DVWA[ 'db_server' ].';dbname='.$_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -497,7 +493,7 @@ function dvwaGuestbook() {
 	$guestbook = '';
 
 	while( $row = mysql_fetch_row( $result ) ) {
-		if( dvwaSecurityLevelGet() == 'high' ) {
+		if( dvwaSecurityLevelGet() == 'impossible' ) {
 			$name    = htmlspecialchars( $row[0] );
 			$comment = htmlspecialchars( $row[1] );
 		}
@@ -514,25 +510,25 @@ function dvwaGuestbook() {
 
 
 // Token functions --
-function generateTokens() {  # Generate a brand new TOKEN
+function generateTokens() {  # Generate a brand new (CSRF) token
 	if( isset( $_SESSION[ 'user_token' ] ) ) {
 		destroyTokens( $_SESSION[ 'user_token' ] );
 	}
-	$_SESSION[ 'user_token' ] = md5( uniqid() );
+	$_SESSION[ 'session_token' ] = md5( uniqid() );
 }
 
-function checkTokens( $token , $returnURL ) {  # Validate the Given TOKEN
-	if( $token !== $_SESSION[ 'user_token' ] ) {
+function checkTokens( $user_token , $returnURL ) {  # Validate the given (CSRF) token
+	if( $user_token !== $_SESSION[ 'session_token' ] ) {
 		dvwaRedirect( $returnURL );
 	}
 }
 
-function destroyTokens( $token ) {  # Destroy any session with the name 'User_token'
+function destroyTokens( $user_token ) {  # Destroy any session with the name 'user_token'
 	unset( $_SESSION['user_token'] );
 }
 
-function tokenField() {  # Return a field for the token
-	return "<input type='hidden' name='token' value='{$_SESSION[ 'user_token' ]}' />";
+function tokenField() {  # Return a field for the (CSRF) token
+	return "<input type='hidden' name='user_token' value='{$_SESSION[ 'session_token' ]}' />";
 }
 // -- END (Token functions)
 

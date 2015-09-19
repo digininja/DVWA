@@ -8,7 +8,7 @@ $page[ 'body' ] .= "
 		<hr />
 		Welcome back <em>".dvwaCurrentUser()."</em><br />
 		Your IP address is: <em>";
-if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER))
+if( array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER ))
 	$page[ 'body' ] .= $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
 else
 	$page[ 'body' ] .= "**Missing Header**";

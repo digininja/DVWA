@@ -6,12 +6,12 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Setup';
+$page[ 'title' ]   = 'Setup'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "setup.php");
+	checkTokens( $_REQUEST[ 'user_token' ] , 'index.php' );
 
 	if( $DBMS == 'MySQL' ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';

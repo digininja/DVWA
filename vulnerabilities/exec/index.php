@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]  .= $page[ 'title_separator' ].'Vulnerability: Command Execution';
+$page[ 'title' ]   = 'Vulnerability: Command Execution'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'exec';
 $page[ 'help_button' ]   = 'exec';
 $page[ 'source_button' ] = 'exec';
@@ -18,22 +18,22 @@ switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;
-
 	case 'medium':
 		$vulnerabilityFile = 'medium.php';
 		break;
-
 	case 'high':
-	default:
 		$vulnerabilityFile = 'high.php';
+		break;
+	default:
+		$vulnerabilityFile = 'impossible.php';
 		break;
 }
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'high.php' )
-	generateTokens();
-
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/exec/source/{$vulnerabilityFile}";
+
+// Anti-CSRF
+if( $vulnerabilityFile == 'impossible.php' )
+	generateTokens();
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -47,9 +47,10 @@ $page[ 'body' ] .= "
 				Enter an IP address:
 				<input type=\"text\" name=\"ip\" size=\"30\">
 				<input type=\"submit\" value=\"Submit\" name=\"submit\">
-			</p>";
+			</p>
+";
 
-if( $vulnerabilityFile == 'high.php' )
+if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "
