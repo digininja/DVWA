@@ -42,7 +42,8 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
 
-  + DVWA v1.8 (latest) - (1.3 MB) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip)
+  + DVWA v1.9 (Testing) - (1.3 MB) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) - `git clone https://github.com/RandomStorm/DVWA`
+  + DVWA v1.8 (Stable) - (1.3 MB) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip)
   + DVWA v1.0.7 LiveCD - (480 MB) [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso)
 
 - - -

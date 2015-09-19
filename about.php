@@ -15,7 +15,7 @@ $page[ 'body' ] .= "
 	<p>Version ".dvwaVersionGet()." (Release date: ".dvwaReleaseDateGet().")</p>
 	<p>Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goals are to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and aid teachers/students to teach/learn web application security in a class room environment</p>
 	<p>The official documentation for DVWA can be found <a href=\"docs/DVWA_v1.3.pdf\">here</a>.</p>
-	<p>DVWA is a RandomStorm OpenSource project. All material is copyright 2008-2011 RandomStorm & Ryan Dewhurst.</p>
+	<p>DVWA is a RandomStorm OpenSource project. All material is copyright 2008-2015 RandomStorm & Ryan Dewhurst.</p>
 
 	<h2>Links</h2>
 	<ul>
@@ -36,6 +36,8 @@ $page[ 'body' ] .= "
 		<li>RandomStorm: ".dvwaExternalLinkUrlGet( 'https://www.randomstorm.com/','www.randomstorm.com' )."</li>
 		<li>Jason Jones: ".dvwaExternalLinkUrlGet( 'http://www.linux-ninja.com/','www.linux-ninja.com' )."</li>
 		<li>Brooks Garrett: ".dvwaExternalLinkUrlGet( 'http://brooksgarrett.com/','www.brooksgarrett.com' )."</li>
+		<li>g0tmi1k: ".dvwaExternalLinkUrlGet( 'https://blog.g0tmi1k.com/','g0tmi1k.com' )."</li>
+		<li>Shinkurt: ".dvwaExternalLinkUrlGet( 'http://www.paulosyibelo.com/','www.paulosyibelo.com' )."</li>
 	</ul>
 	<ul>
 		<li>PHPIDS - Copyright (c) 2007 ".dvwaExternalLinkUrlGet( 'http://github.com/PHPIDS/PHPIDS', 'PHPIDS group' )."</li>

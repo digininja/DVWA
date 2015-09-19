@@ -31,12 +31,12 @@ if(!isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secur
 
 // DVWA version
 function dvwaVersionGet() {
-	return '1.8';
+	return '1.9';
 }
 
 // DVWA release date
 function dvwaReleaseDateGet() {
-	return '11/01/2011';
+	return '2015-09-19';
 }
 
 

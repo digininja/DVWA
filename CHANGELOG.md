@@ -1,7 +1,28 @@
 DAMN VULNERABLE WEB APPLICATION
 =======================
 
-v1.8
+v1.9 (*Not Yet Released*)
+======
+
+Added CSRF token to pre-auth forms (login/setup/security pages). (g0tmi1k + Shinkurt)
+Added HTTPOnly cookie flag on high levels. (g0tmi1k)
+Added PDO for the high (now impossible) examples in SQLi & SQLi Blind. (g0tmi1k)
+Added system check to setup. (g0tmi1k)
+Changed File Include landing page + added 3x example pages. (g0tmi1k)
+Changed HTTP REFERER check for medium level CSRF. (g0tmi1k)
+Changed input box for medium level with SQLi + SQLi Blind. (g0tmi1k)
+Changed SQLi Blind to be a real example of the vulnerability. (g0tmi1k)
+Fixed Brute Force and File Upload impossible levels, as they were vulnerable. (g0tmi1k + Shinkurt)
+Fixed bug with File Include page not loading. (g0tmi1k)
+Fixed CAPTCHA bug where the form wouldn't be visible. (g0tmi1k)
+Fixed CAPTCHA bug where the URL parameters were not being used for low + medium. (g0tmi1k)
+Removed PostgreSQL DB support. (g0tmi1k)
+Renamed 'high' level to 'impossible' and created new vectors for 'high'. (g0tmi1k)
+Updated README and documentation. (g0tmi1k)
+Various code cleanups in the core PHP files + CSS. Verbosed the documentation. (g0tmi1k)
+Various setup improvements (e.g. redirection + limited menu links). (g0tmi1k)
+
+v1.8 (2013-05-01)
 ======
 
 Versioning change: Version numbers now follow Major.Minor (e.g. v1.8) removing the middle digit.
@@ -9,7 +30,7 @@ Moved default security level setting to the config file.
 Fixed a bug which prevented setup when a database name other than 'dvwa' was used.
 Added a logic challenge involving an insecure CAPTCHA (requires external internet access)
 
-v1.0.7
+v1.0.7 (2010-09-08)
 ======
 
 Re-designed the login page + made some other slight cosmetic changes. 06/06/2010 (ethicalhack3r)
@@ -23,7 +44,7 @@ Added 'SQL Injection (Blind)'. 04/02/2010 (ethicalhack3r)
 Added official documentation. 21/11/2009 (ethicalhack3r)
 Implemented view all source functionality. 16/10/2009 (tmacuk, craig, ethicalhack3r)
 
-v1.0.6
+v1.0.6 (2009-10-05)
 ======
 
 Fixed a bug where the logo would not show on first time use. 03/09/2009 (ethicalhack3r)
@@ -37,7 +58,7 @@ Fixed a command execution vulnerability in exec high. 17/09/09 (ethicalhack3r)
 Added some troubleshooting info for PHP 5.2.6 in readme.txt. 17/09/09 (ethicalhack3r)
 Added the upload directory to the upload help. 17/09/09 (ethicalhack3r)
 
-v1.0.5
+v1.0.5 (2009-09-03)
 ======
 
 Made IE friendly as much as possible. 30/08/2009 (ethicalhack3r)
@@ -54,7 +75,7 @@ Delimited 'dvwa' in session- minimising the risk of clash with other projects ru
 Integrated PHPIDS v0.6. 01/08/2009 (jamesr)
 Streamlined login functionality. 01/08/2009 (jamesr)
 
-v1.0.4
+v1.0.4 (2009-06-29)
 ======
 
 Added acunetix scan report. 24/06/2009
@@ -72,21 +93,21 @@ Fixed typos on the welcome page. 03/06/2009
 Improved README.txt and fixed typos. 03/06/2009
 Made SQL injection possible in sqli_med.php. Thanks to Teodor Lupan. 03/06/2009
 
-v1.0.3
+v1.0.3 (2009-05-25)
 ======
 
 Changed XAMPP link in index.php. 25/05/2009
 Set default security to low. 25/05/2009
 Improved output in setup.php. 25/05/2009
 
-v1.0.2
+v1.0.2 (2009-05-24)
 ======
 
 Removed phpinfo on higher security levels. 24/05/2009
 Moved all vulnerable code to /source/. 24/05/2009
 Added viewsource. 24/05/2009
 
-v1.0.1
+v1.0.1 (2009-05-24)
 ======
 
 Implemented different security levels. 24/05/2009
@@ -100,7 +121,7 @@ Combined RFI + LFI to make 'File Inclusion'. 21/05/2009
 More realism to Local File Inclusion. 21/05/2009
 Better error output on upload script. 21/05/2009
 
-v1.0
+v1.0 (2009-05-20)
 ====
 
 Made command execution more realistic. 20/05/2009
