@@ -1,12 +1,19 @@
 <?php
 
 if( isset( $_POST[ 'submit' ] ) ) {
-	$target = $_REQUEST[ 'ip' ];
+	$target = trim($_REQUEST[ 'ip' ]);
 
 	// Remove any of the charactars in the array (blacklist).
 	$substitutions = array(
-		'&' => '',
-		';' => '',
+		'&'  => '',
+		';'  => '',
+		'| ' => '',
+		'-'  => '',
+		'$'  => '',
+		'('  => '',
+		')'  => '',
+		''   => '',
+		'||' => '',
 	);
 
 	$target = str_replace( array_keys( $substitutions ), $substitutions, $target );
