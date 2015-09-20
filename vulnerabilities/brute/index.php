@@ -50,7 +50,7 @@ $page[ 'body' ] .= "
 			<input type=\"submit\" value=\"Login\" name=\"Login\">
 ";
 
-if( $vulnerabilityFile == 'impossible.php' )
+if( $vulnerabilityFile == 'high.php' || $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

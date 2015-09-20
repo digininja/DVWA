@@ -11,7 +11,7 @@ $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ] , 'index.php' );
+	checkTokens( $_REQUEST[ 'user_token' ], 'setup.php' );
 
 	if( $DBMS == 'MySQL' ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
@@ -67,6 +67,8 @@ $page[ 'body' ] .= "
 		<input name=\"create_db\" type=\"submit\" value=\"Create / Reset Database\">
 		".tokenField()."
 	</form>
+	<br />
+	<hr />
 </div>
 ";
 

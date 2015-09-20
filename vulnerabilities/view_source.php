@@ -60,7 +60,7 @@ $page[ 'body' ] .= "
 	<br /> <br />
 
 	<form>
-		<input type=\"button\" value=\"Compare Levels\" onclick=\"window.location.href='view_source_all.php?id=$id'\">
+		<input type=\"button\" value=\"Compare All Levels\" onclick=\"window.location.href='view_source_all.php?id=$id'\">
 	</form>
 </div>
 ";

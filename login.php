@@ -1,7 +1,6 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
-
 require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'phpids' ) );
@@ -10,7 +9,7 @@ dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
+	checkTokens( $_REQUEST[ 'user_token' ], 'login.php' );
 
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
@@ -27,8 +26,8 @@ if( isset( $_POST[ 'Login' ] ) ) {
 				LIMIT 1");
 	$result = @mysql_query( $query );
 	if( mysql_num_rows( $result ) != 1 ) {
-		dvwaMessagePush( "First time.<br />Need to run 'setup.php'." );
-		dvwaRedirect( 'setup.php' );
+		dvwaMessagePush( "First time using DVWA.<br />Need to run 'setup.php'." );
+		dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT.'setup.php' );
 	}
 
 	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
@@ -36,7 +35,7 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	if( $result && mysql_num_rows( $result ) == 1 ) {    // Login Successful...
 		dvwaMessagePush( "You have logged in as '{$user}'" );
 		dvwaLogin( $user );
-		dvwaRedirect( 'index.php' );
+		dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT.'index.php' );
 	}
 
     // Login failed

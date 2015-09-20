@@ -12,7 +12,7 @@ $page[ 'page_id' ] = 'security';
 $securityHtml = '';
 if( isset( $_POST['seclev_submit'] ) ) {
 	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ] , 'index.php' );
+	checkTokens( $_REQUEST[ 'user_token' ], 'security.php' );
 
 	$securityLevel = '';
 	switch( $_POST[ 'security' ] ) {

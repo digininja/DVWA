@@ -2,7 +2,7 @@
 
 if( isset( $_POST[ 'Upload' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php');
 
 	$target_path   = DVWA_WEB_PAGE_TO_ROOT."hackable/uploads/";
 	$target_path   = $target_path . basename( $_FILES[ 'uploaded' ][ 'name' ] );

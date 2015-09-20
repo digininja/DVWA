@@ -2,7 +2,7 @@
 
 if( isset( $_GET[ 'Login' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	checkTokens( $_REQUEST[ 'user_token' ], 'index.php');
 
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
@@ -28,7 +28,7 @@ if( isset( $_GET[ 'Login' ] ) ) {
 	}
 	else {
 		// Login failed
-		sleep(3);
+		sleep( rand( 0, 3 ) );
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
 	}
 }

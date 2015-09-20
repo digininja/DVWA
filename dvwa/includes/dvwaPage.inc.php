@@ -9,7 +9,6 @@ session_start(); // Creates a 'Full Path Disclosure' vuln.
 
 // Include configs
 require_once DVWA_WEB_PAGE_TO_ROOT.'config/config.inc.php';
-
 require_once( 'dvwaPhpIds.inc.php' );
 
 // Declare the $html variable
@@ -252,7 +251,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 	$systemInfoHtml = "";
 	if( dvwaIsLoggedIn() )
-		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br /><b>Security Level:</b> {$securityLevelHtml}<br />{$phpIdsHtml}</div>";
+		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br /><em>Security Level:</em> {$securityLevelHtml}<br />{$phpIdsHtml}</div>";
 	if( $pPage[ 'source_button' ] ) {
 		$systemInfoHtml = dvwaButtonSourceHtmlGet( $pPage[ 'source_button' ] )." $systemInfoHtml";
 	}
@@ -440,25 +439,26 @@ else {
 	$DBMS_errorFunc = '';
 }
 
-$DBMS_connError = '
-	<div align="center">
-		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png" />
-		<pre>Unable to connect to the database.<br />'.$DBMS_errorFunc.'<br /><br /></pre>
-		Click <a href="'.DVWA_WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
-	</div>';
+//$DBMS_connError = '
+//	<div align="center">
+//		<img src="'.DVWA_WEB_PAGE_TO_ROOT.'dvwa/images/logo.png" />
+//		<pre>Unable to connect to the database.<br />'.$DBMS_errorFunc.'<br /><br /></pre>
+//		Click <a href="'.DVWA_WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
+//	</div>';
 
 function dvwaDatabaseConnect() {
 	global $_DVWA;
 	global $DBMS;
-	global $DBMS_connError;
+	//global $DBMS_connError;
 	global $db;
 
 	if( $DBMS == 'MySQL' ) {
 		if( !@mysql_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ] )
 		|| !@mysql_select_db( $_DVWA[ 'db_database' ] ) ) {
 			//die( $DBMS_connError );
-			dvwaMessagePush( $DBMS_connError );
-			dvwaRedirect( 'setup.php' );
+			dvwaLogout();
+			dvwaMessagePush( 'Unable to connect to the database.<br />'.$DBMS_errorFunc );
+			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT.'setup.php' );
 		}
 		// MySQL PDO Prepared Statements (for impossible levels)
 		$db = new PDO('mysql:host='.$_DVWA[ 'db_server' ].';dbname='.$_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
@@ -511,20 +511,21 @@ function dvwaGuestbook() {
 
 // Token functions --
 function generateTokens() {  # Generate a brand new (CSRF) token
-	if( isset( $_SESSION[ 'user_token' ] ) ) {
-		destroyTokens( $_SESSION[ 'user_token' ] );
+	if( isset( $_SESSION[ 'session_token' ] ) ) {
+		destroyTokens( $_SESSION[ 'session_token' ] );
 	}
 	$_SESSION[ 'session_token' ] = md5( uniqid() );
 }
 
-function checkTokens( $user_token , $returnURL ) {  # Validate the given (CSRF) token
-	if( $user_token !== $_SESSION[ 'session_token' ] ) {
+function checkTokens( $user_token, $returnURL ) {  # Validate the given (CSRF) token
+	if( $user_token !== $_SESSION[ 'session_token' ] || !isset( $_SESSION[ 'session_token' ] ) ) {
+		dvwaMessagePush( 'CSRF token is incorrect' );
 		dvwaRedirect( $returnURL );
 	}
 }
 
-function destroyTokens( $user_token ) {  # Destroy any session with the name 'user_token'
-	unset( $_SESSION['user_token'] );
+function destroyTokens( $token ) {  # Destroy any session with the name 'session_token'
+	unset( $token );
 }
 
 function tokenField() {  # Return a field for the (CSRF) token
@@ -533,14 +534,16 @@ function tokenField() {  # Return a field for the (CSRF) token
 // -- END (Token functions)
 
 
+$PHPUploadPath    = realpath( getcwd() )."/hackable/uploads/";
+$PHPIDSPath       = realpath( getcwd() )."/external/phpids/0.6/lib/IDS/tmp/";
 $phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';               // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
 $phpDisplayErrors = 'PHP display errors: <em>'.( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );  // Verbose error messages (e.g. full path disclosure)
-$phpURLInclude    = 'PHP allow URL Include: <em>'.( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>'; // RFI
+$phpURLInclude    = 'PHP allow URL include: <em>'.( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>'; // RFI
 $phpURLFopen      = 'PHP allow URL fopen: <em>'.( ini_get( 'allow_url_fopen' )  ? 'Enabled' : 'Disabled' ) . '</em>';     // RFI
 $phpMagicQuotes   = 'PHP magic quotes: <em>' . ( ini_get( 'magic_quotes_gpc' )  ? 'Enabled(*)' : 'Disabled' ) . '</em>';  // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
-$DVWARecaptcha    = 'reCAPTCHA key: <em>' . ( isset ( $_DVWA[ 'recaptcha_public_key' ] ) ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
-$DVWAUploadsWrite = 'Writable "/hackable/uploads/": <em>' . ( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/" ) ? 'Yes' : 'No(*)' ) . '</em>';  // File Upload
-$DVWAPHPWrite     = 'Writable "/external/phpids/0.6/lib/IDS/tmp": <em>' . ( is_writable( realpath( dirname( dirname( getcwd() ) ) )."external/phpids/0.6/lib/IDS/tmp" ) ? 'Yes' : 'No(*)' ) . '</em>';  // PHPIDS
+$DVWARecaptcha    = 'reCAPTCHA key: <em>' . ( ( isset( $_DVWA[ 'recaptcha_public_key' ] ) && $_DVWA[ 'recaptcha_public_key' ] != '' ) ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
+$DVWAUploadsWrite = 'Writable '.$PHPUploadPath.': <em>' . ( is_writable( $PHPUploadPath ) ? 'Yes' : 'No(*)' ) . '</em>';  // File Upload
+$DVWAPHPWrite     = 'Writable '.$PHPIDSPath.': <em>' . ( is_writable( $PHPIDSPath ) ? 'Yes' : 'No(*)' ) . '</em>';  // PHPIDS
 $DVWAOS           = 'Operating system: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
 
 ?>

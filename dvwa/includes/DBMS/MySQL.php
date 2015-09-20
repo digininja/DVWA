@@ -44,8 +44,8 @@ dvwaMessagePush( "'users' table was created." );
 // Insert some data into users
 // Get the base directory for the avatar media...
 $baseUrl  = 'http://'.$_SERVER[ 'SERVER_NAME' ].$_SERVER[ 'PHP_SELF' ];
-$stripPos = strpos( $baseUrl, 'dvwa/setup.php' );
-$baseUrl  = substr( $baseUrl, 0, $stripPos ).'dvwa/hackable/users/';
+$stripPos = strpos( $baseUrl, 'setup.php' );
+$baseUrl  = substr( $baseUrl, 0, $stripPos ).'hackable/users/';
 
 $insert = "INSERT INTO users VALUES
 	('1','admin','admin','admin',MD5('password'),'{$baseUrl}admin.jpg', NOW(), '0'),
