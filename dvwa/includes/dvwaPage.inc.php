@@ -510,22 +510,22 @@ function dvwaGuestbook() {
 
 
 // Token functions --
-function generateTokens() {  # Generate a brand new (CSRF) token
-	if( isset( $_SESSION[ 'session_token' ] ) ) {
-		destroyTokens( $_SESSION[ 'session_token' ] );
-	}
-	$_SESSION[ 'session_token' ] = md5( uniqid() );
-}
-
-function checkTokens( $user_token, $returnURL ) {  # Validate the given (CSRF) token
-	if( $user_token !== $_SESSION[ 'session_token' ] || !isset( $_SESSION[ 'session_token' ] ) ) {
+function checkToken( $user_token, $session_token, $returnURL ) {  # Validate the given (CSRF) token
+	if( $user_token !== $session_token || !isset( $session_token ) ) {
 		dvwaMessagePush( 'CSRF token is incorrect' );
 		dvwaRedirect( $returnURL );
 	}
 }
 
-function destroyTokens( $token ) {  # Destroy any session with the name 'session_token'
-	unset( $token );
+function generateSessionToken() {  # Generate a brand new (CSRF) token
+	if( isset( $_SESSION[ 'session_token' ] ) ) {
+		destroySessionToken();
+	}
+	$_SESSION[ 'session_token' ] = md5( uniqid() );
+}
+
+function destroySessionToken() {  # Destroy any session with the name 'session_token'
+	unset( $_SESSION[ 'session_token' ] );
 }
 
 function tokenField() {  # Return a field for the (CSRF) token

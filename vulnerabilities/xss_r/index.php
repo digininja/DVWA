@@ -31,10 +31,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/xss_r/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: Reflected Cross Site Scripting (XSS)</h1>

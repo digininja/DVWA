@@ -31,10 +31,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/upload/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 // Check if folder is writeable
 $writableFolderWarningHtml = '';
 if( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/" ) == false ) {

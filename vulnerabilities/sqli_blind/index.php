@@ -31,10 +31,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli_blind/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 // Check if Magic Quotes are on or off
 $magicQuotesWarningHtml = '';
 if( ini_get( 'magic_quotes_gpc' ) == true ) {

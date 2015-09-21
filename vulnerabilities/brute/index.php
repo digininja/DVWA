@@ -30,10 +30,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/brute/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: Brute Force</h1>

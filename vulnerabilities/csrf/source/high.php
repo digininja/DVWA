@@ -1,8 +1,8 @@
 <?php
 
 if( isset( $_GET[ 'Change' ] ) ) {
-	// Anti-CSRF. Check 'user_token' with 'session_token'. Redirect to index.php if not a match
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Turn requests into variables
 	$pass_new  = $_GET[ 'password_new' ];
@@ -21,5 +21,8 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		$html .= "<pre>Passwords did not match.</pre>";
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>

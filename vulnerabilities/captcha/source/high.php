@@ -1,9 +1,6 @@
 <?php
 
 if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
-	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
-
 	$hide_form = true;
 
 	$pass_new  = $_POST[ 'password_new' ];
@@ -36,4 +33,8 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 		}
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
+
 ?>

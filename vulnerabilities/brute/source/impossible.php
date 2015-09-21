@@ -1,8 +1,8 @@
 <?php
 
 if( isset( $_GET[ 'Login' ] ) ) {
-	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
@@ -56,7 +56,7 @@ if( isset( $_GET[ 'Login' ] ) ) {
 	}
 	else {
 		// Login failed
-		sleep(rand( 2, 4 ) );
+		sleep( rand( 2, 4 ) );
 
 		$html .= "<pre><br />Username and/or password incorrect.<br /><br/>Alternative, the account has been locked because of too many failed logins.<br />If this is the case, please try again in {$lockout_time} minutes.</pre>";
 
@@ -64,5 +64,8 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		$result = @mysql_query( $query );
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>

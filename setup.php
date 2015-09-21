@@ -11,7 +11,7 @@ $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'setup.php' );
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'setup.php' );
 
 	if( $DBMS == 'MySQL' ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
@@ -28,7 +28,7 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 }
 
 // Anti-CSRF
-generateTokens();
+generateSessionToken();
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">

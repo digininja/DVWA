@@ -33,10 +33,6 @@ switch( $_COOKIE[ 'security' ] ) {
 $hide_form = false;
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/captcha/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'high.php' || $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 // Deal with an empty captcha key
 if( $_DVWA[ 'recaptcha_public_key' ] != "" ) {
 	$heading = "<h3>Change your password:</h3>";

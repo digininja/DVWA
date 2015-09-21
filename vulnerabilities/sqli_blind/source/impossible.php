@@ -1,8 +1,8 @@
 <?php
 
 if( isset( $_GET[ 'Submit' ] ) ) {
-	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Retrieve data
 	$id = $_GET[ 'id' ];
@@ -18,5 +18,8 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 		}
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>
