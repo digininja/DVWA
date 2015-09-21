@@ -19,9 +19,6 @@ if( isset( $_GET[ 'Login' ] ) ) {
 	$lockout_time       = '15';
 	$account_locked     = false;
 
-	$query  = "UPDATE `users` SET `last_login` = now() WHERE user='$user' LIMIT 1;";
-	$result = @mysql_query( $query );
-
 	$query  = "SELECT failed_login,last_login FROM `users` WHERE user='$user' LIMIT 1;";
 	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
@@ -29,26 +26,33 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		// User locked out.  Note, this method will allow for user enumeration!
 		// $html .= "<pre><br />This account has been locked due to too many incorrect logins.</pre>";
 
-		$last_login    = strtotime( mysql_result( $result, 0, "last_login" ) );
-		$timeout_login = strtotime( "{$last_login} +{$lockout_time} minutes" );
-		$timenow       = strtotime( $last_login );
+		$last_login = mysql_result( $result, 0, "last_login" );
+		$last_login = strtotime( $last_login );
+		$timeout    = strtotime( "${$last_login} +{$lockout_time} minutes" );
+		$timenow    = strtotime( "now" );
 
-		if( $timeout_login < $timenow )
+		$account_locked = false;
+		if( $timeout < $timenow )
 			$account_locked = true;
-		else
-			$account_locked = false;
 	}
 
-	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass' LIMIT 1;";
+	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass' AND failed_login < {$total_failed_login} LIMIT 1;";
 	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 	if( $result && mysql_num_rows( $result ) == 1 && $account_locked == false) {
 		// Get users details
-		$avatar = mysql_result( $result, 0, "avatar" );
+		$avatar       = mysql_result( $result, 0, "avatar" );
+		$failed_login = mysql_result( $result, 0, "failed_login" );
+		$last_login   = mysql_result( $result, 0, "last_login" );
 
 		// Login Successful
 		$html .= "<p>Welcome to the password protected area {$user}</p>";
-		$html .= '<img src="' . $avatar . '" />';
+		$html .= "<img src=\"{$avatar}\" />";
+
+		if( $failed_login >= $total_failed_login ) {
+			$html .= "<p><em>Warning</em>: Someone might of been brute forcing your account.</p>";
+			$html .= "<p>Number of login attempts: {$failed_login}.<br />Last login attempt was at: ${last_login}.</p>";
+		}
 
 		// Reset bad login count
 		$insert = "UPDATE `users` SET `failed_login` = '0' WHERE user='$user' LIMIT 1;";
@@ -63,6 +67,9 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		$query  = "UPDATE `users` SET `failed_login` = failed_login + 1 WHERE user='$user' LIMIT 1;";
 		$result = @mysql_query( $query );
 	}
+
+	$query  = "UPDATE `users` SET `last_login` = now() WHERE user='$user' LIMIT 1;";
+	$result = @mysql_query( $query );
 }
 
 // Generate Anti-CSRF token

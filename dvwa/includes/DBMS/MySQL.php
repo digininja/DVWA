@@ -33,7 +33,7 @@ if( !@mysql_select_db( $_DVWA[ 'db_database' ] ) ) {
 	dvwaPageReload();
 }
 
-$create_tb = "CREATE TABLE users (user_id int(6),first_name varchar(15),last_name varchar(15), user varchar(15), password varchar(32),avatar varchar(70), last_login TIMESTAMP, failed_login INT(1), PRIMARY KEY (user_id));";
+$create_tb = "CREATE TABLE users (user_id int(6),first_name varchar(15),last_name varchar(15), user varchar(15), password varchar(32),avatar varchar(70), last_login TIMESTAMP, failed_login INT(3), PRIMARY KEY (user_id));";
 if( !mysql_query( $create_tb ) ) {
 	dvwaMessagePush( "Table could not be created<br />SQL: ".mysql_error() );
 	dvwaPageReload();
