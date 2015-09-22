@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Vulnerability: Command Execution'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ]   = 'Vulnerability: Command Injection'.$page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'exec';
 $page[ 'help_button' ]   = 'exec';
 $page[ 'source_button' ] = 'exec';
@@ -33,7 +33,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/exec/source/{$vulnerabilityF
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>Vulnerability: Command Execution</h1>
+	<h1>Vulnerability: Command Injection</h1>
 
 	<div class=\"vulnerable_code_area\">
 		<h2>Ping a device</h2>

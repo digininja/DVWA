@@ -143,7 +143,7 @@ With:
 </IfModule>
 ```
 
-+Q. Command execution won't work.
++Q. Command Injection won't work.
 
 -A. Apache may not have high enough priviledges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 

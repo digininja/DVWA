@@ -36,7 +36,7 @@ elseif( $id == 'csrf' ) {
 	$vuln = 'CSRF';
 }
 elseif( $id == 'exec' ) {
-	$vuln = 'Command Execution';
+	$vuln = 'Command Injection';
 }
 elseif( $id == 'sqli' ) {
 	$vuln = 'SQL Injection';
