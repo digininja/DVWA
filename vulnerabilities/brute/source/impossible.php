@@ -46,12 +46,12 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		$last_login   = mysql_result( $result, 0, "last_login" );
 
 		// Login Successful
-		$html .= "<p>Welcome to the password protected area {$user}</p>";
+		$html .= "<p>Welcome to the password protected area <em>{$user}</em></p>";
 		$html .= "<img src=\"{$avatar}\" />";
 
 		if( $failed_login >= $total_failed_login ) {
 			$html .= "<p><em>Warning</em>: Someone might of been brute forcing your account.</p>";
-			$html .= "<p>Number of login attempts: {$failed_login}.<br />Last login attempt was at: ${last_login}.</p>";
+			$html .= "<p>Number of login attempts: <em>{$failed_login}</em>.<br />Last login attempt was at: <em>${last_login}</em>.</p>";
 		}
 
 		// Reset bad login count
@@ -62,7 +62,7 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		// Login failed
 		sleep( rand( 2, 4 ) );
 
-		$html .= "<pre><br />Username and/or password incorrect.<br /><br/>Alternative, the account has been locked because of too many failed logins.<br />If this is the case, please try again in {$lockout_time} minutes.</pre>";
+		$html .= "<pre><br />Username and/or password incorrect.<br /><br/>Alternative, the account has been locked because of too many failed logins.<br />If this is the case, <em>please try again in {$lockout_time} minutes</em>.</pre>";
 
 		$query  = "UPDATE `users` SET `failed_login` = failed_login + 1 WHERE user='$user' LIMIT 1;";
 		$result = @mysql_query( $query );

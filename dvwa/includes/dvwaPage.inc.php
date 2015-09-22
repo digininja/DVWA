@@ -18,9 +18,9 @@ if(!isset( $html )) {
 
 // Valid security levels
 $security_levels = array('low', 'medium', 'high', 'impossible');
-if(!isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $security_levels )) {
+if(!isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $security_levels ) ) {
     // Set security cookie to impossible if no cookie exists
-    if(in_array( $_DVWA[ 'default_security_level' ], $security_levels)) {
+    if( in_array( $_DVWA[ 'default_security_level' ], $security_levels) ) {
 		dvwaSecurityLevelSet( $_DVWA[ 'default_security_level' ] );
     }
     else {
@@ -534,6 +534,7 @@ function tokenField() {  # Return a field for the (CSRF) token
 // -- END (Token functions)
 
 
+// Setup Functions --
 $PHPUploadPath    = realpath( getcwd() )."/hackable/uploads/";
 $PHPIDSPath       = realpath( getcwd() )."/external/phpids/0.6/lib/IDS/tmp/";
 $phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';               // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
@@ -543,7 +544,9 @@ $phpURLFopen      = 'PHP allow URL fopen: <em>'.( ini_get( 'allow_url_fopen' )  
 $phpMagicQuotes   = 'PHP magic quotes: <em>' . ( ini_get( 'magic_quotes_gpc' )  ? 'Enabled(*)' : 'Disabled' ) . '</em>';  // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
 $DVWARecaptcha    = 'reCAPTCHA key: <em>' . ( ( isset( $_DVWA[ 'recaptcha_public_key' ] ) && $_DVWA[ 'recaptcha_public_key' ] != '' ) ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
 $DVWAUploadsWrite = 'Writable '.$PHPUploadPath.': <em>' . ( is_writable( $PHPUploadPath ) ? 'Yes' : 'No(*)' ) . '</em>';  // File Upload
-$DVWAPHPWrite     = 'Writable '.$PHPIDSPath.': <em>' . ( is_writable( $PHPIDSPath ) ? 'Yes' : 'No(*)' ) . '</em>';  // PHPIDS
+$DVWAPHPWrite     = 'Writable '.$PHPIDSPath.': <em>' . ( is_writable( $PHPIDSPath ) ? 'Yes' : 'No(*)' ) . '</em>';        // PHPIDS
 $DVWAOS           = 'Operating system: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
+$SERVER_NAME      = 'Web Server SERVER_NAME: <em>' . $_SERVER[ 'SERVER_NAME' ] . '</em>';                                 // CSRF
+// -- END (Setup Functions)
 
 ?>

@@ -45,9 +45,11 @@ $page[ 'body' ] .= "
 	<h2>Setup Check</h2>
 
 	{$DVWAOS}<br />
-	Backend Database: <em>".$DBMS."</em><br />
+	Backend database: <em>".$DBMS."</em><br />
+	PHP version: v<em>".phpversion()."</em><br />
 	<br />
-	PHP Version: v<em>".phpversion()."</em><br />
+	{$SERVER_NAME}<br />
+	<br />
 	{$phpSafeMode}<br/ >
 	{$phpDisplayErrors}<br />
 	{$phpURLInclude}<br/ >

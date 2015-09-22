@@ -2,8 +2,7 @@
 
 if( isset( $_GET[ 'Change' ] ) ) {
 	// Checks the http referer header
-	if( eregi( $_SERVER[ 'HOST' ], $_SERVER[ 'HTTP_REFERER' ] ) ) {
-
+	if( eregi( $_SERVER[ 'SERVER_NAME' ], $_SERVER[ 'HTTP_REFERER' ] ) ) {
 		// Turn requests into variables
 		$pass_new  = $_GET[ 'password_new' ];
 		$pass_conf = $_GET[ 'password_conf' ];
@@ -20,6 +19,9 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		else {
 			$html .= "<pre>Passwords did not match.</pre>";
 		}
+	}
+	else {
+		$html .= "<pre>That request didn't look correct.</pre>";
 	}
 }
 
