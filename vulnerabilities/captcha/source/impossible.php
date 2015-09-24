@@ -16,6 +16,11 @@ if( isset( $_POST[ 'Change' ] ) ) {
 	$pass_conf = mysql_real_escape_string( $pass_conf );
 	$pass_conf = md5( $pass_conf );
 
+	$pass_curr = $_POST[ 'password_current' ];
+	$pass_curr = stripslashes( $pass_curr );
+	$pass_curr = mysql_real_escape_string( $pass_curr );
+	$pass_curr = md5( $pass_curr );
+
 	$resp = recaptcha_check_answer( $_DVWA[ 'recaptcha_private_key' ],
 		$_SERVER[ 'REMOTE_ADDR' ],
 		$_POST[ 'recaptcha_challenge_field' ],
