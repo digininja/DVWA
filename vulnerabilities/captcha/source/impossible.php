@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
+if( isset( $_POST[ 'Change' ] ) ) {
 	// Check Anti-CSRF token
 	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 

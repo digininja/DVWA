@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
+if( isset( $_POST[ 'Change' ] ) ) {
 	$hide_form = true;
 
 	$pass_new  = $_POST[ 'password_new' ];
@@ -11,7 +11,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 		$_POST[ 'recaptcha_challenge_field' ],
 		$_POST[ 'recaptcha_response_field' ] );
 
-	if(!$resp->is_valid && $_POST[ 'recaptcha_response_field' ] != 'hidd3n_valu3' ) {
+	if(!$resp->is_valid && ( $_POST[ 'recaptcha_response_field' ] != 'hidd3n_valu3' || $_SERVER[ 'HTTP_USER_AGENT' ] != 'reCAPTCHA' ) ) {
 		// What happens when the CAPTCHA was entered incorrectly
 		$html     .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 		$hide_form = false;
