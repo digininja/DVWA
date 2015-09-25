@@ -21,25 +21,29 @@ if( isset( $_POST[ 'Upload' ] ) ) {
 		( $uploaded_type == 'image/jpeg' || $uploaded_type == 'image/png' ) &&
 		getimagesize( $uploaded_tmp ) ) {
 
-			if ( $uploaded_type == 'image/jpeg' ) {
-				$img = imagecreatefromjpeg( $uploaded_tmp );
-				imagejpeg( $img, $temp_file, 100);
-			}
-			else {
-				$img = imagecreatefrompng( $uploaded_tmp );
-				imagepng( $img, $temp_file, 9);
+		// Strip any metadata (using Imagick is recommended over GD)
+		if ( $uploaded_type == 'image/jpeg' ) {
+			$img = imagecreatefromjpeg( $uploaded_tmp );
+			imagejpeg( $img, $temp_file, 100);
+		}
+		else {
+			$img = imagecreatefrompng( $uploaded_tmp );
+			imagepng( $img, $temp_file, 9);
 
-			}
-			imagedestroy( $img );
+		}
+		imagedestroy( $img );
 
-			if( rename( $temp_file, ( getcwd() . DIRECTORY_SEPARATOR . $target_path . $target_file ) ) )
-				$html .= "<a href='${target_path}${target_file}'>${target_file}</a> succesfully uploaded!";
-			else
-				$html .= 'Your image was not uploaded.';
+		// Move the file to the web root from the temp folder
+		if( rename( $temp_file, ( getcwd() . DIRECTORY_SEPARATOR . $target_path . $target_file ) ) ){
+			$html .= "<a href='${target_path}${target_file}'>${target_file}</a> succesfully uploaded!";
+		}
+		else{
+			$html .= 'Your image was not uploaded.';
+		}
 
-			// Delete any temp files
-			if ( file_exists( $temp_file ) )
-				unlink( $temp_file );
+		// Delete any temp files
+		if ( file_exists( $temp_file ) )
+			unlink( $temp_file );
 	}
 	else {
 		$html .= 'Your image was not uploaded. We only accept JPEG or PNG images.';
