@@ -31,10 +31,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli_blind/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 // Check if Magic Quotes are on or off
 $magicQuotesWarningHtml = '';
 if( ini_get( 'magic_quotes_gpc' ) == true ) {
@@ -53,7 +49,7 @@ $page[ 'body' ] .= "
 
 	<div class=\"vulnerable_code_area\">";
 if( $vulnerabilityFile == 'high.php' ){
-	$page[ 'body' ] .= "Click <a href=\"#\" onClick=\"javascript:popUp('session-input.php');return false;\">here to change your ID</a>.";
+	$page[ 'body' ] .= "Click <a href=\"#\" onClick=\"javascript:popUp('cookie-input.php');return false;\">here to change your ID</a>.";
 }
 else {
 	$page[ 'body' ] .= "

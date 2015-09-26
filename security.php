@@ -12,7 +12,7 @@ $page[ 'page_id' ] = 'security';
 $securityHtml = '';
 if( isset( $_POST['seclev_submit'] ) ) {
 	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ] , 'index.php' );
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'security.php' );
 
 	$securityLevel = '';
 	switch( $_POST[ 'security' ] ) {
@@ -70,7 +70,7 @@ else {
 }
 
 // Anti-CSRF
-generateTokens();
+generateSessionToken();
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">

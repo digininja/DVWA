@@ -1,8 +1,8 @@
 <?php
 
-if( isset( $_GET[ 'Submit' ] ) ) {
+if( isset( $_POST[ 'Submit' ] ) ) {
 	// Retrieve data
-	$id = $_GET[ 'id' ];
+	$id = $_POST[ 'id' ];
 	$id = mysql_real_escape_string( $id );
 
 	$query  = "SELECT first_name, last_name FROM users WHERE user_id = $id";

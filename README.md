@@ -50,6 +50,8 @@ DVWA is available either as a package that will run on your own web server or as
 
 ## Installation
 
+### Windows + XAMPP
+
 Installation video:
 https://www.youtube.com/watch?v=GzIj07jt8rM
 
@@ -61,6 +63,12 @@ XAMPP can be downloaded from:
 https://www.apachefriends.org/en/xampp.html
 
 Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: http://127.0.0.1/dvwa/setup.php
+
+### Linux Packages
+
+If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
+
+`apt-get -y install apache2 mysql-server php5 php5-mysql php-pear php5-gd`
 
 
 ### Database Setup
@@ -76,7 +84,6 @@ $_DVWA[ 'db_user' ] = 'root';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 $_DVWA[ 'db_database' ] = 'dvwa';
 ```
-
 
 ### Other Configuration
 
@@ -100,7 +107,6 @@ Note, You are unable to use PHP v7.0 or later with DVWA.
 
 * `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - Need to be generated from: https://www.google.com/recaptcha/admin/create
 
-
 ### Default Credentials
 
 **Default username = `admin`**
@@ -110,7 +116,6 @@ Note, You are unable to use PHP v7.0 or later with DVWA.
 _...can easily be brute forced ;)_
 
 Login URL: http://127.0.0.1/dvwa/login.php
-
 
 ### Troubleshooting
 
@@ -143,7 +148,7 @@ With:
 </IfModule>
 ```
 
-+Q. Command execution won't work.
++Q. Command Injection won't work.
 
 -A. Apache may not have high enough priviledges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 

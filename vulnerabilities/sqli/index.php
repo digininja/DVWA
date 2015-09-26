@@ -31,10 +31,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/sqli/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 // Check if Magic Quotes are on or off
 $magicQuotesWarningHtml = '';
 if( ini_get( 'magic_quotes_gpc' ) == true ) {
@@ -61,7 +57,7 @@ else {
 			<p>
 				User ID:";
 	if( $vulnerabilityFile == 'medium.php' ){
-		$page[ 'body' ] .= "				<select name=\"id\">";
+		$page[ 'body' ] .= "\n				<select name=\"id\">";
 		$query  = "SELECT COUNT(*) FROM users;";
 		$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 		$num    = mysql_result( $result, 0 );
@@ -70,9 +66,9 @@ else {
 		$page[ 'body' ] .= "</select>";
 	}
 	else
-		$page[ 'body' ] .= "				<input type=\"text\" size=\"15\" name=\"id\">";
+		$page[ 'body' ] .= "\n				<input type=\"text\" size=\"15\" name=\"id\">";
 
-	$page[ 'body' ] .= "				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
+	$page[ 'body' ] .= "\n				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
 			</p>
 ";
 

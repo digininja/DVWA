@@ -19,10 +19,11 @@ if( isset( $_GET[ 'Login' ] ) ) {
 
 		// Login Successful
 		$html .= "<p>Welcome to the password protected area {$user}</p>";
-		$html .= '<img src="' . $avatar . '" />';
+		$html .= "<img src=\"{$avatar}\" />";
 	}
 	else {
 		// Login failed
+		sleep( 2 );
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
 	}
 }

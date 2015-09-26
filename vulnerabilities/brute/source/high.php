@@ -1,8 +1,8 @@
 <?php
 
 if( isset( $_GET[ 'Login' ] ) ) {
-	// Anti-CSRF
-	checkTokens( $_POST[ 'token' ] , "index.php");
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
@@ -24,13 +24,16 @@ if( isset( $_GET[ 'Login' ] ) ) {
 
 		// Login Successful
 		$html .= "<p>Welcome to the password protected area {$user}</p>";
-		$html .= '<img src="' . $avatar . '" />';
+		$html .= "<img src=\"{$avatar}\" />";
 	}
 	else {
 		// Login failed
-		sleep(3);
+		sleep( rand( 0, 3 ) );
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>

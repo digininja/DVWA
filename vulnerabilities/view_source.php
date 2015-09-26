@@ -22,7 +22,7 @@ elseif( $id == 'csrf' ) {
 	$vuln = 'CSRF';
 }
 elseif( $id == 'exec' ) {
-	$vuln = 'Command Execution';
+	$vuln = 'Command Injection';
 }
 elseif( $id == 'sqli' ) {
 	$vuln = 'SQL Injection';
@@ -60,7 +60,7 @@ $page[ 'body' ] .= "
 	<br /> <br />
 
 	<form>
-		<input type=\"button\" value=\"Compare Levels\" onclick=\"window.location.href='view_source_all.php?id=$id'\">
+		<input type=\"button\" value=\"Compare All Levels\" onclick=\"window.location.href='view_source_all.php?id=$id'\">
 	</form>
 </div>
 ";

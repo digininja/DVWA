@@ -36,7 +36,7 @@ elseif( $id == 'csrf' ) {
 	$vuln = 'CSRF';
 }
 elseif( $id == 'exec' ) {
-	$vuln = 'Command Execution';
+	$vuln = 'Command Injection';
 }
 elseif( $id == 'sqli' ) {
 	$vuln = 'SQL Injection';
@@ -62,7 +62,7 @@ $page[ 'body' ] .= "
 	<h3>Impossible {$vuln} Source</h3>
 	<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 		<tr>
-			<td><div id=\"code\">{$imphsrc}</div></td>
+			<td><div id=\"code\">{$impsrc}</div></td>
 		</tr>
 	</table>
 	<br />

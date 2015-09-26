@@ -9,11 +9,11 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 
 	$num = @mysql_numrows( $result ); // The '@' character suppresses errors
 	if( $num > 0 ) {
-		$html .= '<pre>User ID (#' . intval( $num ) . ') exists in the database.</pre>';
+		$html .= '<pre>User ID exists in the database.</pre>';
 	}
 	else {
 		if( rand( 0, 5 ) == 3 ) {
-			sleep(rand( 2, 4 ) );
+			sleep( rand( 2, 4 ) );
 			header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 Not Found' );
 		}
 		$html .= '<pre>User ID is MISSING from the database.</pre>';

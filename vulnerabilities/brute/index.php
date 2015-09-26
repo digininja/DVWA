@@ -30,10 +30,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/brute/source/{$vulnerabilityFile}";
 
-// Anti-CSRF
-if( $vulnerabilityFile == 'impossible.php' )
-	generateTokens();
-
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: Brute Force</h1>
@@ -50,7 +46,7 @@ $page[ 'body' ] .= "
 			<input type=\"submit\" value=\"Login\" name=\"Login\">
 ";
 
-if( $vulnerabilityFile == 'impossible.php' )
+if( $vulnerabilityFile == 'high.php' || $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

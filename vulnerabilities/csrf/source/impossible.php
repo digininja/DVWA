@@ -1,8 +1,8 @@
 <?php
 
 if( isset( $_GET[ 'Change' ] ) ) {
-	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Turn requests into variables
 	$pass_curr = $_GET[ 'password_current' ];
@@ -31,5 +31,8 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		$html .= "<pre>Passwords did not match or current password incorrect.</pre>";
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>

@@ -11,7 +11,7 @@ $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
 	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ] , 'index.php' );
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'setup.php' );
 
 	if( $DBMS == 'MySQL' ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/DBMS/MySQL.php';
@@ -28,7 +28,7 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 }
 
 // Anti-CSRF
-generateTokens();
+generateSessionToken();
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
@@ -45,9 +45,11 @@ $page[ 'body' ] .= "
 	<h2>Setup Check</h2>
 
 	{$DVWAOS}<br />
-	Backend Database: <em>".$DBMS."</em><br />
+	Backend database: <em>".$DBMS."</em><br />
+	PHP version: v<em>".phpversion()."</em><br />
 	<br />
-	PHP Version: v<em>".phpversion()."</em><br />
+	{$SERVER_NAME}<br />
+	<br />
 	{$phpSafeMode}<br/ >
 	{$phpDisplayErrors}<br />
 	{$phpURLInclude}<br/ >
@@ -67,6 +69,8 @@ $page[ 'body' ] .= "
 		<input name=\"create_db\" type=\"submit\" value=\"Create / Reset Database\">
 		".tokenField()."
 	</form>
+	<br />
+	<hr />
 </div>
 ";
 

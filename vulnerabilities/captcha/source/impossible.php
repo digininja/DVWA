@@ -1,8 +1,8 @@
 <?php
 
-if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
-	// Anti-CSRF
-	checkTokens( $_REQUEST[ 'user_token' ], 'index.php' );
+if( isset( $_POST[ 'Change' ] ) ) {
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	$hide_form = true;
 
@@ -15,6 +15,11 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 	$pass_conf = stripslashes( $pass_conf );
 	$pass_conf = mysql_real_escape_string( $pass_conf );
 	$pass_conf = md5( $pass_conf );
+
+	$pass_curr = $_POST[ 'password_current' ];
+	$pass_curr = stripslashes( $pass_curr );
+	$pass_curr = mysql_real_escape_string( $pass_curr );
+	$pass_curr = md5( $pass_curr );
 
 	$resp = recaptcha_check_answer( $_DVWA[ 'recaptcha_private_key' ],
 		$_SERVER[ 'REMOTE_ADDR' ],
@@ -43,5 +48,8 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 		}
 	}
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>
