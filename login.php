@@ -1,7 +1,7 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'phpids' ) );
 
@@ -27,7 +27,7 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	$result = @mysql_query( $query );
 	if( mysql_num_rows( $result ) != 1 ) {
 		dvwaMessagePush( "First time using DVWA.<br />Need to run 'setup.php'." );
-		dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT.'setup.php' );
+		dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'setup.php' );
 	}
 
 	$query  = "SELECT * FROM `users` WHERE user='$user' AND password='$pass';";
@@ -35,10 +35,10 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	if( $result && mysql_num_rows( $result ) == 1 ) {    // Login Successful...
 		dvwaMessagePush( "You have logged in as '{$user}'" );
 		dvwaLogin( $user );
-		dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT.'index.php' );
+		dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'index.php' );
 	}
 
-    // Login failed
+	// Login failed
 	dvwaMessagePush( 'Login failed' );
 	dvwaRedirect( 'login.php' );
 }
@@ -46,14 +46,13 @@ if( isset( $_POST[ 'Login' ] ) ) {
 $messagesHtml = messagesPopAllToHtml();
 
 Header( 'Cache-Control: no-cache, must-revalidate');    // HTTP/1.1
-Header( 'Content-Type: text/html;charset=utf-8' );	    // TODO- proper XHTML headers...
-Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );	    // Date in the past
+Header( 'Content-Type: text/html;charset=utf-8' );      // TODO- proper XHTML headers...
+Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );     // Date in the past
 
 // Anti-CSRF
 generateSessionToken();
 
 echo "
-
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
 
 <html xmlns=\"http://www.w3.org/1999/xhtml\">
@@ -64,7 +63,7 @@ echo "
 
 		<title>Login :: Damn Vulnerable Web Application (DVWA) v" . dvwaVersionGet() . "</title>
 
-		<link rel=\"stylesheet\" type=\"text/css\" href=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/css/login.css\" />
+		<link rel=\"stylesheet\" type=\"text/css\" href=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/css/login.css\" />
 
 	</head>
 
@@ -74,7 +73,7 @@ echo "
 
 	<br />
 
-	<p><img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/login_logo.png\" /></p>
+	<p><img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/login_logo.png\" /></p>
 
 	<br />
 
@@ -92,7 +91,7 @@ echo "
 
 	</fieldset>
 
-	".tokenField()."
+	" . tokenField() . "
 
 	</form>
 
@@ -110,7 +109,7 @@ echo "
 	<br />
 	<br />
 
-	<!-- <img src=\"".DVWA_WEB_PAGE_TO_ROOT."dvwa/images/RandomStorm.png\" /> -->
+	<!-- <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/RandomStorm.png\" /> -->
 
 	<p>Damn Vulnerable Web Application (DVWA) is a RandomStorm OpenSource project</p>
 
@@ -118,7 +117,6 @@ echo "
 
 	</body>
 
-</html>
-";
+</html>";
 
 ?>

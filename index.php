@@ -1,12 +1,12 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Welcome'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ]   = 'Welcome' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'home';
 
 $page[ 'body' ] .= "
@@ -26,7 +26,7 @@ $page[ 'body' ] .= "
 	<br />
 
 	<h2>WARNING!</h2>
-	<p>Damn Vulnerable Web Application is damn vulnerable! <em>Do not upload it to your hosting provider's public html folder or any Internet facing servers</em>, as they will be compromised. It is recommend using a virtual machine (such as ".dvwaExternalLinkUrlGet( 'https://www.virtualbox.org/','VirtualBox' )." or ".dvwaExternalLinkUrlGet( 'https://www.vmware.com/','VMware' )."), which is set to NAT networking mode. Inside a guest machine, you can downloading and install ".dvwaExternalLinkUrlGet( 'https://www.apachefriends.org/en/xampp.html','XAMPP' )." for the web server and database.</p>
+	<p>Damn Vulnerable Web Application is damn vulnerable! <em>Do not upload it to your hosting provider's public html folder or any Internet facing servers</em>, as they will be compromised. It is recommend using a virtual machine (such as " . dvwaExternalLinkUrlGet( 'https://www.virtualbox.org/','VirtualBox' ) . " or " . dvwaExternalLinkUrlGet( 'https://www.vmware.com/','VMware' ) . "), which is set to NAT networking mode. Inside a guest machine, you can downloading and install " . dvwaExternalLinkUrlGet( 'https://www.apachefriends.org/en/xampp.html','XAMPP' ) . " for the web server and database.</p>
 	<br />
 	<h3>Disclaimer</h3>
 	<p>We do not take responsibility for the way in which any one uses this application (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA it is not our responsibility it is the responsibility of the person/s who uploaded and installed it.</p>
@@ -37,7 +37,7 @@ $page[ 'body' ] .= "
 	<p>DVWA aims to cover the most commonly seen vulnerabilities found in today's web applications. However there are plenty of other issues with web applications. Should you wish to explore any additional attack vectors, or want more difficult challenges, you may wish to look into the following other projects:</p>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'http://www.itsecgames.com/', 'bWAPP') . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://sourceforge.net/projects/mutillidae/files/mutillidae-project/', 'NOWASP') . " (formerly known as " . dvwaExternalLinkUrlGet( 'http://www.irongeek.com/i.php?page=mutillidae/mutillidae-deliberately-vulnerable-php-owasp-top-10', 'Mutillidae' ).")</li>
+		<li>" . dvwaExternalLinkUrlGet( 'http://sourceforge.net/projects/mutillidae/files/mutillidae-project/', 'NOWASP') . " (formerly known as " . dvwaExternalLinkUrlGet( 'http://www.irongeek.com/i.php?page=mutillidae/mutillidae-deliberately-vulnerable-php-owasp-top-10', 'Mutillidae' ) . ")</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/OWASP_Broken_Web_Applications_Project', 'OWASP Broken Web Applications Project
 ') . "</li>
 	</ul>

@@ -1,13 +1,13 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '../../' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
-require_once DVWA_WEB_PAGE_TO_ROOT."external/recaptcha/recaptchalib.php";
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . "external/recaptcha/recaptchalib.php";
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Vulnerability: Insecure CAPTCHA'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ]   = 'Vulnerability: Insecure CAPTCHA' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'captcha';
 $page[ 'help_button' ]   = 'captcha';
 $page[ 'source_button' ] = 'captcha';
@@ -31,14 +31,14 @@ switch( $_COOKIE[ 'security' ] ) {
 }
 
 $hide_form = false;
-require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/captcha/source/{$vulnerabilityFile}";
+require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/captcha/source/{$vulnerabilityFile}";
 
 // Deal with an empty captcha key
 if( $_DVWA[ 'recaptcha_public_key' ] != "" ) {
 	$heading = "<h3>Change your password:</h3>";
 }
 else {
-	$heading = "reCAPTCHA API key NULL in config file: " . realpath( dirname( dirname( getcwd() ) ) . "/config/config.inc.php" ) . "<br /><em>Please register for a key</em> from reCAPTCHA: ".dvwaExternalLinkUrlGet('https://www.google.com/recaptcha/admin/create');
+	$heading = "reCAPTCHA API key NULL in config file: " . realpath( dirname( dirname( getcwd() ) ) . "/config/config.inc.php" ) . "<br /><em>Please register for a key</em> from reCAPTCHA: " . dvwaExternalLinkUrlGet('https://www.google.com/recaptcha/admin/create');
 }
 
 $page[ 'body' ] .= "
@@ -47,7 +47,7 @@ $page[ 'body' ] .= "
 
 	<div class=\"vulnerable_code_area\">
 		{$heading}
-    	<br />
+		<br />
 
 		<form action=\"#\" method=\"POST\" ";
 
@@ -84,12 +84,11 @@ $page[ 'body' ] .= "
 
 	<h2>More Information</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'http://www.captcha.net/' )."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://www.google.com/recaptcha/' )."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Testing_for_Captcha_(OWASP-AT-012)' )."</li>
+		<li>" . dvwaExternalLinkUrlGet( 'http://www.captcha.net/' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.google.com/recaptcha/' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Testing_for_Captcha_(OWASP-AT-012)' ) . "</li>
 	</ul>
-</div>
-";
+</div>\n";
 
 dvwaHtmlEcho( $page );
 

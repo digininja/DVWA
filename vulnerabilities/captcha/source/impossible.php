@@ -26,7 +26,7 @@ if( isset( $_POST[ 'Change' ] ) ) {
 		$_POST[ 'recaptcha_challenge_field' ],
 		$_POST[ 'recaptcha_response_field' ] );
 
-	if(!$resp->is_valid) {
+	if( !$resp->is_valid ) {
 		// What happens when the CAPTCHA was entered incorrectly
 		$html .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 		$hide_form = false;
@@ -38,10 +38,10 @@ if( isset( $_POST[ 'Change' ] ) ) {
 		$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
 
 		if( ( $pass_new == $pass_conf) && ( $result && mysql_num_rows( $result ) == 1 ) ) {
-		   $insert = "UPDATE `users` SET password = '$pass_new' WHERE user = '" . dvwaCurrentUser() . "';";
-		   $result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
+			$insert = "UPDATE `users` SET password = '$pass_new' WHERE user = '" . dvwaCurrentUser() . "';";
+			$result = mysql_query( $insert ) or die( '<pre>' . mysql_error() . '</pre>' );
 
-		   $html .= "<pre>Password Changed.</pre>";
+			$html .= "<pre>Password Changed.</pre>";
 		}
 		else {
 			$html .= "<pre>Either your current password is incorrect or the new passwords did not match. Please try again.</pre>";

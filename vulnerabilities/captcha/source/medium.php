@@ -11,7 +11,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 		$_POST[ 'recaptcha_challenge_field' ],
 		$_POST[ 'recaptcha_response_field' ] );
 
-	if(!$resp->is_valid) {
+	if( !$resp->is_valid ) {
 		// What happens when the CAPTCHA was entered incorrectly
 		$html .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 		$hide_form = false;
@@ -41,7 +41,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '2' ) ) {
 	$pass_new  = $_POST[ 'password_new' ];
 	$pass_conf = $_POST[ 'password_conf' ];
 
-	if(!$_POST[ 'passed_captcha' ]) {
+	if( !$_POST[ 'passed_captcha' ] ) {
 		$html     .= "<pre><br />You have not passed the CAPTCHA.</pre>";
 		$hide_form = false;
 		return;

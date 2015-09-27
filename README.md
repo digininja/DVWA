@@ -42,9 +42,9 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
 
-  + DVWA v1.9 (Testing) - (1.3 MB) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) - `git clone https://github.com/RandomStorm/DVWA`
-  + DVWA v1.8 (Stable) - (1.3 MB) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip)
-  + DVWA v1.0.7 LiveCD - (480 MB) [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso)
+  + DVWA v1.9 Source (Testing) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) // `git clone https://github.com/RandomStorm/DVWA`
+  + DVWA v1.8 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip) - Released 2013-05-01
+  + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
 
 - - -
 
@@ -90,12 +90,12 @@ $_DVWA[ 'db_database' ] = 'dvwa';
 Depening on your Operating System as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
 Note, You are unable to use PHP v7.0 or later with DVWA.
 
-**Folders Permissions**:
+**Folder Permissions**:
 
 * `./hackable/uploads/` - Needs to be writable by the web service (for File Upload).
-* `./external/phpids/0.6/lib/IDS/tmp/` - Needs to be writable by the web service (if you wish to use PHPIDS).
+* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
 
-**PHP**:
+**PHP configuration**:
 
 * `allow_url_include = on` - Allows for Remote File Inclusions (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
 * `allow_url_fopen = on` -  Allows for Remote File Inclusions (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
@@ -103,9 +103,9 @@ Note, You are unable to use PHP v7.0 or later with DVWA.
 * `magic_quotes_gpc = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
 * `display_errors = off` - (Optional) Hides PHP warning messages to make it less verbose [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
 
-**`config/config.inc.php`**:
+**File: `config/config.inc.php`**:
 
-* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - Need to be generated from: https://www.google.com/recaptcha/admin/create
+* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - These values need to be generated from: https://www.google.com/recaptcha/admin/create
 
 ### Default Credentials
 
@@ -122,9 +122,9 @@ Login URL: http://127.0.0.1/dvwa/login.php
 For the latest troubleshooting information please visit:
 https://github.com/RandomStorm/DVWA/issues
 
-+Q. SQL Injection wont work on PHP version 5.2.6.
++Q. SQL Injection wont work on PHP v5.2.6.
 
--A.If you are using PHP version 5.2.6 you will need to do the following in order for SQL injection and other vulnerabilities to work.
+-A.If you are using PHP v5.2.6 you will need to do the following in order for SQL injection and other vulnerabilities to work.
 
 In `.htaccess`:
 
@@ -154,7 +154,7 @@ With:
 
 +Q. My XSS payload won't run in IE.
 
--A. If your running IE8 or above IE actively filters any XSS. To disable the filter you can do so by setting the HTTP header `X-XSS-Protection: 0` or disable it from internet options. There may also be ways to bypass the filter.
+-A. If your running IE8 or above, IE actively filters any XSS. To disable the filter you can do so by setting the HTTP header `X-XSS-Protection: 0` or disable it from internet options. There may also be ways to bypass the filter.
 
 - - -
 

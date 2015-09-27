@@ -17,17 +17,18 @@ $_DVWA[ 'db_database' ] = 'dvwa';
 $_DVWA[ 'db_user' ]     = 'root';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 
-# Only used for PostgreSQL/PGSQL
+# Only used with PostgreSQL/PGSQL database selection.
 $_DVWA[ 'db_port '] = '5432';
 
 # ReCAPTCHA settings
-#   Get your keys at https://www.google.com/recaptcha/admin/create
+#   Used for the 'Insecure CAPTCHA' module
+#   You'll need to generate your own keys at: https://www.google.com/recaptcha/admin/create
 $_DVWA[ 'recaptcha_public_key' ]  = '';
 $_DVWA[ 'recaptcha_private_key' ] = '';
 
 # Default security level
-#   The default is impossible, you may wish to set this to either low, medium or high.
-#   If you specify an invalid level, DVWA will default to impossible.
+#   Default value for the secuirty level with each session.
+#   The default is 'impossible'. You may wish to set this to either 'low', 'medium', 'high' or impossible'.
 $_DVWA[ 'default_security_level' ] = 'impossible';
 
 ?>

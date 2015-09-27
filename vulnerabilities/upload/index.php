@@ -1,12 +1,12 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '../../' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Vulnerability: File Upload'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ]   = 'Vulnerability: File Upload' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'upload';
 $page[ 'help_button' ]   = 'upload';
 $page[ 'source_button' ] = 'upload';
@@ -29,12 +29,12 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
-require_once DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/upload/source/{$vulnerabilityFile}";
+require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/upload/source/{$vulnerabilityFile}";
 
 // Check if folder is writeable
 $writableFolderWarningHtml = '';
-if( is_writable( realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/" ) == false ) {
-	$writableFolderWarningHtml = "<div class=\"warning\">Incorrect folder permissions: " . realpath( dirname( dirname( getcwd() ) ) )."/hackable/uploads/" . "</div>";
+if( is_writable( realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" ) == false ) {
+	$writableFolderWarningHtml = "<div class=\"warning\">Incorrect folder permissions: " . realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" . "</div>";
 }
 
 $page[ 'body' ] .= "
@@ -49,8 +49,7 @@ $page[ 'body' ] .= "
 			Choose an image to upload:<br /><br />
 			<input name=\"uploaded\" type=\"file\" /><br />
 			<br />
-			<input type=\"submit\" name=\"Upload\" value=\"Upload\" />
-";
+			<input type=\"submit\" name=\"Upload\" value=\"Upload\" />\n";
 
 if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
@@ -62,9 +61,9 @@ $page[ 'body' ] .= "
 
 	<h2>More Information</h2>
 	<ul>
-		<li>".dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Unrestricted_File_Upload' )."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://blogs.securiteam.com/index.php/archives/1268' )."</li>
-		<li>".dvwaExternalLinkUrlGet( 'https://www.acunetix.com/websitesecurity/upload-forms-threat/' )."</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Unrestricted_File_Upload' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://blogs.securiteam.com/index.php/archives/1268' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.acunetix.com/websitesecurity/upload-forms-threat/' ) . "</li>
 	</ul>
 </div>";
 

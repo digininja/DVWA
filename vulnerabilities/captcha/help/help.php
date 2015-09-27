@@ -19,14 +19,14 @@
 		<p>The parameters required to complete this challenge in low security would be similar to the following:</p>
 		<p>step=2&password_new=password&password_conf=password&Change=Change</p>
 
-        <p>For the medium level challenge, the developer has attempted to place state around the session and keep track of whether the user successfully completed the
-            CAPTCHA prior to submitting data. Because the state variable ("passed_captcha") is on the client side, it can also be manipulated by the attacker like so:</p>
-        <p>step=2&password_new=password&password_conf=password&passed_captcha=true&Change=Change</p>
+		<p>For the medium level challenge, the developer has attempted to place state around the session and keep track of whether the user successfully completed the
+			CAPTCHA prior to submitting data. Because the state variable ("passed_captcha") is on the client side, it can also be manipulated by the attacker like so:</p>
+		<p>step=2&password_new=password&password_conf=password&passed_captcha=true&Change=Change</p>
 
-        <p>In the high level, *coming soon*.</p>
+		<p>In the high level, there has been development code left in, which was never removed. Using the hardcoded values, its possible to put in invalid values into the CAPTCHA field.</p>
 
-        <p>In the impossible level, the developer has removed all avenues of attack. The process has been simplified so that data and CAPTCHA verification occurs in one
-            single step. Alternatively, the developer could have moved the state variable server side, or NONCE'd the form.</p>
+		<p>In the impossible level, the developer has removed all avenues of attack. The process has been simplified so that data and CAPTCHA verification occurs in one
+			single step. Alternatively, the developer could have moved the state variable server side, or NONCE'd the form.</p>
 	</div></td>
 	</tr>
 	</table>

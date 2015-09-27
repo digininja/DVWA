@@ -11,7 +11,7 @@ if( isset( $_POST[ 'Change' ] ) && ( $_POST[ 'step' ] == '1' ) ) {
 		$_POST[ 'recaptcha_challenge_field' ],
 		$_POST[ 'recaptcha_response_field' ] );
 
-	if(!$resp->is_valid) {
+	if( !$resp->is_valid ) {
 		// What happens when the CAPTCHA was entered incorrectly
 		$html     .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 		$hide_form = false;
