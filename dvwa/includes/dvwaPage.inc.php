@@ -26,6 +26,11 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 	else {
 		dvwaSecurityLevelSet( 'impossible' );
 	}
+
+	if( $_DVWA[ 'default_phpids_level' ] == 'enabled' )
+		dvwaPhpIdsEnabledSet( true );
+	else
+		dvwaPhpIdsEnabledSet( false );
 }
 
 // DVWA version
@@ -536,7 +541,7 @@ function tokenField() {  # Return a field for the (CSRF) token
 
 // Setup Functions --
 $PHPUploadPath    = realpath( getcwd() ) . "/hackable/uploads/";
-$PHPIDSPath       = realpath( getcwd() ) . "/external/phpids/0.6/lib/IDS/tmp/";
+$PHPIDSPath       = realpath( getcwd() ) . "/external/phpids/" . dvwaPhpIdsVersionGet() . "/lib/IDS/tmp/phpids_log.txt";
 $phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';                 // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
 $phpDisplayErrors = 'PHP display errors: <em>' . ( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );  // Verbose error messages (e.g. full path disclosure)
 $phpURLInclude    = 'PHP allow URL include: <em>' . ( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>'; // RFI

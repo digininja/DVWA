@@ -86,7 +86,9 @@ function dvwaPhpIdsTrap() {
 
 			echo 'Hacking attempt detected and logged.<br />Have a nice day.';
 
-			// echo $result;
+			if( $_DVWA[ 'default_phpids_verbose' ] == 'true' )
+				echo $result;
+
 			exit;
 		}
 	}

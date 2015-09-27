@@ -31,4 +31,14 @@ $_DVWA[ 'recaptcha_private_key' ] = '';
 #   The default is 'impossible'. You may wish to set this to either 'low', 'medium', 'high' or impossible'.
 $_DVWA[ 'default_security_level' ] = 'impossible';
 
+# Default PHPIDS status
+#   PHPIDS status with each session.
+#   The default is 'disabled'. You can set this to be either 'enabled' or 'disabled'.
+$_DVWA[ 'default_phpids_level' ] = 'disabled';
+
+# Verbose PHPIDS messages
+#   Enabling this will show why the WAF blocked the request on the blocked request.
+#   The default is 'disabled'. You can set this to be either 'true' or 'false'.
+$_DVWA[ 'default_phpids_verbose' ] = 'false';
+
 ?>
