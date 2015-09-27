@@ -1,9 +1,12 @@
 <?php
 
+// Is there any input?
 if( array_key_exists( "name", $_GET ) && $_GET[ 'name' ] != NULL ) {
-	$html .= '<pre>';
-	$html .= 'Hello ' . preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $_GET[ 'name' ] );
-	$html .= '</pre>';
+	// Get input
+	$name = preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $_GET[ 'name' ] );
+
+	// Feedback for end user
+	$html .= "<pre>Hello ${name}</pre>";
 }
 
 ?>

@@ -42,7 +42,7 @@ $page[ 'body' ] .= "
 			<p>
 				Enter an IP address:
 				<input type=\"text\" name=\"ip\" size=\"30\">
-				<input type=\"submit\" value=\"Submit\" name=\"submit\">
+				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
 			</p>\n";
 
 if( $vulnerabilityFile == 'impossible.php' )

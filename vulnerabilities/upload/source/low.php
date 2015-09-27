@@ -1,17 +1,19 @@
 <?php
 
 if( isset( $_POST[ 'Upload' ] ) ) {
-	$target_path = DVWA_WEB_PAGE_TO_ROOT . "hackable/uploads/";
-	$target_path = $target_path . basename( $_FILES[ 'uploaded' ][ 'name' ] );
+	// Where are we going to be writing to?
+	$target_path  = DVWA_WEB_PAGE_TO_ROOT . "hackable/uploads/";
+	$target_path .= basename( $_FILES[ 'uploaded' ][ 'name' ] );
 
-	$html .= '<pre>';
+	// Can we move the file to the upload folder?
 	if( !move_uploaded_file( $_FILES[ 'uploaded' ][ 'tmp_name' ], $target_path ) ) {
-		$html .= 'Your image was not uploaded.';
+		// No
+		$html .= '<pre>Your image was not uploaded.</pre>';
 	}
 	else {
-		$html .= $target_path . ' succesfully uploaded!';
+		// Yes!
+		$html .= "<pre>{$target_path} succesfully uploaded!</pre>";
 	}
-	$html .= '</pre>';
 }
 
 ?>

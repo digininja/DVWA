@@ -1,12 +1,15 @@
 <?php
 
+// Is there any input?
 if( array_key_exists( "name", $_GET ) && $_GET[ 'name' ] != NULL ) {
 	// Check Anti-CSRF token
 	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
-	$html .= '<pre>';
-	$html .= 'Hello ' . htmlspecialchars( $_GET[ 'name' ] );
-	$html .= '</pre>';
+	// Get input
+	$name = htmlspecialchars( $_GET[ 'name' ] );
+
+	// Feedback for end user
+	$html .= "<pre>Hello ${name}</pre>";
 }
 
 // Generate Anti-CSRF token

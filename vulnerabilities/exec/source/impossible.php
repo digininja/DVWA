@@ -1,9 +1,10 @@
 <?php
 
-if( isset( $_POST[ 'submit' ] ) ) {
+if( isset( $_POST[ 'Submit' ]  ) ) {
 	// Check Anti-CSRF token
 	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
+	// Get input
 	$target = $_REQUEST[ 'ip' ];
 	$target = stripslashes( $target );
 
@@ -17,15 +18,19 @@ if( isset( $_POST[ 'submit' ] ) ) {
 
 		// Determine OS and execute the ping command.
 		if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
-			$cmd   = shell_exec( 'ping  ' . $target );
-			$html .= "<pre>{$cmd}</pre>";
+			// Windows
+			$cmd = shell_exec( 'ping  ' . $target );
 		}
 		else {
-			$cmd   = shell_exec( 'ping  -c 4 ' . $target );
-			$html .= "<pre>{$cmd}</pre>";
+			// *nix
+			$cmd = shell_exec( 'ping  -c 4 ' . $target );
 		}
+
+		// Feedback for the end user
+		$html .= "<pre>{$cmd}</pre>";
 	}
 	else {
+		// Ops. Let the user name theres a mistake
 		$html .= '<pre>ERROR: You have entered an invalid IP.</pre>';
 	}
 }
