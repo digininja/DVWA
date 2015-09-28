@@ -67,7 +67,6 @@ $page[ 'body' ] .= "
 	</ul>
 </div>";
 
-
 dvwaHtmlEcho( $page );
 
 ?>
