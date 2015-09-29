@@ -28,21 +28,21 @@
 		<p>This allows for direct input into one of <u>many PHP functions</u> that will execute commands on the OS. It is possible to escape out of the designed command and
 			executed unintentional actions.</p>
 		<p>This can be done by adding on to the request, "once the command has executed successfully, run this command".
-		<pre>Spoiler: <span style="background-color:black;color:black;">To add a command "&&"</span>. Example: <span style="background-color:black;color:black;">127.0.0.1 && dir</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">To add a command "&&"</span>. Example: <span class="spoiler">127.0.0.1 && dir</span>.</pre>
 
 		<br />
 
 		<h3>Medium Level</h3>
 		<p>The developer has read up on some of the issues with command injection, and placed in various pattern patching to filter the input. However, this isn't enough.</p>
 		<p>Various other system syntaxes can be used to break out of the desired command.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">e.g. background the ping command</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">e.g. background the ping command</span>.</pre>
 
 		<br />
 
 		<h3>High Level</h3>
 		<p>In the high level, the developer goes back to the drawing board and puts in even more pattern to match. But even this isn't enough.</p>
 		<p>The developer has either made a slight typo with the filters and believes a certain PHP command will save them from this mistake.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;"><?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.trim.php', 'trim()' ); ?>
+		<pre>Spoiler: <span class="spoiler"><?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.trim.php', 'trim()' ); ?>
 			removes all leading & trailing spaces, right?</span>.</pre>
 
 		<br />

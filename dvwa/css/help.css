@@ -18,3 +18,8 @@ div#code {
 div#area {
 	margin-left: 30px;
 }
+
+span.spoiler {
+	background-color: black;
+	color: black;
+}

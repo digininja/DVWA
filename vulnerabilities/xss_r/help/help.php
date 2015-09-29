@@ -26,19 +26,19 @@
 
 		<h3>Low Level</h3>
 		<p>Low level will not check the requested input, before including it to be used in the output text.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?name=&lt;script&gt;alert("XSS");&lt;/script&gt;</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?name=&lt;script&gt;alert("XSS");&lt;/script&gt;</span>.</pre>
 
 		<br />
 
 		<h3>Medium Level</h3>
 		<p>The developer has tried to add a simple pattern matching to remove any references to "&lt;script&gt;", to disable any JavaScript.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">Its cAse sENSiTiVE</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">Its cAse sENSiTiVE</span>.</pre>
 
 		<br />
 
 		<h3>High Level</h3>
 		<p>The developer now believes they can disable all JavaScript by removing the pattern "&lt;s*c*r*i*p*t".</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">HTML events</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">HTML events</span>.</pre>
 
 		<br />
 

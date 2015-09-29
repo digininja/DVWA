@@ -24,7 +24,7 @@
 		<h3>Low Level</h3>
 		<p>The SQL query uses RAW input that is directly controlled by the attacker. All they need to-do is escape the query and then they are able
 			to execute any SQL query they wish.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?id=a' UNION SELECT "text1","text2";-- -&Submit=Submit</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?id=a' UNION SELECT "text1","text2";-- -&Submit=Submit</span>.</pre>
 
 		<br />
 
@@ -34,14 +34,14 @@
 			However due to the SQL query not having quotes around the parameter, this will not fully protect the query from being altered.</p>
 
 		<p>The text box has been replaced with a pre-defined dropdown list and uses POST to submit the form.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?id=a UNION SELECT 1,2;-- -&Submit=Submit</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?id=a UNION SELECT 1,2;-- -&Submit=Submit</span>.</pre>
 
 		<br />
 
 		<h3>High Level</h3>
 		<p>This is very similar to the low level, however this time the attacker is inputting the value in a different manner.
 			The input values are being transferred to the vulnerable query via session variables using another page, rather than a direct GET request.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">ID: a' UNION SELECT "text1","text2";-- -&Submit=Submit</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">ID: a' UNION SELECT "text1","text2";-- -&Submit=Submit</span>.</pre>
 
 		<br />
 

@@ -25,7 +25,7 @@
 		<h3>Low Level</h3>
 		<p>The SQL query uses RAW input that is directly controlled by the attacker. All they need to-do is escape the query and then they are able
 			to execute any SQL query they wish.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?id=1' AND sleep 5&Submit=Submit</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?id=1' AND sleep 5&Submit=Submit</span>.</pre>
 
 		<br />
 
@@ -35,15 +35,15 @@
 			However due to the SQL query not having quotes around the parameter, this will not fully protect the query from being altered.</p>
 
 		<p>The text box has been replaced with a pre-defined dropdown list and uses POST to submit the form.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?id=1 AND sleep 3&Submit=Submit</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?id=1 AND sleep 3&Submit=Submit</span>.</pre>
 
 		<br />
 
 		<h3>High Level</h3>
 		<p>This is very similar to the low level, however this time the attacker is inputting the value in a different manner.
 			The input values are being set on a different page, rather than a GET request.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">ID: 1' AND sleep 10&Submit=Submit</span>.
-			Spoiler: <span style="background-color:black;color:black;">Should be able to cut out the middle man.</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">ID: 1' AND sleep 10&Submit=Submit</span>.
+			Spoiler: <span class="spoiler">Should be able to cut out the middle man.</span>.</pre>
 
 		<br />
 

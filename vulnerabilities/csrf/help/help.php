@@ -25,7 +25,7 @@
 		<h3>Low Level</h3>
 		<p>There are no measures in place to protect against this attack. This means a link can be crafted to achieve a certain action (in this case, change the current users password).
 			Then with some basic social engineering, have the target click the link (or just visit a certain page), to trigger the action.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?password_new=password&password_conf=password&Change=Change</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?password_new=password&password_conf=password&Change=Change</span>.</pre>
 
 		<br />
 
@@ -38,7 +38,7 @@
 
 		<h3>High Level</h3>
 		<p>In the high level, the developer has added an "anti Cross-Site Request Forgery (CSRF) token". In order by bypass this protection method, another vulnerability will be required.</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">e.g. Javascript is a executed on the client side, in the browser</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">e.g. Javascript is a executed on the client side, in the browser</span>.</pre>
 
 		<br />
 

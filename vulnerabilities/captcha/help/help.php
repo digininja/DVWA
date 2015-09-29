@@ -27,23 +27,23 @@
 			move on to the next screen where the password is actually updated. By submitting the new password directly to the change page, the user may bypass the CAPTCHA system.</p>
 
 		<p>The parameters required to complete this challenge in low security would be similar to the following:</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?step=2&password_new=password&password_conf=password&Change=Change</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?step=2&password_new=password&password_conf=password&Change=Change</span>.</pre>
 
 		<br />
 
 		<h3>Medium Level</h3>
 		<p>The developer has attempted to place state around the session and keep track of whether the user successfully completed the
-			CAPTCHA prior to submitting data. Because the state variable (Spoiler: <span style="background-color:black;color:black;">passed_captcha</span>) is on the client side,
+			CAPTCHA prior to submitting data. Because the state variable (Spoiler: <span class="spoiler">passed_captcha</span>) is on the client side,
 			it can also be manipulated by the attacker like so:</p>
-		<pre>Spoiler: <span style="background-color:black;color:black;">?step=2&password_new=password&password_conf=password&passed_captcha=true&Change=Change</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">?step=2&password_new=password&password_conf=password&passed_captcha=true&Change=Change</span>.</pre>
 
 		<br />
 
 		<h3>High Level</h3>
 		<p>There has been development code left in, which was never removed in production. It is possible to mimic the development values, to allow
 			invalid values in be placed into the CAPTCHA field.</p>
-		<p>You will need to spoof your user-agent (Spoiler: <span style="background-color:black;color:black;">reCAPTCHA</span>) as well as use the CAPTCHA value of
-			(Spoiler: <span style="background-color:black;color:black;">hidd3n_valu3</span>) to skip the check.</p>
+		<p>You will need to spoof your user-agent (Spoiler: <span class="spoiler">reCAPTCHA</span>) as well as use the CAPTCHA value of
+			(Spoiler: <span class="spoiler">hidd3n_valu3</span>) to skip the check.</p>
 
 		<br />
 
