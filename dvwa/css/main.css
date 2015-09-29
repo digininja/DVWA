@@ -254,3 +254,13 @@ span.submenu_item + span.submenu_item {
 span.selected {
 	font-weight: bold;
 }
+
+span.success {
+
+	color:green;
+}
+
+span.failure {
+	color:red;
+	font-weight: bold;
+}

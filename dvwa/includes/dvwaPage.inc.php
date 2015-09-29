@@ -542,16 +542,21 @@ function tokenField() {  # Return a field for the (CSRF) token
 // Setup Functions --
 $PHPUploadPath    = realpath( getcwd() ) . "/hackable/uploads/";
 $PHPIDSPath       = realpath( getcwd() ) . "/external/phpids/" . dvwaPhpIdsVersionGet() . "/lib/IDS/tmp/phpids_log.txt";
-$phpSafeMode      = 'PHP safe mode: <em>' . ( ini_get( 'safe_mode' )  ? 'Enabled' : 'Disabled' ) . '</em>';                 // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
-$phpDisplayErrors = 'PHP display errors: <em>' . ( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );  // Verbose error messages (e.g. full path disclosure)
-$phpURLInclude    = 'PHP allow URL include: <em>' . ( ini_get( 'allow_url_include' )  ? 'Enabled' : 'Disabled' ) . '</em>'; // RFI
-$phpURLFopen      = 'PHP allow URL fopen: <em>' . ( ini_get( 'allow_url_fopen' )  ? 'Enabled' : 'Disabled' ) . '</em>';     // RFI
-$phpMagicQuotes   = 'PHP magic quotes: <em>' . ( ini_get( 'magic_quotes_gpc' )  ? 'Enabled(*)' : 'Disabled' ) . '</em>';    // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
-$DVWARecaptcha    = 'reCAPTCHA key: <em>' . ( ( isset( $_DVWA[ 'recaptcha_public_key' ] ) && $_DVWA[ 'recaptcha_public_key' ] != '' ) ? $_DVWA[ 'recaptcha_public_key' ] : 'Missing(*)' ) . '</em>';
-$DVWAUploadsWrite = 'Writable ' . $PHPUploadPath . ': <em>' . ( is_writable( $PHPUploadPath ) ? 'Yes' : 'No(*)' ) . '</em>';  // File Upload
-$DVWAPHPWrite     = 'Writable ' . $PHPIDSPath . ': <em>' . ( is_writable( $PHPIDSPath ) ? 'Yes' : 'No(*)' ) . '</em>';        // PHPIDS
+
+$phpSafeMode      = 'PHP function safe_mode: <span class="' . ( ini_get( 'safe_mode' )  ? 'failure">Enabled' : 'success">Disabled' ) . '</span>';                 // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
+$phpDisplayErrors = 'PHP function display_errors: <em>' . ( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );                // Verbose error messages (e.g. full path disclosure)
+$phpURLInclude    = 'PHP function allow_url_include: <span class="' . ( ini_get( 'allow_url_include' )  ? 'success">Enabled' : 'failure">Disabled' ) . '</span>'; // RFI
+$phpURLFopen      = 'PHP function allow_url_fopen: <span class="' . ( ini_get( 'allow_url_fopen' )  ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';     // RFI
+$phpMagicQuotes   = 'PHP function magic_quotes_gpc: <span class="' . ( ini_get( 'magic_quotes_gpc' )  ? 'failure">Enabled' : 'success">Disabled' ) . '</span>';   // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
+$phpGD            = 'PHP module php-gd: <span class="' . (  (extension_loaded( 'gd' ) && function_exists( 'gd_info' ) ) ? 'success">Installed' : 'failure">Missing' ) . '</span>';     // File Upload
+
+$DVWARecaptcha    = 'reCAPTCHA key: <span class="' . ( ( isset( $_DVWA[ 'recaptcha_public_key' ] ) && $_DVWA[ 'recaptcha_public_key' ] != '' ) ? 'success">' . $_DVWA[ 'recaptcha_public_key' ] : 'failure">Missing' ) . '</span>';
+
+$DVWAUploadsWrite = 'Writable folder ' . $PHPUploadPath . ': <span class="' . ( is_writable( $PHPUploadPath ) ? 'success">Yes)' : 'failure">No' ) . '</span>'; // File Upload
+$DVWAPHPWrite     = 'Writable file ' . $PHPIDSPath . ': <span class="' . ( is_writable( $PHPIDSPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';         // PHPIDS
+
 $DVWAOS           = 'Operating system: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
-$SERVER_NAME      = 'Web Server SERVER_NAME: <em>' . $_SERVER[ 'SERVER_NAME' ] . '</em>';                                   // CSRF
+$SERVER_NAME      = 'Web Server SERVER_NAME: <em>' . $_SERVER[ 'SERVER_NAME' ] . '</em>';   // CSRF
 // -- END (Setup Functions)
 
 ?>

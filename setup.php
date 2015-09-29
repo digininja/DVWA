@@ -46,22 +46,23 @@ $page[ 'body' ] .= "
 
 	{$DVWAOS}<br />
 	Backend database: <em>{$DBMS}</em><br />
-	PHP version: v<em>" . phpversion() . "</em><br />
+	PHP version: <em>" . phpversion() . "</em><br />
 	<br />
 	{$SERVER_NAME}<br />
 	<br />
-	{$phpSafeMode}<br/ >
 	{$phpDisplayErrors}<br />
+	{$phpSafeMode}<br/ >
 	{$phpURLInclude}<br/ >
 	{$phpURLFopen}<br />
 	{$phpMagicQuotes}<br />
+	{$phpGD}<br />
 	<br />
 	{$DVWARecaptcha}<br />
 	<br />
 	{$DVWAUploadsWrite}<br />
 	{$DVWAPHPWrite}<br />
 	<br />
-	<i>Status with \"(*)\" indicate there could be possible issue(s) with a certain modules.</i><br />
+	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
 	<br /><br /><br />
 
 	<!-- Create db button -->
