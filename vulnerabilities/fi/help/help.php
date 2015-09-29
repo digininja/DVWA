@@ -20,8 +20,7 @@
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Execute any PHP function of your choosing on the target system (such as <?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.phpinfo.php', 'phpinfo()' ); ?>
-			or <?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.system.php', 'system()' ); ?>) because of the file inclusion.</p>
+		<p>Read all five famous quotes from '<a href="../hackable/flags/fi.php">../hackable/flags/fi.php</a>' using only the file inclusion.</p>
 
 		<br /><hr /><br />
 

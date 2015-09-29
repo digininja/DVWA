@@ -4,6 +4,7 @@ DAMN VULNERABLE WEB APPLICATION
 v1.9 (*Not Yet Released*)
 ======
 
++ Added a dedicated objective (or "flag") for file include. (@g0tmi1k)
 + Added a warning to any module that requires a certain configuration. (@g0tmi1k)
 + Added comments to all source code that would be visible via DVWA modules. (@g0tmi1k)
 + Added CSRF token to pre-auth forms (login/setup/security pages). (@g0tmi1k + @Shinkurt)
