@@ -11,7 +11,10 @@ $page[ 'title' ] = 'Help' . $page[ 'title_separator' ].$page[ 'title' ];
 $id       = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];
 
-$help = file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/help/help.php" );
+ob_start();
+eval( '?>' . file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/help/help.php" ) . '<?php ' );
+$help = ob_get_contents();
+ob_end_clean();
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
