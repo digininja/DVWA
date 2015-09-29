@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_GET[ 'Submit' ]  ) ) {
+if( isset( $_GET[ 'Submit' ] ) ) {
 	// Check Anti-CSRF token
 	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 

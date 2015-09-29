@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_GET[ 'Submit' ]  ) ) {
+if( isset( $_GET[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_GET[ 'id' ];
 

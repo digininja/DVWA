@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_POST[ 'Submit' ]  ) ) {
+if( isset( $_POST[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_POST[ 'id' ];
 	$id = mysql_real_escape_string( $id );

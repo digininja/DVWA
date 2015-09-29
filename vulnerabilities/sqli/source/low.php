@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_REQUEST[ 'Submit' ]  ) ) {
+if( isset( $_REQUEST[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_REQUEST[ 'id' ];
 
