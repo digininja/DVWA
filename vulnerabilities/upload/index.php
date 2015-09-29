@@ -32,16 +32,20 @@ switch( $_COOKIE[ 'security' ] ) {
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/upload/source/{$vulnerabilityFile}";
 
 // Check if folder is writeable
-$writableFolderWarningHtml = '';
+$WarningHtml = '';
 if( is_writable( realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" ) == false ) {
-	$writableFolderWarningHtml = "<div class=\"warning\">Incorrect folder permissions: " . realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" . "</div>";
+	$WarningHtml .= "<div class=\"warning\">Incorrect folder permissions: " . realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" . "<br /><em>Folder is not writable.</em></div>";
+}
+// Is PHP-GD installed?
+if( ( !extension_loaded( 'gd' ) || !function_exists( 'gd_info' ) ) ) {
+	$WarningHtml .= "<div class=\"warning\">The PHP module <em>PHP-GD is not installed</em>.</div>";
 }
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: File Upload</h1>
 
-	{$writableFolderWarningHtml}
+	{$WarningHtml}
 
 	<div class=\"vulnerable_code_area\">
 		<form enctype=\"multipart/form-data\" action=\"#\" method=\"POST\" />

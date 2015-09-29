@@ -31,10 +31,14 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/sqli/source/{$vulnerabilityFile}";
 
-// Check if Magic Quotes are on or off
-$magicQuotesWarningHtml = '';
+// Is PHP function magic_quotee enabled?
+$WarningHtml = '';
 if( ini_get( 'magic_quotes_gpc' ) == true ) {
-	$magicQuotesWarningHtml = "<div class=\"warning\">Magic Quotes are on, you will not be able to inject SQL.</div>";
+	$WarningHtml .= "<div class=\"warning\">The PHP function \"<em>Magic Quotes</em>\" is enabled.</div>";
+}
+// Is PHP function safe_mode enabled?
+if( ini_get( 'safe_mode' ) == true ) {
+	$WarningHtml .= "<div class=\"warning\">The PHP function \"<em>Safe mode</em>\" is enabled.</div>";
 }
 
 $method = 'GET';
@@ -45,7 +49,7 @@ $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: SQL Injection</h1>
 
-	{$magicQuotesWarningHtml}
+	{$WarningHtml}
 
 	<div class=\"vulnerable_code_area\">";
 if( $vulnerabilityFile == 'high.php' ) {
