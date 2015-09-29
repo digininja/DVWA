@@ -19,10 +19,10 @@ if( isset( $_POST[ 'btnSign' ] ) ) {
 	$name = htmlspecialchars( $name );
 
 	// Update database
-	$query  = "INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );";
-	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
-
-	//mysql_close();
+	$data = $db->prepare( 'INSERT INTO guestbook ( comment, name ) VALUES ( :message, :name );' );
+	$data->bindParam( ':message', $message, PDO::PARAM_STR );
+	$data->bindParam( ':name', $name, PDO::PARAM_STR );
+	$data->execute();
 }
 
 // Generate Anti-CSRF token

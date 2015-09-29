@@ -10,13 +10,16 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 	// Was a number entered?
 	if(is_numeric( $id )) {
 		// Check the database
-		$data = $db->query( 'SELECT first_name, last_name FROM users WHERE user_id = ' . $db->quote( $id ) . ' LIMIT 1;' );
+		$data = $db->prepare( 'SELECT first_name, last_name FROM users WHERE user_id = (:id) LIMIT 1;' );
+		$data->bindParam( ':id', $id, PDO::PARAM_INT );
+		$data->execute();
+		$row = $data->fetch();
 
-		// Get results
-		foreach( $data as $i ) {
+		// Make sure only 1 result is returned
+		if( $data->rowCount() == 1 ) {
 			// Get values
-			$first = $i[ 'first_name' ];
-			$last  = $i[ 'last_name' ];
+			$first = $row[ 'first_name' ];
+			$last  = $row[ 'last_name' ];
 
 			// Feedback for end user
 			$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";

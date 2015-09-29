@@ -12,6 +12,7 @@ $page[ 'help_button' ]   = 'brute';
 $page[ 'source_button' ] = 'brute';
 dvwaDatabaseConnect();
 
+$method            = 'GET';
 $vulnerabilityFile = '';
 switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
@@ -25,6 +26,7 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 	default:
 		$vulnerabilityFile = 'impossible.php';
+		$method = 'POST';
 		break;
 }
 
@@ -37,7 +39,7 @@ $page[ 'body' ] .= "
 	<div class=\"vulnerable_code_area\">
 		<h2>Login</h2>
 
-		<form action=\"#\" method=\"GET\">
+		<form action=\"#\" method=\"{$method}\">
 			Username:<br />
 			<input type=\"text\" name=\"username\"><br />
 			Password:<br />

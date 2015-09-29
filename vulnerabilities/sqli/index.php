@@ -13,6 +13,7 @@ $page[ 'source_button' ] = 'sqli';
 
 dvwaDatabaseConnect();
 
+$method            = 'GET';
 $vulnerabilityFile = '';
 switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
@@ -20,6 +21,7 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 	case 'medium':
 		$vulnerabilityFile = 'medium.php';
+		$method = 'POST';
 		break;
 	case 'high':
 		$vulnerabilityFile = 'high.php';
@@ -40,10 +42,6 @@ if( ini_get( 'magic_quotes_gpc' ) == true ) {
 if( ini_get( 'safe_mode' ) == true ) {
 	$WarningHtml .= "<div class=\"warning\">The PHP function \"<em>Safe mode</em>\" is enabled.</div>";
 }
-
-$method = 'GET';
-if( $vulnerabilityFile == 'medium.php' )
-	$method = 'POST';
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
