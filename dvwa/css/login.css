@@ -5,6 +5,25 @@ body {
 	color: #6b6b6b;
 }
 
+#wrapper {
+	text-align: center;
+	margin: 0 auto;
+}
+
+#content {
+	display: inline-block;
+	padding: 20px;
+	width: auto;
+}
+
+#footer {
+	position: absolute;
+	width: 100%;
+	height: 50px;
+	bottom: 0px;
+	left: 0px;
+}
+
 label {
 	float: left;
 	text-align: right;
@@ -37,3 +56,4 @@ fieldset {
 p {
 	font-size: 10px;
 }
+

@@ -69,13 +69,19 @@ echo "
 
 	<body>
 
-	<div align=\"center\">
+	<div id=\"wrapper\">
+
+	<div id=\"header\">
 
 	<br />
 
 	<p><img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/login_logo.png\" /></p>
 
 	<br />
+
+	</div> <!--<div id=\"header\">-->
+
+	<div id=\"content\">
 
 	<form action=\"login.php\" method=\"post\">
 
@@ -86,6 +92,7 @@ echo "
 
 			<label for=\"pass\">Password</label> <input type=\"password\" class=\"loginInput\" AUTOCOMPLETE=\"off\" size=\"20\" name=\"password\"><br />
 
+			<br />
 
 			<p class=\"submit\"><input type=\"submit\" value=\"Login\" name=\"Login\"></p>
 
@@ -94,7 +101,6 @@ echo "
 	" . tokenField() . "
 
 	</form>
-
 
 	<br />
 
@@ -110,10 +116,15 @@ echo "
 	<br />
 
 	<!-- <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/RandomStorm.png\" /> -->
+	</div > <!--<div id=\"content\">-->
 
-	<p>Damn Vulnerable Web Application (DVWA) is a RandomStorm OpenSource project</p>
+	<div id=\"footer\">
 
-	</div> <!-- end align div -->
+	<p>" . dvwaExternalLinkUrlGet( 'http://www.dvwa.co.uk/', 'Damn Vulnerable Web Application (DVWA)' ) . " is a RandomStorm OpenSource project.</p>
+
+	</div> <!--<div id=\"footer\"> -->
+
+	</div> <!--<div id=\"wrapper\"> -->
 
 	</body>
 
