@@ -1,5 +1,6 @@
 <?php
 
-$file = $_GET[ 'page' ]; // The page we wish to display
+// The page we wish to display
+$file = $_GET[ 'page' ];
 
 ?>

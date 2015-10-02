@@ -1,8 +1,27 @@
 body {
 	background: #fefffe;
 	font: 12px/15px Arial, Helvetica, sans-serif;
-	line-height:20px;
-	color:#6b6b6b;
+	line-height: 20px;
+	color: #6b6b6b;
+}
+
+#wrapper {
+	text-align: center;
+	margin: 0 auto;
+}
+
+#content {
+	display: inline-block;
+	padding: 20px;
+	width: auto;
+}
+
+#footer {
+	position: absolute;
+	width: 100%;
+	height: 50px;
+	bottom: 0px;
+	left: 0px;
 }
 
 label {
@@ -15,7 +34,7 @@ label {
 	font-weight: bold;
 }
 
-.loginInput{
+.loginInput {
 	float: left;
 	color: #6B6B6B;
 	width: 320px;
@@ -31,9 +50,10 @@ fieldset {
 	width: 350px;
 	padding: 10px 20px 10px 20px;
 	overflow: hidden;
-	border-style:none;
+	border-style: none;
 }
 
 p {
 	font-size: 10px;
 }
+

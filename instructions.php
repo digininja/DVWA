@@ -1,12 +1,12 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Instructions'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ]   = 'Instructions' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'instructions';
 
 $docs = array(
@@ -14,7 +14,7 @@ $docs = array(
 	'PDF'            => array( 'legend' => 'PDF Guide', 'file' => 'docs/pdf.html' ),
 	'changelog'      => array( 'legend' => 'Change Log', 'file' => 'CHANGELOG.md' ),
 	'copying'        => array( 'legend' => 'Copying', 'file' => 'COPYING.txt' ),
-	'PHPIDS-license' => array( 'legend' => 'PHPIDS License', 'file' => DVWA_WEB_PAGE_TO_PHPIDS.'LICENSE' ),
+	'PHPIDS-license' => array( 'legend' => 'PHPIDS License', 'file' => DVWA_WEB_PAGE_TO_PHPIDS . 'LICENSE' ),
 );
 
 $selectedDocId = isset( $_GET[ 'doc' ] ) ? $_GET[ 'doc' ] : '';
@@ -52,10 +52,9 @@ $page[ 'body' ] .= "
 	{$docMenuHtml}
 
 	<span class=\"fixed\">
-	  {$instructions}
+		{$instructions}
 	</span>
-</div>
-";
+</div>";
 
 dvwaHtmlEcho( $page );
 

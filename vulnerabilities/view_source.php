@@ -1,12 +1,12 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '../' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] .= 'Source'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ] .= 'Source' . $page[ 'title_separator' ].$page[ 'title' ];
 
 $id       = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];
@@ -43,7 +43,7 @@ else {
 	$vuln = 'XSS (Stored)';
 }
 
-$source = @file_get_contents( DVWA_WEB_PAGE_TO_ROOT."vulnerabilities/{$id}/source/{$security}.php" );
+$source = @file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/source/{$security}.php" );
 $source = str_replace( array( '$html .=' ), array( 'echo' ), $source );
 
 $page[ 'body' ] .= "
@@ -53,7 +53,7 @@ $page[ 'body' ] .= "
 	<div id=\"code\">
 		<table width='100%' bgcolor='white' style=\"border:2px #C0C0C0 solid\">
 			<tr>
-				<td><div id=\"code\">".highlight_string( $source, true )."</div></td>
+				<td><div id=\"code\">" . highlight_string( $source, true ) . "</div></td>
 			</tr>
 		</table>
 	</div>
@@ -62,8 +62,7 @@ $page[ 'body' ] .= "
 	<form>
 		<input type=\"button\" value=\"Compare All Levels\" onclick=\"window.location.href='view_source_all.php?id=$id'\">
 	</form>
-</div>
-";
+</div>\n";
 
 dvwaSourceHtmlEcho( $page );
 

@@ -1,13 +1,13 @@
-body{
-	margin:0;
+body {
+	margin: 0;
 	color: #2f2f2f;
 	font: 12px/15px Arial, Helvetica, sans-serif;
-	min-width:981px;
+	min-width: 981px;
 	height: 100%;
-	position:relative;
+	position: relative;
 }
 
-body.home{
+body.home {
 	background: #e7e7e7;
 }
 
@@ -25,7 +25,7 @@ a img {
 	border: 0;
 }
 
-a:hover {
+a: hover {
 	text-decoration: none;
 }
 
@@ -34,28 +34,24 @@ input, textarea, select {
 	vertical-align: middle;
 }
 
-form,fieldset{
+form,fieldset {
 	margin: 0;
 	padding: 0;
 	border-style: none;
 }
-
 
 em {
 	font-weight: bold;
 	font-style: normal;
 }
 
-
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
 }
 
-
 h1 {
 	font-size: 200%;
 }
-
 
 h2 {
 	font-size: 160%;
@@ -66,14 +62,12 @@ h3 {
 	font-size: 130%;
 }
 
-
 hr {
 	border-width: 0px;
 	color: #C3D9FF;
 	background-color: #C3D9FF;
 	height: 1px;
 }
-
 
 ul.menuBlocks {
 	list-style-type: none;
@@ -83,17 +77,14 @@ ul.menuBlocks {
 	margin-left: 0px;
 }
 
-
 ul + ul, ul + ul.menuBlocks, ul + h1, ul + h2, ul + p {
 	margin-top: 20px;
 }
-
 
 .fixed {
 	font-family: Fixed, Courier, monospace;
 	font-size: 13px;
 }
-
 
 div.warning {
 	border: 2px solid #ff0000;
@@ -120,13 +111,13 @@ div#container {
 	height: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	background:#f4f4f4;
+	background: #f4f4f4;
 	font-size: 13px;
 }
 
 div#header {
 	padding: 10px;
-	overflow:hidden;
+	overflow: hidden;
 	background: #2f2f2f;
 	border-bottom: 5px solid #A1CC33;
 	text-align: center;
@@ -137,9 +128,8 @@ div#system_info {
 	text-align: right;
 }
 
-
 div#main_body {
-	float:right;
+	float: right;
 	width: 693px;
 	background: #f4f4f4;
 	padding-top: 20px;
@@ -147,12 +137,10 @@ div#main_body {
 	font-size: 13px;
 }
 
-
 div.body_padded {
 	padding-left: 20px;
 	padding-right: 20px;
 }
-
 
 div#main_menu {
 	float: left;
@@ -163,7 +151,6 @@ div#main_menu {
 	padding-bottom: 10px;
 }
 
-
 div#main_menu li {
 	border-width: 1px;
 	border-style: solid;
@@ -173,39 +160,32 @@ div#main_menu li {
 	background-color: #bebebe;
 }
 
-
 div#main_menu li a {
 	color: #000000;
 	text-decoration: none;
 	text-decoration: none;
 }
 
-
 div#main_menu li.selected {
 	border-color: #758DAE #758DAE #758DAE #758DAE;
 	background-color: #99cc33;
 }
 
-
 div#main_menu li.selected a {
 	color: #F9F7ED;
 }
 
-
-div#main_menu li:hover {
+div#main_menu li: hover {
 	border-color: #D2D4D4;
 }
 
-
-div#main_menu li:hover a {
+div#main_menu li: hover a {
 	color: #F9F7ED;
 }
-
 
 div#main_menu_padded {
 	padding: 15px;
 }
-
 
 div#footer {
 	color: #999999;
@@ -214,7 +194,6 @@ div#footer {
 	text-align: center;
 	border-top: 5px solid #A1CC33;
 }
-
 
 input.popup_button {
 	border-width: 1px;
@@ -225,7 +204,6 @@ input.popup_button {
 	background-color: #C3C3C3;
 	float: right;
 }
-
 
 div.vulnerable_code_area {
 	background-color: #f8fafa;
@@ -253,11 +231,9 @@ div#idslog {
 	background-color: #f8fafa;
 }
 
-
 pre {
 	color: red;
 }
-
 
 div.submenu {
 	border-bottom: 1px solid #000000;
@@ -266,18 +242,25 @@ div.submenu {
 	font-size: 13px;
 }
 
-
 span.submenu_item {
 	padding: 0px 10px 0px 10px;
 }
-
 
 span.submenu_item + span.submenu_item {
 	border-left: 1px dashed #000000;
 	font-size: 13px;
 }
 
-
 span.selected {
+	font-weight: bold;
+}
+
+span.success {
+
+	color:green;
+}
+
+span.failure {
+	color:red;
 	font-weight: bold;
 }

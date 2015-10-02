@@ -1,12 +1,12 @@
 <?php
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '../' );
-require_once DVWA_WEB_PAGE_TO_ROOT.'dvwa/includes/dvwaPage.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ] = 'Source'.$page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ] = 'Source' . $page[ 'title_separator' ].$page[ 'title' ];
 
 $id = $_GET[ 'id' ];
 
@@ -95,8 +95,7 @@ $page[ 'body' ] .= "
 		<input type=\"button\" value=\"<-- Back\" onClick=\"history.go(-1);return true;\">
 	</form>
 
-</div>
-";
+</div>\n";
 
 dvwaSourceHtmlEcho( $page );
 
