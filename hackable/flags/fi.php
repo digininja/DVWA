@@ -12,8 +12,8 @@ if( !defined( 'DVWA_WEB_PAGE_TO_ROOT' ) ) {
 
 echo "2.) My name is Sherlock Holmes. It is my business to know what other people don't know.\n\n<br /><br />\n";
 
-$line3 = "3.) Romeo, Romeo! wherefore art thou Romeo?";
-$line3 = "--LINE MISSING--";
+$line3 = "3.) Romeo, Romeo! Wherefore art thou Romeo?";
+$line3 = "--LINE HIDDEN ;)--";
 echo $line3 . "\n\n<br /><br />\n";
 
 $line4 = "NC4pI" . "FRoZSBwb29s" . "IG9uIH" . "RoZSByb29mIG1" . "1c3QgaGF" . "2ZSBh" . "IGxlY" . "Wsu";
