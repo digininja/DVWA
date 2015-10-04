@@ -42,9 +42,10 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
 
-  + DVWA v1.9 Source (Testing) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) // `git clone https://github.com/RandomStorm/DVWA`
-  + DVWA v1.8 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.0.8.zip) - Released 2013-05-01
+  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.9.zip) - Released 2015-10-04
   + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
+
+  + DVWA v1.xx Testing - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) // `git clone https://github.com/RandomStorm/DVWA`
 
 - - -
 

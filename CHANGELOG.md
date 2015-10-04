@@ -1,7 +1,7 @@
 DAMN VULNERABLE WEB APPLICATION
 =======================
 
-v1.9 (*Not Yet Released*)
+v1.9 (2015-10-04)
 ======
 
 + Added a dedicated objective (or "flag") for file include. (@g0tmi1k)

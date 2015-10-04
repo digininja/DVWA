@@ -40,7 +40,7 @@ function dvwaVersionGet() {
 
 // DVWA release date
 function dvwaReleaseDateGet() {
-	return '2015-09-19';
+	return '2015-10-04';
 }
 
 
