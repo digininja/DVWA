@@ -28,9 +28,9 @@ $page[ 'body' ] .= "
 
 	<h2>Credits</h2>
 	<ul>
-		<li>Craig: " . dvwaExternalLinkUrlGet( 'http://www.youreadmyblog.info/','www.youreadmyblog.info' ) . "</li>
+		<li>Craig</li>
 		<li>Jamesr: " . dvwaExternalLinkUrlGet( 'https://www.creativenucleus.com/','www.creativenucleus.com' ) . " / " . dvwaExternalLinkUrlGet( 'http://www.designnewcastle.co.uk/','www.designnewcastle.co.uk' ) . "</li>
-		<li>Ryan Dewhurst: " . dvwaExternalLinkUrlGet( 'http://www.ethicalhack3r.co.uk/','www.ethicalhack3r.co.uk' ) . "</li>
+		<li>Ryan Dewhurst: " . dvwaExternalLinkUrlGet( 'https://www.dewhurstsecurity.com/','www.dewhurstsecurity.com' ) . "</li>
 		<li>Tedi Heriyanto: " . dvwaExternalLinkUrlGet( 'http://tedi.heriyanto.net/','http://tedi.heriyanto.net' ) . "</li>
 		<li>Tom Mackenzie: " . dvwaExternalLinkUrlGet( 'https://www.tmacuk.co.uk/','www.tmacuk.co.uk' ) . "</li>
 		<li>RandomStorm: " . dvwaExternalLinkUrlGet( 'https://www.randomstorm.com/','www.randomstorm.com' ) . "</li>
