@@ -33,12 +33,12 @@ require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/upload/source/{$vulnerabil
 
 // Check if folder is writeable
 $WarningHtml = '';
-if( is_writable( realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" ) == false ) {
-	$WarningHtml .= "<div class=\"warning\">Incorrect folder permissions: " . realpath( dirname( dirname( getcwd() ) ) ) . "/hackable/uploads/" . "<br /><em>Folder is not writable.</em></div>";
+if( !is_writable( $PHPUploadPath ) ) {
+	$WarningHtml .= "<div class=\"warning\">Incorrect folder permissions: {$PHPUploadPath}<br /><em>Folder is not writable.</em></div>";
 }
 // Is PHP-GD installed?
 if( ( !extension_loaded( 'gd' ) || !function_exists( 'gd_info' ) ) ) {
-	$WarningHtml .= "<div class=\"warning\">The PHP module <em>PHP-GD is not installed</em>.</div>";
+	$WarningHtml .= "<div class=\"warning\">The PHP module <em>GD is not installed</em>.</div>";
 }
 
 $page[ 'body' ] .= "

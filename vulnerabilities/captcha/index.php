@@ -36,8 +36,8 @@ require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/captcha/source/{$vulnerabi
 // Check if we have a reCAPTCHA key
 $WarningHtml = '';
 if( $_DVWA[ 'recaptcha_public_key' ] == "" ) {
-	$WarningHtml = "<div class=\"warning\"><em>reCAPTCHA API key missing</em> from config file: " . realpath( dirname( dirname( getcwd() ) ) . "/config/config.inc.php" ) . "</div>";
-	$html = "<em>Please register for a key</em> from reCAPTCHA: " . dvwaExternalLinkUrlGet('https://www.google.com/recaptcha/admin/create');
+	$WarningHtml = "<div class=\"warning\"><em>reCAPTCHA API key missing</em> from config file: " . realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_TO_ROOT . "config" . DIRECTORY_SEPARATOR . "config.inc.php" ) . "</div>";
+	$html = "<em>Please register for a key</em> from reCAPTCHA: " . dvwaExternalLinkUrlGet( 'https://www.google.com/recaptcha/admin/create' );
 	$hide_form = true;
 }
 
