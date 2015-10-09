@@ -42,9 +42,9 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
 
-  + DVWA Development Source (Latest) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) // `git clone https://github.com/RandomStorm/DVWA`
   + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.9.zip) - Released 2015-10-05
   + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
+  + DVWA Development Source (Latest) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) // `git clone https://github.com/RandomStorm/DVWA`
 
 - - -
 
@@ -68,8 +68,7 @@ Simply unzip dvwa.zip, place the unzipped files in your public html folder, then
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mysql-server php5 php5-mysql php-pear php5-gd`
-
+`apt-get -y install apache2 mysql-server php5 php5-mysql php5-gd`
 
 ### Database Setup
 
@@ -160,7 +159,7 @@ With:
 
 ## Links
 
-Homepage: http://www.dvwa.co.uk
+Homepage: http://www.dvwa.co.uk/
 
 Project Home: https://github.com/RandomStorm/DVWA
 
