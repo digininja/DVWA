@@ -6,10 +6,10 @@ if( isset( $_SESSION [ 'id' ] ) ) {
 
 	// Check database
 	$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;";
-	$result = mysql_query( $query ) or die( '<pre>Something went wrong.</pre>' );
+	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>Something went wrong.</pre>' );
 
 	// Get results
-	$num = mysql_numrows( $result );
+	$num = mysqli_num_rows( $result );
 	$i   = 0;
 	while( $i < $num ) {
 		// Get values
@@ -23,7 +23,7 @@ if( isset( $_SESSION [ 'id' ] ) ) {
 		$i++;
 	}
 
-	mysql_close();
+	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 }
 
 ?>

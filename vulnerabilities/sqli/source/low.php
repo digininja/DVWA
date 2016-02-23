@@ -6,10 +6,10 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 
 	// Check database
 	$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
-	$result = mysql_query( $query ) or die( '<pre>' . mysql_error() . '</pre>' );
+	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
 
 	// Get results
-	$num = mysql_numrows( $result );
+	$num = mysqli_num_rows( $result );
 	$i   = 0;
 	while( $i < $num ) {
 		// Get values
@@ -23,7 +23,7 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 		$i++;
 	}
 
-	mysql_close();
+	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 }
 
 ?>
