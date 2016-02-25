@@ -48,7 +48,7 @@ $page[ 'body' ] .= "
 	{$WarningHtml}
 
 	<div class=\"vulnerable_code_area\">
-		<form enctype=\"multipart/form-data\" action=\"#\" method=\"POST\" />
+		<form enctype=\"multipart/form-data\" action=\"#\" method=\"POST\">
 			<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"100000\" />
 			Choose an image to upload:<br /><br />
 			<input name=\"uploaded\" type=\"file\" /><br />
