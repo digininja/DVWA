@@ -63,7 +63,7 @@ $page[ 'body' ] .= "
 	<h2>More Information</h2>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'http://www.captcha.net/' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'https://www.google.com/recaptcha/' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://github.com/claviska/simple-php-captcha' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Testing_for_Captcha_(OWASP-AT-012)' ) . "</li>
 	</ul>
 </div>\n";
