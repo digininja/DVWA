@@ -53,6 +53,12 @@ elseif( $id == 'xss_r' ) {
 elseif( $id == 'xss_s' ) {
 	$vuln = 'Stored XSS';
 }
+elseif ( $id == 'badcaptcha' ) {
+    $vuln = 'Bad CAPTCHA';
+}
+elseif ( $id == 'captcha' ) {
+    $vuln = 'Insecure CAPTCHA';
+}
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">

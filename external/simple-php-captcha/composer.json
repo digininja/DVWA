@@ -1,0 +1,7 @@
+{
+    "name": "abeautifulsite/simple-php-captcha",
+    "description": "A simple PHP CAPTCHA script",
+    "version": "1.0.0",
+    "homepage": "http://www.abeautifulsite.net/",
+    "license": "MIT"
+}
