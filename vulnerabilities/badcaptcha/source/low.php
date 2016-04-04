@@ -8,7 +8,7 @@ if( isset( $_POST[ 'Submit' ] ) ) {
 	$captcha_code  = $_POST[ 'captcha' ];
 
 	// Check CAPTCHA the the one in the session
-	$resp = strtoupper($captcha_code) == $_SESSION['captcha']['code'];
+	$resp = $captcha_code == $_SESSION['captcha']['code'];
 
 	// Did the CAPTCHA fail?
 	if( !$resp ) {
@@ -30,7 +30,7 @@ $_SESSION['captcha'] = simple_php_captcha( array(
     'min_length' => 3,
     'max_length' => 3,
     'backgrounds' => array(DVWA_WEB_PAGE_TO_ROOT . "external/simple-php-captcha/backgrounds/" . "grey-sandbag.png"),
-    'characters' => 'ABCDEFGHJKLMNPRSTUVWXYZ',
+    'characters' => '1234567890',
     'min_font_size' => 28,
     'max_font_size' => 28,
     'color' => '#666',

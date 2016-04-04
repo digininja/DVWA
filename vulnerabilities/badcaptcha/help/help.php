@@ -22,7 +22,7 @@
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>The issue with this CAPTCHA is that it should be easy to guess using an OCR. The CAPTCHA code is composed only by three uppercase letters, always of the same
+		<p>The issue with this CAPTCHA is that it should be easy to guess using an OCR. The CAPTCHA code is composed only by three digits, always of the same
 		size and without rotations.</p>
 
 		<br />
