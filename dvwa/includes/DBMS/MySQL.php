@@ -6,7 +6,7 @@ This file contains all of the code to setup the initial MySQL database. (setup.p
 
 */
 
-if( @mysql_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ] ) ) {
+if( !@mysql_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ] ) ) {
 	dvwaMessagePush( "Could not connect to the MySQL service.<br />Please check the config file." );
 	dvwaMessagePush( "Error:" . mysql_error() );
 	dvwaPageReload();
