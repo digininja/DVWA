@@ -409,10 +409,10 @@ function dvwaSourceHtmlEcho( $pPage ) {
 // To be used on all external links --
 function dvwaExternalLinkUrlGet( $pLink,$text=null ) {
 	if(is_null( $text )) {
-		return '<a href="http://hiderefer.com/?' . $pLink . '" target="_blank">' . $pLink . '</a>';
+		return '<a href="' . $pLink . '" target="_blank">' . $pLink . '</a>';
 	}
 	else {
-		return '<a href="http://hiderefer.com/?' . $pLink . '" target="_blank">' . $text . '</a>';
+		return '<a href="' . $pLink . '" target="_blank">' . $text . '</a>';
 	}
 }
 // -- END ( external links)
