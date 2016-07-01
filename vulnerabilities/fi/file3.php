@@ -7,15 +7,16 @@ $page[ 'body' ] .= "
 		<h3>File 3</h3>
 		<hr />
 		Welcome back <em>" . dvwaCurrentUser() . "</em><br />
-		Your IP address is: <em>";
-if( array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER ))
-	$page[ 'body' ] .= $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-else
-	$page[ 'body' ] .= "**Missing Header**";
-$page[ 'body' ] .= "</em><br />
-		Your user-agent address is: <em>{$_SERVER[ 'HTTP_USER_AGENT' ]}</em><br />
-		You came form: <em>{$_SERVER[ 'HTTP_REFERER' ]}</em><br />
-		I'm hosted at: <em>{$_SERVER[ 'HTTP_HOST' ]}</em><br /><br />
+		Your IP address is: <em>{$_SERVER[ 'REMOTE_ADDR' ]}</em><br />";
+if( array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER )) {
+	$page[ 'body' ] .= "Forwarded for: <em>" . $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+	$page[ 'body' ] .= "</em><br />";
+}
+		$page[ 'body' ] .= "Your user-agent address is: <em>{$_SERVER[ 'HTTP_USER_AGENT' ]}</em><br />";
+if( array_key_exists( 'HTTP_REFERER', $_SERVER )) {
+		$page[ 'body' ] .= "You came from: <em>{$_SERVER[ 'HTTP_REFERER' ]}</em><br />";
+}
+		$page[ 'body' ] .= "I'm hosted at: <em>{$_SERVER[ 'HTTP_HOST' ]}</em><br /><br />
 		[<em><a href=\"?page=include.php\">back</a></em>]
 	</div>
 
