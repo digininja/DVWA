@@ -433,7 +433,7 @@ function dvwaButtonSourceHtmlGet( $pId ) {
 
 if( $DBMS == 'MySQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
-	$DBMS_errorFunc = 'mysql_error()';
+	$DBMS_errorFunc = 'mysqli_error()';
 }
 elseif( $DBMS == 'PGSQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
@@ -458,15 +458,14 @@ function dvwaDatabaseConnect() {
 	global $db;
 
 	if( $DBMS == 'MySQL' ) {
-		if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ] ))
-		|| !@((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $_DVWA[ 'db_database' ])) ) {
+		if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ], $_DVWA['db_database'], $_DVWA['db_port'] ))) {
 			//die( $DBMS_connError );
 			dvwaLogout();
-			dvwaMessagePush( 'Unable to connect to the database.<br />' . $DBMS_errorFunc );
+			dvwaMessagePush( 'Unable to connect to the database.<br />' . mysqli_error($GLOBALS['___mysqli_ston']));
 			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'setup.php' );
 		}
 		// MySQL PDO Prepared Statements (for impossible levels)
-		$db = new PDO('mysql:host=' . $_DVWA[ 'db_server' ].';dbname=' . $_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
+		$db = new PDO('mysql:host=' . $_DVWA[ 'db_server' ].';port=' . $_DVWA['db_port'] . ';dbname=' . $_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	}
