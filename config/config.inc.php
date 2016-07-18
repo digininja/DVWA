@@ -17,8 +17,8 @@ $_DVWA[ 'db_database' ] = 'dvwa';
 $_DVWA[ 'db_user' ]     = 'root';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 
-# Only used with PostgreSQL/PGSQL database selection.
-$_DVWA[ 'db_port '] = '5432';
+# Port the DB-Server is running on. By default its 3306 for MySQL and 5432 for PGSQL
+$_DVWA[ 'db_port' ] = '3306';
 
 # ReCAPTCHA settings
 #   Used for the 'Insecure CAPTCHA' module
