@@ -12,14 +12,14 @@ if( isset( $_POST[ 'Submit' ] ) ) {
 	// Get results
 	while ( ( $row = mysqli_fetch_assoc( $result ) ) !== NULL ) {
 		// Get values
-        $first = $row['first_name'];
-        $last = $row['last_name'];
+		$first = $row['first_name'];
+		$last = $row['last_name'];
 
 		// Feedback for end user
 		$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
 	}
 
-    mysqli_free_result($result);
+	mysqli_free_result($result);
 }
 
 ?>

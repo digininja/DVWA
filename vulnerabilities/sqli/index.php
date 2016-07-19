@@ -13,7 +13,7 @@ $page[ 'source_button' ] = 'sqli';
 
 dvwaDatabaseConnect();
 
-$method            = 'GET';
+$method			= 'GET';
 $vulnerabilityFile = '';
 switch( $_COOKIE[ 'security' ] ) {
 	case 'low':
@@ -63,9 +63,9 @@ else {
 		$query  = "SELECT user_id FROM users;";
 		$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
 		while ( ( $row = mysqli_fetch_array( $result, MYSQLI_NUM ) ) !== NULL) {
-            $page[ 'body' ] .= "<option value=\"{$row[0]}\">{$row[0]}</option>";
-        }
-        mysqli_free_result( $result );
+			$page[ 'body' ] .= "<option value=\"{$row[0]}\">{$row[0]}</option>";
+		}
+		mysqli_free_result( $result );
 		$page[ 'body' ] .= "</select>";
 	}
 	else
