@@ -120,7 +120,7 @@ echo "
 
 	<div id=\"footer\">
 
-	<p>" . dvwaExternalLinkUrlGet( 'http://www.dvwa.co.uk/', 'Damn Vulnerable Web Application (DVWA)' ) . " is a RandomStorm OpenSource project.</p>
+	<p>" . dvwaExternalLinkUrlGet( 'http://www.dvwa.co.uk/', 'Damn Vulnerable Web Application (DVWA)' ) . "</p>
 
 	</div> <!--<div id=\"footer\"> -->
 
