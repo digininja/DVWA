@@ -158,6 +158,5 @@ Links
 =====
 
 + Homepage: http://www.dvwa.co.uk
-+ Project Home: https://github.com/RandomStorm/DVWA
 
 _Created by the DVWA team._
