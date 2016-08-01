@@ -15,7 +15,7 @@ $page[ 'body' ] .= "
 	<p>Version " . dvwaVersionGet() . " (Release date: " . dvwaReleaseDateGet() . ")</p>
 	<p>Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goals are to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and aid teachers/students to teach/learn web application security in a class room environment</p>
 	<p>The official documentation for DVWA can be found <a href=\"docs/DVWA_v1.3.pdf\">here</a>.</p>
-	<p>DVWA is a RandomStorm OpenSource project. All material is copyright 2008-2015 RandomStorm & Ryan Dewhurst.</p>
+	<p>All material is copyright 2008-2015 RandomStorm & Ryan Dewhurst.</p>
 
 	<h2>Links</h2>
 	<ul>
