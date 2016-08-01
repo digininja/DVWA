@@ -40,9 +40,9 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
 
-  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/SizzlingKeys/DVWA/archive/v1.9.zip) - Released 2015-10-05
+  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/v1.9.zip) - Released 2015-10-05
   + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
-  + DVWA Development Source (Latest) [Download ZIP](https://github.com/SizzlingKeys/DVWA/archive/master.zip) // `git clone https://github.com/SizzlingKeys/DVWA`
+  + DVWA Development Source (Latest) [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/master.zip) // `git clone https://github.com/ethicalhack3r/DVWA`
 
 - - -
 
@@ -117,7 +117,7 @@ Login URL: http://127.0.0.1/dvwa/login.php
 ### Troubleshooting
 
 For the latest troubleshooting information please visit:
-https://github.com/SizzlingKeys/DVWA/issues
+https://github.com/ethicalhack3r/DVWA/issues
 
 +Q. SQL Injection wont work on PHP v5.2.6.
 
@@ -159,6 +159,6 @@ With:
 
 Homepage: http://www.dvwa.co.uk/
 
-Project Home: https://github.com/SizzlingKeys/DVWA
+Project Home: https://github.com/ethicalhack3r/DVWA
 
 *Created by the DVWA team*
