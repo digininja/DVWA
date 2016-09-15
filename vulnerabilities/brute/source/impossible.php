@@ -7,12 +7,12 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	// Sanitise username input
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
-	$user = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $user ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$user = mysqli_real_escape_string($con, $user );
 
 	// Sanitise password input
 	$pass = $_POST[ 'password' ];
 	$pass = stripslashes( $pass );
-	$pass = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$pass = mysqli_real_escape_string($con, $pass );
 	$pass = md5( $pass );
 
 	// Default values

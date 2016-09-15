@@ -11,7 +11,7 @@ $page[ 'page_id' ] = 'sqli_blind';
 $page[ 'help_button' ]   = 'sqli_blind';
 $page[ 'source_button' ] = 'sqli_blind';
 
-dvwaDatabaseConnect();
+$con = dvwaDatabaseConnect();
 
 $method            = 'GET';
 $vulnerabilityFile = '';
@@ -61,8 +61,8 @@ else {
 	if( $vulnerabilityFile == 'medium.php' ) {
 		$page[ 'body' ] .= "\n				<select name=\"id\">";
 		$query  = "SELECT COUNT(*) FROM users;";
-		$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
-		$num    = mysqli_fetch_row( $result )[0];
+		$result = mysqli_query($con, $query ) or die( '<pre>' . mysqli_error($con) . '</pre>' );
+		$num    = mysqli_result( $result, 0 );
 		$i      = 0;
 		while( $i < $num ) { $i++; $page[ 'body' ] .= "<option value=\"{$i}\">{$i}</option>"; }
 		$page[ 'body' ] .= "</select>";

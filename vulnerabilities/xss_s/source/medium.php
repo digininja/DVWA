@@ -7,18 +7,18 @@ if( isset( $_POST[ 'btnSign' ] ) ) {
 
 	// Sanitize message input
 	$message = strip_tags( addslashes( $message ) );
-	$message = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $message ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$message = mysqli_real_escape_string($con, $message );
 	$message = htmlspecialchars( $message );
 
 	// Sanitize name input
 	$name = str_replace( '<script>', '', $name );
-	$name = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $name ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$name = mysqli_real_escape_string($con, $name );
 
 	// Update database
 	$query  = "INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
+	$result = mysqli_query($con, $query ) or die( '<pre>' . mysqli_error($con) . '</pre>' );
 
-	//mysql_close();
+	//mysqli_close();
 }
 
 ?>

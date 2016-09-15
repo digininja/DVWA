@@ -30,7 +30,7 @@
 
 		<h3>Medium Level</h3>
 		<p>The medium level uses a form of SQL injection protection, with the function of
-			"<?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.mysql-real-escape-string.php', 'mysql_real_escape_string()' ); ?>".
+			"<?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/mysqli.real-escape-string.php', 'mysqli_real_escape_string()' ); ?>".
 			However due to the SQL query not having quotes around the parameter, this will not fully protect the query from being altered.</p>
 
 		<p>The text box has been replaced with a pre-defined dropdown list and uses POST to submit the form.</p>

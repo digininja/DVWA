@@ -6,7 +6,7 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 
 	// Check database
 	$getid  = "SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $getid ); // Removed 'or die' to suppress mysql errors
+	$result = mysqli_query($con, $getid ); // Removed 'or die' to suppress mysqli errors
 
 	// Get results
 	$num = @mysqli_num_rows( $result ); // The '@' character suppresses errors
@@ -27,7 +27,7 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}
 
-	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
+	mysqli_close($con);
 }
 
 ?>

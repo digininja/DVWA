@@ -7,22 +7,21 @@ if( isset( $_GET[ 'Login' ] ) ) {
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
 	$user = stripslashes( $user );
-	$user = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $user ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$user = mysqli_real_escape_string($con, $user );
 
 	// Sanitise password input
 	$pass = $_GET[ 'password' ];
 	$pass = stripslashes( $pass );
-	$pass = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$pass = mysqli_real_escape_string($con, $pass );
 	$pass = md5( $pass );
 
 	// Check database
 	$query  = "SELECT * FROM `users` WHERE user = '$user' AND password = '$pass';";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
+	$result = mysqli_query($con, $query ) or die( '<pre>' . mysqli_error($con) . '</pre>' );
 
 	if( $result && mysqli_num_rows( $result ) == 1 ) {
 		// Get users details
-		$row    = mysqli_fetch_assoc( $result );
-		$avatar = $row["avatar"];
+		$avatar = mysqli_result( $result, 0, "avatar" );
 
 		// Login successful
 		$html .= "<p>Welcome to the password protected area {$user}</p>";
@@ -34,7 +33,7 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
 	}
 
-	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
+	mysqli_close();
 }
 
 // Generate Anti-CSRF token
