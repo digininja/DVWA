@@ -4,6 +4,11 @@ Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is da
 
 The aim of DVWA is to **practice some of the most common web vulnerability**, with **various difficultly levels**, with a simple straightforward interface.
 Please note, there are **both documented and undocumented vulnerability** with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
+- - -
+
+## Installation Video
+
+[![How to setup DVWA (Damn Vulnerable Web Application)](http://i.imgur.com/2hhcLN3.png)](https://www.youtube.com/watch?v=5BG6iq_AUvM "How to setup DVWA (Damn Vulnerable Web Application)")
 
 - - -
 
