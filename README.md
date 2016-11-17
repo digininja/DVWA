@@ -8,7 +8,7 @@ Please note, there are **both documented and undocumented vulnerability** with t
 
 ## Installation Video
 
-[![How to setup DVWA (Damn Vulnerable Web Application)](http://i.imgur.com/2hhcLN3.png)](https://www.youtube.com/watch?v=5BG6iq_AUvM "How to setup DVWA (Damn Vulnerable Web Application)")
+[![How to setup DVWA (Damn Vulnerable Web Application)](http://i.imgur.com/SM3evfx.png)](https://www.youtube.com/watch?v=5BG6iq_AUvM "How to setup DVWA (Damn Vulnerable Web Application)")
 
 - - -
 
