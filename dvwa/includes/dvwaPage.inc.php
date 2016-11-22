@@ -1,7 +1,7 @@
 <?php
 
 if( !defined( 'DVWA_WEB_PAGE_TO_ROOT' ) ) {
-	die( 'DVWA System error- WEB_PAGE_TO_ROOT undefined' );
+	define( 'DVWA System error- WEB_PAGE_TO_ROOT undefined' );
 	exit;
 }
 
@@ -35,12 +35,12 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 
 // DVWA version
 function dvwaVersionGet() {
-	return '1.10 *Development*';
+	return '1.9.1';
 }
 
 // DVWA release date
 function dvwaReleaseDateGet() {
-	return '2015-10-08';
+	return '2016-09-10';
 }
 
 
@@ -409,10 +409,10 @@ function dvwaSourceHtmlEcho( $pPage ) {
 // To be used on all external links --
 function dvwaExternalLinkUrlGet( $pLink,$text=null ) {
 	if(is_null( $text )) {
-		return '<a href="' . $pLink . '" target="_blank">' . $pLink . '</a>';
+		return '<a href="http://hiderefer.com/?' . $pLink . '" target="_blank">' . $pLink . '</a>';
 	}
 	else {
-		return '<a href="' . $pLink . '" target="_blank">' . $text . '</a>';
+		return '<a href="http://hiderefer.com/?' . $pLink . '" target="_blank">' . $text . '</a>';
 	}
 }
 // -- END ( external links)
@@ -433,7 +433,7 @@ function dvwaButtonSourceHtmlGet( $pId ) {
 
 if( $DBMS == 'MySQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
-	$DBMS_errorFunc = 'mysql_error()';
+	$DBMS_errorFunc = 'mysqli_error()';
 }
 elseif( $DBMS == 'PGSQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
@@ -451,24 +451,43 @@ else {
 //		Click <a href="' . DVWA_WEB_PAGE_TO_ROOT . 'setup.php">here</a> to setup the database.
 //	</div>';
 
+
+function mysqli_result($res,$row=0,$col=0){
+    $numrows = mysqli_num_rows($res);
+    if ($numrows && $row <= ($numrows-1) && $row >=0){
+        mysqli_data_seek($res,$row);
+        $resrow = (is_numeric($col)) ? mysqli_fetch_row($res) : mysqli_fetch_assoc($res);
+        if (isset($resrow[$col])){
+            return $resrow[$col];
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
 function dvwaDatabaseConnect() {
 	global $_DVWA;
 	global $DBMS;
 	//global $DBMS_connError;
 	global $db;
+	global $con;
 
 	if( $DBMS == 'MySQL' ) {
-		if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ] ))
-		|| !@((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $_DVWA[ 'db_database' ])) ) {
+		if( !$con = mysqli_connect( $_DVWA[ 'db_server' ], $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ], $_DVWA[ 'db_database' ] )){
 			//die( $DBMS_connError );
 			dvwaLogout();
 			dvwaMessagePush( 'Unable to connect to the database.<br />' . $DBMS_errorFunc );
 			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'setup.php' );
 		}
-		// MySQL PDO Prepared Statements (for impossible levels)
+		// mysqli PDO Prepared Statements (for impossible levels)
 		$db = new PDO('mysql:host=' . $_DVWA[ 'db_server' ].';dbname=' . $_DVWA[ 'db_database' ].';charset=utf8', $_DVWA[ 'db_user' ], $_DVWA[ 'db_password' ]);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		return $con;
 	}
 	elseif( $DBMS == 'PGSQL' ) {
 		//$dbconn = pg_connect("host={$_DVWA[ 'db_server' ]} dbname={$_DVWA[ 'db_database' ]} user={$_DVWA[ 'db_user' ]} password={$_DVWA[ 'db_password' ])}"
@@ -492,8 +511,9 @@ function dvwaRedirect( $pLocation ) {
 
 // XSS Stored guestbook function --
 function dvwaGuestbook() {
+	global $con;
 	$query  = "SELECT name, comment FROM guestbook";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
+	$result = mysqli_query($con, $query );
 
 	$guestbook = '';
 
@@ -540,30 +560,23 @@ function tokenField() {  # Return a field for the (CSRF) token
 
 
 // Setup Functions --
-$PHPUploadPath    = realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_TO_ROOT . "hackable" . DIRECTORY_SEPARATOR . "uploads" ) . DIRECTORY_SEPARATOR;
-$PHPIDSPath       = realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_TO_ROOT . "external" . DIRECTORY_SEPARATOR . "phpids" . DIRECTORY_SEPARATOR . dvwaPhpIdsVersionGet() . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR . "IDS" . DIRECTORY_SEPARATOR . "tmp" . DIRECTORY_SEPARATOR . "phpids_log.txt" );
+$PHPUploadPath    = realpath( getcwd() ) . "/hackable/uploads/";
+$PHPIDSPath       = realpath( getcwd() ) . "/external/phpids/" . dvwaPhpIdsVersionGet() . "/lib/IDS/tmp/phpids_log.txt";
 
-$phpDisplayErrors = 'PHP function display_errors: <em>' . ( ini_get( 'display_errors' ) ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );                                                  // Verbose error messages (e.g. full path disclosure)
-$phpSafeMode      = 'PHP function safe_mode: <span class="' . ( ini_get( 'safe_mode' ) ? 'failure">Enabled' : 'success">Disabled' ) . '</span>';                                                   // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
-$phpMagicQuotes   = 'PHP function magic_quotes_gpc: <span class="' . ( ini_get( 'magic_quotes_gpc' ) ? 'failure">Enabled' : 'success">Disabled' ) . '</span>';                                     // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
-$phpURLInclude    = 'PHP function allow_url_include: <span class="' . ( ini_get( 'allow_url_include' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                   // RFI
-$phpURLFopen      = 'PHP function allow_url_fopen: <span class="' . ( ini_get( 'allow_url_fopen' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                       // RFI
-$phpGD            = 'PHP module gd: <span class="' . ( ( extension_loaded( 'gd' ) && function_exists( 'gd_info' ) ) ? 'success">Installed' : 'failure">Missing' ) . '</span>';                    // File Upload
-$phpMySQL         = 'PHP module mysql: <span class="' . ( ( extension_loaded( 'mysql' ) && function_exists( 'mysqli_query' ) ) ? 'success">Installed' : 'failure">Missing' ) . '</span>';                // Core DVWA
-$phpPDO           = 'PHP module pdo_mysql: <span class="' . ( extension_loaded( 'pdo_mysql' ) ? 'success">Installed' : 'failure">Missing' ) . '</span>';                // SQLi
+$phpDisplayErrors = 'PHP function display_errors: <em>' . ( ini_get( 'display_errors' )  ? 'Enabled</em> <i>(Easy Mode!)</i>' : 'Disabled</em>' );                // Verbose error messages (e.g. full path disclosure)
+$phpSafeMode      = 'PHP function safe_mode: <span class="' . ( ini_get( 'safe_mode' )  ? 'failure">Enabled' : 'success">Disabled' ) . '</span>';                 // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
+$phpMagicQuotes   = 'PHP function magic_quotes_gpc: <span class="' . ( ini_get( 'magic_quotes_gpc' )  ? 'failure">Enabled' : 'success">Disabled' ) . '</span>';   // DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0
+$phpURLInclude    = 'PHP function allow_url_include: <span class="' . ( ini_get( 'allow_url_include' )  ? 'success">Enabled' : 'failure">Disabled' ) . '</span>'; // RFI
+$phpURLFopen      = 'PHP function allow_url_fopen: <span class="' . ( ini_get( 'allow_url_fopen' )  ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';     // RFI
+$phpGD            = 'PHP module php-gd: <span class="' . (  ( extension_loaded( 'gd' ) && function_exists( 'gd_info' ) ) ? 'success">Installed' : 'failure">Missing' ) . '</span>';     // File Upload
 
 $DVWARecaptcha    = 'reCAPTCHA key: <span class="' . ( ( isset( $_DVWA[ 'recaptcha_public_key' ] ) && $_DVWA[ 'recaptcha_public_key' ] != '' ) ? 'success">' . $_DVWA[ 'recaptcha_public_key' ] : 'failure">Missing' ) . '</span>';
 
-$DVWAUploadsWrite = '[User: ' . get_current_user() . '] Writable folder ' . $PHPUploadPath . ': <span class="' . ( is_writable( $PHPUploadPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';                                     // File Upload
-$DVWAPHPWrite     = '[User: ' . get_current_user() . '] Writable file ' . $PHPIDSPath . ': <span class="' . ( is_writable( $PHPIDSPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';                                              // PHPIDS
+$DVWAUploadsWrite = 'Writable folder ' . $PHPUploadPath . ': <span class="' . ( is_writable( $PHPUploadPath ) ? 'success">Yes)' : 'failure">No' ) . '</span>'; // File Upload
+$DVWAPHPWrite     = 'Writable file ' . $PHPIDSPath . ': <span class="' . ( is_writable( $PHPIDSPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';         // PHPIDS
 
-$DVWAOS           = 'Operating system: <em>' . ( strtoupper( substr (PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
-$SERVER_NAME      = 'Web Server SERVER_NAME: <em>' . $_SERVER[ 'SERVER_NAME' ] . '</em>';                                                                                                          // CSRF
-
-$MYSQL_USER       = 'MySQL username: <em>' . $_DVWA[ 'db_user' ] . '</em>';
-$MYSQL_PASS       = 'MySQL password: <em>' . ( ($_DVWA[ 'db_password' ] != "" ) ? '******' : '*blank*' ) . '</em>';
-$MYSQL_DB         = 'MySQL database: <em>' . $_DVWA[ 'db_database' ] . '</em>';
-$MYSQL_SERVER     = 'MySQL host: <em>' . $_DVWA[ 'db_server' ] . '</em>';
+$DVWAOS           = 'Operating system: <em>' . ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
+$SERVER_NAME      = 'Web Server SERVER_NAME: <em>' . $_SERVER[ 'SERVER_NAME' ] . '</em>';   // CSRF
 // -- END (Setup Functions)
 
 ?>

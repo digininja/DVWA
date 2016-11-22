@@ -1,3 +1,5 @@
+![DVWA](https://www.randomstorm.com/images/tools/dvwa.png "DVWA")
+
 # DAMN VULNERABLE WEB APPLICATION
 
 Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goal is to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and to aid both students & teachers to learn about web application security in a controlled class room environment.
@@ -45,9 +47,9 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
 
-  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/v1.9.zip) - Released 2015-10-05
+  + DVWA Development Source (Latest) [Download ZIP](https://github.com/RandomStorm/DVWA/archive/master.zip) // `git clone https://github.com/RandomStorm/DVWA`
+  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/RandomStorm/DVWA/archive/v1.9.zip) - Released 2015-10-05
   + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
-  + DVWA Development Source (Latest) [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/master.zip) // `git clone https://github.com/ethicalhack3r/DVWA`
 
 - - -
 
@@ -71,7 +73,8 @@ Simply unzip dvwa.zip, place the unzipped files in your public html folder, then
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mysql-server php5 php5-mysql php5-gd`
+`apt-get -y install apache2 mysql-server php5 php5-mysql php-pear php5-gd`
+
 
 ### Database Setup
 
@@ -122,7 +125,7 @@ Login URL: http://127.0.0.1/dvwa/login.php
 ### Troubleshooting
 
 For the latest troubleshooting information please visit:
-https://github.com/ethicalhack3r/DVWA/issues
+https://github.com/RandomStorm/DVWA/issues
 
 +Q. SQL Injection wont work on PHP v5.2.6.
 
@@ -162,8 +165,8 @@ With:
 
 ## Links
 
-Homepage: http://www.dvwa.co.uk/
+Homepage: http://www.dvwa.co.uk
 
-Project Home: https://github.com/ethicalhack3r/DVWA
+Project Home: https://github.com/RandomStorm/DVWA
 
 *Created by the DVWA team*

@@ -1,11 +1,11 @@
 DAMN VULNERABLE WEB APPLICATION
 =======================
 
-v1.10 (*Not Yet Released)
+v1.9.1 (2015-10-05)
 ======
 
-+ Improved IIS support. (@g0tmi1k)
-+ Improved setup system check. (@g0tmi1k)
++ Fixed Now Work into PHP 7.0 (@goldrak)
+
 
 v1.9 (2015-10-05)
 ======
@@ -38,7 +38,7 @@ v1.9 (2015-10-05)
 + Renamed 'Command Execution' to 'Command Injection'. (@g0tmi1k)
 + Renamed 'high' level to 'impossible' and created new vectors for 'high'. (@g0tmi1k)
 + Updated README and documentation. (@g0tmi1k)
-+ Various code cleanups in the core PHP files + CSS. (@g0tmi1k)
++ Various code cleanups in the core PHP files+CSS. (@g0tmi1k)
 + Various setup improvements (e.g. redirection + limited menu links). (@g0tmi1k)
 
 v1.8 (2013-05-01)
@@ -158,5 +158,6 @@ Links
 =====
 
 + Homepage: http://www.dvwa.co.uk
++ Project Home: https://github.com/RandomStorm/DVWA
 
 _Created by the DVWA team._

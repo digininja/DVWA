@@ -3,11 +3,11 @@
 if( isset( $_POST[ 'Submit' ]  ) ) {
 	// Get input
 	$id = $_POST[ 'id' ];
-	$id = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $id ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$id = mysqli_real_escape_string($con, $id );
 
 	// Check database
 	$getid  = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
-	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $getid ); // Removed 'or die' to suppress mysql errors
+	$result = mysqli_query($con, $getid ); // Removed 'or die' to suppress mysqli errors
 
 	// Get results
 	$num = @mysqli_num_rows( $result ); // The '@' character suppresses errors
@@ -20,7 +20,7 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}
 
-	//mysql_close();
+	//mysqli_close();
 }
 
 ?>
