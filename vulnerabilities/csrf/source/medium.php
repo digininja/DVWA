@@ -2,7 +2,7 @@
 
 if( isset( $_GET[ 'Change' ] ) ) {
 	// Checks to see where the request came from
-	if( eregi( $_SERVER[ 'SERVER_NAME' ], $_SERVER[ 'HTTP_REFERER' ] ) ) {
+	if( stripos( $_SERVER[ 'HTTP_REFERER' ] ,$_SERVER[ 'SERVER_NAME' ])!=-1 ) {
 		// Get input
 		$pass_new  = $_GET[ 'password_new' ];
 		$pass_conf = $_GET[ 'password_conf' ];
