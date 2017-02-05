@@ -1,0 +1,47 @@
+<?php
+
+require_once 'HTMLPurifier/DefinitionCache/Decorator.php';
+
+/**
+ * Definition cache decorator template.
+ */
+class HTMLPurifier_DefinitionCache_Decorator_Template extends
+      HTMLPurifier_DefinitionCache_Decorator
+{
+
+    var $name = 'Template'; // replace this
+
+    function copy() {
+        // replace class name with yours
+        return new HTMLPurifier_DefinitionCache_Decorator_Template();
+    }
+
+    // remove methods you don't need
+
+    function add($def, $config) {
+        return parent::add($def, $config);
+    }
+
+    function set($def, $config) {
+        return parent::set($def, $config);
+    }
+
+    function replace($def, $config) {
+        return parent::replace($def, $config);
+    }
+
+    function get($config) {
+        return parent::get($config);
+    }
+
+    function flush() {
+        return parent::flush();
+    }
+
+    function cleanup($config) {
+        return parent::cleanup($config);
+    }
+
+}
+
+// vim: et sw=4 sts=4

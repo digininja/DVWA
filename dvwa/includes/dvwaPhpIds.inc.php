@@ -14,7 +14,7 @@ set_include_path( get_include_path() . PATH_SEPARATOR . DVWA_WEB_PAGE_TO_PHPIDS 
 require_once 'IDS/Init.php';
 
 function dvwaPhpIdsVersionGet() {
-	return '0.6';
+	return '0.7';
 }
 
 // PHPIDS Log parsing function

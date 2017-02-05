@@ -1,0 +1,3 @@
+CSS
+DESCRIPTION: Configuration regarding allowed CSS.
+--# vim: et sw=4 sts=4

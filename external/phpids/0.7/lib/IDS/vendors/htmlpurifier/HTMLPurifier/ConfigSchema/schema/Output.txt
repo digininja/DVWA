@@ -1,0 +1,3 @@
+Output
+DESCRIPTION: Configuration relating to the generation of (X)HTML.
+--# vim: et sw=4 sts=4
