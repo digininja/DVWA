@@ -12,7 +12,7 @@ $DBMS = 'MySQL';
 #   WARNING: The database specified under db_database WILL BE ENTIRELY DELETED during setup.
 #   Please use a database dedicated to DVWA.
 $_DVWA = array();
-$_DVWA[ 'db_server' ]   = '127.0.0.1';
+$_DVWA[ 'db_server' ]   = 'db';
 $_DVWA[ 'db_database' ] = 'dvwa';
 $_DVWA[ 'db_user' ]     = 'root';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
