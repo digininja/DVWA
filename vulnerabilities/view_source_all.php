@@ -26,32 +26,39 @@ $impsrc = @file_get_contents("./{$id}/source/impossible.php");
 $impsrc = str_replace( array( '$html .=' ), array( 'echo' ), $impsrc);
 $impsrc = highlight_string( $impsrc, true );
 
-if( $id == 'fi' ) {
-	$vuln = 'File Inclusion';
-}
-elseif( $id == 'brute' ) {
-	$vuln = 'Brute Force';
-}
-elseif( $id == 'csrf' ) {
-	$vuln = 'CSRF';
-}
-elseif( $id == 'exec' ) {
-	$vuln = 'Command Injection';
-}
-elseif( $id == 'sqli' ) {
-	$vuln = 'SQL Injection';
-}
-elseif( $id == 'sqli_blind' ) {
-	$vuln = 'SQL Injection (Blind)';
-}
-elseif( $id == 'upload' ) {
-	$vuln = 'File Upload';
-}
-elseif( $id == 'xss_r' ) {
-	$vuln = 'Reflected XSS';
-}
-elseif( $id == 'xss_s' ) {
-	$vuln = 'Stored XSS';
+switch ($id) {
+	case "fi" :
+		$vuln = 'File Inclusion';
+		break;
+	case "brute" :
+		$vuln = 'Brute Force';
+		break;
+	case "csrf" :
+		$vuln = 'CSRF';
+		break;
+	case "exec" :
+		$vuln = 'Command Injection';
+		break;
+	case "sqli" :
+		$vuln = 'SQL Injection';
+		break;
+	case "sqli_blind" :
+		$vuln = 'SQL Injection (Blind)';
+		break;
+	case "upload" :
+		$vuln = 'File Upload';
+		break;
+	case "xss_r" :
+		$vuln = 'Reflected XSS';
+		break;
+	case "xss_s" :
+		$vuln = 'Stored XSS';
+		break;
+	case "weak_id" :
+		$vuln = 'Weak Session IDs';
+		break;
+	default:
+		$vuln = "Unknown Vulnerability";
 }
 
 $page[ 'body' ] .= "
