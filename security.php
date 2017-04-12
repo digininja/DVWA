@@ -96,7 +96,7 @@ $page[ 'body' ] .= "
 			<li> Medium - This setting is mainly to give an example to the user of <em>bad security practices</em>, where the developer has tried but failed to secure an application. It also acts as a challenge to users to refine their exploitation techniques.</li>
 			<li> High - This option is an extension to the medium difficulty, with a mixture of <em>harder or alternative bad practices</em> to attempt to secure the code. The vulnerability may not allow the same extent of the exploitation, similar in various Capture The Flags (CTFs) competitions.</li>
 			<li> Impossible - This level should be <em>secure against all vulnerabilities</em>. It is used to compare the vulnerable source code to the secure source code.<br />
-				Priority to DVWA v1.9, this level was known as 'high'.</li>
+				Prior to DVWA v1.9, this level was known as 'high'.</li>
 		</ol>
 		<select name=\"security\">
 			{$securityOptionsHtml}
