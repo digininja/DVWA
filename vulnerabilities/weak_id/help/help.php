@@ -6,39 +6,34 @@
 	<tr>
 	<td><div id="code">
 		<h3>About</h3>
-		<p>blah.</p>
+		<p>Knowledge of a session ID is often the only thing required to access a site as a specific user after they have logged in, if that session ID is able to be calculated or easily guessed, then an attacker will have an easy way to gain access to user accounts without having to brute force passwords or find other vulnerabilities such as Cross-Site Scripting.</p>
 
-		<br /><hr /><br />
+		<p><hr /></p>
 
 		<h3>Objective</h3>
-		<p>blah.</p>
+		<p>This module uses four different ways to set the dvwaSession cookie value, the objective of each level is to work out how the ID is generated and then infer the IDs of other system users.</p>
 
-		<br /><hr /><br />
+		<p><hr /></p>
 
 		<h3>Low Level</h3>
-		<p>blah.</p>
-
-		<br />
+		<p>The cookie value should be very obviously predictable.</p>
 
 		<h3>Medium Level</h3>
-		<p>blah.</p>
-
-		<br />
+		<p>The value looks a little more random than on low but if you collect a few you should start to see a pattern.</p>
 
 		<h3>High Level</h3>
-		<p>blah.</p>
+		<p>First work out what format the value is in and then try to work out what is being used as the input to generate the values.</p>
+		<p>Extra flags are also being added to the cookie, this does not affect the challenge but highlights extra protections that can be added to protect the cookies.</p>
 
-		<br />
 
 		<h3>Impossible Level</h3>
-		<p>blah.</p>
+		<p>The cookie value should not be predictable at this level but feel free to try.</p>
+		<p>As well as the extra flags, the cookie is being tied to the domain and the path of the challenge.</p>
 	</div></td>
 	</tr>
 	</table>
 
 	</div>
-
-	<br />
 
 	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management' ); ?></p>
 </div>
