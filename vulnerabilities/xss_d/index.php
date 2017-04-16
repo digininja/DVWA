@@ -31,18 +31,42 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/xss_d/source/{$vulnerabilityFile}";
 
-$page[ 'body' ] .= "
-<div class=\"body_padded\">
+# For the impossible level, don't decode the querystring
+$decodeURI = "decodeURI";
+if ($vulnerabilityFile == 'impossible.php') {
+	$decodeURI = "";
+}
+
+$page[ 'body' ] = <<<EOF
+<div class="body_padded">
 	<h1>Vulnerability: DOM Based Cross Site Scripting (XSS)</h1>
 
-	<div class=\"vulnerable_code_area\">
-		<form name=\"XSS\" action=\"#\" method=\"GET\">
-			<p>
-				What's your name?
-				<input type=\"text\" name=\"name\">
-				<input type=\"submit\" value=\"Submit\">
-			</p>\n";
+	<div class="vulnerable_code_area">
+ 
+ 		<p>Please choose a language:</p>
 
+		<form name="XSS" action="/vulnerabilities/xss_d/" method="GET">
+			<select name="default">
+				<script>
+					if (document.location.href.indexOf("default=") >= 0) {
+						var lang = document.location.href.substring(document.location.href.indexOf("default=")+8);
+						document.write("<option value='" + lang + "'>" + $decodeURI(lang) + "</option>");
+						document.write("<option value='' disabled='disabled'>----</option>");
+					}
+					    
+					document.write("<option value='English'>English</option>");
+					document.write("<option value='French'>French</option>");
+					document.write("<option value='Spanish'>Spanish</option>");
+					document.write("<option value='German'>German</option>");
+				</script>
+			</select>
+			<input type="submit" value="Select" />
+		</form>
+		{$html}
+	</div>
+EOF;
+
+/*
 if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
@@ -50,7 +74,8 @@ $page[ 'body' ] .= "
 		</form>
 		{$html}
 	</div>
-
+*/
+$page[ 'body' ] .= "
 	<h2>More Information</h2>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)' ) . "</li>

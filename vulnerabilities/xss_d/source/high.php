@@ -1,12 +1,18 @@
 <?php
 
 // Is there any input?
-if( array_key_exists( "name", $_GET ) && $_GET[ 'name' ] != NULL ) {
-	// Get input
-	$name = preg_replace( '/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i', '', $_GET[ 'name' ] );
-
-	// Feedback for end user
-	$html .= "<pre>Hello ${name}</pre>";
+if ( array_key_exists( "default", $_GET ) && !is_null ($_GET[ 'default' ]) ) {
+	switch ($_GET['default']) {
+		case "French":
+		case "English":
+		case "German":
+		case "Spanish":
+			# ok
+			break;
+		default:
+			header ("location: /vulnerabilities/xss_d/?default=English");
+			exit;
+	}
 }
 
 ?>
