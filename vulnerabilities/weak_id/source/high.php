@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	}
 	$_SESSION['last_session_id_high']++;
 	$cookie_value = md5($_SESSION['last_session_id_high']);
-	setcookie("dvwaSession", $cookie_value);
+	setcookie("dvwaSession", $cookie_value, time()+3600, "/vulnerabilities/weak_id/", $_SERVER['HTTP_HOST'], false, false);
 }
 
 ?>
