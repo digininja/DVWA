@@ -62,8 +62,17 @@ foreach( array( 'low', 'medium', 'high', 'impossible' ) as $securityLevel ) {
 }
 
 $phpIdsHtml = 'PHPIDS is currently: ';
+
+// Able to write to the PHPIDS log file?
+$WarningHtml = '';
+
 if( dvwaPhpIdsIsEnabled() ) {
 	$phpIdsHtml .= '<em>enabled</em>. [<a href="?phpids=off">Disable PHPIDS</a>]';
+
+	# Only check if PHPIDS is enabled
+	if( !is_writable( $PHPIDSPath ) ) {
+		$WarningHtml .= "<div class=\"warning\"><em>Cannot write to the PHPIDS log file</em>: ${PHPIDSPath}</div>";
+	}
 }
 else {
 	$phpIdsHtml .= '<em>disabled</em>. [<a href="?phpids=on">Enable PHPIDS</a>]';
@@ -71,13 +80,6 @@ else {
 
 // Anti-CSRF
 generateSessionToken();
-
-// Able to write to the PHPIDS log file?
-$WarningHtml = '';
-if( !is_writable( $PHPIDSPath ) ) {
-	$WarningHtml .= "<div class=\"warning\"><em>Cannot write to the PHPIDS log file</em>: ${PHPIDSPath}</div>";
-}
-
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
