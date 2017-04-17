@@ -15,36 +15,37 @@
 			and will execute the JavaScript. Because it thinks the script came from a trusted source, the malicious script can access any cookies, session tokens, or other
 			sensitive information retained by your browser and used with that site. These scripts can even rewrite the content of the HTML page.</p>
 
-		<p>Because its a reflected XSS, the malicious code is not stored in the remote web application, so requires some social engineering (such as a link via email/chat).</p>
+		<p>DOM Based XSS is a special case of reflected where the JavaScript is hidden in the URL and pulled out by JavaScript in the page while it is rendering rather than being embedded in the page when it is served. This can make it stealthier than other attacks and WAFs or other protections which are reading the page body do not see any malicious content.</p>
 
-		<br /><hr /><br />
+		<p><hr /></p>
 
 		<h3>Objective</h3>
-		<p>One way or another, steal the cookie of a logged in user.</p>
+		<p>Run your own JavaScript in another user's browser, use this to steal the cookie of a logged in user.</p>
 
-		<br /><hr /><br />
+		<p><hr /></p>
 
 		<h3>Low Level</h3>
 		<p>Low level will not check the requested input, before including it to be used in the output text.</p>
-		<pre>Spoiler: <span class="spoiler">?name=&lt;script&gt;alert("XSS");&lt;/script&gt;</span>.</pre>
+		<pre>Spoiler: <span class="spoiler"><?=htmlentities ("/vulnerabilities/xss_d/?default=English<script>alert(1)</script>")?></span>.</pre>
 
-		<br />
+		<p><br /></p>
 
 		<h3>Medium Level</h3>
-		<p>The developer has tried to add a simple pattern matching to remove any references to "&lt;script&gt;", to disable any JavaScript.</p>
-		<pre>Spoiler: <span class="spoiler">Its cAse sENSiTiVE</span>.</pre>
+		<p>The developer has tried to add a simple pattern matching to remove any references to "&lt;script" to disable any JavaScript. Find a way to run JavaScript without using the script tags.</p>
+		<pre>Spoiler: <span class="spoiler">You must first break out of the select block then you can add an image with an onerror event:<br />
+<?=htmlentities ("/vulnerabilities/xss_d/?default=English>/option></select><img src='x' onerror='alert(1)'>");?></span>.</pre>
 
-		<br />
+		<p><br /></p>
 
 		<h3>High Level</h3>
-		<p>The developer now believes they can disable all JavaScript by removing the pattern "&lt;s*c*r*i*p*t".</p>
-		<pre>Spoiler: <span class="spoiler">HTML events</span>.</pre>
+		<p>The developer is now white listing only the allowed languages, you must find a way to run your code without it going to the server.</p>
+		<pre>Spoiler: <span class="spoiler">The fragment section of a URL (anything after the # symbol) does not get sent to the server and so cannot be blocked. The bad JavaScript being used to render the page reads the content from it when creating the page.<br />
+<?=htmlentities ("/vulnerabilities/xss_d/?default=English#<script>alert(1)</script>")?></span>.</pre>
 
-		<br />
+		<p><br /></p>
 
 		<h3>Impossible Level</h3>
-		<p>Using inbuilt PHP functions (such as "<?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.htmlspecialchars.php', 'htmlspecialchars()' ); ?>"),
-			its possible to escape any values which would alter the behaviour of the input.</p>
+		<p>The contents taken from the URL are encoded by default by most browsers which prevents any injected JavaScript from being executed.</p>
 	</div></td>
 	</tr>
 	</table>
