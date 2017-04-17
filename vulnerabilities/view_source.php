@@ -47,6 +47,7 @@ switch ($id) {
 		$vuln = "Unknown Vulnerability";
 }
 
+print ( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/source/{$security}.php" );
 $source = @file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/source/{$security}.php" );
 $source = str_replace( array( '$html .=' ), array( 'echo' ), $source );
 
