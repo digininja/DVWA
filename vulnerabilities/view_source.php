@@ -36,6 +36,9 @@ elseif( $id == 'upload' ) {
 elseif( $id == 'xss_r' ) {
 	$vuln = 'XSS (Reflected)';
 }
+elseif( $id == 'badcaptcha' ) {
+	$vuln = 'Bad CAPTCHA';
+}
 elseif( $id == 'captcha' ) {
 	$vuln = 'Insecure CAPTCHA';
 }
