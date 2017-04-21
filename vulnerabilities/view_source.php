@@ -12,35 +12,39 @@ $id       = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];
 
 
-if( $id == 'fi' ) {
-	$vuln = 'File Inclusion';
-}
-elseif( $id == 'brute' ) {
-	$vuln = 'Brute Force';
-}
-elseif( $id == 'csrf' ) {
-	$vuln = 'CSRF';
-}
-elseif( $id == 'exec' ) {
-	$vuln = 'Command Injection';
-}
-elseif( $id == 'sqli' ) {
-	$vuln = 'SQL Injection';
-}
-elseif( $id == 'sqli_blind' ) {
-	$vuln = 'SQL Injection (Blind)';
-}
-elseif( $id == 'upload' ) {
-	$vuln = 'File Upload';
-}
-elseif( $id == 'xss_r' ) {
-	$vuln = 'XSS (Reflected)';
-}
-elseif( $id == 'captcha' ) {
-	$vuln = 'Insecure CAPTCHA';
-}
-else {
-	$vuln = 'XSS (Stored)';
+switch ($id) {
+	case "fi" :
+		$vuln = 'File Inclusion';
+		break;
+	case "brute" :
+		$vuln = 'Brute Force';
+		break;
+	case "csrf" :
+		$vuln = 'CSRF';
+		break;
+	case "exec" :
+		$vuln = 'Command Injection';
+		break;
+	case "sqli" :
+		$vuln = 'SQL Injection';
+		break;
+	case "sqli_blind" :
+		$vuln = 'SQL Injection (Blind)';
+		break;
+	case "upload" :
+		$vuln = 'File Upload';
+		break;
+	case "xss_r" :
+		$vuln = 'Reflected XSS';
+		break;
+	case "xss_s" :
+		$vuln = 'Stored XSS';
+		break;
+	case "weak_id" :
+		$vuln = 'Weak Session IDs';
+		break;
+	default:
+		$vuln = "Unknown Vulnerability";
 }
 
 $source = @file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/source/{$security}.php" );
