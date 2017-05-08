@@ -45,7 +45,7 @@ $page[ 'body' ] = <<<EOF
  
  		<p>Please choose a language:</p>
 
-		<form name="XSS" action="/vulnerabilities/xss_d/" method="GET">
+		<form name="XSS" method="GET">
 			<select name="default">
 				<script>
 					if (document.location.href.indexOf("default=") >= 0) {
