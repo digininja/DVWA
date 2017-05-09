@@ -6,7 +6,7 @@ if ( array_key_exists( "default", $_GET ) && !is_null ($_GET[ 'default' ]) ) {
 	
 	# Do not allow script tags
 	if (stripos ($default, "<script") !== false) {
-		header ("location: /vulnerabilities/xss_d/?default=English");
+		header ("location: ?default=English");
 		exit;
 	}
 }

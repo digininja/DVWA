@@ -12,7 +12,7 @@ if ( array_key_exists( "default", $_GET ) && !is_null ($_GET[ 'default' ]) ) {
 			# ok
 			break;
 		default:
-			header ("location: /vulnerabilities/xss_d/?default=English");
+			header ("location: ?default=English");
 			exit;
 	}
 }
