@@ -4,9 +4,12 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_REQUEST[ 'id' ];
 
-	// Check database
-	$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
-	$result = mysqli_query($query ) or die( '<pre>' . mysqli_connect_error() . '</pre>' );
+
+	$id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $id );
+   		  
+	// Check database		  
+	$query  = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
+	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . mysqli_error($GLOBALS["___mysqli_ston"]) . '</pre>' );
 
 	// Get results
 	while( $row = mysqli_fetch_assoc( $result ) ) {
@@ -18,7 +21,7 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 		$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
 	}
 
-	mysqli_close();
+	mysqli_close($GLOBALS["___mysqli_ston"]);
 }
 
 ?>
