@@ -434,7 +434,7 @@ function dvwaButtonSourceHtmlGet( $pId ) {
 
 if( $DBMS == 'MySQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
-	$DBMS_errorFunc = 'mysql_error()';
+	$DBMS_errorFunc = 'mysqli_error()';
 }
 elseif( $DBMS == 'PGSQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
