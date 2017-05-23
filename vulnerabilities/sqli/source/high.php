@@ -18,7 +18,7 @@ if( isset( $_SESSION [ 'id' ] ) ) {
 		$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
 	}
 
-	mysqli_close();
+	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);		
 }
 
 ?>

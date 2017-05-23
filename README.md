@@ -6,12 +6,6 @@ The aim of DVWA is to **practice some of the most common web vulnerability**, wi
 Please note, there are **both documented and undocumented vulnerability** with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
 - - -
 
-## Installation Video
-
-[![How to setup DVWA (Damn Vulnerable Web Application)](http://i.imgur.com/SM3evfx.png)](https://www.youtube.com/watch?v=5BG6iq_AUvM "How to setup DVWA (Damn Vulnerable Web Application)")
-
-- - -
-
 ## WARNING!
 
 Damn Vulnerable Web Application is damn vulnerable! **Do not upload it to your hosting provider's public html folder or any Internet facing servers**, as they will be compromised. It is recommend using a virtual machine (such as [VirtualBox](https://www.virtualbox.org/) or [VMware](https://www.vmware.com/)), which is set to NAT networking mode. Inside a guest machine, you can downloading and install [XAMPP](https://www.apachefriends.org/en/xampp.html) for the web server and database.
@@ -53,10 +47,12 @@ DVWA is available either as a package that will run on your own web server or as
 
 ## Installation
 
-### Windows + XAMPP
+### Installation Videos
 
-Installation video:
-https://www.youtube.com/watch?v=GzIj07jt8rM
+- [How to setup DVWA (Damn Vulnerable Web Application) on Ubuntu](https://www.youtube.com/watch?v=5BG6iq_AUvM) [21:01 minutes]
+- [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo) [12:39 minutes]
+
+### Windows + XAMPP
 
 The easiest way to install DVWA is to download and install [XAMPP](https://www.apachefriends.org/en/xampp.html) if you do not already have a web server setup.
 
