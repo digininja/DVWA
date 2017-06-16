@@ -83,6 +83,21 @@ $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 $_DVWA[ 'db_database' ] = 'dvwa';
 ```
 
+Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), then you can't use the database root user, you must create a new database user. To do this, connect to the database as the root user then use the following commands:
+
+```
+mysql> create database dvwa;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> grant all on dvwa.* to dvwa@localhost identified by 'xxx';
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+
+```
+
 ### Other Configuration
 
 Depening on your Operating System as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
