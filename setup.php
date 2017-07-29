@@ -69,6 +69,9 @@ $page[ 'body' ] .= "
 	{$DVWAUploadsWrite}<br />
 	{$DVWAPHPWrite}<br />
 	<br />
+	<br />
+	{$bakWritable}
+	<br />
 	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
 	<br /><br /><br />
 
