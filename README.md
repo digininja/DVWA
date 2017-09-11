@@ -34,6 +34,9 @@ You should have received a copy of the GNU General Public License
 along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.org/licenses/.
 
 - - -
+## Download and install as a docker container
+- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
+`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
 ## Download
 
