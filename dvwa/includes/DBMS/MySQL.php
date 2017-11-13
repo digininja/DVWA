@@ -8,6 +8,9 @@ This file contains all of the code to setup the initial MySQL database. (setup.p
 
 if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ] )) ) {
 	dvwaMessagePush( "Could not connect to the MySQL service.<br />Please check the config file." );
+	if ($_DVWA[ 'db_user' ] == "root") {
+		dvwaMessagePush( 'Your database user is root, if you are using MariaDB, this will not work, please read the README.md file.' );
+	}
 	dvwaPageReload();
 }
 
