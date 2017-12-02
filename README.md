@@ -38,6 +38,8 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 - [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
+Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
+
 ## Download
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
