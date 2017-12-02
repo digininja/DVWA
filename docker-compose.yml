@@ -1,0 +1,20 @@
+version: "2"
+services:
+  backend:
+    build:
+      context: docker/
+    extra_hosts:
+        - "local.mydvwa.com:127.0.0.1"
+    volumes:
+      - ./:/var/www/html/dvwa/
+      - ./logs/:/var/log/apache2/
+    #links:
+    #  - db
+    ports:
+      - 80:80
+
+  db:
+    image: mysql:5.5
+    environment:
+      "MYSQL_DATABASE": "dvwa"
+      "MYSQL_ROOT_PASSWORD": "p@ssw0rd"
