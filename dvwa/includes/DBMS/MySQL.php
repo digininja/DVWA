@@ -6,6 +6,8 @@ This file contains all of the code to setup the initial MySQL database. (setup.p
 
 */
 
+define( 'DVWA_WEB_PAGE_TO_ROOT', '../../../' );
+
 if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ] )) ) {
 	dvwaMessagePush( "Could not connect to the MySQL service.<br />Please check the config file." );
 	dvwaPageReload();
@@ -78,8 +80,21 @@ if( !mysqli_query($GLOBALS["___mysqli_ston"],  $insert ) ) {
 dvwaMessagePush( "Data inserted into 'guestbook' table." );
 
 
+
+
+// Copy .bak for a fun directory listing vuln
+$conf = DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php';
+$bakconf = DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php.bak';
+if (file_exists($conf)) {
+	// Who cares if it fails. Suppress.
+	@copy($conf, $bakconf);
+}
+
+dvwaMessagePush( "Backup file /config/config.inc.php.bak automatically created" );
+
 // Done
 dvwaMessagePush( "<em>Setup successful</em>!" );
+
 if( !dvwaIsLoggedIn())
 	dvwaMessagePush( "Please <a href='login.php'>login</a>.<script>setTimeout(function(){window.location.href='login.php'},5000);</script>" );
 dvwaPageReload();
