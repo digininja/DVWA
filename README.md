@@ -38,6 +38,8 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 - [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
+Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
+
 ## Download
 
 DVWA is available either as a package that will run on your own web server or as a Live CD:
@@ -49,6 +51,8 @@ DVWA is available either as a package that will run on your own web server or as
 - - -
 
 ## Installation
+
+**Please make sure your config/config.inc.php file exists. Only having a config.inc.php.dist will not be sufficient and you'll have to edit it to suit your environment and rename it to config.inc.php. [Windows may hide the trailing extension.](https://support.microsoft.com/en-in/help/865219/how-to-show-or-hide-file-name-extensions-in-windows-explorer)**
 
 ### Installation Videos
 
@@ -70,13 +74,13 @@ Simply unzip dvwa.zip, place the unzipped files in your public html folder, then
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mysql-server php5 php5-mysql php5-gd`
+`apt-get -y install apache2 mysql-server php php-mysqli php-gd`
 
 ### Database Setup
 
 To set up the database, simply click on the `Setup DVWA` button in the main menu, then click on the `Create / Reset Database` button. This will create / reset the database for you with some data in.
 
-If you receive an error while trying to create your database, make sure your database credentials are correct within `./config/config.inc.php`.
+If you receive an error while trying to create your database, make sure your database credentials are correct within `./config/config.inc.php`. *This differs from config.inc.php.dist, which is an example file.*
 
 The variables are set to the following by default:
 
@@ -104,7 +108,6 @@ Query OK, 0 rows affected (0.00 sec)
 ### Other Configuration
 
 Depending on your Operating System as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
-Note, You are unable to use PHP v7.0 or later with DVWA.
 
 **Folder Permissions**:
 
@@ -140,11 +143,11 @@ https://github.com/ethicalhack3r/DVWA/issues
 
 +Q. SQL Injection won't work on PHP v5.2.6.
 
--A.If you are using PHP v5.2.6 you will need to do the following in order for SQL injection and other vulnerabilities to work.
+-A.If you are using PHP v5.2.6 or above you will need to do the following in order for SQL injection and other vulnerabilities to work.
 
 In `.htaccess`:
 
-Replace:
+Replace (please note it may say mod_php7):
 
 ```php
 <IfModule mod_php5.c>
@@ -168,9 +171,6 @@ With:
 
 -A. Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
-+Q. My XSS payload won't run in IE.
-
--A. If you're running IE8 or above, IE actively filters any XSS. To disable the filter you can do so by setting the HTTP header `X-XSS-Protection: 0` or disable it from internet options. There may also be ways to bypass the filter.
 
 - - -
 
