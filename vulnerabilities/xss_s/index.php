@@ -48,7 +48,10 @@ $page[ 'body' ] .= "
 				</tr>
 				<tr>
 					<td width=\"100\">&nbsp;</td>
-					<td><input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onClick=\"return checkForm();\"></td>
+					<td>
+						<input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onClick=\"return checkForm();\" />
+						<input name=\"btnSign\" type=\"submit\" value=\"Clear Guestbook\" onClick=\"return confirmClear();\" />
+					</td>
 				</tr>
 			</table>\n";
 
