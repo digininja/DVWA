@@ -45,7 +45,7 @@ if( isset( $_POST[ 'Login' ] ) ) {
 		// Check to see if enough time has passed, if it hasn't locked the account
 		if( $timenow < $timeout ) {
 			$account_locked = true;
-			// print "The accont is locked<br />";
+			// print "The account is locked<br />";
 		}
 	}
 
