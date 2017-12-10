@@ -32,14 +32,21 @@ if( isset( $_POST[ 'Login' ] ) ) {
 		//$html .= "<pre><br />This account has been locked due to too many incorrect logins.</pre>";
 
 		// Calculate when the user would be allowed to login again
-		$last_login = $row[ 'last_login' ];
-		$last_login = strtotime( $last_login );
-		$timeout    = strtotime( "{$last_login} +{$lockout_time} minutes" );
-		$timenow    = strtotime( "now" );
+		$last_login = strtotime( $row[ 'last_login' ] );
+		$timeout    = $last_login + ($lockout_time * 60);
+		$timenow    = time();
+
+		/*
+		print "The last login was: " . date ("h:i:s", $last_login) . "<br />";
+		print "The timenow is: " . date ("h:i:s", $timenow) . "<br />";
+		print "The timeout is: " . date ("h:i:s", $timeout) . "<br />";
+		*/
 
 		// Check to see if enough time has passed, if it hasn't locked the account
-		if( $timenow > $timeout )
+		if( $timenow < $timeout ) {
 			$account_locked = true;
+			// print "The account is locked<br />";
+		}
 	}
 
 	// Check the database (if username matches the password)
@@ -70,8 +77,7 @@ if( isset( $_POST[ 'Login' ] ) ) {
 		$data = $db->prepare( 'UPDATE users SET failed_login = "0" WHERE user = (:user) LIMIT 1;' );
 		$data->bindParam( ':user', $user, PDO::PARAM_STR );
 		$data->execute();
-	}
-	else {
+	} else {
 		// Login failed
 		sleep( rand( 2, 4 ) );
 
