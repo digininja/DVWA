@@ -73,6 +73,12 @@ $page[ 'body' ] .= "
 	{$bakWritable}
 	<br />
 	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
+	<br />
+	If you see disabled on either <i>allow_url_fopen</i> or <i>allow_url_include</i>, set the following in your php.ini file and restart Apache.<br />
+	<pre><code>allow_url_fopen = On
+allow_url_include = On</code></pre>
+	These are only required for the file inclusion labs so unless you want to play with those, you can ignore them.
+
 	<br /><br /><br />
 
 	<!-- Create db button -->
