@@ -36,7 +36,7 @@ $page[ 'body' ] .= "
 	<h1>Vulnerability: Stored Cross Site Scripting (XSS)</h1>
 
 	<div class=\"vulnerable_code_area\">
-		<form method=\"post\" name=\"guestform\" onsubmit=\"return validate_form(this)\">
+		<form method=\"post\" name=\"guestform\" \">
 			<table width=\"550\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">
 				<tr>
 					<td width=\"100\">Name *</td>
@@ -48,7 +48,10 @@ $page[ 'body' ] .= "
 				</tr>
 				<tr>
 					<td width=\"100\">&nbsp;</td>
-					<td><input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onClick=\"return checkForm();\"></td>
+					<td>
+						<input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onclick=\"return validate_form(this.form);\" />
+						<!--<input name=\"btnSign\" type=\"submit\" value=\"Clear Guestbook\" onClick=\"return confirmClear();\" /> -->
+					</td>
 				</tr>
 			</table>\n";
 
