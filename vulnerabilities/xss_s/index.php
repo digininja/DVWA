@@ -5,6 +5,10 @@ require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
+if (array_key_exists ("btnClear", $_POST)) {
+	print "Clear it";
+}
+
 $page = dvwaPageNewGrab();
 $page[ 'title' ]   = 'Vulnerability: Stored Cross Site Scripting (XSS)' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'xss_s';
@@ -49,8 +53,8 @@ $page[ 'body' ] .= "
 				<tr>
 					<td width=\"100\">&nbsp;</td>
 					<td>
-						<input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onclick=\"return validate_form(this.form);\" />
-						<!--<input name=\"btnSign\" type=\"submit\" value=\"Clear Guestbook\" onClick=\"return confirmClear();\" /> -->
+						<input name=\"btnSign\" type=\"submit\" value=\"Sign Guestbook\" onclick=\"return validateGuestbookForm(this.form);\" />
+						<input name=\"btnClear\" type=\"submit\" value=\"Clear Guestbook\" onClick=\"return confirmClearGuestbook();\" />
 					</td>
 				</tr>
 			</table>\n";
