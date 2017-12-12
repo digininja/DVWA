@@ -5,10 +5,6 @@ require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
-if (array_key_exists ("btnClear", $_POST)) {
-	print "Clear it";
-}
-
 $page = dvwaPageNewGrab();
 $page[ 'title' ]   = 'Vulnerability: Stored Cross Site Scripting (XSS)' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'xss_s';
@@ -16,6 +12,11 @@ $page[ 'help_button' ]   = 'xss_s';
 $page[ 'source_button' ] = 'xss_s';
 
 dvwaDatabaseConnect();
+
+if (array_key_exists ("btnClear", $_POST)) {
+	$query  = "TRUNCATE guestbook;";
+	$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
+}
 
 $vulnerabilityFile = '';
 switch( $_COOKIE[ 'security' ] ) {
