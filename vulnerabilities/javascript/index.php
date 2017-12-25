@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			switch( $_COOKIE[ 'security' ] ) {
 				case 'low':
 					if ($token == md5(str_rot13("success"))) {
-						$message = "<p>Well done!</p>";
+						$message = "<p style='color:red'>Well done!</p>";
 					} else {
 						$message = "<p>Invalid token.</p>";
 					}
@@ -76,9 +76,9 @@ $page[ 'body' ] = <<<EOF
 	$message
 
 	<form name="low_js" method="post">
-		<input type="text" name="token" value="" id="token" />
-		<label for="phrase">Phrase</label><input type="text" name="phrase" value="fail" id="phrase" />
-		<input type="submit" name="send" value="Send" />
+		<input type="hidden" name="token" value="" id="token" />
+		<label for="phrase">Phrase</label> <input type="text" name="phrase" value="" id="phrase" />
+		<input type="submit" name="send" value="Submit" />
 	</form>
 EOF;
 
