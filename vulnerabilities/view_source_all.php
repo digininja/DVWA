@@ -27,6 +27,9 @@ $impsrc = str_replace( array( '$html .=' ), array( 'echo' ), $impsrc);
 $impsrc = highlight_string( $impsrc, true );
 
 switch ($id) {
+	case "javascript" :
+		$vuln = 'JavaScript';
+		break;
 	case "fi" :
 		$vuln = 'File Inclusion';
 		break;

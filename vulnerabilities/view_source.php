@@ -43,6 +43,9 @@ switch ($id) {
 	case "weak_id" :
 		$vuln = 'Weak Session IDs';
 		break;
+	case "javascript" :
+		$vuln = 'JavaScript';
+		break;
 	default:
 		$vuln = "Unknown Vulnerability";
 }
