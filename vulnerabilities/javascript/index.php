@@ -54,7 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 					}
 					break;
 				case 'high':
-					$vulnerabilityFile = 'high.php';
+					if ($token == hash("sha256", hash("sha256", "XX" . strrev("success")) . "ZZ")) {
+						$message = "<p style='color:red'>Well done!</p>";
+					} else {
+						$message = "<p>Invalid token.</p>";
+					}
 					break;
 				default:
 					$vulnerabilityFile = 'impossible.php';
@@ -81,8 +85,8 @@ $page[ 'body' ] = <<<EOF
 
 	<form name="low_js" method="post">
 		<input type="hidden" name="token" value="" id="token" />
-		<label for="phrase">Phrase</label> <input type="text" name="phrase" value="" id="phrase" />
-		<input type="submit" name="send" value="Submit" />
+		<label for="phrase">Phrase</label> <input type="text" name="phrase" value="success" id="phrase" />
+		<input type="submit" id="send" name="send" value="Submit" />
 	</form>
 EOF;
 

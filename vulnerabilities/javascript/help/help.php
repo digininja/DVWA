@@ -26,7 +26,10 @@
 		<p><br /></p>
 
 		<h3>High Level</h3>
-		<p></p>
+		<p>
+			The JavaScript has been obfuscated by at least one engine. You are going to need to step through the code to work out what is useful, what is garbage and what is needed to complete the mission.
+		</p>
+		<pre>Spoiler: <span class="spoiler">If it helps, two packers have been used, the first is from <a href="https://www.danstools.com/javascript-obfuscate/index.php">Dan's Tools</a> and the second is the <a href="https://javascriptobfuscator.herokuapp.com/">JavaScript Obfuscator Tool</a>.</span></pre>
 
 		<p><br /></p>
 
