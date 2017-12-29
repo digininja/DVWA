@@ -47,7 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 					}
 					break;
 				case 'medium':
-					$vulnerabilityFile = 'medium.php';
+					if ($token == strrev("XXsuccessXX")) {
+						$message = "<p style='color:red'>Well done!</p>";
+					} else {
+						$message = "<p>Invalid token.</p>";
+					}
 					break;
 				case 'high':
 					$vulnerabilityFile = 'high.php';

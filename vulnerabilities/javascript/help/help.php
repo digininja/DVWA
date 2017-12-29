@@ -13,12 +13,15 @@
 		<hr />
 		<h3>Low Level</h3>
 		<p>All the JavaScript is included in the page. Read the source and work out what function is being used to generate the token required to match with the phrase and then call the function manually.</p>
-		<pre>Spoiler: <span class="spoiler">Change the phrase to success and then use the function generate_token() to update the token</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">Change the phrase to success and then use the function generate_token() to update the token.</span></pre>
 
 		<p><br /></p>
 
 		<h3>Medium Level</h3>
-		<p></p>
+		<p>
+			The JavaScript has been broken out into its own file and then minimized. You need to view the source for the included file and then work out what it is doing. Both Firefox and Chrome have a Pretty Print feature which attempts to reverse the compression and display code in a readable way.
+		</p>
+		<pre>Spoiler: <span class="spoiler">The file uses the setTimeout function to run the do_elsesomething function which generates the token.</span></pre>
 
 		<p><br /></p>
 
