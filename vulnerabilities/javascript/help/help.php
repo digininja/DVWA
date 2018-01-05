@@ -8,7 +8,7 @@
 		<hr />
 		
 		<h3>Objective</h3>
-		<p>Simply submit the phrase "success" to win the level. Obviously, it isn't quite that easy, each level implements different protection mechanisms, the JavaScript included in the pages has to be analysed and then manipulated to bypass the proections.</p>
+		<p>Simply submit the phrase "success" to win the level. Obviously, it isn't quite that easy, each level implements different protection mechanisms, the JavaScript included in the pages has to be analysed and then manipulated to bypass the protections.</p>
 
 		<hr />
 		<h3>Low Level</h3>
