@@ -48,7 +48,7 @@ dvwaMessagePush( "'users' table was created." );
 
 // Insert some data into users
 // Get the base directory for the avatar media...
-$baseUrl  = 'http://' . $_SERVER[ 'SERVER_NAME' ] . $_SERVER[ 'PHP_SELF' ];
+$baseUrl  = 'http://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ];
 $stripPos = strpos( $baseUrl, 'setup.php' );
 $baseUrl  = substr( $baseUrl, 0, $stripPos ) . 'hackable/users/';
 
