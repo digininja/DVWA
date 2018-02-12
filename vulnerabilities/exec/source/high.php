@@ -2,13 +2,13 @@
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
 	// Get input
-	$target = trim($_REQUEST[ 'ip' ]);
+	$target = $_REQUEST[ 'ip' ];
 
 	// Set blacklist
 	$substitutions = array(
 		'&'  => '',
 		';'  => '',
-		'| ' => '',
+		'|' => '',
 		'-'  => '',
 		'$'  => '',
 		'('  => '',
