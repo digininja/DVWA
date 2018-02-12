@@ -74,7 +74,7 @@ Simply unzip dvwa.zip, place the unzipped files in your public html folder, then
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mysql-server php php-mysqli php-gd`
+`apt-get -y install apache2 mysql-server php php-mysqli php-gd libapache2-mod-php`
 
 ### Database Setup
 
