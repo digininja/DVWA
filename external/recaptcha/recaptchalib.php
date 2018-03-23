@@ -35,10 +35,10 @@ function CheckCaptcha($key, $response) {
 
 }
 
-function recaptcha_get_html(){
+function recaptcha_get_html($pubKey){
 	return "
 		<script src='https://www.google.com/recaptcha/api.js'></script>
-		<br /> <div class='g-recaptcha' data-theme='dark' data-sitekey='6LelWk4UAAAAAGaBJWFusnIlAVoaCK8DWnRBDE4g'></div>
+		<br /> <div class='g-recaptcha' data-theme='dark' data-sitekey='" . $pubKey . "'></div>
 	";
 }
 
