@@ -9,13 +9,13 @@ if( isset( $_POST[ 'Change' ] ) ) {
 	$pass_conf = $_POST[ 'password_conf' ];
 
 	// Check CAPTCHA from 3rd party
-	$resp = recaptcha_check_answer( $_DVWA[ 'recaptcha_private_key' ],
-		$_SERVER[ 'REMOTE_ADDR' ],
-		$_POST[ 'recaptcha_challenge_field' ],
-		$_POST[ 'recaptcha_response_field' ] );
+	$resp = recaptcha_check_answer(
+		$_DVWA[ 'recaptcha_private_key' ],
+		$_POST['g-recaptcha-response']
+	);
 
 	// Did the CAPTCHA fail?
-	if( !$resp->is_valid && ( $_POST[ 'recaptcha_response_field' ] != 'hidd3n_valu3' || $_SERVER[ 'HTTP_USER_AGENT' ] != 'reCAPTCHA' ) ) {
+	if( !$resp && ( $_POST[ 'g-recaptcha-response' ] != 'hidd3n_valu3' || $_SERVER[ 'HTTP_USER_AGENT' ] != 'reCAPTCHA' ) ) {
 		// What happens when the CAPTCHA was entered incorrectly
 		$html     .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 		$hide_form = false;
