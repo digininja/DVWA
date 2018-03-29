@@ -14,16 +14,15 @@ if( isset( $_POST[ 'Change' ] ) ) {
 		$_POST['g-recaptcha-response']
 	);
 
-	// Did the CAPTCHA fail?
-	if( !$resp && ( $_POST[ 'g-recaptcha-response' ] != 'hidd3n_valu3' || $_SERVER[ 'HTTP_USER_AGENT' ] != 'reCAPTCHA' ) ) {
-		// What happens when the CAPTCHA was entered incorrectly
-		$html     .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
-		$hide_form = false;
-		return;
-	}
-	else {
+	if (
+		$resp || 
+		(
+			$_POST[ 'g-recaptcha-response' ] == 'hidd3n_valu3'
+			&& $_SERVER[ 'HTTP_USER_AGENT' ] == 'reCAPTCHA'
+		)
+	){
 		// CAPTCHA was correct. Do both new passwords match?
-		if( $pass_new == $pass_conf ) {
+		if ($pass_new == $pass_conf) {
 			$pass_new = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass_new ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
 			$pass_new = md5( $pass_new );
 
@@ -33,12 +32,18 @@ if( isset( $_POST[ 'Change' ] ) ) {
 
 			// Feedback for user
 			$html .= "<pre>Password Changed.</pre>";
-		}
-		else {
+
+		} else {
 			// Ops. Password mismatch
 			$html     .= "<pre>Both passwords must match.</pre>";
 			$hide_form = false;
 		}
+
+	} else {
+		// What happens when the CAPTCHA was entered incorrectly
+		$html     .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
+		$hide_form = false;
+		return;
 	}
 
 	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
