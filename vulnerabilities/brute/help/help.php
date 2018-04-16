@@ -21,7 +21,7 @@
 			making the attack time longer.</p>
 		
 		<p>Effective ways for the testing of password cracking in DVWA are using tools like THC-Hydra and Foofus Medusa.
-		The example with THC-Hydra is:</p>
+			The example with THC-Hydra is:</p>
 		<p>hydra -l admin -p password http-get-form "/dvwa/login.php:username=^USER^&password=^PASS^&submit=Login:Login failed"</p>
 
 		<br /><hr /><br />
