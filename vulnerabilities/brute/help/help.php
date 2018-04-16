@@ -19,6 +19,10 @@
 		<p>A last resort is to try every possible password, known as a brute force attack. In theory, if there is no limit to the number of attempts, a brute force attack will always
 			be successful since the rules for acceptable passwords must be publicly known; but as the length of the password increases, so does the number of possible passwords
 			making the attack time longer.</p>
+		
+		<p>Effective ways for the testing of password cracking in DVWA are using tools like THC-Hydra and Foofus Medusa.
+		The example with THC-Hydra is:</p>
+		<p>hydra -l admin -p password http-get-form "/dvwa/login.php:username=^USER^&password=^PASS^&submit=Login:Login failed"</p>
 
 		<br /><hr /><br />
 
