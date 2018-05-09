@@ -34,7 +34,7 @@
 
 		<h3>High Level</h3>
 		<p>Once the file has been received from the client, the server will try to resize any image that was included in the request.</p>
-		<pre>Spoiler: <span class="spoiler">need to link in another vulnerability, such as file includion</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">need to link in another vulnerability, such as file inclusion</span>.</pre>
 
 		<br />
 
