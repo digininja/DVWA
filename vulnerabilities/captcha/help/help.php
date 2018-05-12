@@ -6,7 +6,7 @@
 	<tr>
 	<td><div id="code">
 		<h3>About</h3>
-		<p>A <?php echo dvwaExternalLinkUrlGet( 'http://www.captcha.net/', 'CAPTCHA' ); ?> is a program that can tell whether its user is a human or a computer. You've probably seen
+		<p>A <?php echo dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/CAPTCHA', 'CAPTCHA' ); ?> is a program that can tell whether its user is a human or a computer. You've probably seen
 			them - colourful images with distorted text at the bottom of Web registration forms. CAPTCHAs are used by many websites to prevent abuse from
 			"bots", or automated programs usually written to generate spam. No computer program can read distorted text as well as humans can, so bots
 			cannot navigate sites protected by CAPTCHAs.</p>
@@ -58,5 +58,5 @@
 
 	<br />
 
-	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'http://www.captcha.net/' ); ?></p>
+	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/CAPTCHA' ); ?></p>
 </div>

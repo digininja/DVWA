@@ -44,7 +44,7 @@
 			This level also extends on the medium level, by waiting when there is a failed login but this time it is a random amount of time between two and four seconds.
 			The idea of this is to try and confuse any timing predictions.</p>
 
-		<p>Using a <?php echo dvwaExternalLinkUrlGet( 'http://www.captcha.net/', 'CAPTCHA' ); ?> form could have a similar effect as a CSRF token.</p>
+		<p>Using a <?php echo dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/CAPTCHA', 'CAPTCHA' ); ?> form could have a similar effect as a CSRF token.</p>
 
 		<br />
 
