@@ -171,6 +171,12 @@ With:
 
 -A. Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
++Q. Why can't the database connect on CentOS?
+
+-A. You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the webserver to talk to the database:
+```
+setsebool -P httpd_can_network_connect_db 1
+```
 
 - - -
 
