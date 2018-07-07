@@ -9,22 +9,24 @@ $headerCSP = "Content-Security-Policy:".
 "object-src 'none'; ". // valid object embed and applet tags src
 "script-src 'self' 'unsafe-inline' 'nonce-TmV2ZXIgZ29pbmcgdG8gZ2l2ZSB5b3UgdXA=';" .
 "style-src 'self' 'unsafe-inline';";// allows css from self and inline allows inline css
-//Sends the Header in the HTTP response to instruct the Browser how it should handle content and what is whitelisted
-//Its up to the browser to follow the policy which each browser has varying support
+
 header($headerCSP);
 
-# https://pastebin.com/raw/R570EE00
+// Disable XSS protections so that inline alert boxes will work
+header ("X-XSS-Protection: 0");
+
+# <script nonce="TmV2ZXIgZ29pbmcgdG8gZ2l2ZSB5b3UgdXA=">alert(1)</script>
 
 ?>
 <?php
 if (isset ($_POST['include'])) {
 $page[ 'body' ] .= "
-	<script nonce='TmV2ZXIgZ29pbmcgdG8gZ2l2ZSB5b3UgdXA='>alert(1);</script>
+	" . $_POST['include'] . "
 ";
 }
 $page[ 'body' ] .= '
 <form name="csp" method="POST">
-	<p>You can include scripts from external sources, examine the Content Security Policy and enter a URL to include here:</p>
+	<p>Whatever you enter here gets dropped directly into the page, see if you can get an alert box to pop up.</p>
 	<input size="50" type="text" name="include" value="" id="include" />
 	<input type="submit" value="Include" />
 </form>
