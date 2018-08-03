@@ -85,7 +85,7 @@ $page[ 'body' ] = <<<EOF
 
 	<form name="low_js" method="post">
 		<input type="hidden" name="token" value="" id="token" />
-		<label for="phrase">Phrase</label> <input type="text" name="phrase" value="success" id="phrase" />
+		<label for="phrase">Phrase</label> <input type="text" name="phrase" value="ChangeMe" id="phrase" />
 		<input type="submit" id="send" name="send" value="Submit" />
 	</form>
 EOF;
