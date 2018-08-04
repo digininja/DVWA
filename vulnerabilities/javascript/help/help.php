@@ -44,7 +44,8 @@
 
 	<p>Reference:</p>
 	<ul>
+		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.youtube.com/watch?v=8UqHCrGdxOM' )?></li>
 		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.w3schools.com/js/' )?></li>
 		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.youtube.com/watch?v=cs7EQdWO5o0&index=17&list=WL' )?></li>
-		<li><?php echo dvwaExternalLinkUrlGet( 'https://ponyfoo.com/articles/es6-proxies-in-depth' )?></li>
+	</ul>
 </div>
