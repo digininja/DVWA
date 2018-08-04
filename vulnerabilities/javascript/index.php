@@ -72,6 +72,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	}
 }
 
+if ( $_COOKIE[ 'security' ] == "impossible" ) {
+$page[ 'body' ] = <<<EOF
+<div class="body_padded">
+	<h1>Vulnerability: JavaScript Attacks</h1>
+
+	<div class="vulnerable_code_area">
+	<p>
+		You can never trust anything that comes from the user or prevent them from messing with it and so there is no impossible level.
+	</p>
+EOF;
+} else {
 $page[ 'body' ] = <<<EOF
 <div class="body_padded">
 	<h1>Vulnerability: JavaScript Attacks</h1>
@@ -89,6 +100,7 @@ $page[ 'body' ] = <<<EOF
 		<input type="submit" id="send" name="send" value="Submit" />
 	</form>
 EOF;
+}
 
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/javascript/source/{$vulnerabilityFile}";
 
