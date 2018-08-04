@@ -31,6 +31,7 @@
 		</p>
 		<pre>Spoiler: <span class="spoiler">If it helps, two packers have been used, the first is from <a href="https://www.danstools.com/javascript-obfuscate/index.php">Dan's Tools</a> and the second is the <a href="https://javascriptobfuscator.herokuapp.com/">JavaScript Obfuscator Tool</a>.</span></pre>
 		<pre>Spoiler 2: <span class="spoiler">This deobfuscation tool seems to work the best on this code <a href="http://deobfuscatejavascript.com/">deobfuscate javascript</a>.</span></pre>
+		<pre>Spoiler 3: <span class="spoiler">This is one way to do it... run the obfuscated JS through a deobfuscation app, intercept the response for the obfuscated JS and swap in the readable version. Work out the flow and you will see three functions that need to be called in order. Call the functions at the right time with the right parameters.</pre>
 
 		<p><br /></p>
 
