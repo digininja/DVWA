@@ -13,6 +13,9 @@ $headerCSP = "Content-Security-Policy:".
 //Sends the Header in the HTTP response to instruct the Browser how it should handle content and what is whitelisted
 //Its up to the browser to follow the policy which each browser has varying support
 header($headerCSP);
+
+# https://pastebin.com/raw/R570EE00
+
 ?>
 <?php
 if (isset ($_POST['include'])) {
@@ -23,7 +26,7 @@ $page[ 'body' ] .= "
 $page[ 'body' ] .= '
 <form name="csp" method="POST">
 	<p>You can include scripts from external sources, examine the Content Security Policy and enter a URL to include here:</p>
-	<input size="50" type="text" name="include" value="https://pastebin.com/raw/R570EE00" id="include" />
+	<input size="50" type="text" name="include" value="" id="include" />
 	<input type="submit" value="Include" />
 </form>
 ';
