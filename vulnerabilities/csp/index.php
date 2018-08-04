@@ -29,32 +29,16 @@ switch( $_COOKIE[ 'security' ] ) {
 		break;
 }
 
-require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/xss_d/source/{$vulnerabilityFile}";
-
 $page[ 'body' ] = <<<EOF
 <div class="body_padded">
 	<h1>Vulnerability: Content Security Policy (CSP) Bypass</h1>
 
 	<div class="vulnerable_code_area">
+EOF;
  
- 		<p>Please choose a language:</p>
+require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/csp/source/{$vulnerabilityFile}";
 
-		<form name="XSS" method="GET">
-			<select name="default">
-				<script>
-					if (document.location.href.indexOf("default=") >= 0) {
-						var lang = document.location.href.substring(document.location.href.indexOf("default=")+8);
-						document.write("<option value='' disabled='disabled'>----</option>");
-					}
-					    
-					document.write("<option value='English'>English</option>");
-					document.write("<option value='French'>French</option>");
-					document.write("<option value='Spanish'>Spanish</option>");
-					document.write("<option value='German'>German</option>");
-				</script>
-			</select>
-			<input type="submit" value="Select" />
-		</form>
+$page[ 'body' ] .= <<<EOF
 	</div>
 EOF;
 

@@ -14,12 +14,16 @@ $headerCSP = "Content-Security-Policy:".
 //Its up to the browser to follow the policy which each browser has varying support
 header($headerCSP);
 ?>
-
-<script>
-alert(1);
-</script>
-
-<script src="https://pastebin.com/raw/R570EE00"></script>
-
-Hello
-
+<?php
+if (isset ($_POST['include'])) {
+$page[ 'body' ] .= "
+	<script src='" . $_POST['include'] . "'></script>
+";
+}
+$page[ 'body' ] .= '
+<form name="csp" method="POST">
+	<p>You can include scripts from external sources, examine the Content Security Policy and enter a URL to include here:</p>
+	<input size="50" type="text" name="include" value="https://pastebin.com/raw/R570EE00" id="include" />
+	<input type="submit" value="Include" />
+</form>
+';
