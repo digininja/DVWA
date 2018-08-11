@@ -18,21 +18,19 @@
 
 		<h3>Low Level</h3>
 		<p>Examine the policy to find all the sources that can be used to host external script files.</p>
-		<pre>Spoiler: <span class="spoiler">Scripts can be included from Pastebin, try storing some JavaScript on there.</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">Scripts can be included from Pastebin, try storing some JavaScript on there and then loading it in.</span></pre>
 
 		<br />
 
 		<h3>Medium Level</h3>
 		<p>The CSP policy tries to use a nonce to prevent inline scripts from being added by attackers.</p>
-		<pre>Spoiler: <span class="spoiler">Examine the nonce and see how it varies (or doesn't).</span>.</pre>
+		<pre>Spoiler: <span class="spoiler">Examine the nonce and see how it varies (or doesn't).</span></pre>
 
 		<br />
 
 		<h3>High Level</h3>
-		<p>In the high level, the developer goes back to the drawing board and puts in even more pattern to match. But even this isn't enough.</p>
-		<p>The developer has either made a slight typo with the filters and believes a certain PHP command will save them from this mistake.</p>
-		<pre>Spoiler: <span class="spoiler"><?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.trim.php', 'trim()' ); ?>
-			removes all leading & trailing spaces, right?</span>.</pre>
+		<p>The page makes a JSONP call to source/jsonp.php passing the name of the function to callback to, you need to modify the jsonp.php script to change the callback function.</p>
+		<pre>Spoiler: <span class="spoiler">The JavaScript on the page will execute whatever is returned by the page, changing this to your own code will execute that instead</span></pre>
 
 		<br />
 
