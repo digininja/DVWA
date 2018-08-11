@@ -6,11 +6,8 @@
 	<tr>
 	<td><div id="code">
 		<h3>About</h3>
-		<p>Blah about CSP.</p>
-
-		<p></p>
-		<p></p>
-		<p></p>
+		<p>Content Security Policy (CSP) is used to define where scripts and other resources can be loaded or executed from. This module will walk you through ways to bypass the policy based on common mistakes made by developers.</p>
+		<p>None of the vulnerabilities are actual vulnerabilities in CSP, they are vulnerabilities in the way it has been implemented.</p>
 
 		<br /><hr /><br />
 
@@ -20,17 +17,14 @@
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>This allows for direct input into one of <u>many PHP functions</u> that will execute commands on the OS. It is possible to escape out of the designed command and
-			executed unintentional actions.</p>
-		<p>This can be done by adding on to the request, "once the command has executed successfully, run this command".
-		<pre>Spoiler: <span class="spoiler">To add a command "&&"</span>. Example: <span class="spoiler">127.0.0.1 && dir</span>.</pre>
+		<p>Examine the policy to find all the sources that can be used to host external script files.</p>
+		<pre>Spoiler: <span class="spoiler">Scripts can be included from Pastebin, try storing some JavaScript on there.</span>.</pre>
 
 		<br />
 
 		<h3>Medium Level</h3>
-		<p>The developer has read up on some of the issues with command injection, and placed in various pattern patching to filter the input. However, this isn't enough.</p>
-		<p>Various other system syntaxes can be used to break out of the desired command.</p>
-		<pre>Spoiler: <span class="spoiler">e.g. background the ping command</span>.</pre>
+		<p>The CSP policy tries to use a nonce to prevent inline scripts from being added by attackers.</p>
+		<pre>Spoiler: <span class="spoiler">Examine the nonce and see how it varies (or doesn't).</span>.</pre>
 
 		<br />
 
