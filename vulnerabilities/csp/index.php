@@ -45,8 +45,9 @@ EOF;
 $page[ 'body' ] .= "
 	<h2>More Information</h2>
 	<ul>
-		<li>" . dvwaExternalLinkUrlGet( 'https://content-security-policy.com/' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://content-security-policy.com/', "Content Security Policy Reference" ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP', "Mozilla Developer Network - CSP: script-src") . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://blog.mozilla.org/security/2014/10/04/csp-for-the-web-we-have/', "Mozilla Security Blog - CSP for the web we have" ) . "</li>
 	</ul>
 </div>\n";
 
