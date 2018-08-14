@@ -35,8 +35,9 @@
 		<br />
 
 		<h3>Impossible Level</h3>
-		<p>In the impossible level, the challenge has been re-written, only to allow a very stricted input. If this doesn't match and doesn't produce a certain result,
-			it will not be allowed to execute. Rather than "black listing" filtering (allowing any input and removing unwanted), this uses "white listing" (only allow certain values).</p>
+		<p>
+			This level is an update of the high level where the JSONP call has its callback function hardcoded and the CSP policy is locked down to only allow external scripts.
+		</p>
 	</div></td>
 	</tr>
 	</table>
