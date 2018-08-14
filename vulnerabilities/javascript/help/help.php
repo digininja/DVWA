@@ -47,5 +47,6 @@
 		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.youtube.com/watch?v=8UqHCrGdxOM' )?></li>
 		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.w3schools.com/js/' )?></li>
 		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.youtube.com/watch?v=cs7EQdWO5o0&index=17&list=WL' )?></li>
+		<li><?php echo dvwaExternalLinkUrlGet( 'https://www.youtube.com/playlist?list=PLC9K7uaDMdAUNktlDTxsmj6rJBf4Q9TR5' )?></li>
 	</ul>
 </div>
