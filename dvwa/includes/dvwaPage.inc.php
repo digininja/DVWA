@@ -229,7 +229,7 @@ function dvwaHtmlEcho( $pPage ) {
 		foreach( $menuBlock as $menuItem ) {
 			$selectedClass = ( $menuItem[ 'id' ] == $pPage[ 'page_id' ] ) ? 'selected' : '';
 			$fixedUrl = DVWA_WEB_PAGE_TO_ROOT.$menuItem[ 'url' ];
-			$menuBlockHtml .= "<li onclick=\"window.location='{$fixedUrl}'\" class=\"{$selectedClass}\"><a href=\"{$fixedUrl}\">{$menuItem[ 'name' ]}</a></li>\n";
+			$menuBlockHtml .= "<li class=\"{$selectedClass}\"><a href=\"{$fixedUrl}\">{$menuItem[ 'name' ]}</a></li>\n";
 		}
 		$menuHtml .= "<ul class=\"menuBlocks\">{$menuBlockHtml}</ul>";
 	}
