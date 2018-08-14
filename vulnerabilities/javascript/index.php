@@ -115,6 +115,7 @@ $page[ 'body' ] .= "
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.youtube.com/watch?v=cs7EQdWO5o0&index=17&list=WL' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://ponyfoo.com/articles/es6-proxies-in-depth' ) . "</li>
 	</ul>
+	<p><i>Module developed by <a href='https://twitter.com/digininja'>Digininja</a>.</i></p>
 </div>\n";
 
 dvwaHtmlEcho( $page );
