@@ -12,7 +12,7 @@ Damn Vulnerable Web Application is damn vulnerable! **Do not upload it to your h
 
 ### Disclaimer
 
-We do not take responsibility for the way in which any one uses this application (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA it is not our responsibility it is the responsibility of the person/s who uploaded and installed it.
+We do not take responsibility for the way in which any one uses this application (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA, it is not our responsibility, it is the responsibility of the person/s who uploaded and installed it.
 
 - - -
 
@@ -107,7 +107,7 @@ Query OK, 0 rows affected (0.00 sec)
 
 ### Other Configuration
 
-Depending on your Operating System as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
+Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
 
 **Folder Permissions**:
 
@@ -143,7 +143,7 @@ https://github.com/ethicalhack3r/DVWA/issues
 
 +Q. SQL Injection won't work on PHP v5.2.6.
 
--A.If you are using PHP v5.2.6 or above you will need to do the following in order for SQL injection and other vulnerabilities to work.
+-A.If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
 
 In `.htaccess`:
 
