@@ -1,6 +1,9 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+
 	// Get input
 	$target = trim($_REQUEST[ 'ip' ]);
 
@@ -33,5 +36,8 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 	// Feedback for the end user
 	$html .= "<pre>{$cmd}</pre>";
 }
+
+// Generate Anti-CSRF token
+generateSessionToken();
 
 ?>
