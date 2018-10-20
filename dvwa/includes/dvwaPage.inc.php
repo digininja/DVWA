@@ -330,7 +330,7 @@ function dvwaHtmlEcho( $pPage ) {
 			<div id=\"footer\">
 
 				<p>Damn Vulnerable Web Application (DVWA) v" . dvwaVersionGet() . "</p>
-				<script src='/dvwa/js/add_event_listeners.js'></script>
+				<script src='" . DVWA_WEB_PAGE_TO_ROOT . "/dvwa/js/add_event_listeners.js'></script>
 
 			</div>
 

@@ -96,13 +96,19 @@ Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), t
 mysql> create database dvwa;
 Query OK, 1 row affected (0.00 sec)
 
-mysql> grant all on dvwa.* to dvwa@localhost identified by 'xxx';
+mysql> grant all on dvwa.* to dvwa@localhost identified by 'SuperSecretPassword99';
 Query OK, 0 rows affected, 1 warning (0.01 sec)
 
 mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
+```
 
+You will then need to update the config file, the new entries will look like this:
 
+```php
+$_DVWA[ 'db_user' ] = 'dvwa';
+$_DVWA[ 'db_password' ] = 'SuperSecretPassword99';
+$_DVWA[ 'db_database' ] = 'dvwa';
 ```
 
 ### Other Configuration
