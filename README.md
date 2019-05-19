@@ -37,6 +37,8 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 ## Ansible playbook install
 Easy way to install DVWA is to use this Ansible playbook playbook https://github.com/L1ghtn1ng/dvwa-ansible
 
+Any issues using this, please report problems to https://github.com/L1ghtn1ng/dvwa-ansible/issues and not to the DVWA team
+
 ## Download and install as a docker container
 - [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
