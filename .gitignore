@@ -1,5 +1,7 @@
 config/config.inc.php
-Dockerfile
+
+.env
+docker-compose.override.yaml
 
 # Vim swap files
 .*swp

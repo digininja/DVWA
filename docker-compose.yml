@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  web:
+    build: .
+    ports:
+      - "${DVWA_HTTP_PORT:-127.0.0.1:8080}:80"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_NAME: "${DATABASE_NAME:-dvwa}"
+      DATABASE_USER: "${DATABASE_USER:-dvwa}"
+      DATABASE_PASSWORD: "${DATABASE_PASSWORD:-dvwa}"
+      RECAPTCHA_PUBLIC_KEY: $RECAPTCHA_PUBLIC_KEY
+      RECAPTCHA_PRIVATE_KEY: $RECAPTCHA_PRIVATE_KEY
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5
+    volumes:
+      - .docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-root}"
+      MYSQL_DATABASE: "${DATABASE_NAME:-dvwa}"
+      MYSQL_USER: "${DATABASE_USER:-dvwa}"
+      MYSQL_PASSWORD: "${DATABASE_PASSWORD:-dvwa}"
+
+volumes:
+  db-data:

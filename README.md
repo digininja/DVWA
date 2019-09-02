@@ -34,11 +34,16 @@ You should have received a copy of the GNU General Public License
 along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.org/licenses/.
 
 - - -
-## Download and install as a docker container
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
+## Docker
+Build and start the containers using [docker-compose](https://docs.docker.com/compose/):
 
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
+```
+docker-compose up --build
+```
+
+At this point, you can visit [http://localhost:8080](http://localhost:8080) to see the site running.
+
+You can also use the `.env` file to change the default settings. 
 
 ## Download
 
