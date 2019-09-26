@@ -20,10 +20,10 @@ if( isset( $_POST['seclev_submit'] ) ) {
 			$securityLevel = 'low';
 			break;
 		case 'medium':
-			$securityLevel = 'medium';
+			$securityLevel = 'low';
 			break;
 		case 'high':
-			$securityLevel = 'high';
+			$securityLevel = 'low';
 			break;
 		default:
 			$securityLevel = 'impossible';
