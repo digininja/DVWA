@@ -9,7 +9,13 @@ dvwaDatabaseConnect();
 
 if( isset( $_POST[ 'Login' ] ) ) {
 	// Anti-CSRF
-	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'login.php' );
+	if (array_key_exists ("session_token", $_SESSION)) {
+		$session_token = $_SESSION[ 'session_token' ];
+	} else {
+		$session_token = "";
+	}
+
+	checkToken( $_REQUEST[ 'user_token' ], $session_token, 'login.php' );
 
 	$user = $_POST[ 'username' ];
 	$user = stripslashes( $user );
