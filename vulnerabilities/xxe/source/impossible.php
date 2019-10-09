@@ -1,5 +1,4 @@
 <?php
-
 function HandleXmlError($errno, $errstr, $errfile, $errline){
                     if ($errno==E_WARNING && (substr_count($errstr,"DOMDocument::loadXML()")>0))
                     {
@@ -13,9 +12,8 @@ function XXE(){
 	$xmloutput = '';
 	if( isset( $_FILES[ 'uploaded' ] ) ) {
 		$filepath = $_FILES[ 'uploaded' ][ 'tmp_name' ];
-                $content = file_get_contents($filepath);
-                if(!preg_match_all('/http/i', $content)){
-		libxml_disable_entity_loader(false);
+		$content = file_get_contents($filepath);
+		libxml_disable_entity_loader(true);
 		set_error_handler('HandleXmlError');
 		$dom = new DOMDocument();
 		$dom->preserveWhiteSpace = false;
@@ -33,10 +31,8 @@ function XXE(){
 		'Artist: '. htmlentities($xml->artist)  . '<br />' . 
 		'</code>';
 		}
-        }else{
-                $errorM="No external calls allowed";
-                return $errorM;
-        }
-}
+	}
+    return $xmloutput;
+    echo "Thanks for submitting XML.";
 }
 ?>

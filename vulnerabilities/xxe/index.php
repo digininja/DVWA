@@ -22,10 +22,10 @@ switch( $_COOKIE[ 'security' ] ) {
 		$vulnerabilityFile = 'medium.php';
 		break;
 	case 'high':
-		$vulnerabilityFile = 'medium.php';
+		$vulnerabilityFile = 'high.php';
 		break;
 	default:
-		$vulnerabilityFile = 'medium.php';
+		$vulnerabilityFile = 'impossible.php';
 		break;
 }
 
