@@ -6,8 +6,10 @@
 	<tr>
 	<td><div id="code">
 		<h3>About</h3>
-		<p>An XML External Entity attack is a type of attack against an application that parses XML input. 
-		   This attack occurs when XML input containing a reference to an external entity is processed by a weakly configured XML parser. This attack may lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.</p>
+		<p>"Cross-Site Scripting (XSS)" attacks are a type of injection problem, in which malicious scripts are injected into the otherwise benign and trusted web sites.
+			XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script,
+			to a different end user. Flaws that allow these attacks to succeed are quite widespread and occur anywhere a web application using input from a user in the output,
+			without validating or encoding it.</p>
 
 		<p>An attacker can use XSS to send a malicious script to an unsuspecting user. The end user's browser has no way to know that the script should not be trusted,
 			and will execute the JavaScript. Because it thinks the script came from a trusted source, the malicious script can access any cookies, session tokens, or other
