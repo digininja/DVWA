@@ -49,7 +49,8 @@ dvwaMessagePush( "'users' table was created." );
 
 
 // Insert some data into users
-$avatarUrl  = '/hackable/users/';
+$base_dir= str_replace ("setup.php", "", $_SERVER['SCRIPT_NAME']);
+$avatarUrl  = $base_dir . 'hackable/users/';
 
 $insert = "INSERT INTO users VALUES
 	('1','admin','admin','admin',MD5('password'),'{$avatarUrl}admin.jpg', NOW(), '0'),
