@@ -1,4 +1,8 @@
+# Neither the config file or its backup should go
+# into the repo.
+config/config.inc.php.bak
 config/config.inc.php
+
 Dockerfile
 
 # Vim swap files
