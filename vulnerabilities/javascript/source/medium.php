@@ -1,5 +1,5 @@
 <?php
 $page[ 'body' ] .= <<<EOF
-<script src="/vulnerabilities/javascript/source/medium.js"></script>
+<script src="/dvwa/vulnerabilities/javascript/source/medium.js"></script>
 EOF;
 ?>
