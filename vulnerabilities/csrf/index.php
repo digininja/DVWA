@@ -35,8 +35,8 @@ $testCredentials = "
  <button onclick=\"testFunct()\">Test Credentials</button><br /><br />
  <script>
 function testFunct() {
-  window.open(\"" . DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/test_credentials.php\", \"_blank\", 
-  \"toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=400\");
+  window.open(\"" . DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/csrf/test_credentials.php\", \"_blank\", 
+  \"toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=400\");
 }
 </script>
 ";
