@@ -11,7 +11,7 @@ if( !defined( 'DVWA_WEB_PAGE_TO_ROOT' ) ) {
 }
 
 if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ] )) ) {
-	dvwaMessagePush( "Could not connect to the MySQL service.<br />Please check the config file." );
+	dvwaMessagePush( "Could not connect to the MySQL service.<br />Please check the config file.<br />" . mysqli_connect_errno() . ": " . mysqli_connect_error() . "." );
 	if ($_DVWA[ 'db_user' ] == "root") {
 		dvwaMessagePush( 'Your database user is root, if you are using MariaDB, this will not work, please read the README.md file.' );
 	}
