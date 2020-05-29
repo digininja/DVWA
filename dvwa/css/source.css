@@ -20,12 +20,10 @@ div#area {
 }
 
 .loginSuccess {
-	padding: 0 20px 20px 20px;
 	color: #638323;
 }
 
 .loginFail {
-	padding: 0 20px 20px 20px;
 	color: #a50a0a;
 }
 
