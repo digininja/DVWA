@@ -106,6 +106,39 @@ mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
+### Other Configuration
+
+Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
+
+**Folder Permissions**:
+
+* `./hackable/uploads/` - Needs to be writable by the web service (for File Upload).
+* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
+
+**PHP configuration**:
+
+* `allow_url_include = on` - Allows for Remote File Inclusions (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
+* `allow_url_fopen = on` -  Allows for Remote File Inclusions (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
+* `safe_mode = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
+* `magic_quotes_gpc = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
+* `display_errors = off` - (Optional) Hides PHP warning messages to make it less verbose [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
+
+**File: `config/config.inc.php`**:
+
+* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - These values need to be generated from: https://www.google.com/recaptcha/admin/create
+
+### Default Credentials
+
+**Default username = `admin`**
+
+**Default password = `password`**
+
+_...can easily be brute forced ;)_
+
+Login URL: http://127.0.0.1/dvwa/login.php
+
+### Troubleshooting
+
 ### Troubleshooting
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
@@ -200,46 +233,9 @@ After all that, the setup process should now work as normal.
 
 If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
 
+#### SQL Injection won't work on PHP v5.2.6.
 
-### Other Configuration
-
-Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
-
-**Folder Permissions**:
-
-* `./hackable/uploads/` - Needs to be writable by the web service (for File Upload).
-* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
-
-**PHP configuration**:
-
-* `allow_url_include = on` - Allows for Remote File Inclusions (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
-* `allow_url_fopen = on` -  Allows for Remote File Inclusions (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* `safe_mode = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
-* `magic_quotes_gpc = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
-* `display_errors = off` - (Optional) Hides PHP warning messages to make it less verbose [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
-
-**File: `config/config.inc.php`**:
-
-* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - These values need to be generated from: https://www.google.com/recaptcha/admin/create
-
-### Default Credentials
-
-**Default username = `admin`**
-
-**Default password = `password`**
-
-_...can easily be brute forced ;)_
-
-Login URL: http://127.0.0.1/dvwa/login.php
-
-### Troubleshooting
-
-For the latest troubleshooting information please visit:
-https://github.com/ethicalhack3r/DVWA/issues
-
-+Q. SQL Injection won't work on PHP v5.2.6.
-
--A.If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
+If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
 
 In `.htaccess`:
 
@@ -263,16 +259,33 @@ With:
 </IfModule>
 ```
 
-+Q. Command Injection won't work.
+#### Command Injection won't work.
 
 -A. Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
-+Q. Why can't the database connect on CentOS?
+#### Why can't the database connect on CentOS?
 
--A. You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the webserver to talk to the database:
+You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the webserver to talk to the database:
+
 ```
 setsebool -P httpd_can_network_connect_db 1
 ```
+
+#### Anything else
+
+For the latest troubleshooting information please read both open and closed tickets in the git repo:
+
+<https://github.com/ethicalhack3r/DVWA/issues>
+
+Before submitting a ticket, please make sure you are running the latest version of the code from the repo. This is not the latest release, this is the latest code from the master branch.
+
+If raising a ticket, please submit at least the following information:
+
+- Operating System
+- The last 5 lines from the web server error log directly after whatever error you are reporting occurs
+- If it is a database authentication problem, go through the steps above and screenshot each step. submit these along with a screenshot of the section of the config file showing the database user and password.
+- A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
+
 
 - - -
 
