@@ -106,15 +106,64 @@ mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-#### Troubleshooting
+### Troubleshooting
 
-With the most recent versions of MySQL/MariaDB, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
+These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
+
+#### "Access denied" running setup
+
+If you see the following error when running the setup script it means the authentication credentials in the config file do not match those configured on the database:
+
+```
+Database Error #1045: Access denied for user 'dvwa'@'localhost' (using password: YES).
+```
+
+The first thing to do is to double check what you think you put in the config file is what is actually there.
+
+If it matches what you expect, the next thing to do is to check you can log in as the user on the command line. Assuming you have a database user of `dvwa` and a password of `p@ssw0rd`, run the following command:
+
+```
+mysql -u dvwa -pp@ssw0rd
+```
+
+*Note: There is no space after the -p*
+
+If you see the following, the password is correct:
+
+```
+$ mysql -u dvwa -pp@ssw0rd
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 8.0.20-0ubuntu0.19.10.1 (Ubuntu)
+```
+
+As you can connect on the command line, it is likely something wrong in the config file, double check that and then raise an issue if you still can't get things working.
+
+If you see the following, the password you are using is wrong. Repeat the setup steps and make sure you use the same username and password throughout the process.
+
+```
+$ mysql -u dvwa -pp@ssword
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
+```
+
+#### Unknown authentication method
+
+With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
 
 ```
 Database Error #2054: The server requested authentication method unknown to the client.
 ```
 
-If you are on Ubuntu, the fix is simple, just follow these steps:
+You have two options, the easiest is to uninstall MySQL and install MariaDB:
+
+```
+sudo apt remove mysql-server
+sudo apt install mariadb-server
+```
+
+Alternatively, follow these steps:
 
 1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
 1. Under the line `[mysqld]`, add the following:
@@ -122,33 +171,30 @@ If you are on Ubuntu, the fix is simple, just follow these steps:
 1. Restart the database: `sudo service mysql restart`
 1. Check the authentication method for your database user:
 
-```sql
-mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
-+-----------+------------------+-----------------------+
-| Host      | User             | plugin                |
-+-----------+------------------+-----------------------+
-| localhost | dvwa             | caching_sha2_password |
-+-----------+------------------+-----------------------+
-1 rows in set (0.00 sec)
-```
+    ```sql
+    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
+    +-----------+------------------+-----------------------+
+    | Host      | User             | plugin                |
+    +-----------+------------------+-----------------------+
+    | localhost | dvwa             | caching_sha2_password |
+    +-----------+------------------+-----------------------+
+    1 rows in set (0.00 sec)
+    ```
+1. You'll likely see `caching_sha2_password`. If you do, run the following command:
 
-You'll likely see `caching_sha2_password`. If you do, run the following command:
-
-```sql
-mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
-```
-
-Re-running the check, you should now see `mysql_native_password`.
-
-```sql
-mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
-+-----------+------+-----------------------+
-| Host      | User | plugin                |
-+-----------+------+-----------------------+
-| localhost | dvwa | mysql_native_password |
-+-----------+------+-----------------------+
-1 row in set (0.00 sec)
-```
+    ```sql
+    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+    ```
+1. Re-running the check, you should now see `mysql_native_password`.
+    ```sql
+    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
+    +-----------+------+-----------------------+
+    | Host      | User | plugin                |
+    +-----------+------+-----------------------+
+    | localhost | dvwa | mysql_native_password |
+    +-----------+------+-----------------------+
+    1 row in set (0.00 sec)
+    ```
 
 After all that, the setup process should now work as normal.
 
