@@ -139,8 +139,6 @@ Login URL: http://127.0.0.1/dvwa/login.php
 
 ### Troubleshooting
 
-### Troubleshooting
-
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
 
 #### "Access denied" running setup
@@ -235,11 +233,13 @@ If you want more information see the following page: <https://www.php.net/manual
 
 #### SQL Injection won't work on PHP v5.2.6.
 
+PHP 5.x reached end of life in January 2019 so we would recommend running DVWA with a current 7.x version, if you must use 5.x...
+
 If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
 
 In `.htaccess`:
 
-Replace (please note it may say mod_php7):
+Replace:
 
 ```php
 <IfModule mod_php5.c>
