@@ -85,7 +85,7 @@ If you receive an error while trying to create your database, make sure your dat
 The variables are set to the following by default:
 
 ```php
-$_DVWA[ 'db_user' ] = 'root';
+$_DVWA[ 'db_user' ] = 'dvwa';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 $_DVWA[ 'db_database' ] = 'dvwa';
 ```
@@ -96,20 +96,64 @@ Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), t
 mysql> create database dvwa;
 Query OK, 1 row affected (0.00 sec)
 
-mysql> grant all on dvwa.* to dvwa@localhost identified by 'SuperSecretPassword99';
-Query OK, 0 rows affected, 1 warning (0.01 sec)
+mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> grant all on dvwa.* to dvwa@localhost;
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-You will then need to update the config file, the new entries will look like this:
+#### Troubleshooting
 
-```php
-$_DVWA[ 'db_user' ] = 'dvwa';
-$_DVWA[ 'db_password' ] = 'SuperSecretPassword99';
-$_DVWA[ 'db_database' ] = 'dvwa';
+With the most recent versions of MySQL/MariaDB, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
+
 ```
+Database Error #2054: The server requested authentication method unknown to the client.
+```
+
+If you are on Ubuntu, the fix is simple, just follow these steps:
+
+1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
+1. Under the line `[mysqld]`, add the following:
+  `default-authentication-plugin=mysql_native_password`
+1. Restart the database: `sudo service mysql restart`
+1. Check the authentication method for your database user:
+
+```sql
+mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
++-----------+------------------+-----------------------+
+| Host      | User             | plugin                |
++-----------+------------------+-----------------------+
+| localhost | dvwa             | caching_sha2_password |
++-----------+------------------+-----------------------+
+1 rows in set (0.00 sec)
+```
+
+You'll likely see `caching_sha2_password`. If you do, run the following command:
+
+```sql
+mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+```
+
+Re-running the check, you should now see `mysql_native_password`.
+
+```sql
+mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
++-----------+------+-----------------------+
+| Host      | User | plugin                |
++-----------+------+-----------------------+
+| localhost | dvwa | mysql_native_password |
++-----------+------+-----------------------+
+1 row in set (0.00 sec)
+```
+
+After all that, the setup process should now work as normal.
+
+If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
+
 
 ### Other Configuration
 
