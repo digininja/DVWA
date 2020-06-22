@@ -34,19 +34,16 @@ You should have received a copy of the GNU General Public License
 along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.org/licenses/.
 
 - - -
-## Download and install as a docker container
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
-
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
 
 ## Download
 
-DVWA is available either as a package that will run on your own web server or as a Live CD:
+While there are various versions of DVWA around, the only supported version is the latest source from the offical Github repository. You can either lone it from the repo:
 
-  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/v1.9.zip) - Released 2015-10-05
-  + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
-  + DVWA Development Source (Latest) [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/master.zip) // `git clone https://github.com/ethicalhack3r/DVWA`
+```
+git clone https://github.com/ethicalhack3r/DVWA.git
+```
+
+Or [download a ZIP of the files](https://github.com/ethicalhack3r/DVWA/archive/master.zip).
 
 - - -
 
@@ -74,7 +71,9 @@ Simply unzip dvwa.zip, place the unzipped files in your public html folder, then
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mysql-server php php-mysqli php-gd libapache2-mod-php`
+`apt-get -y install apache2 mariadb-server php php-mysqli php-gd libapache2-mod-php`
+
+The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make chnages to get MySQL to work correctly.
 
 ### Database Setup
 
@@ -137,11 +136,21 @@ _...can easily be brute forced ;)_
 
 Login URL: http://127.0.0.1/dvwa/login.php
 
-### Troubleshooting
+- - -
+
+## Docker Container
+- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
+`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
+
+Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
+
+- - -
+
+## Troubleshooting
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
 
-#### "Access denied" running setup
+### "Access denied" running setup
 
 If you see the following error when running the setup script it means the authentication credentials in the config file do not match those configured on the database:
 
@@ -179,7 +188,7 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
 ```
 
-#### Unknown authentication method
+### Unknown authentication method
 
 With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
 
@@ -187,12 +196,9 @@ With the most recent versions of MySQL, PHP can no longer talk to the database i
 Database Error #2054: The server requested authentication method unknown to the client.
 ```
 
-You have two options, the easiest is to uninstall MySQL and install MariaDB:
+You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the offical guide from the MariaDB project:
 
-```
-sudo apt remove mysql-server
-sudo apt install mariadb-server
-```
+<https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
 
 Alternatively, follow these steps:
 
@@ -231,7 +237,7 @@ After all that, the setup process should now work as normal.
 
 If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
 
-#### SQL Injection won't work on PHP v5.2.6.
+### SQL Injection won't work on PHP v5.2.6.
 
 PHP 5.x reached end of life in January 2019 so we would recommend running DVWA with a current 7.x version, if you must use 5.x...
 
@@ -263,7 +269,7 @@ With:
 
 -A. Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
-#### Why can't the database connect on CentOS?
+### Why can't the database connect on CentOS?
 
 You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the webserver to talk to the database:
 
@@ -271,7 +277,7 @@ You may be running into problems with SELinux.  Either disable SELinux or run th
 setsebool -P httpd_can_network_connect_db 1
 ```
 
-#### Anything else
+### Anything else
 
 For the latest troubleshooting information please read both open and closed tickets in the git repo:
 
@@ -285,7 +291,6 @@ If raising a ticket, please submit at least the following information:
 - The last 5 lines from the web server error log directly after whatever error you are reporting occurs
 - If it is a database authentication problem, go through the steps above and screenshot each step. submit these along with a screenshot of the section of the config file showing the database user and password.
 - A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
-
 
 - - -
 
