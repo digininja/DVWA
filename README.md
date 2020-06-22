@@ -152,18 +152,28 @@ These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. 
 
 ### "Access denied" running setup
 
-If you see the following error when running the setup script it means the authentication credentials in the config file do not match those configured on the database:
+If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
 
 ```
-Database Error #1045: Access denied for user 'dvwa'@'localhost' (using password: YES).
+Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
 ```
+
+The error is telling you that you are using the username `notdvwa`.
+
+The following error says you have pointed the config file at the wrong database.
+
+```
+SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
+```
+
+It is saying that you are using the user `dvwa` and trying to connect to the database `notdvwa`.
 
 The first thing to do is to double check what you think you put in the config file is what is actually there.
 
 If it matches what you expect, the next thing to do is to check you can log in as the user on the command line. Assuming you have a database user of `dvwa` and a password of `p@ssw0rd`, run the following command:
 
 ```
-mysql -u dvwa -pp@ssw0rd
+mysql -u dvwa -pp@ssw0rd -D dvwa
 ```
 
 *Note: There is no space after the -p*
@@ -171,21 +181,41 @@ mysql -u dvwa -pp@ssw0rd
 If you see the following, the password is correct:
 
 ```
-$ mysql -u dvwa -pp@ssw0rd
-mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 22
-Server version: 8.0.20-0ubuntu0.19.10.1 (Ubuntu)
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 14
+Server version: 10.3.22-MariaDB-0ubuntu0.19.10.1 Ubuntu 19.10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [dvwa]>
 ```
 
 As you can connect on the command line, it is likely something wrong in the config file, double check that and then raise an issue if you still can't get things working.
 
-If you see the following, the password you are using is wrong. Repeat the setup steps and make sure you use the same username and password throughout the process.
+If you see the following, the username or password you are using is wrong. Repeat the setup steps and make sure you use the same username and password throughout the process.
 
 ```
-$ mysql -u dvwa -pp@ssword
-mysql: [Warning] Using a password on the command line interface can be insecure.
 ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
+```
+
+If you get the following, the user credentials are correct but the user does not have access to the database. Again, repeat the setup steps and check the database name you are using.
+
+```
+ERROR 1044 (42000): Access denied for user 'dvwa'@'localhost' to database 'dvwa'
+```
+
+The final error you could get is this:
+
+```
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+```
+
+This is not an authentication issue but tells you that the database server is not running. Start it with the following
+
+```sh
+sudo service mysql start
 ```
 
 ### Unknown authentication method
@@ -236,6 +266,14 @@ Alternatively, follow these steps:
 After all that, the setup process should now work as normal.
 
 If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
+
+### Database Error #2002: No such file or directory.
+
+The database server is not running. In a Debian based distro this can be done with:
+
+```sh
+sudo service mysql start
+```
 
 ### SQL Injection won't work on PHP v5.2.6.
 
