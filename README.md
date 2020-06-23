@@ -37,7 +37,7 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.o
 
 ## Download
 
-While there are various versions of DVWA around, the only supported version is the latest source from the offical Github repository. You can either lone it from the repo:
+While there are various versions of DVWA around, the only supported version is the latest source from the official GitHub repository. You can either clone it from the repo:
 
 ```
 git clone https://github.com/ethicalhack3r/DVWA.git
@@ -73,7 +73,7 @@ If you are using a Debian based Linux distribution, you will need to install the
 
 `apt-get -y install apache2 mariadb-server php php-mysqli php-gd libapache2-mod-php`
 
-The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make chnages to get MySQL to work correctly.
+The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
 
 ### Database Setup
 
@@ -111,7 +111,7 @@ Depending on your Operating System, as well as version of PHP, you may wish to a
 
 **Folder Permissions**:
 
-* `./hackable/uploads/` - Needs to be writable by the web service (for File Upload).
+* `./hackable/uploads/` - Needs to be writeable by the web service (for File Upload).
 * `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
 
 **PHP configuration**:
@@ -226,7 +226,7 @@ With the most recent versions of MySQL, PHP can no longer talk to the database i
 Database Error #2054: The server requested authentication method unknown to the client.
 ```
 
-You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the offical guide from the MariaDB project:
+You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the official guide from the MariaDB project:
 
 <https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
 
@@ -309,7 +309,7 @@ With:
 
 ### Why can't the database connect on CentOS?
 
-You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the webserver to talk to the database:
+You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the web server to talk to the database:
 
 ```
 setsebool -P httpd_can_network_connect_db 1
@@ -327,7 +327,7 @@ If raising a ticket, please submit at least the following information:
 
 - Operating System
 - The last 5 lines from the web server error log directly after whatever error you are reporting occurs
-- If it is a database authentication problem, go through the steps above and screenshot each step. submit these along with a screenshot of the section of the config file showing the database user and password.
+- If it is a database authentication problem, go through the steps above and screenshot each step. Submit these along with a screenshot of the section of the config file showing the database user and password.
 - A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
 
 - - -
@@ -339,3 +339,4 @@ Homepage: http://www.dvwa.co.uk/
 Project Home: https://github.com/ethicalhack3r/DVWA
 
 *Created by the DVWA team*
+
