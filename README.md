@@ -34,19 +34,16 @@ You should have received a copy of the GNU General Public License
 along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.org/licenses/.
 
 - - -
-## Download and install as a docker container
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
-
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
 
 ## Download
 
-DVWA is available either as a package that will run on your own web server or as a Live CD:
+While there are various versions of DVWA around, the only supported version is the latest source from the official GitHub repository. You can either clone it from the repo:
 
-  + DVWA v1.9 Source (Stable) - \[1.3 MB\] [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/v1.9.zip) - Released 2015-10-05
-  + DVWA v1.0.7 LiveCD - \[480 MB\] [Download ISO](http://www.dvwa.co.uk/DVWA-1.0.7.iso) - Released 2010-09-08
-  + DVWA Development Source (Latest) [Download ZIP](https://github.com/ethicalhack3r/DVWA/archive/master.zip) // `git clone https://github.com/ethicalhack3r/DVWA`
+```
+git clone https://github.com/ethicalhack3r/DVWA.git
+```
+
+Or [download a ZIP of the files](https://github.com/ethicalhack3r/DVWA/archive/master.zip).
 
 - - -
 
@@ -74,7 +71,9 @@ Simply unzip dvwa.zip, place the unzipped files in your public html folder, then
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mysql-server php php-mysqli php-gd libapache2-mod-php`
+`apt-get -y install apache2 mariadb-server php php-mysqli php-gd libapache2-mod-php`
+
+The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
 
 ### Database Setup
 
@@ -85,7 +84,7 @@ If you receive an error while trying to create your database, make sure your dat
 The variables are set to the following by default:
 
 ```php
-$_DVWA[ 'db_user' ] = 'root';
+$_DVWA[ 'db_user' ] = 'dvwa';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 $_DVWA[ 'db_database' ] = 'dvwa';
 ```
@@ -96,19 +95,14 @@ Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), t
 mysql> create database dvwa;
 Query OK, 1 row affected (0.00 sec)
 
-mysql> grant all on dvwa.* to dvwa@localhost identified by 'SuperSecretPassword99';
-Query OK, 0 rows affected, 1 warning (0.01 sec)
+mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> grant all on dvwa.* to dvwa@localhost;
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
-```
-
-You will then need to update the config file, the new entries will look like this:
-
-```php
-$_DVWA[ 'db_user' ] = 'dvwa';
-$_DVWA[ 'db_password' ] = 'SuperSecretPassword99';
-$_DVWA[ 'db_database' ] = 'dvwa';
 ```
 
 ### Other Configuration
@@ -117,7 +111,7 @@ Depending on your Operating System, as well as version of PHP, you may wish to a
 
 **Folder Permissions**:
 
-* `./hackable/uploads/` - Needs to be writable by the web service (for File Upload).
+* `./hackable/uploads/` - Needs to be writeable by the web service (for File Upload).
 * `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
 
 **PHP configuration**:
@@ -142,18 +136,154 @@ _...can easily be brute forced ;)_
 
 Login URL: http://127.0.0.1/dvwa/login.php
 
-### Troubleshooting
+- - -
 
-For the latest troubleshooting information please visit:
-https://github.com/ethicalhack3r/DVWA/issues
+## Docker Container
+- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
+`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
-+Q. SQL Injection won't work on PHP v5.2.6.
+Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
 
--A.If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
+- - -
+
+## Troubleshooting
+
+These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
+
+### "Access denied" running setup
+
+If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
+
+```
+Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
+```
+
+The error is telling you that you are using the username `notdvwa`.
+
+The following error says you have pointed the config file at the wrong database.
+
+```
+SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
+```
+
+It is saying that you are using the user `dvwa` and trying to connect to the database `notdvwa`.
+
+The first thing to do is to double check what you think you put in the config file is what is actually there.
+
+If it matches what you expect, the next thing to do is to check you can log in as the user on the command line. Assuming you have a database user of `dvwa` and a password of `p@ssw0rd`, run the following command:
+
+```
+mysql -u dvwa -pp@ssw0rd -D dvwa
+```
+
+*Note: There is no space after the -p*
+
+If you see the following, the password is correct:
+
+```
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 14
+Server version: 10.3.22-MariaDB-0ubuntu0.19.10.1 Ubuntu 19.10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [dvwa]>
+```
+
+As you can connect on the command line, it is likely something wrong in the config file, double check that and then raise an issue if you still can't get things working.
+
+If you see the following, the username or password you are using is wrong. Repeat the setup steps and make sure you use the same username and password throughout the process.
+
+```
+ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
+```
+
+If you get the following, the user credentials are correct but the user does not have access to the database. Again, repeat the setup steps and check the database name you are using.
+
+```
+ERROR 1044 (42000): Access denied for user 'dvwa'@'localhost' to database 'dvwa'
+```
+
+The final error you could get is this:
+
+```
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+```
+
+This is not an authentication issue but tells you that the database server is not running. Start it with the following
+
+```sh
+sudo service mysql start
+```
+
+### Unknown authentication method
+
+With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
+
+```
+Database Error #2054: The server requested authentication method unknown to the client.
+```
+
+You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the official guide from the MariaDB project:
+
+<https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
+
+Alternatively, follow these steps:
+
+1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
+1. Under the line `[mysqld]`, add the following:
+  `default-authentication-plugin=mysql_native_password`
+1. Restart the database: `sudo service mysql restart`
+1. Check the authentication method for your database user:
+
+    ```sql
+    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
+    +-----------+------------------+-----------------------+
+    | Host      | User             | plugin                |
+    +-----------+------------------+-----------------------+
+    | localhost | dvwa             | caching_sha2_password |
+    +-----------+------------------+-----------------------+
+    1 rows in set (0.00 sec)
+    ```
+1. You'll likely see `caching_sha2_password`. If you do, run the following command:
+
+    ```sql
+    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+    ```
+1. Re-running the check, you should now see `mysql_native_password`.
+    ```sql
+    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
+    +-----------+------+-----------------------+
+    | Host      | User | plugin                |
+    +-----------+------+-----------------------+
+    | localhost | dvwa | mysql_native_password |
+    +-----------+------+-----------------------+
+    1 row in set (0.00 sec)
+    ```
+
+After all that, the setup process should now work as normal.
+
+If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
+
+### Database Error #2002: No such file or directory.
+
+The database server is not running. In a Debian based distro this can be done with:
+
+```sh
+sudo service mysql start
+```
+
+### SQL Injection won't work on PHP v5.2.6.
+
+PHP 5.x reached end of life in January 2019 so we would recommend running DVWA with a current 7.x version, if you must use 5.x...
+
+If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
 
 In `.htaccess`:
 
-Replace (please note it may say mod_php7):
+Replace:
 
 ```php
 <IfModule mod_php5.c>
@@ -173,16 +303,32 @@ With:
 </IfModule>
 ```
 
-+Q. Command Injection won't work.
+#### Command Injection won't work.
 
 -A. Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
-+Q. Why can't the database connect on CentOS?
+### Why can't the database connect on CentOS?
 
--A. You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the webserver to talk to the database:
+You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the web server to talk to the database:
+
 ```
 setsebool -P httpd_can_network_connect_db 1
 ```
+
+### Anything else
+
+For the latest troubleshooting information please read both open and closed tickets in the git repo:
+
+<https://github.com/ethicalhack3r/DVWA/issues>
+
+Before submitting a ticket, please make sure you are running the latest version of the code from the repo. This is not the latest release, this is the latest code from the master branch.
+
+If raising a ticket, please submit at least the following information:
+
+- Operating System
+- The last 5 lines from the web server error log directly after whatever error you are reporting occurs
+- If it is a database authentication problem, go through the steps above and screenshot each step. Submit these along with a screenshot of the section of the config file showing the database user and password.
+- A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
 
 - - -
 
@@ -193,3 +339,4 @@ Homepage: http://www.dvwa.co.uk/
 Project Home: https://github.com/ethicalhack3r/DVWA
 
 *Created by the DVWA team*
+
