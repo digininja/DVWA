@@ -275,6 +275,16 @@ The database server is not running. In a Debian based distro this can be done wi
 sudo service mysql start
 ```
 
+### Errors "MySQL server has gone away" and "Packets out of order"
+
+There are a few reasons you could be getting these errors, but the most likely is the version of database server you are running is not compatible with the version of PHP.
+
+This is most commonly found when you are running the latest version of MySQL as PHP and it do not get on well. Best advice, ditch MySQL and install MariaDB as this is not something we can support.
+
+For more information, see:
+
+<https://www.ryadel.com/en/fix-mysql-server-gone-away-packets-order-similar-mysql-related-errors/>
+
 ### SQL Injection won't work on PHP v5.2.6.
 
 PHP 5.x reached end of life in January 2019 so we would recommend running DVWA with a current 7.x version, if you must use 5.x...

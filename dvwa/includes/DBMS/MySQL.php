@@ -10,14 +10,13 @@ if( !defined( 'DVWA_WEB_PAGE_TO_ROOT' ) ) {
 	define( 'DVWA_WEB_PAGE_TO_ROOT', '../../../' );
 }
 
-if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ] )) ) {
+if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ], "", $_DVWA[ 'db_port' ] )) ) {
 	dvwaMessagePush( "Could not connect to the database service.<br />Please check the config file.<br />Database Error #" . mysqli_connect_errno() . ": " . mysqli_connect_error() . "." );
 	if ($_DVWA[ 'db_user' ] == "root") {
 		dvwaMessagePush( 'Your database user is root, if you are using MariaDB, this will not work, please read the README.md file.' );
 	}
 	dvwaPageReload();
 }
-
 
 // Create database
 $drop_db = "DROP DATABASE IF EXISTS {$_DVWA[ 'db_database' ]};";
