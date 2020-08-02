@@ -35,5 +35,6 @@
 
 	</div>
 
-	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management' ); ?></p>
+	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management_Testing/01-Testing_for_Session_Management_Schema', 'WSTG - Session Management Schema' ); ?></p>
+	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html', 'OWASP Cheat Sheet - Session Management' ); ?></p>
 </div>
