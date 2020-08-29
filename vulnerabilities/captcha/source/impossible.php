@@ -34,7 +34,6 @@ if( isset( $_POST[ 'Change' ] ) ) {
 		// What happens when the CAPTCHA was entered incorrectly
 		$html .= "<pre><br />The CAPTCHA was incorrect. Please try again.</pre>";
 		$hide_form = false;
-		return;
 	}
 	else {
 		// Check that the current password is correct
