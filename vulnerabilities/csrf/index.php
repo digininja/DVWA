@@ -31,14 +31,26 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/csrf/source/{$vulnerabilityFile}";
 
+$testCredentials = "
+ <button onclick=\"testFunct()\">Test Credentials</button><br /><br />
+ <script>
+function testFunct() {
+  window.open(\"" . DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/csrf/test_credentials.php\", \"_blank\", 
+  \"toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=400\");
+}
+</script>
+";
+
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: Cross Site Request Forgery (CSRF)</h1>
 
 	<div class=\"vulnerable_code_area\">
 		<h3>Change your admin password:</h3>
-		<br />
-
+		<br /> 
+		<div id=\"test_credentials\">
+			".$testCredentials ."
+		</div><br />
 		<form action=\"#\" method=\"GET\">";
 
 if( $vulnerabilityFile == 'impossible.php' ) {
