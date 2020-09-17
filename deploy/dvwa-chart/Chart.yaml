@@ -1,6 +1,6 @@
 apiVersion: v2
-name: dvwa-chart
-description: A Helm chart for Kubernetes
+name: dvwa
+description: A Helm chart for DVWA on Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
