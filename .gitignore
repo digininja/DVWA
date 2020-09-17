@@ -4,7 +4,5 @@
 config/config.inc.php.bak
 config/config.inc.php
 
-Dockerfile
-
 # Vim swap files
 .*swp
