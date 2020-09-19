@@ -36,6 +36,13 @@ if( isset( $_POST[ 'create_db' ] ) ) {
 // Anti-CSRF
 generateSessionToken();
 
+$database_type_name = "Unknown - The site is probably now broken";
+if( $DBMS == 'MySQL' ) {
+	$database_type_name = "MySQL/MariaDB";
+} elseif($DBMS == 'PGSQL') {
+	$database_type_name = "PostgreSQL";
+}
+
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Database Setup <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/spanner.png\" /></h1>
@@ -51,7 +58,7 @@ $page[ 'body' ] .= "
 	<h2>Setup Check</h2>
 
 	{$DVWAOS}<br />
-	Backend database: <em>{$DBMS}</em><br />
+	Backend database: <em>{$database_type_name}</em><br />
 	PHP version: <em>" . phpversion() . "</em><br />
 	<br />
 	{$SERVER_NAME}<br />
