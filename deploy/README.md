@@ -44,3 +44,7 @@ Select the dvwa service:
 ....
 |-------------|-----------------|--------------|----------------------------|
 ```
+
+## Update to PHP7
+
+Upgrade to Ubuntu (18.04) is running PHP (7.2), built against master.
