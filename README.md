@@ -139,10 +139,10 @@ Login URL: http://127.0.0.1/dvwa/login.php
 - - -
 
 ## Docker Container
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
+- [dockerhub page](https://hub.docker.com/r/soheileizadi/dvwa/)
+`docker run --rm -it -p 80:80 soheileizadi/dvwa`
 
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
+The [Dockerfile](deploy/Dockerfile) in the project is available if you like to customize your container.
 
 - - -
 
