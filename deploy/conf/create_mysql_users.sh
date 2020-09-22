@@ -17,8 +17,6 @@ echo "=> Creating MySQL admin user with ${_word} password"
 mysql -uroot -e "CREATE USER 'admin'@'%' IDENTIFIED BY '$PASS'"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION"
 
-mysql -uroot -e " GRANT ALL PRIVILEGES ON phpmyadmin.* TO  'pma'@'localhost' IDENTIFIED BY ''"
-
 CREATE_MYSQL_USER=false
 
 if [ -n "$CREATE_MYSQL_BASIC_USER_AND_DB" ] || \

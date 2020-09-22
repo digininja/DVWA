@@ -56,7 +56,7 @@ RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 # Preparation
 RUN \
 #  rm -fr /app/* && \
-  wget https://github.com/ethicalhack3r/DVWA/archive/master.zip && \
+  wget https://github.com/digininja/DVWA/archive/master.zip && \
   unzip /master.zip && \
   cp -r /DVWA-master/* /app && \
   rm -rf /DVWA-master && \
