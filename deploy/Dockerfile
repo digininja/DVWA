@@ -25,7 +25,6 @@ ADD conf/start-apache2.sh /start-apache2.sh
 ADD conf/start-mysql.sh /start-mysql.sh
 ADD conf/run.sh /run.sh
 RUN chmod 755 /*.sh
-ADD conf/my.cnf /etc/mysql/conf.d/my.cnf
 ADD conf/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD conf/supervisord-mysql.conf /etc/supervisor/conf.d/supervisord-mysql.conf
 
@@ -65,7 +64,9 @@ RUN \
   sed -ri -e "s/^allow_url_include.*/allow_url_include = On/" /etc/php/$PHP_VERSION/apache2/php.ini && \
   chmod a+w /app/hackable/uploads && \
   chmod a+w /app/external/phpids/0.6/lib/IDS/tmp/phpids_log.txt && \
-  cp /app/config/config.inc.php.dist /app/config/config.inc.php
+  cp /app/config/config.inc.php.dist /app/config/config.inc.php && \
+  sed -i "s/^.*recaptcha_public_key.* = '';/\$_DVWA[ 'recaptcha_public_key' ] = getenv('RECAPTCHA_PUBLIC_KEY');/g" /app/config/config.inc.php && \
+  sed -i "s/^.*recaptcha_private_key' ].* = '';/\$_DVWA[ 'recaptcha_private_key' ] = getenv('RECAPTCHA_PRIVATE_KEY');/g" /app/config/config.inc.php
 
 
 

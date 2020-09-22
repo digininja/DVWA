@@ -14,4 +14,4 @@ docker:
 push:
 	@docker push $(SERVER_IMAGE)
 run:
-	@docker run --rm -it -p 80:80 $(SERVER_IMAGE):$(IMAGE_VERSION)
+	@docker run --rm -it -p 80:80 -e RECAPTCHA_PUBLIC_KEY=PUBLIC_KEY -e RECAPTCHA_PRIVATE_KEY=PRIVATE_KEY $(SERVER_IMAGE):$(IMAGE_VERSION)

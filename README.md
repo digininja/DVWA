@@ -140,9 +140,19 @@ Login URL: http://127.0.0.1/dvwa/login.php
 
 ## Docker Container
 - [dockerhub page](https://hub.docker.com/r/soheileizadi/dvwa/)
-`docker run --rm -it -p 80:80 soheileizadi/dvwa`
+```bash
+docker run --rm -it -p 80:80 soheileizadi/dvwa
+
+```
 
 The [Dockerfile](deploy/Dockerfile) in the project is available if you like to customize your container.
+
+Setting up ReCAPTCHA with docker, You'll need to generate your keys at: 
+[https://www.google.com/recaptcha/admin](https://www.google.com/recaptcha/admin).
+You can run the container using the public and private keys you get:
+```bash
+docker run --rm -it -p 80:80 -e RECAPTCHA_PUBLIC_KEY=PUBLIC_KEY -e RECAPTCHA_PRIVATE_KEY=PRIVATE_KEY soheileizadi/dvwa
+```
 
 - - -
 
