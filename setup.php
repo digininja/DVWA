@@ -57,12 +57,11 @@ $page[ 'body' ] .= "
 
 	<h2>Setup Check</h2>
 
-	{$DVWAOS}<br />
-	Backend database: <em>{$database_type_name}</em><br />
-	PHP version: <em>" . phpversion() . "</em><br />
-	<br />
 	{$SERVER_NAME}<br />
 	<br />
+	{$DVWAOS}<br />
+	<br />
+	PHP version: <em>" . phpversion() . "</em><br />
 	{$phpDisplayErrors}<br />
 	{$phpSafeMode}<br/ >
 	{$phpURLInclude}<br/ >
@@ -72,10 +71,12 @@ $page[ 'body' ] .= "
 	{$phpMySQL}<br />
 	{$phpPDO}<br />
 	<br />
+	Backend database: <em>{$database_type_name}</em><br />
 	{$MYSQL_USER}<br />
 	{$MYSQL_PASS}<br />
 	{$MYSQL_DB}<br />
 	{$MYSQL_SERVER}<br />
+	{$MYSQL_PORT}<br />
 	<br />
 	{$DVWARecaptcha}<br />
 	<br />
