@@ -52,9 +52,6 @@ if [ -n "$APACHE_ROOT" ];then
     rm -f /var/www/html && ln -s "/app/${APACHE_ROOT}" /var/www/html
 fi
 
-echo "Editing phpmyadmin config"
-sed -i "s/cfg\['blowfish_secret'\] = ''/cfg['blowfish_secret'] = '`date | md5sum`'/" /var/www/phpmyadmin/config.inc.php
-
 echo "Setting up MySQL directories"
 mkdir -p /var/run/mysqld
 

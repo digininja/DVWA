@@ -1,6 +1,13 @@
 FROM ubuntu:bionic
 MAINTAINER soheil@gmail.com
 
+ARG PHP_VERSION=7.2
+
+#ARG DATABASE_SERVER=mariadb-server
+ARG DATABASE_SERVER=mysql-server
+
+
+
 ENV CREATE_MYSQL_BASIC_USER_AND_DB true
 ENV MYSQL_USER_NAME dvwa
 ENV MYSQL_USER_DB dvwa
@@ -9,7 +16,7 @@ ENV MYSQL_USER_PASS p@ssw0rd
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-		apt-get -y install git wget unzip supervisor apache2 mysql-server php php-mysqli php-gd libapache2-mod-php
+		apt-get -y install git wget unzip supervisor apache2 $DATABASE_SERVER php php-mysqli php-gd libapache2-mod-php
 #  apt-get -y install supervisor git nano apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc php5-mcrypt && \
 #  echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -54,8 +61,8 @@ RUN \
   unzip /master.zip && \
   cp -r /DVWA-master/* /app && \
   rm -rf /DVWA-master && \
-  echo 'session.save_path = "/tmp"' >> /etc/php/7.2/apache2/php.ini && \
-  sed -ri -e "s/^allow_url_include.*/allow_url_include = On/" /etc/php/7.2/apache2/php.ini && \
+  echo 'session.save_path = "/tmp"' >> /etc/php/$PHP_VERSION/apache2/php.ini && \
+  sed -ri -e "s/^allow_url_include.*/allow_url_include = On/" /etc/php/$PHP_VERSION/apache2/php.ini && \
   chmod a+w /app/hackable/uploads && \
   chmod a+w /app/external/phpids/0.6/lib/IDS/tmp/phpids_log.txt && \
   cp /app/config/config.inc.php.dist /app/config/config.inc.php
