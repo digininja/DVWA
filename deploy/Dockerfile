@@ -23,10 +23,12 @@ RUN apt-get update && \
 # Add image configuration and scripts
 ADD conf/start-apache2.sh /start-apache2.sh
 ADD conf/start-mysql.sh /start-mysql.sh
+ADD conf/start-logging.sh /start-logging.sh
 ADD conf/run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD conf/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD conf/supervisord-mysql.conf /etc/supervisor/conf.d/supervisord-mysql.conf
+ADD conf/supervisord-logging.conf /etc/supervisor/conf.d/supervisord-logging.conf
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql/*
