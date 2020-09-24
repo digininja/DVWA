@@ -83,7 +83,11 @@ fi
 
 echo "Editing MySQL config"
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
-sed -i "s/^#general_log*/general_log/" /etc/mysql/my.cnf
+# Enable every and all logging, this is not performant or
+# Recommended for production systems, but it sure helps 
+# for debugging and trial and error
+sed -i "s/^#general_log*/general_log/" /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i "s/^#slow_query_log*/slow_query_log/" /etc/mysql/mysql.conf.d/mysqld.cnf
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 sed -i "s/user.*/user = www-data/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
