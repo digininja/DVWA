@@ -1,6 +1,7 @@
 import glob
 import re
 import requests
+import time
 
 
 def get_php_files():
@@ -18,7 +19,7 @@ def get_urls(filename):
         return matches
 
 
-def check(url):
+def check_once(url):
     try:
         headers = {
             'User-Agent':
@@ -26,16 +27,28 @@ def check(url):
         }
         response = requests.get(url, verify=False, headers=headers)
     except requests.exceptions.ConnectionError:
-        return 0
-    return response.status_code
+        return False, -1
+    return response.ok, response.status_code
+
+
+def check(url):
+    # We try for 5 times, with 3 seconds interval.
+    try_count = 5
+    try_interval = 3
+    for i in range(try_count):
+        ok, status_code = check_once(url)
+        if ok:
+            break
+        time.sleep(try_interval)
+    return ok, status_code
 
 
 def test_url():
     broken_urls = []
     for php_file in get_php_files():
         for url in get_urls(php_file):
-            status_code = check(url)
-            if status_code not in [200, 300]:
+            ok, status_code = check_once(url)
+            if not ok:
                 broken_urls.append((php_file, url, status_code))
     for php_file, url, status_code in broken_urls:
         print("%s\t%s\t%s" % (php_file, url, status_code))
