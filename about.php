@@ -32,7 +32,7 @@ $page[ 'body' ] .= "
 		<li>Jamesr: " . dvwaExternalLinkUrlGet( 'https://www.creativenucleus.com/','www.creativenucleus.com' ) . "</li>
 		<li>Jason Jones: " . dvwaExternalLinkUrlGet( 'http://www.linux-ninja.com/','www.linux-ninja.com' ) . "</li>
 		<li>RandomStorm</li>
-		<li>Ryan Dewhurst: " . dvwaExternalLinkUrlGet( 'https://www.dewhurstsecurity.com/','www.dewhurstsecurity.com' ) . "</li>
+		<li>Ryan Dewhurst: " . dvwaExternalLinkUrlGet( 'https://dewhurstsecurity.com/','dewhurstsecurity.com' ) . "</li>
 		<li>Shinkurt: " . dvwaExternalLinkUrlGet( 'http://www.paulosyibelo.com/','www.paulosyibelo.com' ) . "</li>
 		<li>Tedi Heriyanto: " . dvwaExternalLinkUrlGet( 'http://tedi.heriyanto.net/','tedi.heriyanto.net' ) . "</li>
 		<li>Tom Mackenzie</li>
