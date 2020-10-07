@@ -194,7 +194,7 @@ MariaDB [dvwa]>
 
 As you can connect on the command line, it is likely something wrong in the config file, double check that and then raise an issue if you still can't get things working.
 
-If you see the following, the username or password you are using is wrong. Repeat the setup steps and make sure you use the same username and password throughout the process.
+If you see the following, the username or password you are using is wrong. Repeat the [Database Setup](#database-setup) steps and make sure you use the same username and password throughout the process.
 
 ```
 ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
