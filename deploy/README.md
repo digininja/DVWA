@@ -21,7 +21,7 @@ Here we demonstrate deployment on
 [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) but chart can be deployed on any cluster:
 
 ```bash
-start minikube
+minikube start
 ```
 
 ```bash
@@ -43,6 +43,11 @@ Select the dvwa service:
 | dvwa        | seizadi-dvwa    | http/80      | http://192.168.64.40:31022 |
 ....
 |-------------|-----------------|--------------|----------------------------|
+```
+
+Delete the deployment
+```bash
+helm uninstall seizadi-dvwa
 ```
 
 ## Update to PHP7

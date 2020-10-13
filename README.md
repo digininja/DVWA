@@ -145,7 +145,7 @@ docker run --rm -it -p 80:80 soheileizadi/dvwa
 
 ```
 
-The [Dockerfile](deploy/Dockerfile) in the project is available if you like to customize your container.
+The [Dockerfile](deploy/Dockerfile) in the project is available if you would like to customize the container.
 
 Setting up ReCAPTCHA with docker, You'll need to generate your keys at: 
 [https://www.google.com/recaptcha/admin](https://www.google.com/recaptcha/admin).
