@@ -7,3 +7,6 @@ Dockerfile
 
 # Vim swap files
 .*swp
+
+# VS Code editor files
+*.code-workspace
