@@ -2,9 +2,6 @@
 #
 # Prepare our container for initial boot.
 
-# Where does our MySQL data live?
-VOLUME_HOME="/var/lib/mysql"
-
 #######################################
 # Use sed to replace apache php.ini values for a given PHP version.
 # Globals:
@@ -52,13 +49,6 @@ if [ -n "$APACHE_ROOT" ];then
     rm -f /var/www/html && ln -s "/app/${APACHE_ROOT}" /var/www/html
 fi
 
-echo "Setting up MySQL directories"
-mkdir -p /var/run/mysqld
-
-# Setup user and permissions for MySQL and Apache
-chmod -R 770 /var/lib/mysql
-chmod -R 770 /var/run/mysqld
-
 if [ -n "$VAGRANT_OSX_MODE" ];then
     echo "Setting up users and groups"
     usermod -u $DOCKER_USER_ID www-data
@@ -71,44 +61,7 @@ else
     chown -R www-data:staff /app
 fi
 
-echo "Allowing Apache/PHP to write to MySQL"
-chown -R www-data:staff /var/lib/mysql
-chown -R www-data:staff /var/run/mysqld
-chown -R www-data:staff /var/log/mysql
-
-if [ -e /var/run/mysqld/mysqld.sock ];then
-    echo "Removing MySQL socket"
-    rm /var/run/mysqld/mysqld.sock
-fi
-
-echo "Editing MySQL config"
-sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
-# Enable every and all logging, this is not performant or
-# Recommended for production systems, but it sure helps 
-# for debugging and trial and error
-sed -i "s/^#general_log*/general_log/" /etc/mysql/mysql.conf.d/mysqld.cnf
-sed -i "s/^#slow_query_log*/slow_query_log/" /etc/mysql/mysql.conf.d/mysqld.cnf
-sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
-sed -i "s/user.*/user = www-data/" /etc/mysql/mysql.conf.d/mysqld.cnf
-
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
-    echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
-    echo "=> Installing MySQL ..."
-
-    # Try the 'preferred' solution
-    mysqld --initialize-insecure
-
-    # IF that didn't work
-    if [ $? -ne 0 ]; then
-        # Fall back to the 'depreciated' solution
-        mysql_install_db > /dev/null 2>&1
-    fi
-
-    echo "=> Done!"
-    /create_mysql_users.sh
-else
-    echo "=> Using an existing volume of MySQL"
-fi
-
-echo "Starting supervisord"
-exec supervisord -n
+echo "Starting apache2"
+source /etc/apache2/envvars
+apache2 &
+tail -f /var/log/apache2/*

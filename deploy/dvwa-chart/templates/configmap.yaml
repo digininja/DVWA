@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}
+data:
+  MYSQL_DATABASE: "dvwa"
+  MYSQL_USER_NAME: "dvwa"
+  MYSQL_USER_PASS: "p@ssw0rd"
+  MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+  DB_SERVER_HOST: "{{ template "dvwa-chart.fullname" . }}-mysql"
+

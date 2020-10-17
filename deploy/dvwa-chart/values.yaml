@@ -2,6 +2,17 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# default values for mysql
+mysql:
+  mysqlUser: dvwa
+  mysqlPassword: p@ssw0rd
+  mysqlDatabase: dvwa
+  configurationFiles:
+    my.cnf: |-
+      [mysqld]
+      general_log
+      slow_query_log
+
 # Default values for web-dvwa.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -11,7 +22,7 @@ replicaCount: 1
 image:
   repository: soheileizadi/dvwa
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""

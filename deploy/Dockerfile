@@ -3,40 +3,16 @@ MAINTAINER soheil@gmail.com
 
 ARG PHP_VERSION=7.2
 
-#ARG DATABASE_SERVER=mariadb-server
-ARG DATABASE_SERVER=mysql-server
-
-
-
-ENV CREATE_MYSQL_BASIC_USER_AND_DB true
-ENV MYSQL_USER_NAME dvwa
-ENV MYSQL_USER_DB dvwa
-ENV MYSQL_USER_PASS p@ssw0rd
+ENV DB_SERVER_HOST 127.0.0.1
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-		apt-get -y install git wget unzip supervisor apache2 $DATABASE_SERVER php php-mysqli php-gd libapache2-mod-php
-#  apt-get -y install supervisor git nano apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc php5-mcrypt && \
-#  echo "ServerName localhost" >> /etc/apache2/apache2.conf
+		apt-get -y install git wget unzip supervisor apache2 php php-mysqli php-gd libapache2-mod-php
 
 # Add image configuration and scripts
-ADD conf/start-apache2.sh /start-apache2.sh
-ADD conf/start-mysql.sh /start-mysql.sh
-ADD conf/start-logging.sh /start-logging.sh
 ADD conf/run.sh /run.sh
 RUN chmod 755 /*.sh
-ADD conf/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
-ADD conf/supervisord-mysql.conf /etc/supervisor/conf.d/supervisord-mysql.conf
-ADD conf/supervisord-logging.conf /etc/supervisor/conf.d/supervisord-logging.conf
-
-# Remove pre-installed database
-RUN rm -rf /var/lib/mysql/*
-
-# Add MySQL utils
-ADD conf/create_mysql_users.sh /create_mysql_users.sh
-RUN chmod 755 /*.sh
-RUN chmod +4000 /usr/bin/find
 
 # config to enable .htaccess
 ADD conf/apache_default.conf /etc/apache2/sites-available/000-default.conf
@@ -45,10 +21,6 @@ RUN a2enmod rewrite
 #Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 60M
 ENV PHP_POST_MAX_SIZE 60M
-
-# Add volumes for MySQL
-VOLUME  ["/etc/mysql", "/var/lib/mysql" ]
-
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -67,10 +39,11 @@ RUN \
   chmod a+w /app/hackable/uploads && \
   chmod a+w /app/external/phpids/0.6/lib/IDS/tmp/phpids_log.txt && \
   cp /app/config/config.inc.php.dist /app/config/config.inc.php && \
+  sed -i "s/^.*db_server.* = '127.0.0.1';/\$_DVWA[ 'db_server' ] = getenv('DB_SERVER_HOST');/g" /app/config/config.inc.php && \
   sed -i "s/^.*recaptcha_public_key.* = '';/\$_DVWA[ 'recaptcha_public_key' ] = getenv('RECAPTCHA_PUBLIC_KEY');/g" /app/config/config.inc.php && \
   sed -i "s/^.*recaptcha_private_key' ].* = '';/\$_DVWA[ 'recaptcha_private_key' ] = getenv('RECAPTCHA_PRIVATE_KEY');/g" /app/config/config.inc.php
 
 
 
-EXPOSE 80 3306
+EXPOSE 80
 CMD ["/run.sh"]
