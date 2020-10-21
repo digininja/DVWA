@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    # Every Sunday at 0AM UTC
+    - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test with pytest
+        run: |
+          export SETUPTOOLS_USE_DISTUTILS=stdlib
+          pip3 install pytest
+          python3 -m pytest -s
