@@ -47,7 +47,7 @@ def test_url():
     broken_urls = []
     for php_file in get_php_files():
         for url in get_urls(php_file):
-            ok, status_code = check_once(url)
+            ok, status_code = check(url)
             if not ok:
                 broken_urls.append((php_file, url, status_code))
     for php_file, url, status_code in broken_urls:
