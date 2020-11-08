@@ -63,5 +63,4 @@ fi
 
 echo "Starting apache2"
 source /etc/apache2/envvars
-apache2 &
-tail -f /var/log/apache2/*
+/usr/sbin/apache2ctl -DFOREGROUND

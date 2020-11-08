@@ -8,7 +8,7 @@ ENV DB_SERVER_HOST 127.0.0.1
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-		apt-get -y install git wget unzip supervisor apache2 php php-mysqli php-gd libapache2-mod-php
+		apt-get -y install git wget unzip supervisor apache2 php php-mysqli php-gd libapache2-mod-php iputils-ping
 
 # Add image configuration and scripts
 ADD conf/run.sh /run.sh
@@ -17,6 +17,9 @@ RUN chmod 755 /*.sh
 # config to enable .htaccess
 ADD conf/apache_default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
+# To enable loging Apache http traffic detail
+RUN a2enmod dump_io
+
 
 #Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 60M
