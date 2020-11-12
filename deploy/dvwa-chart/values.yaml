@@ -7,11 +7,10 @@ mysql:
   mysqlUser: dvwa
   mysqlPassword: p@ssw0rd
   mysqlDatabase: dvwa
-  configurationFiles:
-    my.cnf: |-
-      [mysqld]
-      general_log
-      slow_query_log
+  image: "soheileizadi/mysql-generallog"
+  imageTag: "latest"
+  imagePullPolicy: "Always"
+
 
 # Default values for web-dvwa.
 # This is a YAML-formatted file.

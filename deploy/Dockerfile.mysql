@@ -1,0 +1,9 @@
+FROM mysql
+
+COPY my.cnf /etc/mysql/my.cnf
+
+RUN mkdir /streamlog && \
+    touch /streamlog/mysql_query.log && \
+    chmod 666 /streamlog/mysql_query.log && \
+    apt-get update -y && \
+    apt-get install -y procps
