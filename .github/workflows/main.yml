@@ -12,7 +12,7 @@ jobs:
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.0-9.x
       with:
         project: CXDVWA
-        team: 'CxServer'
+        team: '/CxServer'
         checkmarx_url: ${{ secrets.CHECKMARX_URL }}
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
