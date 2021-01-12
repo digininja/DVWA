@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v2
     # Scan code with Checkmarx
     - name: Checkmarx CxFlow Action
-      uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.1
+      uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.0-9.x
       with:
         project: CXDVWA
         team: 'CxServer'
