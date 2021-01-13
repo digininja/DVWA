@@ -38,7 +38,7 @@ steps:
     ConnectionDetailsSelection: 'Credentials'
     apiId: '$(APIID)'
     apiKey: '$(APIKEY)'
-    veracodeAppProfile: 'IGDEXE.NodeGoat'
+    veracodeAppProfile: 'AzDevOps.DVWA'
     version: '$(build.buildNumber)'
     filepath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     createSandBox: false
