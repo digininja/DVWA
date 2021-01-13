@@ -1,0 +1,69 @@
+# PHP
+# Test and package your PHP project.
+# Add steps that run tests, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/php
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  phpVersion: 7.2
+
+steps:
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Agent.BuildDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Criando pacote para analise'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      export SRCCLR_SCM_URI=$(Build.Repository.Uri)
+      export SRCCLR_SCM_REF=$(Build.SourceBranch)
+      export SRCCLR_SCM_REV=$(build.buildNumber)
+      curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan -url "$(Build.BuildId).zip"
+    workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'SRCCLR'
+
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '$(APIID)'
+    apiKey: '$(APIKEY)'
+    veracodeAppProfile: 'IGDEXE.NodeGoat'
+    version: '$(build.buildNumber)'
+    filepath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    createSandBox: false
+    createProfile: true
+    failTheBuildIfVeracodeScanDidNotInitiate: false
+    scanStatusCheckInterval: '60'
+    importResults: true
+    failBuildOnPolicyFail: true
+  displayName: 'SAST'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Configuracoes
+      urlPipeScan="https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip"
+      veracodeID="$(APIID)"
+      veracodeAPIkey="$(APIKEY)"
+      caminhoArquivo="$(Build.BuildId).zip"
+      
+      # Faz o download da ferramenta
+      curl -o pipescan.zip $urlPipeScan
+      # Descompacta a ferramenta
+      unzip -o pipescan.zip -d "./"
+      # Faz a analise
+      java -jar "pipeline-scan.jar" -f "$caminhoArquivo" -vid $veracodeID -vkey $veracodeAPIkey
+    workingDirectory: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Pipeline Scan'
