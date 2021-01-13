@@ -29,7 +29,7 @@ steps:
       export SRCCLR_SCM_URI=$(Build.Repository.Uri)
       export SRCCLR_SCM_REF=$(Build.SourceBranch)
       export SRCCLR_SCM_REV=$(Build.SourceVersion)
-      curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan -url "$(Build.BuildId).zip"
+      curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan "$(Build.BuildId).zip"
     workingDirectory: '$(Build.ArtifactStagingDirectory)'
   displayName: 'SRCCLR'
 
