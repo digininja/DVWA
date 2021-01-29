@@ -38,38 +38,15 @@ steps:
     failBuildOnPolicyFail: false
   displayName: 'SAST'
 
-- task: Bash@3
+- task: Veracode Flaw Importer@3
   inputs:
-    targetType: 'inline'
-    script: |
-      # Configuracoes
-      urlDownloadAPI="https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.12.7.3/vosp-api-wrappers-java-20.12.7.3.jar"
-      veracodeID="$(APIID)"
-      veracodeAPIkey="$(APIKEY)"
-      appID="$(APPID)"
-      caminhoArquivo="$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
-      numeroVersao=$(date +%H%M%s%d%m%y)
-      # Faz o download da ferramenta
-      curl -L -o VeracodeJavaAPI.jar $urlDownloadAPI
-      # Utiliza a ferramenta
-      java -jar VeracodeJavaAPI.jar -vid $veracodeID -vkey $veracodeAPIkey -action UploadAndScanByAppId -appid "$appID" -filepath "$caminhoArquivo" -version $numeroVersao
-  displayName: 'Wrapper UploadAndScanByAppId'
-
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Configuracoes
-      urlPipeScan="https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip"
-      veracodeID="$(APIID)"
-      veracodeAPIkey="$(APIKEY)"
-      caminhoArquivo="$(Build.BuildId).zip"
-      
-      # Faz o download da ferramenta
-      curl -o pipescan.zip $urlPipeScan
-      # Descompacta a ferramenta
-      unzip -o pipescan.zip -d "./"
-      # Faz a analise
-      java -jar "pipeline-scan.jar" -f "$caminhoArquivo" -vid $veracodeID -vkey $veracodeAPIkey
-    workingDirectory: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Pipeline Scan'
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '$(APIID)'
+    apiKey: '$(APIKEY)'
+    veracodeAppProfile: 'AzDevOps.DVWA'
+    sandboxName: 
+    importType: 'All Flaws'
+    workItemType: 'Bug'
+    area: 'M3Corp'
+    flawImportLimit: '1000'
+  displayName: 'Relatorio'
