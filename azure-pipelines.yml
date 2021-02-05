@@ -46,7 +46,7 @@ steps:
     veracodeAppProfile: 'AzDevOps.DVWA'
     sandboxName: 
     importType: 'All Flaws'
-    workItemType: 'Bug'
+    workItemType: 'Issue'
     area: 'M3Corp'
     flawImportLimit: '1000'
   displayName: 'Relatorio'
