@@ -7,7 +7,7 @@ dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
 $page[ 'title' ]   = 'DVWA Security' . $page[ 'title_separator' ].$page[ 'title' ];
-$page[ 'page_id' ] = 'security';
+$page[ 'page_id' ] = 'security new';
 
 $securityHtml = '';
 if( isset( $_POST['seclev_submit'] ) ) {
