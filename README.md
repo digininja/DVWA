@@ -31,7 +31,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Damn Vulnerable Web Application (DVWA).  If not, see http://www.gnu.org/licenses/.
+along with Damn Vulnerable Web Application (DVWA).  If not, see <http://www.gnu.org/licenses/>.
 
 - - -
 
@@ -64,7 +64,7 @@ XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows 
 XAMPP can be downloaded from:
 https://www.apachefriends.org/en/xampp.html
 
-Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: http://127.0.0.1/dvwa/setup.php
+Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: `http://127.0.0.1/dvwa/setup.php`
 
 ### Linux Packages
 
@@ -345,9 +345,9 @@ If raising a ticket, please submit at least the following information:
 
 ## Links
 
-Homepage: http://www.dvwa.co.uk/
+Homepage: <http://www.dvwa.co.uk/>
 
-Project Home: https://github.com/digininja/DVWA
+Project Home: <https://github.com/digininja/DVWA>
 
 *Created by the DVWA team*
 
