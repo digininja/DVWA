@@ -136,6 +136,8 @@ _...can easily be brute forced ;)_
 
 Login URL: http://127.0.0.1/login.php
 
+_Note: This will be different if you installed DVWA into a different directory._
+
 - - -
 
 ## Docker Container
