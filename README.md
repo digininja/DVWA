@@ -134,7 +134,7 @@ Depending on your Operating System, as well as version of PHP, you may wish to a
 
 _...can easily be brute forced ;)_
 
-Login URL: http://127.0.0.1/dvwa/login.php
+Login URL: http://127.0.0.1/login.php
 
 - - -
 
