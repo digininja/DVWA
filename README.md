@@ -53,7 +53,6 @@ Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/maste
 
 ### Installation Videos
 
-- [How to setup DVWA (Damn Vulnerable Web Application) on Ubuntu](https://www.youtube.com/watch?v=5BG6iq_AUvM) [21:01 minutes]
 - [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo) [12:39 minutes]
 
 ### Windows + XAMPP
