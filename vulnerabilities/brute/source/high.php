@@ -2,7 +2,9 @@
 
 if( isset( $_GET[ 'Login' ] ) ) {
 	// Check Anti-CSRF token
-	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+	if (isset($_SESSION[ 'session_token' ])) {
+		checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+	}
 
 	// Sanitise username input
 	$user = $_GET[ 'username' ];
