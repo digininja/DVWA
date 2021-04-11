@@ -48,6 +48,13 @@ def check(url):
 
 
 def test_url():
+    # Need to rewrite this so it generates a single, unique list of URLs,
+    # removes any which are to be ignored, and then checks them. Would be
+    # much cleaner.
+    
+    ignore_urls = [
+        "https://wpscan.com" # Cloudflare doesn't like GitHub checking it
+    ]
     broken_urls = []
     for php_file in get_php_files():
         for url in get_urls(php_file):
