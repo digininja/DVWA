@@ -53,15 +53,34 @@ def test_url():
     # much cleaner.
     
     ignore_urls = [
-        "https://wpscan.com" # Cloudflare doesn't like GitHub checking it
+        "https://wpscan.com/", # Cloudflare doesn't like GitHub checking it
+        "http://www.w3.org/TR/html4/loose.dtd" # Don't need to check the DTD
     ]
+    all_urls = []
     broken_urls = []
     for php_file in get_php_files():
         for url in get_urls(php_file):
+            all_urls.append(url)
+    
+    # This removes any duplicates
+    dedup_urls = list(dict.fromkeys(all_urls))
+
+    for url in dedup_urls:
+        if not url in ignore_urls:
+            # print("checking %s" % url)
             ok, status_code = check(url)
             if not ok:
-                broken_urls.append((php_file, url, status_code))
-    for php_file, url, status_code in broken_urls:
-        print("%s\t%s\t%s" % (php_file, url, status_code))
+                # The php_file variable is now broken as it was set in a previous loop
+                # and doesn't come across into this one.
+
+                #print("failed to access %s from file %s with code %d" % (url, php_file, status_code))
+                # broken_urls.append((php_file, url, status_code))
+                broken_urls.append((url, status_code))
+
+    #for php_file, url, status_code in broken_urls:
+    #    print("%s\t%s\t%d" % (php_file, url, status_code))
+
+    for url, status_code in broken_urls:
+        print("%s\t%d" % (url, status_code))
 
     assert len(broken_urls) == 0, "Broken URLs Detected."
