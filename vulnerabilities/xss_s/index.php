@@ -45,11 +45,11 @@ $page[ 'body' ] .= "
 			<table width=\"550\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">
 				<tr>
 					<td width=\"100\">Name *</td>
-					<td><input name=\"txtName\" type=\"text\" size=\"30\" maxlength=\"10\"></td>
+					<td><input name=\"txtName\" type=\"text\" size=\"30\" maxlength=\"30\"></td>
 				</tr>
 				<tr>
 					<td width=\"100\">Message *</td>
-					<td><textarea name=\"mtxMessage\" cols=\"50\" rows=\"3\" maxlength=\"50\"></textarea></td>
+					<td><textarea name=\"mtxMessage\" cols=\"50\" rows=\"3\" maxlength=\"150\"></textarea></td>
 				</tr>
 				<tr>
 					<td width=\"100\">&nbsp;</td>
