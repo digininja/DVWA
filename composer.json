@@ -1,0 +1,9 @@
+{
+    "name": "srcclr/example-php-composer",
+    "description": "An example PHP project using Composer to demonstrate SourceClear scans.",
+    "type": "project",
+    "require": {
+      "moodle/moodle": "2.6.2",
+      "appserver-io/http": "1.1.6"
+    }
+}

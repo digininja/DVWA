@@ -1,0 +1,215 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "cb693fc7725f817ca207af940a2bb817",
+    "packages": [
+        {
+            "name": "appserver-io-psr/http-message",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/appserver-io-psr/http-message.git",
+                "reference": "f30acd535e6812a1a4db91070a089768c35c9b20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/appserver-io-psr/http-message/zipball/f30acd535e6812a1a4db91070a089768c35c9b20",
+                "reference": "f30acd535e6812a1a4db91070a089768c35c9b20",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "appserver-io/build": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "AppserverIo\\Psr\\HttpMessage": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Johann Zelger",
+                    "email": "jz@appserver.io",
+                    "homepage": "http://www.appserver.io",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tim Wagner",
+                    "email": "tw@appserver.io",
+                    "homepage": "http://www.appserver.io",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Bernhard Wick",
+                    "email": "bw@appserver.io",
+                    "homepage": "http://www.appserver.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PSR package containing some interface for HTTP messaging while PSR-7 is in proposal state",
+            "homepage": "https://github.com/appserver-io-psr/http-message",
+            "keywords": [
+                "http",
+                "httpmessage",
+                "php",
+                "protocol",
+                "server"
+            ],
+            "time": "2017-05-13T14:27:22+00:00"
+        },
+        {
+            "name": "appserver-io/http",
+            "version": "1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/appserver-io/http.git",
+                "reference": "07cecee646cc2200eb49509106a02413c45188b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/appserver-io/http/zipball/07cecee646cc2200eb49509106a02413c45188b5",
+                "reference": "07cecee646cc2200eb49509106a02413c45188b5",
+                "shasum": ""
+            },
+            "require": {
+                "appserver-io-psr/http-message": "~1.0",
+                "ircmaxell/password-compat": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "appserver-io/build": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "AppserverIo\\Http": [
+                        "src/",
+                        "tests/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Wagner",
+                    "email": "tw@appserver.io",
+                    "homepage": "https://github.com/wagnert",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Bernhard Wick",
+                    "email": "bw@appserver.io",
+                    "homepage": "https://github.com/wick-ed",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Johann Zelger",
+                    "email": "jz@appserver.io",
+                    "homepage": "https://github.com/wick-ed/zelgerj",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Philipp Dittert",
+                    "email": "p.dittert@techdivision.com",
+                    "homepage": "http://www.appserver.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "HTTP protocol implementation for usage in server context",
+            "homepage": "https://github.com/appserver-io/http",
+            "keywords": [
+                "http",
+                "php",
+                "protocol",
+                "server"
+            ],
+            "time": "2015-10-19T15:57:43+00:00"
+        },
+        {
+            "name": "ircmaxell/password-compat",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ircmaxell/password_compat.git",
+                "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/5c5cde8822a69545767f7c7f3058cb15ff84614c",
+                "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/password.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Ferrara",
+                    "email": "ircmaxell@php.net",
+                    "homepage": "http://blog.ircmaxell.com"
+                }
+            ],
+            "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
+            "homepage": "https://github.com/ircmaxell/password_compat",
+            "keywords": [
+                "hashing",
+                "password"
+            ],
+            "time": "2014-11-20T16:49:30+00:00"
+        },
+        {
+            "name": "moodle/moodle",
+            "version": "v2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moodle/moodle.git",
+                "reference": "ef0ee34df09859681f91d5544437faa3551ae213"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moodle/moodle/zipball/ef0ee34df09859681f91d5544437faa3551ae213",
+                "reference": "ef0ee34df09859681f91d5544437faa3551ae213",
+                "shasum": ""
+            },
+            "require-dev": {
+                "moodlehq/behat-extension": "1.26.7",
+                "phpunit/dbunit": "1.2.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2014-03-07T17:51:51+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
