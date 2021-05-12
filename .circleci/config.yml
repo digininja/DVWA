@@ -87,7 +87,7 @@ jobs:
             #export DEBUG=1
             git config --global user.email "$emailgit"
             git config --global user.name "$nomegit"            
-            git remote set-url origin https://github.com/VictorM3/DVWA.git
+            git remote set-url origin https://github.com/IGDEXE/DVWA.git
             git checkout -f master
             export EXTRA_ARGS='--update-advisor --pull-request'
             curl -sSL https://download.sourceclear.com/ci.sh | bash -s – scan $EXTRA_ARGS
