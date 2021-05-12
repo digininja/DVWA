@@ -123,11 +123,10 @@ workflows:
   version: 2.1
   build_and_scan:
     jobs:
-      #- Veracode_sca_image_scanning 
-      - build
-      #- build:
-      #    requires:
-      #      - Veracode_sca_image_scanning
+      - Veracode_sca_image_scanning 
+      - build:
+          requires:
+            - Veracode_sca_image_scanning
       - Veracode_sca:
           requires:
             - build
