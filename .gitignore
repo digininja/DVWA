@@ -10,3 +10,6 @@ Dockerfile
 
 # VS Code editor files
 *.code-workspace
+
+# Used by pytest
+tests/__pycache__/

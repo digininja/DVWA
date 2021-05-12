@@ -7,8 +7,12 @@ import time
 def get_php_files():
     patterns = ["*.php", "*/*.php", "*/*/*.php"]
     files = []
+    ignore_files = ["dvwa/includes/Parsedown.php"]
     for pattern in patterns:
         files.extend(glob.glob(pattern))
+    for ignore_file in ignore_files:
+        if ignore_file in files:
+            files.remove(ignore_file)
     return files
 
 
@@ -44,6 +48,13 @@ def check(url):
 
 
 def test_url():
+    # Need to rewrite this so it generates a single, unique list of URLs,
+    # removes any which are to be ignored, and then checks them. Would be
+    # much cleaner.
+    
+    ignore_urls = [
+        "https://wpscan.com" # Cloudflare doesn't like GitHub checking it
+    ]
     broken_urls = []
     for php_file in get_php_files():
         for url in get_urls(php_file):
