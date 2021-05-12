@@ -1,0 +1,139 @@
+#Steps:
+# Veracode Software Composition Analysis
+# Veracode Static Analysis Asynchronous Upload and Scan
+# Veracode Static Analysis PipelineScan
+# Import flaws to Azure Boards
+
+version: 2.1
+jobs:
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.1-node-browsers
+    working_directory: ~/repo/dvwa
+    steps:
+      - checkout
+      # keep the files around for the scan job
+      - persist_to_workspace:
+          root: ..
+          paths:
+            - dvwa
+  # job to upload to Veracode for scanning
+  veracode_sast:
+    # use a java-based image to run the Veracode API wrapper
+    docker:
+      - image: cimg/openjdk:8.0.282-node
+    working_directory: ~/repo
+    steps:
+      # get the files from the previous job
+      - attach_workspace:
+          at: .   
+      # grab the Veracode agent
+      - run: 
+          name: "Package for upload to Veracode"
+          #command: zip -r upload.zip nodegoat
+          command: zip -r upload.zip dvwa -x *docs/*
+      - run:
+          name: "Get the Veracode agent"
+          command: |
+            wget -q -O veracode-wrapper.jar https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/21.2.7.4/vosp-api-wrappers-java-21.2.7.4.jar
+      - run:
+          name: "Upload to Veracode"
+          command: java -jar veracode-wrapper.jar 
+              -vid $TEAM_ANALYSISCENTER_ID
+              -vkey $TEAM_ANALYSISCENTER_KEY
+              -action uploadandscan 
+              -appname "PHP_CircleCI"
+              -createprofile true 
+              -version CircleCI-$CIRCLE_BUILD_NUM 
+              -filepath upload.zip
+ 
+ # job to upload to Veracode for Agent Based SCA image scanning
+  Veracode_sca_image_scanning:
+    docker:
+      # specify the version you desire here
+      - image: cimg/openjdk:8.0.282-node
+      #- image: maven:3.6.3-openjdk-8
+      #- image: indigo/centos-maven:latest
+    working_directory: ~/repo
+    steps:
+      # get the files from the previous job
+      - attach_workspace:
+          at: .
+      - setup_remote_docker:
+          version: 19.03.13
+      # download and run Veracode SCA
+      - run:
+          name: "Veracode Software Composition Analysis image scanning"
+          command: |
+            curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan --image maven:3.6.3-openjdk-8
+ 
+ # job to upload to Veracode for Agent Based SCA scanning
+  Veracode_sca:
+    docker:
+      - image: circleci/php:7.1-node-browsers
+    working_directory: ~/repo
+    steps:
+      # get the files from the previous job
+      - attach_workspace:
+          at: .
+      # download and run Veracode SCA
+      - run:
+          name: "Veracode Software Composition Analysis"
+          command: |
+            cd dvwa
+            export SRCCLR_SCM_TOKEN=$github_api
+            export SRCCLR_SCM_TYPE=GITHUB
+            #export DEBUG=1
+            git config --global user.email "$emailgit"
+            git config --global user.name "$nomegit"            
+            git remote set-url origin https://github.com/VictorM3/DVWA.git
+            git checkout -f master
+            export EXTRA_ARGS='--update-advisor --pull-request'
+            curl -sSL https://download.sourceclear.com/ci.sh | bash -s – scan $EXTRA_ARGS
+
+ # job to perform a Veracode Pipeline Scan
+  Veracode_pipelinescan:
+    docker: 
+      - image: cimg/openjdk:8.0.282-node
+    working_directory: ~/repo
+    steps:
+      # get the files from the previous job
+      - attach_workspace:
+          at: .
+      # Downlowad the scanner
+      - run: 
+          name: "Package for upload to Veracode"
+          #command: zip -r upload.zip nodegoat
+          command: zip -r upload.zip dvwa -x *docs/*
+      - run:
+         name: "Download Veracode Pipeline Scan"
+         command: |
+           curl -sSO https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+      - run:
+         name: "Unzip Veracode Pipeline Scan"
+         command: |
+           unzip pipeline-scan-LATEST.zip
+      - run:
+         name: "Run Veracode Pipeline Scan  and create a baseline"
+         command: |
+           java -jar pipeline-scan.jar -vid $TEAM_ANALYSISCENTER_ID -vkey $TEAM_ANALYSISCENTER_KEY -f upload.zip --json_output_file="baseline.json"
+# serial jobs - need to run 'build' before 'scan'
+workflows:
+  version: 2.1
+  build_and_scan:
+    jobs:
+      #- Veracode_sca_image_scanning 
+      - build
+      #- build:
+      #    requires:
+      #      - Veracode_sca_image_scanning
+      - Veracode_sca:
+          requires:
+            - build
+      - veracode_sast:
+          requires:
+            - build
+      - Veracode_pipelinescan:
+          requires:
+            - build
