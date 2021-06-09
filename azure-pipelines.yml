@@ -4,10 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/php
 
 trigger:
-- main
+- master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 variables:
   phpVersion: 7.2
@@ -63,7 +63,7 @@ steps:
     scanStatusCheckInterval: '60'
     importResults: true
     failBuildOnPolicyFail: false
-  displayName: 'SAST'
+  displayName: 'Veracode SAST'
 
 - task: Veracode Flaw Importer@3
   inputs:
@@ -76,4 +76,4 @@ steps:
     workItemType: 'Issue'
     area: '$(system.teamProject)'
     flawImportLimit: '1000'
-  displayName: 'Relatorio'
+  displayName: 'Veracode importando falhas'
