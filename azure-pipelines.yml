@@ -11,6 +11,8 @@ pool:
 
 variables:
   phpVersion: 7.2
+  veracodeAppProfile: PP_DEMO.$(Build.DefinitionName)
+  caminhoPacote: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
 steps:
 - task: ArchiveFiles@2
@@ -18,7 +20,7 @@ steps:
     rootFolderOrFile: '$(Agent.BuildDirectory)'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    archiveFile: '$(caminhoPacote)'
     replaceExistingArchive: true
   displayName: 'Criando pacote para analise'
 
@@ -27,9 +29,9 @@ steps:
     ConnectionDetailsSelection: 'Credentials'
     apiId: '$(APIID)'
     apiKey: '$(APIKEY)'
-    veracodeAppProfile: 'AzDevOps.DVWA'
+    veracodeAppProfile: '$(veracodeAppProfile)'
     version: '$(build.buildNumber)'
-    filepath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    filepath: '$(caminhoPacote)'
     createSandBox: false
     createProfile: true
     failTheBuildIfVeracodeScanDidNotInitiate: false
@@ -43,10 +45,10 @@ steps:
     ConnectionDetailsSelection: 'Credentials'
     apiId: '$(APIID)'
     apiKey: '$(APIKEY)'
-    veracodeAppProfile: 'AzDevOps.DVWA'
+    veracodeAppProfile: '$(veracodeAppProfile)'
     sandboxName: 
     importType: 'All Flaws'
     workItemType: 'Issue'
-    area: 'M3Corp'
+    area: '$(system.teamProject)'
     flawImportLimit: '1000'
   displayName: 'Relatorio'
