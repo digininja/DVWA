@@ -40,12 +40,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      export SRCCLR_SCM_URI=$(Build.Repository.Uri)
-      export SRCCLR_SCM_REF=$(Build.SourceBranchName)
-      export SRCCLR_SCM_REF_TYPE="branch"
-      export SRCCLR_SCM_REV=$(Build.SourceVersion)
-      export EXTRA_ARGS='--update-advisor --pull-request'
-      curl -sSL https://download.sourceclear.com/ci.sh | bash -s – scan $EXTRA_ARGS --allow-dirty
+      export SRCCLR_SCM_NAME=$(veracodeAppProfile)
+      curl -sSL https://download.sourceclear.com/ci.sh | bash -s – scan --update-advisor --allow-dirty
   displayName: 'Veracode SCA'
   continueOnError: true
   
