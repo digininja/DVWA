@@ -62,7 +62,7 @@ The easiest way to install DVWA is to download and install [XAMPP](https://www.a
 XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows and Mac OS X. The package includes the Apache web server, MySQL, PHP, Perl, a FTP server and phpMyAdmin.
 
 XAMPP can be downloaded from:
-https://www.apachefriends.org/en/xampp.html
+<https://www.apachefriends.org/en/xampp.html>
 
 Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: `http://127.0.0.1/dvwa/setup.php`
 
@@ -140,6 +140,7 @@ _Note: This will be different if you installed DVWA into a different directory._
 - - -
 
 ## Docker Container
+
 - [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
@@ -248,12 +249,15 @@ Alternatively, follow these steps:
     +-----------+------------------+-----------------------+
     1 rows in set (0.00 sec)
     ```
+
 1. You'll likely see `caching_sha2_password`. If you do, run the following command:
 
     ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
+
 1. Re-running the check, you should now see `mysql_native_password`.
+
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
     +-----------+------+-----------------------+
@@ -314,9 +318,9 @@ With:
 </IfModule>
 ```
 
-#### Command Injection won't work.
+### Command Injection won't work
 
--A. Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
+Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
 ### Why can't the database connect on CentOS?
 
@@ -350,4 +354,3 @@ Homepage: <http://www.dvwa.co.uk/>
 Project Home: <https://github.com/digininja/DVWA>
 
 *Created by the DVWA team*
-
