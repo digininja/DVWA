@@ -35,6 +35,16 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see <http://www.gnu.
 
 - - -
 
+## Internationalisation
+
+This file is available in multiple languages:
+
+- Chinese
+
+If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected.
+
+- - -
+
 ## Download
 
 While there are various versions of DVWA around, the only supported version is the latest source from the official GitHub repository. You can either clone it from the repo:
