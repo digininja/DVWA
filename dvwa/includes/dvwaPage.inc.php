@@ -37,6 +37,8 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 		dvwaPhpIdsEnabledSet( false );
 }
 
+dvwaLocaleSet( $_DVWA[ 'default_locale' ] );
+
 // DVWA version
 function dvwaVersionGet() {
 	return '1.10 *Development*';
@@ -149,6 +151,22 @@ function dvwaSecurityLevelSet( $pSecurityLevel ) {
 }
 
 
+function dvwaLocaleGet() {	
+	$dvwaSession =& dvwaSessionGrab();
+	return $dvwaSession[ 'locale' ];
+}
+
+
+function dvwaLocaleSet( $pLocale ) {
+	$dvwaSession =& dvwaSessionGrab();
+	$locales = array('en', 'zh');
+	if( in_array( $pLocale, $locales) ) {
+		$dvwaSession[ 'locale' ] = $pLocale;
+	} else {
+		$dvwaSession[ 'locale' ] = 'en';
+	}
+}
+
 // Start message functions --
 
 function dvwaMessagePush( $pMessage ) {
@@ -256,6 +274,9 @@ function dvwaHtmlEcho( $pPage ) {
 
 	$phpIdsHtml   = '<em>PHPIDS:</em> ' . ( dvwaPhpIdsIsEnabled() ? 'enabled' : 'disabled' );
 	$userInfoHtml = '<em>Username:</em> ' . ( dvwaCurrentUser() );
+	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
+	$localeHtml = '<em>Locale:</em> ' . ( dvwaLocaleGet() );
+	
 
 	$messagesHtml = messagesPopAllToHtml();
 	if( $messagesHtml ) {
@@ -263,8 +284,8 @@ function dvwaHtmlEcho( $pPage ) {
 	}
 
 	$systemInfoHtml = "";
-	if( dvwaIsLoggedIn() )
-		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br /><em>Security Level:</em> {$securityLevelHtml}<br />{$phpIdsHtml}</div>";
+	if( dvwaIsLoggedIn() ) 
+		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br />{$securityLevelHtml}<br />{$localeHtml}<br />{$phpIdsHtml}</div>";
 	if( $pPage[ 'source_button' ] ) {
 		$systemInfoHtml = dvwaButtonSourceHtmlGet( $pPage[ 'source_button' ] ) . " $systemInfoHtml";
 	}
@@ -425,7 +446,8 @@ function dvwaExternalLinkUrlGet( $pLink,$text=null ) {
 
 function dvwaButtonHelpHtmlGet( $pId ) {
 	$security = dvwaSecurityLevelGet();
-	return "<input type=\"button\" value=\"View Help\" class=\"popup_button\" id='help_button' data-help-url='" . DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/view_help.php?id={$pId}&security={$security}' )\">";
+	$locale = dvwaLocaleGet();
+	return "<input type=\"button\" value=\"View Help\" class=\"popup_button\" id='help_button' data-help-url='" . DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/view_help.php?id={$pId}&security={$security}&locale={$locale}' )\">";
 }
 
 
