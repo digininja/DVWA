@@ -1,0 +1,37 @@
+# Template PHP Build
+
+# This template allows you to validate your PHP application.
+# The workflow allows running tests and code linting on the default branch.
+
+image: composer:2.0
+
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Package
+            deployment: test
+            script:
+              - zip -r application.zip .
+        - step:
+            name: SAST
+            script:
+              - wget https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.8.7.1/vosp-api-wrappers-java-20.8.7.1.jar -O veracodeJavaAPI.jar 
+            after-script:
+             - java -jar veracodeJavaAPI.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY
+              -action UploadAndScan -appname "BitBucket.DVWA" -createprofile true -autoscan true
+              -filepath application.zip -version $BITBUCKET_BUILD_NUMBER
+        - step:
+            name: SCA
+            script:
+              - curl -sSL https://download.sourceclear.com/ci.sh | sh
+        - step:
+            name: Pipeline Scan
+            script:
+              - curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+              - unzip pipeline-scan-LATEST.zip pipeline-scan.jar
+              - java -jar pipeline-scan.jar
+                  --veracode_api_id "$VERACODE_API_ID"
+                  --veracode_api_key "$VERACODE_API_KEY"
+                  --file "application.zip"
