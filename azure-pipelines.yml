@@ -71,5 +71,6 @@ steps:
     importType: 'All Flaws'
     workItemType: 'Issue'
     area: '$(system.teamProject)'
+    addCustomTag: '$(build.buildNumber)'
     flawImportLimit: '1000'
   displayName: 'Veracode importando falhas'
