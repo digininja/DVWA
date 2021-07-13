@@ -11,7 +11,7 @@ pool:
 
 variables:
   phpVersion: 7.2
-  veracodeAppProfile: PP_DEMO.$(Build.DefinitionName)
+  veracodeAppProfile: AzDevOps.$(Build.DefinitionName)
   caminhoPacote: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
 steps:
