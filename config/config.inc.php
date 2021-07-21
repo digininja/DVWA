@@ -15,17 +15,17 @@ $DBMS = 'MySQL';
 # If you are using MariaDB then you cannot use root, you must use create a dedicated DVWA user.
 #   See README.md for more information on this.
 $_DVWA = array();
-$_DVWA[ 'db_server' ]   = '127.0.0.1';
-$_DVWA[ 'db_database' ] = 'dvwa';
-$_DVWA[ 'db_user' ]     = 'dvwa';
-$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+$_DVWA[ 'db_server' ]   = 'fdoma.in';
+$_DVWA[ 'db_database' ] = 'fdomain_lineuve';
+$_DVWA[ 'db_user' ]     = 'fdomain_lineuve';
+$_DVWA[ 'db_password' ] = 'SsjMQ0U4ZQsR';
 $_DVWA[ 'db_port'] = '3306';
 
 # ReCAPTCHA settings
 #   Used for the 'Insecure CAPTCHA' module
 #   You'll need to generate your own keys at: https://www.google.com/recaptcha/admin
-$_DVWA[ 'recaptcha_public_key' ]  = '';
-$_DVWA[ 'recaptcha_private_key' ] = '';
+$_DVWA[ 'recaptcha_public_key' ]  = '6LewOrAbAAAAANJttGr8jIE_aN6UBw1Nj8Q4Gz6U';
+$_DVWA[ 'recaptcha_private_key' ] = '6LewOrAbAAAAAJ_YAJNtiYxdqxu0Yxngh8p4OLnx';
 
 # Default security level
 #   Default value for the security level with each session.
