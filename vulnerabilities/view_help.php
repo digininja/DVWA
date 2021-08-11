@@ -10,9 +10,14 @@ $page[ 'title' ] = 'Help' . $page[ 'title_separator' ].$page[ 'title' ];
 
 $id       = $_GET[ 'id' ];
 $security = $_GET[ 'security' ];
+$locale = $_GET[ 'locale' ];
 
 ob_start();
-eval( '?>' . file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/help/help.php" ) . '<?php ' );
+if ($locale == 'en') {
+	eval( '?>' . file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/help/help.php" ) . '<?php ' );
+} else {
+	eval( '?>' . file_get_contents( DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/{$id}/help/help.{$locale}.php" ) . '<?php ' );
+}
 $help = ob_get_contents();
 ob_end_clean();
 
