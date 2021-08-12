@@ -23,3 +23,5 @@ insert into users values ('2','Gordon','Brown','gordonb',('abc123'),'{$avatarUrl
 insert into users values ('3','Hack','Me','1337',('charley'),'{$avatarUrl}1337.jpg', DATE(), '0');
 insert into users values ('4','Pablo','Picasso','pablo',('letmein'),'{$avatarUrl}pablo.jpg', DATE(), '0');
 insert into users values ('5','Bob','Smith','smithy',('password'),'{$avatarUrl}smithy.jpg', DATE(), '0');";
+
+insert into guestbook values ('1', 'What a brilliant app!', 'Marcel Marceau');

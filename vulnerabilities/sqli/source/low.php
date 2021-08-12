@@ -4,13 +4,7 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_REQUEST[ 'id' ];
 
-	define ("MYSQL", "mysql");
-	define ("SQLITE", "sqlite");
-
-	define ("SQLI_DB", SQLITE);
-	//define ("SQLI_DB", MYSQL);
-
-	switch (SQLI_DB) {
+	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
 			// Check database
 			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
@@ -29,17 +23,31 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 			mysqli_close($GLOBALS["___mysqli_ston"]);
 			break;
 		case SQLITE:
-			$sqlite_db = "/var/sites/dvwa/non-secure/htdocs/vulnerabilities/sqli/source/sqli.db";
-			$sqlite_db_connection = new SQLite3($sqlite_db);
-			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
-			$results = $sqlite_db_connection->query($query);
-			while ($row = $results->fetchArray()) {
-				// Get values
-				$first = $row["first_name"];
-				$last  = $row["last_name"];
+			global $sqlite_db_connection;
 
-				// Feedback for end user
-				$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
+			#$sqlite_db_connection = new SQLite3($_DVWA['SQLITE_DB']);
+			#$sqlite_db_connection->enableExceptions(true);
+
+			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
+			#print $query;
+			try {
+				$results = $sqlite_db_connection->query($query);
+			} catch (Exception $e) {
+				echo 'Caught exception: ' . $e->getMessage();
+				exit();
+			}
+
+			if ($results) {
+				while ($row = $results->fetchArray()) {
+					// Get values
+					$first = $row["first_name"];
+					$last  = $row["last_name"];
+
+					// Feedback for end user
+					$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
+				}
+			} else {
+				echo "Error in fetch ".$sqlite_db->lastErrorMsg();
 			}
 			break;
 	} 
