@@ -37,6 +37,10 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 		dvwaPhpIdsEnabledSet( false );
 }
 
+if (!array_key_exists ("default_locale", $_DVWA)) {
+    $_DVWA[ 'default_locale' ] = "en";
+}
+
 dvwaLocaleSet( $_DVWA[ 'default_locale' ] );
 
 // DVWA version
