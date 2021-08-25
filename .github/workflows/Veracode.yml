@@ -1,0 +1,39 @@
+name: veracode-security-action
+on: [push]
+jobs:
+  Packaging:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'veracode.zip'
+        path: .
+  
+  sast-policy-veracode:
+    runs-on: ubuntu-latest
+    needs: [Packaging]
+    steps:
+    - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
+      with: 
+        java-version: '8'
+    - uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the next uploadandscan action can access them.
+      with:
+        path: veracode.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
+    
+    - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
+      env:
+        VID: ${{ secrets.VID }}
+        VKEY: ${{ secrets.VKEY }}
+        AppName: Github Actions - ${{ github.repository }}
+      with:
+        vid: '$VID'
+        vkey: '$VKEY'
+        criticality: 'VeryHigh'
+        appname: '$AppName'
+        createprofile: true
+        filepath: 'veracode.zip'
+        deleteIncompleteScan: false
+        version: ${{ github.run_id }}
+        scantimeout: 30
