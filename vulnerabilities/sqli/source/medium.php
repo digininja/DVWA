@@ -23,6 +23,28 @@ if( isset( $_POST[ 'Submit' ] ) ) {
 			break;
 		case SQLITE:
 			global $sqlite_db_connection;
+
+			$query  = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
+			#print $query;
+			try {
+				$results = $sqlite_db_connection->query($query);
+			} catch (Exception $e) {
+				echo 'Caught exception: ' . $e->getMessage();
+				exit();
+			}
+
+			if ($results) {
+				while ($row = $results->fetchArray()) {
+					// Get values
+					$first = $row["first_name"];
+					$last  = $row["last_name"];
+
+					// Feedback for end user
+					$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
+				}
+			} else {
+				echo "Error in fetch ".$sqlite_db->lastErrorMsg();
+			}
 			break;
 	}
 }
