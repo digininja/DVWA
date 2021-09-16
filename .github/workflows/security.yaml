@@ -1,0 +1,33 @@
+name: Cx scan on PR
+
+# This is to run Checkmarx(https://pelotoncycle.atlassian.net/wiki/spaces/APPSEC/pages/1539377066/Checkmarx) on PR
+# This tool will help to discover security vulnerabilities in the native source code developed by Peloton’s engineering team.
+# Reach out to app-sec@onepeloton.com for any questions
+
+on:
+ pull_request:
+   types: [opened, reopened, synchronize]
+   branches:
+   - master
+   - main
+
+jobs:
+  checkmarx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkmarx Scan
+        uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.1
+        with:
+          checkmarx_url: ${{ secrets.CX_SERVER }}
+          team: 'CxServer/SP/Company/Security'
+          project: ${{ github.repository }}
+          checkmarx_username: ${{ secrets.CX_USER }}
+          checkmarx_password: ${{ secrets.CX_PASSWORD }}
+          checkmarx_client_secret: ${{ secrets.CX_CLIENTSECRET }}
+          bug_tracker: GITHUBPULL
+          params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.head_ref }} --merge-id=${{ github.event.number }} --severity=High --status=new --incremental-num-scans=8
+          scanners: sast
+          preset: 'Checkmarx Default'
+          incremental: true
+          break_build: true
