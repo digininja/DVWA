@@ -27,7 +27,7 @@ $_DVWA[ 'db_port'] = '3306';
 $_DVWA[ 'recaptcha_public_key' ]  = '';
 $_DVWA[ 'recaptcha_private_key' ] = '';
 
-# Default security level
+# Default security levels
 #   Default value for the security level with each session.
 #   The default is 'impossible'. You may wish to set this to either 'low', 'medium', 'high' or impossible'.
 $_DVWA[ 'default_security_level' ] = 'impossible';
