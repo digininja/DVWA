@@ -11,7 +11,6 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
 			$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ); // Removed 'or die' to suppress mysql errors
 
-			// Get results
 			try {
 				$exists = (mysqli_num_rows( $result ) > 0); // The '@' character suppresses errors
 			} catch(Exception $e) {
