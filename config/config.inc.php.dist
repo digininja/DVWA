@@ -47,4 +47,15 @@ $_DVWA[ 'default_phpids_verbose' ] = 'false';
 #   The default is 'en'. You may wish to set this to either 'en' or 'zh'.
 $_DVWA[ 'default_locale' ] = 'en';
 
+define ("MYSQL", "mysql");
+define ("SQLITE", "sqlite");
+
+# SQLi DB Backend
+#   Use this to switch the backend database used in the SQLi and Blind SQLi labs.
+#   This does not affect the backend for any other services, just these two labs.
+#   If you do not understand what this means, do not change it.
+$_DVWA["SQLI_DB"] = MYSQL;
+#$_DVWA["SQLI_DB"] = SQLITE;
+#$_DVWA["SQLITE_DB"] = "sqli.db";
+
 ?>

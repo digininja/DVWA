@@ -93,6 +93,8 @@ If you receive an error while trying to create your database, make sure your dat
 The variables are set to the following by default:
 
 ```php
+$_DVWA[ 'db_server'] = '127.0.0.1';
+$_DVWA[ 'db_port'] = '3306';
 $_DVWA[ 'db_user' ] = 'dvwa';
 $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 $_DVWA[ 'db_database' ] = 'dvwa';
@@ -354,6 +356,27 @@ If raising a ticket, please submit at least the following information:
 - The last 5 lines from the web server error log directly after whatever error you are reporting occurs
 - If it is a database authentication problem, go through the steps above and screenshot each step. Submit these along with a screenshot of the section of the config file showing the database user and password.
 - A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
+
+- - -
+
+## SQLite3 SQL Injection
+
+_Support for this is limited, before raising issues, please ensure you are prepared to work on debugging, do not simply claim "it does not work"._
+
+By default, SQLi and Blind SQLi are done against the MariaDB/MySQL server used by the site but it is possible to switch to do the SQLi testing against SQLite3 instead.
+
+I am not going to cover how to get SQLite3 working with PHP, but it should be a simple case of installing the `php-sqlite3` package and making sure it is enabled.
+
+To make the switch, simply edit the config file and add or edit these lines:
+
+```
+$_DVWA["SQLI_DB"] = "sqlite";
+$_DVWA["SQLITE_DB"] = "sqli.db";
+```
+
+By default it uses the file `database/sqli.db`, if you mess it up, simply copy `database/sqli.db.dist` over the top.
+
+The challenges are exactly the same as for MySQL, they just run against SQLite3 instead.
 
 - - -
 

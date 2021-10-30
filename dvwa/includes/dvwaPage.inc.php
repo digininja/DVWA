@@ -38,7 +38,7 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 }
 
 if (!array_key_exists ("default_locale", $_DVWA)) {
-    $_DVWA[ 'default_locale' ] = "en";
+	$_DVWA[ 'default_locale' ] = "en";
 }
 
 dvwaLocaleSet( $_DVWA[ 'default_locale' ] );
@@ -154,12 +154,15 @@ function dvwaSecurityLevelSet( $pSecurityLevel ) {
 	setcookie( 'security', $pSecurityLevel, NULL, NULL, NULL, NULL, $httponly );
 }
 
-
 function dvwaLocaleGet() {	
 	$dvwaSession =& dvwaSessionGrab();
 	return $dvwaSession[ 'locale' ];
 }
 
+function dvwaSQLiDBGet() {
+	global $_DVWA;
+	return $_DVWA['SQLI_DB'];
+}
 
 function dvwaLocaleSet( $pLocale ) {
 	$dvwaSession =& dvwaSessionGrab();
@@ -280,6 +283,7 @@ function dvwaHtmlEcho( $pPage ) {
 	$userInfoHtml = '<em>Username:</em> ' . ( dvwaCurrentUser() );
 	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
 	$localeHtml = '<em>Locale:</em> ' . ( dvwaLocaleGet() );
+	$sqliDbHtml = '<em>SQLi DB:</em> ' . ( dvwaSQLiDBGet() );
 	
 
 	$messagesHtml = messagesPopAllToHtml();
@@ -289,7 +293,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 	$systemInfoHtml = "";
 	if( dvwaIsLoggedIn() ) 
-		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br />{$securityLevelHtml}<br />{$localeHtml}<br />{$phpIdsHtml}</div>";
+		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br />{$securityLevelHtml}<br />{$localeHtml}<br />{$phpIdsHtml}<br />{$sqliDbHtml}</div>";
 	if( $pPage[ 'source_button' ] ) {
 		$systemInfoHtml = dvwaButtonSourceHtmlGet( $pPage[ 'source_button' ] ) . " $systemInfoHtml";
 	}
@@ -488,6 +492,7 @@ function dvwaDatabaseConnect() {
 	global $DBMS;
 	//global $DBMS_connError;
 	global $db;
+	global $sqlite_db_connection;
 
 	if( $DBMS == 'MySQL' ) {
 		if( !@($GLOBALS["___mysqli_ston"] = mysqli_connect( $_DVWA[ 'db_server' ],  $_DVWA[ 'db_user' ],  $_DVWA[ 'db_password' ], "", $_DVWA[ 'db_port' ] ))
@@ -510,6 +515,13 @@ function dvwaDatabaseConnect() {
 	}
 	else {
 		die ( "Unknown {$DBMS} selected." );
+	}
+
+	if ($_DVWA['SQLI_DB'] == SQLITE) {
+		$location = DVWA_WEB_PAGE_TO_ROOT . "database/" . $_DVWA['SQLITE_DB'];
+		$sqlite_db_connection = new SQLite3($location);
+		$sqlite_db_connection->enableExceptions(true);
+	#	print "sqlite db setup";
 	}
 }
 
