@@ -1,8 +1,6 @@
 # Translation
 
-翻译：@[inVains](https://github.com/inVains)
-
-部分来自机器翻译，请以原文为准[README.md](README.md)
+翻译：@[inVains](https://github.com/inVains) @[songzy12](https://github.com/songzy12)
 
 - - -
 
@@ -37,9 +35,9 @@ Damn Vulnerable Web Application (DVWA) 的发布是为了希望它有用，但�
 
 ## 国际化
 
-该文件有多种语言版本： 
+该文件有多种语言版本：
 
-- 中文: [简体中文](README.zh.md)
+- 英文：[English](README.md)
 
 如果您想贡献翻译，请提交 PR。 但是请注意，这并不意味着只是简单的通过谷歌翻译并提交，这种提交将被拒绝。
 

@@ -33,16 +33,6 @@ switch( $_COOKIE[ 'security' ] ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/sqli/source/{$vulnerabilityFile}";
 
-// Is PHP function magic_quotee enabled?
-$WarningHtml = '';
-if( ini_get( 'magic_quotes_gpc' ) == true ) {
-	$WarningHtml .= "<div class=\"warning\">The PHP function \"<em>Magic Quotes</em>\" is enabled.</div>";
-}
-// Is PHP function safe_mode enabled?
-if( ini_get( 'safe_mode' ) == true ) {
-	$WarningHtml .= "<div class=\"warning\">The PHP function \"<em>Safe mode</em>\" is enabled.</div>";
-}
-
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: SQL Injection</h1>
