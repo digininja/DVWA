@@ -29,7 +29,7 @@ Damn Vulnerable Web Application (DVWA)是自由软件：您可以根据自由软
 
 Damn Vulnerable Web Application (DVWA) 的发布是为了希望它有用，但不（对"有用性"）做任何保证； 甚至不对适销性（MERCHANTABILITY）或针对特定目的的适用性（FITNESS FOR A PARTICULAR PURPOSE）的做任何暗示保证。 有关更多详细信息，请参阅 GNU 通用公共许可证。
 
-您应该已经随Damn Vulnerable Web Application (DVWA)收到一份GNU通用公共许可证。 如果没有，请参阅 <http://www.gnu.org/licenses/>。
+您应该已经随Damn Vulnerable Web Application (DVWA)收到一份GNU通用公共许可证。 如果没有，请参阅 <https://www.gnu.org/licenses/>。
 
 - - -
 
@@ -349,7 +349,7 @@ setsebool -P httpd_can_network_connect_db 1
 
 ## 链接
 
-主页: <http://www.dvwa.co.uk/>
+主页: <https://dvwa.co.uk/>
 
 项目主页: <https://github.com/digininja/DVWA>
 
