@@ -329,7 +329,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 			<div id=\"header\">
 
-				<img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/logo.png\" alt=\"Damn Vulnerable Web Application\" />
+				<img id=\"headImg\" src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/logo.png\" alt=\"Damn Vulnerable Web Application\" />
 
 			</div>
 
