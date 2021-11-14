@@ -1,4 +1,6 @@
 <?php
+# Possible idea - XSS through jQuery append user content into the page
+
 $name="";
 
 if (array_key_exists ("name", $_GET)) {
