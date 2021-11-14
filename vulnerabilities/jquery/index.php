@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 $page[ 'body' ] = <<<EOF
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <div class="body_padded">
 	<h1>Vulnerability: jQuery Attacks</h1>
 
