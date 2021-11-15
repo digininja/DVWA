@@ -58,10 +58,9 @@ Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );     // Date in the past
 // Anti-CSRF
 generateSessionToken();
 
-echo "
-<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+echo "<!DOCTYPE html>
 
-<html xmlns=\"http://www.w3.org/1999/xhtml\">
+<html lang=\"en-GB\">
 
 	<head>
 
@@ -126,7 +125,7 @@ echo "
 
 	<div id=\"footer\">
 
-	<p>" . dvwaExternalLinkUrlGet( 'http://www.dvwa.co.uk/', 'Damn Vulnerable Web Application (DVWA)' ) . "</p>
+	<p>" . dvwaExternalLinkUrlGet( 'https://github.com/digininja/DVWA/', 'Damn Vulnerable Web Application (DVWA)' ) . "</p>
 
 	</div> <!--<div id=\"footer\"> -->
 

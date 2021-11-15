@@ -18,3 +18,12 @@ div#code {
 div#area {
 	margin-left: 30px;
 }
+
+.loginSuccess {
+	color: #638323;
+}
+
+.loginFail {
+	color: #a50a0a;
+}
+

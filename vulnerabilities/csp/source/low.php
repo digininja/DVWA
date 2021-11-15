@@ -1,10 +1,12 @@
 <?php
 
-$headerCSP = "Content-Security-Policy: script-src 'self' https://pastebin.com  example.com code.jquery.com https://ssl.google-analytics.com ;"; // allows js from self, pastebin.com, jquery and google analytics.
+$headerCSP = "Content-Security-Policy: script-src 'self' https://pastebin.com hastebin.com example.com code.jquery.com https://ssl.google-analytics.com ;"; // allows js from self, pastebin.com, hastebin.com, jquery and google analytics.
 
 header($headerCSP);
 
+# These might work if you can't create your own for some reason
 # https://pastebin.com/raw/R570EE00
+# https://hastebin.com/raw/ohulaquzex
 
 ?>
 <?php

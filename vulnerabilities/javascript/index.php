@@ -30,7 +30,7 @@ switch( $_COOKIE[ 'security' ] ) {
 }
 
 $message = "";
-// Check whwat was sent in to see if it was what was expected
+// Check what was sent in to see if it was what was expected
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	if (array_key_exists ("phrase", $_POST) && array_key_exists ("token", $_POST)) {
 
