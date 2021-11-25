@@ -19,7 +19,6 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 				$exists = false;
 			}
 			
-			((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 			break;
 		case SQLITE:
 			global $sqlite_db_connection;
