@@ -41,7 +41,7 @@ return $data;
 // Clear PHPIDS log
 function dvwaClearIdsLog()	{
 	if( isset( $_GET[ 'clear_log' ] ) ) {
-		$fp = fopen( DVWA_WEB_PAGE_TO_PHPIDS_LOG, w );
+		$fp = fopen( DVWA_WEB_PAGE_TO_PHPIDS_LOG, "w" );
 		fclose( $fp );
 		dvwaMessagePush( "PHPIDS log cleared" );
 		dvwaPageReload();
