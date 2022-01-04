@@ -18,7 +18,7 @@
 
 		<h3>Low Level</h3>
 		<p>Examine the policy to find all the sources that can be used to host external script files.</p>
-		<pre>Spoiler: <span class="spoiler">Scripts can be included from Pastebin or Hastebin, try storing some JavaScript on there and then loading it in.</span></pre>
+		<pre>Spoiler: <span class="spoiler">Scripts can be included from Pastebin or Toptal (use to be Hastebin), try storing some JavaScript on there and then loading it in.</span></pre>
 
 		<br />
 
