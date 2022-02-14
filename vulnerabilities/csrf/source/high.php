@@ -4,7 +4,7 @@ $change = false;
 $request_type = "html";
 $return_message = "Request Failed";
 
-if ($_SERVER['CONTENT_TYPE'] == "application/json") {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && array_key_exists ("CONTENT_TYPE", $_SERVER) && $_SERVER['CONTENT_TYPE'] == "application/json") {
 	$data = json_decode(file_get_contents('php://input'), true);
 	$request_type = "json";
 	if (array_key_exists("HTTP_USER_TOKEN", $_SERVER) &&
