@@ -59,7 +59,7 @@ Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/maste
 
 ## Installation
 
-**Please make sure your config/config.inc.php file exists. Only having a config.inc.php.dist will not be sufficient and you'll have to edit it to suit your environment and rename it to config.inc.php. [Windows may hide the trailing extension.](https://support.microsoft.com/en-in/help/865219/how-to-show-or-hide-file-name-extensions-in-windows-explorer)**
+**Please make sure your config/config.inc.php file exists. Only having a config.inc.php.dist will not be sufficient and you'll have to edit it to suit your environment and rename it to config.inc.php. [Windows may hide the trailing extension.](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)**
 
 ### Installation Videos
 
