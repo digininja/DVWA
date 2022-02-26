@@ -150,8 +150,8 @@ function dvwaSecurityLevelSet( $pSecurityLevel ) {
 	else {
 		$httponly = false;
 	}
-	setcookie( session_name(), session_id(), null, '/', null, null, $httponly );
-	setcookie( 'security', $pSecurityLevel, NULL, NULL, NULL, NULL, $httponly );
+	setcookie( session_name(), session_id(), 0, '/', "", false, $httponly );
+	setcookie( 'security', $pSecurityLevel, 0, "/", "", false, $httponly );
 }
 
 function dvwaLocaleGet() {	
