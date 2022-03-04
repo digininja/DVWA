@@ -11,6 +11,8 @@ Before you raise a bug, please make sure you have fully read the README, especia
 
 Issues will be closed if the answer is in the README and no obvious attempts have been made to follow it.
 
+Support will only be given for users running the latest pull of code from GitHub. Not a tagged release, not a pre-installed app, not a ZIP you got from a mate.
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
