@@ -164,6 +164,24 @@ Please ensure you are using aufs due to previous MySQL issues. Run `docker info`
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
 
+### I browsed to the site and got a 404
+
+If you are having this problem you need to understand file locations. By default, the Apache document root (the place it starts looking for web content) is `/var/www/html`. If you put the file `hello.txt` in this directory, to access it you would browse to `http://localhost/hello.txt`.
+
+If you created a directory and put the file in there - `/var/www/html/mydir/hello.txt` - you would then need to browse to `http://localhost/mydir/hello.txt`.
+
+Linux is by default case sensitive and so in the example above, if you tried to browse to any of these, you would get a `404 Not Found`:
+
+- `http://localhost/MyDir/hello.txt`
+- `http://localhost/mydir/Hello.txt`
+- `http://localhost/MYDIR/hello.txt`
+
+How does this affect DVWA? Most people use git to checkout DVWA into `/var/www/html`, this gives them the directory `/var/www/html/DVWA/` with all the DVWA files inside it. They then browse to `http://localhost/` and get either a `404` or the default Apache welcome page. As the files are in DVWA, you must browse to `http://localhost/DVWA`.
+
+The other common mistake is to browse to `http://localhost/dvwa` which will give a `404` because `dvwa` is not `DVWA` as far as Linux directory matching is concerned.
+
+So after setup, if you try to visit the site and get a `404`, think about where you installed the files to, where they are relative to the document root, and what the case of the directory you used is.
+
 ### "Access denied" running setup
 
 If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
