@@ -14,7 +14,8 @@ if( array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER )) {
 }
 		$page[ 'body' ] .= "Your user-agent address is: <em>{$_SERVER[ 'HTTP_USER_AGENT' ]}</em><br />";
 if( array_key_exists( 'HTTP_REFERER', $_SERVER )) {
-		$page[ 'body' ] .= "You came from: <em>{$_SERVER[ 'HTTP_REFERER' ]}</em><br />";
+		$sanitized_referer = htmlspecialchars($_SERVER[ 'HTTP_REFERER' ]);
+		$page[ 'body' ] .= "You came from: <em>{$sanitized_referer}</em><br />";
 }
 		$page[ 'body' ] .= "I'm hosted at: <em>{$_SERVER[ 'HTTP_HOST' ]}</em><br /><br />
 		[<em><a href=\"?page=include.php\">back</a></em>]
