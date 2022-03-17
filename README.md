@@ -40,6 +40,7 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see <https://www.gnu
 This file is available in multiple languages:
 
 - Chinese: [简体中文](README.zh.md)
+- Turkish: [Türkçe](README.tr.md)
 
 If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected.
 
