@@ -321,34 +321,6 @@ For more information, see:
 
 <https://www.ryadel.com/en/fix-mysql-server-gone-away-packets-order-similar-mysql-related-errors/>
 
-### SQL Injection won't work on PHP v5.2.6.
-
-PHP 5.x reached end of life in January 2019 so we would recommend running DVWA with a current 7.x version, if you must use 5.x...
-
-If you are using PHP v5.2.6 or above, you will need to do the following in order for SQL injection and other vulnerabilities to work.
-
-In `.htaccess`:
-
-Replace:
-
-```php
-<IfModule mod_php5.c>
-    php_flag magic_quotes_gpc off
-    #php_flag allow_url_fopen on
-    #php_flag allow_url_include on
-</IfModule>
-```
-
-With:
-
-```php
-<IfModule mod_php5.c>
-    magic_quotes_gpc = Off
-    allow_url_fopen = On
-    allow_url_include = On
-</IfModule>
-```
-
 ### Command Injection won't work
 
 Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
