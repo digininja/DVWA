@@ -1,4 +1,4 @@
-DAMN VULNERABLE WEB APPLICATION
+DAMN VULNERABLE WEB APPLICATION!
 =======================
 
 v1.10 (*Not Yet Released)
@@ -9,7 +9,7 @@ v1.10 (*Not Yet Released)
 
 v1.9 (2015-10-05)
 ======
-
++ Added new things for testing!
 + Added a dedicated objective (or "flag") for file include. (@g0tmi1k)
 + Added a warning to any module that requires a certain configuration. (@g0tmi1k)
 + Added comments to all source code that would be visible via DVWA modules. (@g0tmi1k)
