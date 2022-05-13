@@ -69,18 +69,18 @@ git clone https://github.com/digininja/DVWA.git
 
 - [تثبيت Damn Vulnerable Web Application (DVWA)  على نظام التشغيل Windows 10 ](https://www.youtube.com/watch?v=cak2lQvBRAo) [12:39 دقيقة]
 
-### Windows + XAMPP
+### تثبيت Windows + XAMPP
 
 أسهل طريقة لتثبيت DVWA هي تحميل [XAMPP] وتثبيته (https://www.apachefriends.org/en/xampp.html) إذا لم يكن لديك خادم الويب جاهز ومعد مسبقاً.
 
-XAMPP هو وسيلة سهلة لتثبيت Apache Distribution لأنظمة Linux و Solaris و Windows و Mac OS X. تتضمن الحزمة خادم الويب Apache و MySQL و PHP و Perl وخادم FTP و phpMyAdmin.
+يعدXAMPP  وسيلة سهلة لتثبيت Apache Distribution لأنظمة Linux و Solaris و Windows و Mac OS X. تتضمن الحزمة خادم الويب Apache و MySQL و PHP و Perl وخادم FTP و phpMyAdmin.
 
 يمكن تحميل XAMPP من هنا:
 <https://www.apachefriends.org/en/xampp.html>
 
 ببساطة قم بفك ضغط dvwa.zip ، ضع الملفات التي تم فك ضغطها في مجلد html العام ، ثم اطلب العنوان التالي من المتصفح: `http://127.0.0.1/dvwa/setup.php`
 
-### Linux Packages
+### حزم Linux
 إذا كنت تستخدم توزيعة Linux مبنية على Debian ، فستحتاج إلى تثبيت الحزم التالية _ (أو ما يكافئها) _:
 
 `apt-get -y install apache2 mariadb-server php php-mysqli php-gd libapache2-mod-php`
@@ -91,7 +91,7 @@ XAMPP هو وسيلة سهلة لتثبيت Apache Distribution لأنظمة Lin
 
 لإعداد قاعدة البيانات ، ما عليك سوى الضغط على الزر `Setup DVWA` في القائمة الرئيسية ، ثم االضغط على الزر `Create / Reset Database`. سيؤدي هذا إلى إنشاء / إعادة تعيين قاعدة البيانات وإضافة بعض البيانات.
 
-إذا ظهر خطأ أثناء محاولة إنشاء قاعدة البيانات، فتأكد من صحة بيانات الدخول قاعدة البيانات (اسم المستخدم وكلمة المرور) في الملف `./config/config.inc.php` * وهذا الملف يختلف عن config.inc.php.dist والذي يعتبر مثال.*
+إذا ظهر خطأ أثناء محاولة إنشاء قاعدة البيانات، فتأكد من صحة بيانات الدخول قاعدة البيانات (اسم المستخدم وكلمة المرور) في الملف `/config/config.inc.php` *وهذا الملف يختلف عن config.inc.php.dist والذي يعتبر مثال.*
 
 تم ضبط قيم المتحولات التالية افتراضياً وفق ما يلي:
 
@@ -123,22 +123,21 @@ Query OK, 0 rows affected (0.00 sec)
 
 اعتمادًا على نظام التشغيل الخاص بك وإصدار PHP ، قد ترغب في تغيير التكوين الافتراضي default configuration. سيكون موقع الملفات مختلفًا حسب كل جهاز.
 
-**سمايات المجلد**:
+**سماحيات المجلد**:
+* المسار `/hackable/uploads/` - يجب أن تستطيع خدمة الويب الكتابة على هذا الملف (لتنفيذ وظيفة تحميل الملف).
+* المسار `/external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - يجب أن تستطيع خدمة الويب الكتابة على هذا الملف (إذا كنت ترغب باستخدام PHPIDS).
 
-* `./hackable/uploads/` - يجب أن تستطيع خدمة الويب الكتابة على هذا الملف (لتنفيذ وظيفة تحميل الملف).
-* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - يجب أن تستطيع خدمة الويب الكتابة على هذا الملف (إذا كنت ترغب باستخدام PHPIDS).
 
-**PHP تكوين**:
-
-* `allow_url_include = on` - السماح بتضمين الملفات عن بعد  Remote File Inclusions (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
-* `allow_url_fopen = on` -  السماح بتضمين الملفات عن بعد  Remote File Inclusions (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* `safe_mode = off` - (إذا كان إصدار PHP أقل من أو يساوي 5.4) السماح بحقن SQL  - SQL Injection (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
-* `magic_quotes_gpc = off` - (إذا كان إصدار PHP أقل من أو يساوي 5.4) السماح بحقن SQL  - SQL Injection (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
-* `display_errors = off` - (اختياري)  إخفاء رسائل تحذير PHP لجعلها أقل إسهابًا  [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
+**تكوين PHP**:
+* الخيار `allow_url_include = on` - السماح بتضمين الملفات عن بعد  Remote File Inclusions (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
+* الخيار `allow_url_fopen = on` -  السماح بتضمين الملفات عن بعد  Remote File Inclusions (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
+* الخيار `safe_mode = off` - (إذا كان إصدار PHP أقل من أو يساوي 5.4) السماح بحقن SQL  - SQL Injection (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
+* الخيار `magic_quotes_gpc = off` - (إذا كان إصدار PHP أقل من أو يساوي 5.4) السماح بحقن SQL  - SQL Injection (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
+* الخيار `display_errors = off` - (اختياري)  إخفاء رسائل تحذير PHP لجعلها أقل إسهابًا  [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
 
 **الملف:  `config/config.inc.php`**:
 
-* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - يجب توليد قيم هذه المتحولات وذلك من خلال:  https://www.google.com/recaptcha/admin/create
+* المتحولات `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - يجب توليد قيم هذه المتحولات وذلك من خلال:  https://www.google.com/recaptcha/admin/create
 
 ### بيانات الدخول الافتراضية
 
@@ -154,9 +153,9 @@ _ملاحظة: سيختلف الرابط في حال تثبيت DVWA في مسا
 
 - - -
 
-## Docker حاوية
+## حاوية Docker
 
-- [dockerhub صفحة](https://hub.docker.com/r/vulnerables/web-dvwa/)
+- يمكنك زيارة [dockerhub صفحة](https://hub.docker.com/r/vulnerables/web-dvwa/)
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
 يرجى التأكد من أنك تستخدم aufs بسبب مشاكل MySQL السابقة. نفذ الأمر `docker info` للتحقق من storage driver. إذا لم يكن aufs ، يرجى تغييره على هذا النحو. هناك أدلة لكل نظام تشغيل حول كيفية القيام بذلك ، لكنها مختلفة تمامًا لذا لن نغطي ذلك هنا.
@@ -167,7 +166,7 @@ _ملاحظة: سيختلف الرابط في حال تثبيت DVWA في مسا
 
 يفترض هذا أنك تستخدم توزيعة قائمة على Debian ، كـ Debian و Ubuntu و Kali. بالنسبة إلى التوزيعات الأخرى ، اتبع ذلك ، ولكن قم بتعديل الأمر عند الضرورة.
 
-### الحصول على استجابة 40 عند تصفح الموقع
+### الحصول على استجابة 404 عند تصفح الموقع
 
 إذا كنت تواجه هذه المشكلة ، فأنت بحاجة إلى فهم مواقع الملفات. بشكل افتراضي ، جذر مستندات Apache (Apache document root  هو المكان الذي يبدأ فيه البحث عن محتوى الويب) هو  `/var/www/html` إذا وضعت الملف `hello.txt` في هذا المجلد، يمكن الوصول إليه بطلب `http://localhost/hello.txt` من المتصفح.
 
@@ -201,9 +200,9 @@ The error is telling you that you are using the username `notdvwa`.
 SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
 ```
 
-إنه يقول أنك تستخدم المستخدم `dvwa` وتحاول الاتصال بقاعدة البيانات` notdvwa`.
+رسالة الخطأ توضح أنك تستخدم المستخدم `dvwa` وتحاول الاتصال بقاعدة البيانات `notdvwa`.
 
-أول شيء يجب القيام به هو التحقق مرة أخرى مما تعتقد أنك قد وضعته في ملف التكوين صحيح ومطابق للبيانات الفعلية.
+أول ما يجب القيام به هو التحقق مرة أخرى مما تعتقد أنك قد وضعته في ملف التكوين صحيح ومطابق للبيانات الفعلية.
 
 إذا كان يتطابق مع ما تتوقعه ، فإن الشيء التالي الذي يجب فعله هو التحقق من أنه يمكنك تسجيل الدخول كمستخدم في محرر الأوامر command line. بافتراض أن لديك مستخدم قاعدة بيانات لـ `dvwa` وكلمة مرور هي `p@ssw0rd`، قم بتنفيذ الأمر التالي:
 
@@ -351,7 +350,7 @@ sudo service mysql start
 </IfModule>
 ```
 
-### عند فشل حقن الأوامر Command Injection
+### فشل حقن الأوامر Command Injection
 قد لا يكون لدى Apache امتيازات عالية كافية لتنفيذ الأوامر على خادم الويب. إذا كنت تقوم بتشغيل DVWA على نظام Linux ، فتأكد من تسجيل الدخول كمستخدم root. أما في Windows  قم بتسجيل الدخول كـ administrator.
 
 ### Why can't the database connect on CentOS?
@@ -362,7 +361,7 @@ sudo service mysql start
 setsebool -P httpd_can_network_connect_db 1
 ```
 
-### Anything else
+### لأي مشكلة أخرى
 
 للحصول على أحدث معلومات استكشاف الأخطاء وإصلاحها ، يرجى قراءة كل من التذاكر المفتوحة والمغلقة في  الريبو  git repo:
 
@@ -380,7 +379,7 @@ setsebool -P httpd_can_network_connect_db 1
 
 - - -
 
-## SQLite3 SQL Injection
+## حقن SQL في SQLite3 
 
 _ الدعم لهذا الأمر محدود ، قبل طرح مشكلتك، يرجى التأكد من استعدادك للعمل على تصحيح الأخطاء ، ولا تكتب ببساطة "أنه لا يعمل" ._
 
@@ -395,7 +394,7 @@ $_DVWA["SQLI_DB"] = "sqlite";
 $_DVWA["SQLITE_DB"] = "sqli.db";
 ```
 
-بشكل افتراضي ، يستخدم الملف `database / sqli.db` ، إذا أحدثت خللا فيه، فما عليك سوى نسخ محتويات ملف` database / sqli.db.dist` ولصقها في الملف الذي تعمل عليه.
+بشكل افتراضي ، يستخدم الملف `database/sqli.db` ، إذا أحدثت خللا فيه، فما عليك سوى نسخ محتويات ملف `database/sqli.db.dist` ولصقها في الملف الذي تعمل عليه.
 
 التحديات هي نفسها تمامًا مثل MySQL ، ولكنك الآن تنفذها في SQLite3  بدلاً من MySQL.
 
