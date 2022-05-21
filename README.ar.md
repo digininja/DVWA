@@ -228,7 +228,7 @@ MariaDB [dvwa]>
 ```
 
 نظرًا لأنه يمكنك الاتصال في سطر الأوامر ، فمن المحتمل أن يكون هناك خطأ ما في ملف التكوين ، تحقق مرة أخرى من ذلك ثم قم بإنشاء تذكرة للمشكلة إذا كنت لا تزال غير قادر على التشغيل.
-إذا رأيت ما يلي ، فإن اسم المستخدم أو كلمة المرور التي تستخدمها غير صحيحة. كرر خطوات [إعداد قاعدة البيانات] (#إعداد-قاعدة-البيانات) وتأكد من استخدام اسم المستخدم وكلمة المرور نفسهما طوال العملية.
+إذا رأيت ما يلي ، فإن اسم المستخدم أو كلمة المرور التي تستخدمها غير صحيحة. كرر خطوات [إعداد قاعدة البيانات](#إعداد-قاعدة-البيانات) وتأكد من استخدام اسم المستخدم وكلمة المرور نفسهما طوال العملية.
 
 ```
 ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
@@ -264,11 +264,15 @@ Database Error #2054: The server requested authentication method unknown to the 
 
 بدلاً من ذلك، اتبع الخطوات التالية:
 
-1- باستخدام الحساب root، عدل الملف التالي: `/etc/mysql/mysql.conf.d/mysqld.cnf`
+1- باستخدام الحساب root، عدل الملف التالي: `/etc/mysql/mysql.conf.d/mysqld.cnf`.
+
 2- أضف ما يلي تحت لاسطر `[mysqld]`:
   `default-authentication-plugin=mysql_native_password`
-3- أعد تشغيل خدمة قواعد البيانات: `sudo service mysql restart`
+  
+3- أعد تشغيل خدمة قواعد البيانات: `sudo service mysql restart`.
+
 4- تخقق من طريقة المصادقة الخاصة بحساب قاعدة البيانات:
+
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -280,11 +284,13 @@ Database Error #2054: The server requested authentication method unknown to the 
     1 rows in set (0.00 sec)
     ```
 
+
 5- من المرجح أنها `caching_sha2_password`، إذا كان كذلك، نفذ ما يلي:
 
     ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
+
 
 6- تحقق مجدداً، يجب أن تصبح الآن `mysql_native_password` .
 
