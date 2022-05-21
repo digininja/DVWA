@@ -87,7 +87,7 @@ git clone https://github.com/digininja/DVWA.git
 
 سيعمل الموقع مع MySQL بدلاً من MariaDB لكننا نوصي بشدة باستخدام MariaDB لأنه يعمل خارج الصندوق، سيتعين عليك إجراء تغييرات لتمكين  MySQL  من العمل بشكل صحيح.
 
-### إعداد قواعد البيانات
+### إعداد قاعدة البيانات
 
 لإعداد قاعدة البيانات ، ما عليك سوى الضغط على الزر `Setup DVWA` في القائمة الرئيسية ، ثم االضغط على الزر `Create / Reset Database`. سيؤدي هذا إلى إنشاء / إعادة تعيين قاعدة البيانات وإضافة بعض البيانات.
 
@@ -228,15 +228,13 @@ MariaDB [dvwa]>
 ```
 
 نظرًا لأنه يمكنك الاتصال في سطر الأوامر ، فمن المحتمل أن يكون هناك خطأ ما في ملف التكوين ، تحقق مرة أخرى من ذلك ثم قم بإنشاء تذكرة للمشكلة إذا كنت لا تزال غير قادر على التشغيل.
-إذا رأيت ما يلي ، فإن اسم المستخدم أو كلمة المرور التي تستخدمها غير صحيحة. كرر خطوات [إعداد قاعدة البيانات] (# إعداد قاعدة البيانات) وتأكد من استخدام اسم المستخدم وكلمة المرور نفسهما طوال العملية.
-If you see the following, the username or password you are using is wrong. Repeat the [Database Setup](#database-setup) steps and make sure you use the same username and password throughout the process.
+إذا رأيت ما يلي ، فإن اسم المستخدم أو كلمة المرور التي تستخدمها غير صحيحة. كرر خطوات [إعداد قاعدة البيانات] (#إعداد-قاعدة-البيانات) وتأكد من استخدام اسم المستخدم وكلمة المرور نفسهما طوال العملية.
 
 ```
 ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
 ```
 
-If you get the following, the user credentials are correct but the user does not have access to the database. Again, repeat the setup steps and check the database name you are using.
-
+إذا حصلت على ما يلي ، فإن بيانات الدخول صحيحة ولكن ليس لدى المستخدم حق الوصول إلى قاعدة البيانات. مرة أخرى ، كرر خطوات الإعداد وتحقق من اسم قاعدة البيانات التي تستخدمها.
 ```
 ERROR 1044 (42000): Access denied for user 'dvwa'@'localhost' to database 'dvwa'
 ```
@@ -253,25 +251,24 @@ ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run
 sudo service mysql start
 ```
 
-### Unknown authentication method
+### مشكلة Unknown authentication method
 
-With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
-
+مع أحدث إصدارات MySQL ، لم يعد بإمكان PHP الاتصال بقاعدة البيانات في تكوينها الافتراضي. إذا حاولت تشغيل البرنامج النصي للإعداد setup script وتلقيت الرسالة الjالية ، فهذا يعني أنه عليك إجراء بعض التعديلات على التكوين.
 ```
 Database Error #2054: The server requested authentication method unknown to the client.
 ```
 
-You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the official guide from the MariaDB project:
+لديك خياران ، أسهلهما هو إلغاء تثبيت MySQL وتثبيت MariaDB. تجد في الرابط التالي الدليل الرسمي لمشروع MariaDB:
 
 <https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
 
 بدلاً من ذلك، اتبع الخطوات التالية:
 
 1- باستخدام الحساب root، عدل الملف التالي: `/etc/mysql/mysql.conf.d/mysqld.cnf`
-1. أضف ما يلي تحت لاسطر `[mysqld]`:
+2- أضف ما يلي تحت لاسطر `[mysqld]`:
   `default-authentication-plugin=mysql_native_password`
-1. أعد تشغيل خدمة قواعد البيانات: `sudo service mysql restart`
-1. تخقق من طريقة المصادقة الخاصة بحساب قاعدة البيانات:
+3- أعد تشغيل خدمة قواعد البيانات: `sudo service mysql restart`
+4- تخقق من طريقة المصادقة الخاصة بحساب قاعدة البيانات:
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -283,13 +280,13 @@ You have two options, the easiest is to uninstall MySQL and install MariaDB. The
     1 rows in set (0.00 sec)
     ```
 
-1. من المرجح أنها `caching_sha2_password`، إذا كان كذلك، نفذ ما يلي:
+5- من المرجح أنها `caching_sha2_password`، إذا كان كذلك، نفذ ما يلي:
 
     ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
 
-1. تحقق مجدداً، يجب أن تصبح الآن `mysql_native_password` .
+6- تحقق مجدداً، يجب أن تصبح الآن `mysql_native_password` .
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -305,7 +302,7 @@ You have two options, the easiest is to uninstall MySQL and install MariaDB. The
 
 إذا كنت تريد المزيد من المعلومات يرجى الاطلاع على:  <https://www.php.net/manual/en/mysqli.requirements.php>.
 
-### Database Error #2002: No such file or directory.
+### مشكلة Database Error #2002: No such file or directory.
 
 إذا كان خادم قاعدة البيانات لا يعمل. وكنت تسخدم توزيعة مبنية على Debian، يمكن القيام بذلك باستخدام:
 
@@ -354,7 +351,7 @@ sudo service mysql start
 ### فشل حقن الأوامر Command Injection
 قد لا يكون لدى Apache امتيازات عالية كافية لتنفيذ الأوامر على خادم الويب. إذا كنت تقوم بتشغيل DVWA على نظام Linux ، فتأكد من تسجيل الدخول كمستخدم root. أما في Windows  قم بتسجيل الدخول كـ administrator.
 
-### Why can't the database connect on CentOS?
+### لماذا لا يمكن الاتصال بقاعدة البيانات في CentOS؟
 
 قد تواجه مشاكل مع SELinux، قم إما بتعطيل SELinux أو تشغيل هذا الأمر للسماح لخادم الويب بالتخاطب مع قاعدة البيانات:
 
