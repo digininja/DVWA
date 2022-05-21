@@ -3,12 +3,12 @@
 إن  Damn Vulnerable Web Application (DVWA) هو تطبيق ويب تم إضعافه عمداً ومصمم بـ PHP / MySQL. الهدف الرئيسي هو مساعدة مختصي أمن المعلومات وذلك باختبار مهاراتهم وأدواتهم في بيئة تشبه البيئة الحقيقية، ومساعدة مطوري الويب على فهم طرق تأمين تطبيقات الويب بشكل أفضل ومساعدة كل من الطلاب والمدرسين في التعرف على أمان تطبيقات الويب في بيئة محكمة.
 
 الهدف من DVWA هو **التدرب على بعض نقاط الضعف على الويب الأكثر شيوعًا** ، ضمن **مستويات مختلفة من الصعوبة** ، بواجهة بسيطة ومباشرة.
-يرجى ملاحظة أن هناك ** ثغرات موثقة وغير موثقة ** في هذا التطبيق. هذا متعمد. نحن نشجع على محاولة اكتشاف أكبر عدد ممكن من المشكلات.
+يرجى ملاحظة أن هناك **ثغرات موثقة وغير موثقة** في هذا التطبيق ,هو إجراء متعمد. نحن نشجع على محاولة اكتشاف أكبر عدد ممكن من المشكلات.
 - - -
 
 ## تحذير!
 
-إن  Damn Vulnerable Web Application (DVWA) ضعيف للغاية أمنياً! **لا تضعه في مجلد html العام لمزود الاستضافة الخاص بك أو الخوادم التي تعمل على الانترنت** ، إذ أنه سيتم اختراقها. يُوصى باستخدام كيان افتراضي (مثل [VirtualBox] (https://www.virtualbox.org/)  أو [VMware] (https://www.vmware.com/)) ، ويتم تعيينه على وضع شبكة NAT، يمكنك تنزيل وتثبيت [XAMPP] (https://www.apachefriends.org/en/xampp.html) لخادم الويب وقاعدة البيانات.
+إن  Damn Vulnerable Web Application (DVWA) ضعيف للغاية أمنياً! **لا تضعه في مجلد html العام في الاستضافة الخاصة بك أو الخوادم التي تعمل على الانترنت** ، إذ أنه سيتم اختراقها. يُوصى باستخدام كيان افتراضي (مثل [VirtualBox] (https://www.virtualbox.org/)  أو [VMware] (https://www.vmware.com/)) ، ويتم تعيينه على وضع شبكة NAT، يمكنك تنزيل وتثبيت [XAMPP] (https://www.apachefriends.org/en/xampp.html) لخادم الويب وقاعدة البيانات.
 
 
 ### إخلاء مسؤولية
@@ -43,9 +43,9 @@ Free Software Foundation ، إما الإصدار 3 من الترخيص ، أو
 
 - الصينية: [简体中文](README.zh.md)
 - التركية: [Türkçe](README.tr.md)
-- االعربية: [العربية](README.ar.md)
+- العربية: [العربية](README.ar.md)
 
-إذا كنت ترغب في المساهمة في ترجمة ، يرجى تقديم PR . ولا يعني ذلك مجرد استخدام خدمة الترجمة من Google وإرسال المساهمة ، فسيتم رفضها.
+إذا كنت ترغب في المساهمة في ترجمة ، يرجى تقديم  PR . ولا يعني ذلك مجرد استخدام خدمة الترجمة من Google وإرسال المساهمة ، إذ أنه سيتم رفضها.
 
 - - -
 
@@ -73,7 +73,7 @@ git clone https://github.com/digininja/DVWA.git
 
 أسهل طريقة لتثبيت DVWA هي تحميل [XAMPP] وتثبيته (https://www.apachefriends.org/en/xampp.html) إذا لم يكن لديك خادم الويب جاهز ومعد مسبقاً.
 
-يعدXAMPP  وسيلة سهلة لتثبيت Apache Distribution لأنظمة Linux و Solaris و Windows و Mac OS X. تتضمن الحزمة خادم الويب Apache و MySQL و PHP و Perl وخادم FTP و phpMyAdmin.
+يعد XAMPP  وسيلة سهلة لتثبيت Apache Distribution في أنظمة Linux و Solaris و Windows و Mac OS X. تتضمن الحزمة خادم الويب Apache و MySQL و PHP و Perl وخادم FTP و phpMyAdmin.
 
 يمكن تحميل XAMPP من هنا:
 <https://www.apachefriends.org/en/xampp.html>
@@ -137,11 +137,11 @@ Query OK, 0 rows affected (0.00 sec)
 
 **الملف:  `config/config.inc.php`**:
 
-* المتحولات `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - يجب توليد قيم هذه المتحولات وذلك من خلال:  https://www.google.com/recaptcha/admin/create
+* المتحولات `$_DVWA[ 'recaptcha_public_key' ]`  و`$_DVWA[ 'recaptcha_private_key' ]`  يجب توليد قيم هذه المتحولات وذلك من خلال:  https://www.google.com/recaptcha/admin/create
 
 ### بيانات الدخول الافتراضية
 
-**اسم المستخدم لاافتراضي  = `admin`**
+**اسم المستخدم الالافتراضي  = `admin`**
 
 **كلمة المرور الافتراضية  = `password`**
 
@@ -168,7 +168,7 @@ _ملاحظة: سيختلف الرابط في حال تثبيت DVWA في مسا
 
 ### الحصول على استجابة 404 عند تصفح الموقع
 
-إذا كنت تواجه هذه المشكلة ، فأنت بحاجة إلى فهم مواقع الملفات. بشكل افتراضي ، جذر مستندات Apache (Apache document root  هو المكان الذي يبدأ فيه البحث عن محتوى الويب) هو  `/var/www/html` إذا وضعت الملف `hello.txt` في هذا المجلد، يمكن الوصول إليه بطلب `http://localhost/hello.txt` من المتصفح.
+إذا كنت تواجه هذه المشكلة ، فأنت بحاجة إلى فهم مواقع الملفات. بشكل افتراضي ، جذر مستندات Apache (Apache document root  هو المكان الذي يبدأ فيه البحث عن محتوى الويب) هو  `/var/www/html/` إذا وضعت الملف `hello.txt` في هذا المجلد، يمكن الوصول إليه بطلب `http://localhost/hello.txt` من المتصفح.
 
 إذا أنشأت مجلد ووضعت الملف فيه - `/var/www/html/mydir/hello.txt` فيمكنك الوصول إلى الملف من الخلال المتصفح بزيارة `http://localhost/mydir/hello.txt`.
 
@@ -332,9 +332,7 @@ sudo service mysql start
 
 إذا كنت تستخدم إصدار PHP v5.2.6 أو أحدث ، فستحتاج إلى القيام بما يلي حتى يعمل حقن SQL والثغرات الأمنية الأخرى.
 
-في ملف  `.htaccess`:
-
-استبدل الآتي:
+استبدل الآتي في ملف `htaccess.`:
 
 ```php
 <IfModule mod_php5.c>
