@@ -178,13 +178,14 @@ _ملاحظة: سيختلف الرابط في حال تثبيت DVWA في مسا
 - `http://localhost/mydir/Hello.txt`
 - `http://localhost/MYDIR/hello.txt`
 
-How does this affect DVWA? Most people use git to checkout DVWA into `/var/www/html`, this gives them the directory `/var/www/html/DVWA/` with all the DVWA files inside it. They then browse to `http://localhost/` and get either a `404` or the default Apache welcome page. As the files are in DVWA, you must browse to `http://localhost/DVWA`.
+كيف يؤثر ذلك على DVWA؟ يستخدم معظم الأشخاص git للتحقق من DVWA في `/var/www/html` ، وهذا يمنحهم الدليل `/var/www/html/DVWA/` متضمنة جميع ملفات DVWA بداخله. ثم يقومون بطلب الرابط `http://localhost/`من المتصفح ويحصلون على 404 أو الصفحة الافتراضية في Apache. نظرًا لأن الملفات موجودة في مجلد DVWA ، يجب طلب `http://localhost/DVWA`.
 
-The other common mistake is to browse to `http://localhost/dvwa` which will give a `404` because `dvwa` is not `DVWA` as far as Linux directory matching is concerned.
+الخطأ الشائع الآخر هو طلب الرابط `http://localhost/dvwa`  والذي سيعطي` 404` لأن `dvwa` ليس` DVWA` بسبب حساسية الأحرف في  Linux.
 
-So after setup, if you try to visit the site and get a `404`, think about where you installed the files to, where they are relative to the document root, and what the case of the directory you used is.
+لذلك بعد الإعداد ، إذا حاولت زيارة الموقع والحصول على "404" ، ففكر في المكان الذي قمت بتثبيت الملفات فيه ، وأين ترتبط بالمسار الأساسي ، وما هو اسم المجلد  الذي استخدمته.
 
-### "Access denied" running setup
+
+### مشكلة "Access denied"
 
 إذا رأيت ما يلي عند تشغيل البرنامج النصي للإعداد setup script ، فهذا يعني أن اسم المستخدم أو كلمة المرور في ملف التكوين لا يتطابقان مع تلك التي تم تكوينها في قاعدة البيانات:
 
@@ -192,7 +193,7 @@ So after setup, if you try to visit the site and get a `404`, think about where 
 Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
 ```
 
-The error is telling you that you are using the username `notdvwa`.
+يخبرك الخطأ أن اسم المستخدم هو `notdvwa`.
 
 يشير الخطأ التالي إلى أنك وجهت ملف التكوين إلى قاعدة البيانات الخاطئة.
 
@@ -227,7 +228,7 @@ MariaDB [dvwa]>
 ```
 
 نظرًا لأنه يمكنك الاتصال في سطر الأوامر ، فمن المحتمل أن يكون هناك خطأ ما في ملف التكوين ، تحقق مرة أخرى من ذلك ثم قم بإنشاء تذكرة للمشكلة إذا كنت لا تزال غير قادر على التشغيل.
-
+إذا رأيت ما يلي ، فإن اسم المستخدم أو كلمة المرور التي تستخدمها غير صحيحة. كرر خطوات [إعداد قاعدة البيانات] (# إعداد قاعدة البيانات) وتأكد من استخدام اسم المستخدم وكلمة المرور نفسهما طوال العملية.
 If you see the following, the username or password you are using is wrong. Repeat the [Database Setup](#database-setup) steps and make sure you use the same username and password throughout the process.
 
 ```
@@ -266,7 +267,7 @@ You have two options, the easiest is to uninstall MySQL and install MariaDB. The
 
 بدلاً من ذلك، اتبع الخطوات التالية:
 
-1. باستخدام الحساب root، عدل الملف التالي: `/etc/mysql/mysql.conf.d/mysqld.cnf`
+1- باستخدام الحساب root، عدل الملف التالي: `/etc/mysql/mysql.conf.d/mysqld.cnf`
 1. أضف ما يلي تحت لاسطر `[mysqld]`:
   `default-authentication-plugin=mysql_native_password`
 1. أعد تشغيل خدمة قواعد البيانات: `sudo service mysql restart`
