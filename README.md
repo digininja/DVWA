@@ -268,10 +268,10 @@ You have two options, the easiest is to uninstall MySQL and install MariaDB. The
 Alternatively, follow these steps:
 
 1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
-2. Under the line `[mysqld]`, add the following:
+1. Under the line `[mysqld]`, add the following:
   `default-authentication-plugin=mysql_native_password`
-3. Restart the database: `sudo service mysql restart`
-4. Check the authentication method for your database user:
+1. Restart the database: `sudo service mysql restart`
+1. Check the authentication method for your database user:
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -283,13 +283,13 @@ Alternatively, follow these steps:
     1 rows in set (0.00 sec)
     ```
 
-5. You'll likely see `caching_sha2_password`. If you do, run the following command:
+1. You'll likely see `caching_sha2_password`. If you do, run the following command:
 
     ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
 
-6. Re-running the check, you should now see `mysql_native_password`.
+1. Re-running the check, you should now see `mysql_native_password`.
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';

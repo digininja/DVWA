@@ -43,7 +43,7 @@ en même temps que le bordel d'application web vulnérable (BAVW). Sinon, consul
 Ce fichier est disponibles dans diverses langues ci-dessous :
 - Chinois: [简体中文](README.zh.md)
 - Turque: [Türkçe](README.tr.md)
-- Anglais: [简体中文](README.md)
+- Anglais: [English](README.md)
 
 Si vous souhaitez contribuer à la traduction, faite une demande d'extraction (pull request, PR). Par contre, ça ne doit pas être juste du Google Trad, ou ce sera rejeté.
 
@@ -262,10 +262,10 @@ Vous avez deux options, la première étant de désinstaller MySQL et d'installe
 Sinon, suivez ces étapes:
 
 1. En tant que root, éditez le fichier `/etc/mysql/mysql.conf.d/mysqld.cnf`
-2. sous la ligne `[mysqld]`, ajoutez
+1. sous la ligne `[mysqld]`, ajoutez
    `default-authentication-plugin=mysql_native_password`
-3. redémarrez MySQL: `sudo service mysql restart`
-4. Vérifiez le méthode de connexion pour votre utilisateur:
+1. redémarrez MySQL: `sudo service mysql restart`
+1. Vérifiez le méthode de connexion pour votre utilisateur:
    ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
     +-----------+------------------+-----------------------+
@@ -275,11 +275,11 @@ Sinon, suivez ces étapes:
     +-----------+------------------+-----------------------+
     1 rows in set (0.00 sec)
     ```
-5. Vous verrez probablement `caching_sha2_password`. Si c'est le cas, tapez:
+1. Vous verrez probablement `caching_sha2_password`. Si c'est le cas, tapez:
    ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
-6. Relancez la vérification, vous devriez voir `mysql_native_password`.
+1. Relancez la vérification, vous devriez voir `mysql_native_password`.
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
     +-----------+------+-----------------------+
