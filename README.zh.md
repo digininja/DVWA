@@ -69,7 +69,7 @@ git clone https://github.com/digininja/DVWA.git
 
 XAMPP 是一个非常易于安装的 Apache 发行版，适用于 Linux、Solaris、Windows 和 Mac OS X。该软件包包括 Apache Web 服务器、MySQL、PHP、Perl、一个 FTP 服务器和 phpMyAdmin。
 
-XAMPP 可以从以下位置下载：https://www.apachefriends.org/en/xampp.html 
+XAMPP 可以从以下位置下载：https://www.apachefriends.org/
 
 只需解压缩 dvwa.zip，将解压缩的文件放在您的公共 html 文件夹中，然后使用浏览器访问：`http://127.0.0.1/dvwa/setup.php`
 

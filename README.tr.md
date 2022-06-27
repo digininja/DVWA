@@ -70,7 +70,7 @@ Eğer bir web sunucusu kurulumunuz yoksa, DVWA'yı kurmanın en kolay yolu [XAMP
 XAMPP; Linux, Solaris, Windows ve Mac OS X için kurulumu oldukça kolay bir Apache ürünüdür. Paketin içeriğinde Apache web sunucusu, MySQL, PHP, Perl, bir FTP sunucusu ve phpMyAdmin yer almaktadır.
 
 XAMPP'ı şu bağlantıdan indirebilirsiniz:
-<https://www.apachefriends.org/en/xampp.html>
+<https://www.apachefriends.org/>
 
 dvwa.zip dosyasını arşivden çıkarın. Çıkarılan dosyaları public html dizininize taşıyın. Sonra tarayıcınızdan `http://127.0.0.1/dvwa/setup.php` adresine gidin.
 

@@ -69,12 +69,12 @@ Ou [télécharger le fichier zippé](https://github.com/digininja/DVWA/archive/m
 
 ### Win + XAMPP
 
-La solution la plus facile pour installer BAVW est de télécharger et d'installer [XAMPP](https://www.apachefriends.org/fr/xampp.html) si vous n'avez pas déjà de serveur web.
+La solution la plus facile pour installer BAVW est de télécharger et d'installer [XAMPP](https://www.apachefriends.org/) si vous n'avez pas déjà de serveur web.
 
 XAMPP est une distribution apache pour Linux, Solaris, Windows et MacOS très facile d'installation. Le paquet inclut le serveur web apache, MySQL, PHP, Perl, un serveur FTP et phpMyAdmin.
 
 XAMPP peut être téléchargé depuis :
-<https://www.apachefriends.org/fr/xampp.html>
+<https://www.apachefriends.org/>
 
 Dézippez simplement dvwa.zip, placez le fichier décompressé dans votre fichier HTML public, puis allez avec votre navigateur sur `http://localhost/dvwa/setup.php`
 

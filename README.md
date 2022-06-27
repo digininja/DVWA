@@ -73,7 +73,7 @@ The easiest way to install DVWA is to download and install [XAMPP](https://www.a
 XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows and Mac OS X. The package includes the Apache web server, MySQL, PHP, Perl, a FTP server and phpMyAdmin.
 
 XAMPP can be downloaded from:
-<https://www.apachefriends.org/en/xampp.html>
+<https://www.apachefriends.org/>
 
 Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: `http://127.0.0.1/dvwa/setup.php`
 

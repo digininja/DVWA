@@ -76,7 +76,7 @@ git clone https://github.com/digininja/DVWA.git
 يعد XAMPP  وسيلة سهلة لتثبيت Apache Distribution في أنظمة Linux و Solaris و Windows و Mac OS X. تتضمن الحزمة خادم الويب Apache و MySQL و PHP و Perl وخادم FTP و phpMyAdmin.
 
 يمكن تحميل XAMPP من هنا:
-<https://www.apachefriends.org/en/xampp.html>
+<https://www.apachefriends.org/>
 
 ببساطة قم بفك ضغط dvwa.zip ، ضع الملفات التي تم فك ضغطها في مجلد html العام ، ثم اطلب العنوان التالي من المتصفح: `http://127.0.0.1/dvwa/setup.php`
 
