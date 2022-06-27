@@ -7,7 +7,7 @@ DVWA, **en yaygın web zafiyetlerinden bazılarının** basit bir arayüz üzeri
 
 ## UYARI!
 
-Damn Vulnerable Web Application epey zafiyetlidir! **Internet üzerinden erişilebilen bir sunucuya veya barındırma hizmeti sağlayıcınızın public_html dizinine yüklemeyin.** Bu durum, sunucunuzu tehlikeye atar. [VirtualBox](https://www.virtualbox.org/) veya [VMware](https://www.vmware.com/) gibi bir ortamda, sanal makinede, NAT ağı modunda kullanmanız önerilir. Sanal makine içinde web sunucusu ve veri tabanı için [XAMPP](https://www.apachefriends.org/en/xampp.html) indirip kurabilirsiniz.
+Damn Vulnerable Web Application epey zafiyetlidir! **Internet üzerinden erişilebilen bir sunucuya veya barındırma hizmeti sağlayıcınızın public_html dizinine yüklemeyin.** Bu durum, sunucunuzu tehlikeye atar. [VirtualBox](https://www.virtualbox.org/) veya [VMware](https://www.vmware.com/) gibi bir ortamda, sanal makinede, NAT ağı modunda kullanmanız önerilir. Sanal makine içinde web sunucusu ve veri tabanı için [XAMPP](https://www.apachefriends.org/) indirip kurabilirsiniz.
 
 ### Sorumluluk Reddi
 

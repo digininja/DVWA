@@ -13,7 +13,7 @@ DVWA的具体目标是通过简单明了的界面，来**演练一些最常见�
 
 ## 警告！
 
-DVWA十分易受攻击！  **不要将其上传到您的云服务器的公共 html 文件夹或任何面向 Internet 的服务器**，因为它们会受到危害。 建议使用虚拟机（如[VirtualBox](https://www.virtualbox.org/) 或[VMware](https://www.vmware.com/)），设置为NAT组网方式。在客机（guest machine）中，您可以下载并安装 [XAMPP](https://www.apachefriends.org/en/xampp.html) 作为 Web 服务器和数据库。
+DVWA十分易受攻击！  **不要将其上传到您的云服务器的公共 html 文件夹或任何面向 Internet 的服务器**，因为它们会受到危害。 建议使用虚拟机（如[VirtualBox](https://www.virtualbox.org/) 或[VMware](https://www.vmware.com/)），设置为NAT组网方式。在客机（guest machine）中，您可以下载并安装 [XAMPP](https://www.apachefriends.org/) 作为 Web 服务器和数据库。
 
 ### 免责声明
 

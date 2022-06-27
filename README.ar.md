@@ -8,7 +8,7 @@
 
 ## تحذير!
 
-إن  Damn Vulnerable Web Application (DVWA) ضعيف للغاية أمنياً! **لا تضعه في مجلد html العام في الاستضافة الخاصة بك أو الخوادم التي تعمل على الانترنت** ، إذ أنه سيتم اختراقها. يُوصى باستخدام كيان افتراضي (مثل [VirtualBox] (https://www.virtualbox.org/)  أو [VMware] (https://www.vmware.com/)) ، ويتم تعيينه على وضع شبكة NAT، يمكنك تنزيل وتثبيت [XAMPP] (https://www.apachefriends.org/en/xampp.html) لخادم الويب وقاعدة البيانات.
+إن  Damn Vulnerable Web Application (DVWA) ضعيف للغاية أمنياً! **لا تضعه في مجلد html العام في الاستضافة الخاصة بك أو الخوادم التي تعمل على الانترنت** ، إذ أنه سيتم اختراقها. يُوصى باستخدام كيان افتراضي (مثل [VirtualBox] (https://www.virtualbox.org/)  أو [VMware] (https://www.vmware.com/)) ، ويتم تعيينه على وضع شبكة NAT، يمكنك تنزيل وتثبيت [XAMPP] (https://www.apachefriends.org/) لخادم الويب وقاعدة البيانات.
 
 
 ### إخلاء مسؤولية
