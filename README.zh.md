@@ -65,7 +65,7 @@ git clone https://github.com/digininja/DVWA.git
 
 ### Windows + XAMPP
 
-如果您还没有设置 Web 服务器，安装 DVWA 的最简单方法是下载并安装 [XAMPP](https://www.apachefriends.org/en/xampp.html)。
+如果您还没有设置 Web 服务器，安装 DVWA 的最简单方法是下载并安装 [XAMPP](https://www.apachefriends.org/)。
 
 XAMPP 是一个非常易于安装的 Apache 发行版，适用于 Linux、Solaris、Windows 和 Mac OS X。该软件包包括 Apache Web 服务器、MySQL、PHP、Perl、一个 FTP 服务器和 phpMyAdmin。
 

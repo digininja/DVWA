@@ -15,7 +15,7 @@ Notez qu'il existe des **vulnérabilités documentées ou non** avec ce programm
 
 ## ATTENTION !
 
-Bordel D'application web vulnérable est vachement vulnérable ! **Ne la publiez pas sur le dossier html public de votre hébergeur ni aucun serveur visible sur internet**, ou ils seront compromis. Il est recommendé d'utiliser une machine virtuelle (comme [VirtualBox](https://www.virtualbox.org/) ou [VMware](https://www.vmware.com/)), réglé sur le mode réseau NAT. Dans une machine invitée, vous pouvez télécharger et installer [XAMPP](https://www.apachefriends.org/fr/xampp.html) pour le serveur web et la base de données.
+Bordel D'application web vulnérable est vachement vulnérable ! **Ne la publiez pas sur le dossier html public de votre hébergeur ni aucun serveur visible sur internet**, ou ils seront compromis. Il est recommendé d'utiliser une machine virtuelle (comme [VirtualBox](https://www.virtualbox.org/) ou [VMware](https://www.vmware.com/)), réglé sur le mode réseau NAT. Dans une machine invitée, vous pouvez télécharger et installer [XAMPP](https://www.apachefriends.org/) pour le serveur web et la base de données.
 
 ### Non-responsabilité
 

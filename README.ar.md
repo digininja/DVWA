@@ -71,7 +71,7 @@ git clone https://github.com/digininja/DVWA.git
 
 ### تثبيت Windows + XAMPP
 
-أسهل طريقة لتثبيت DVWA هي تحميل [XAMPP] وتثبيته (https://www.apachefriends.org/en/xampp.html) إذا لم يكن لديك خادم الويب جاهز ومعد مسبقاً.
+أسهل طريقة لتثبيت DVWA هي تحميل [XAMPP] وتثبيته (https://www.apachefriends.org/) إذا لم يكن لديك خادم الويب جاهز ومعد مسبقاً.
 
 يعد XAMPP  وسيلة سهلة لتثبيت Apache Distribution في أنظمة Linux و Solaris و Windows و Mac OS X. تتضمن الحزمة خادم الويب Apache و MySQL و PHP و Perl وخادم FTP و phpMyAdmin.
 
