@@ -348,6 +348,6 @@ Le challenge est le même pour MySQL, il sont juste antagoniste à SQLite3.
 
 ## Liens
 
-Page d'accueil: <https://dvwa.co.uk/>
 Dépôt GitHub: <https://github.com/digininja/DVWA>
+
 Créé par l'équipe BAWV.

@@ -375,8 +375,6 @@ The challenges are exactly the same as for MySQL, they just run against SQLite3 
 
 ## Links
 
-Homepage: <https://dvwa.co.uk/>
-
 Project Home: <https://github.com/digininja/DVWA>
 
 *Created by the DVWA team*

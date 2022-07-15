@@ -401,8 +401,6 @@ Olay MySQL ile aynı. Sadece SQLite3'e karşı yapılacak.
 
 ## Bağlantılar
 
-Anasayfa: <https://dvwa.co.uk/>
-
 Proje Sayfası: <https://github.com/digininja/DVWA>
 
 *DVWA takımı tarafından oluşturulmuştur*

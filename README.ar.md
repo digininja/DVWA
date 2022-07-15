@@ -404,8 +404,6 @@ $_DVWA["SQLITE_DB"] = "sqli.db";
 
 ## روابط
 
-الصفحة الرئيسية: <https://dvwa.co.uk/>
-
 الصفحة الرئيسية للمشروع: <https://github.com/digininja/DVWA>
 
 *تم إنشاؤها بواسطة فريقDVWA *

@@ -349,8 +349,6 @@ setsebool -P httpd_can_network_connect_db 1
 
 ## 链接
 
-主页: <https://dvwa.co.uk/>
-
 项目主页: <https://github.com/digininja/DVWA>
 
 *Created by the DVWA team*
