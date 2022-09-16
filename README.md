@@ -62,6 +62,7 @@ Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/maste
 
 ### Installation Videos
 
+- [Installing DVWA on Kali running in VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
 - [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo) [12:39 minutes]
 
 ### Windows + XAMPP
@@ -89,12 +90,12 @@ On Windows, this can be a bit harder if you are hiding file extensions, if you a
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-* apache2
-* libapache2-mod-php
-* mariadb-server
-* mariadb-client
-* php php-mysqli
-* php-gd
+- apache2
+- libapache2-mod-php
+- mariadb-server
+- mariadb-client
+- php php-mysqli
+- php-gd
 
 I would recommend doing an update before this, just so you make sure you are going to get the latest version of everything.
 
