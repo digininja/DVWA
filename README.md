@@ -89,7 +89,19 @@ On Windows, this can be a bit harder if you are hiding file extensions, if you a
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
 
-`apt-get -y install apache2 mariadb-server php php-mysqli php-gd libapache2-mod-php`
+* apache2
+* libapache2-mod-php
+* mariadb-server
+* mariadb-client
+* php php-mysqli
+* php-gd
+
+I would recommend doing an update before this, just so you make sure you are going to get the latest version of everything.
+
+```
+apt update
+apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libapache2-mod-php
+```
 
 The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
 
