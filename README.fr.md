@@ -65,6 +65,7 @@ Ou [télécharger le fichier zippé](https://github.com/digininja/DVWA/archive/m
 **Soyez sûrs que le fichier config/config.inc.php existe. Avoir le fichier config.inc.php.dist ne suffira pas, vous devrez le modifier par rapport à votre environnement et le renommer config.inc.php. [Windows cachera peut-être l'extension](https://lecrabeinfo.net/afficher-extensions-noms-de-fichiers-dans-windows.html)**
 
 ## Vidéos d'installation
+- (en anglais) [Installing DVWA on Kali running in VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
 - (En anglais) [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo) \[12:39 minutes\]
 
 ### Win + XAMPP
@@ -82,9 +83,20 @@ Dézippez simplement dvwa.zip, placez le fichier décompressé dans votre fichie
 
 Si vous utilisez une distribution basée sur Debian (Debian, ubuntu, kali, parrot, Rapberry pi OS etc), vous devez installer les paquets suivants _(ou leurs équivalents)_:
 
+- apache2
+- libapache2-mod-php
+- mariadb-server
+- mariadb-client
+- php
+- php-mysql
+- php-gd
+- php-mbstring
+
+La commande suivante vous permet de les installer.
+
 `apt install apache2 mariadb-server php php-mysqli php-gd php-mbstring libapache2-mod-php`
 
-Note: php-mbstring permet de gérer les caractères européens, arabes, caligraphiques et cetera, notamment la table de caractères UTF-8. Ne pas la télécharger pourrait entrainez des problèmes d'affichage si vous n'avez pas un langage germanique comme l'anglais ou l'allemand.
+Note: php-mbstring permet de gérer les caractères européens, arabes, caligraphiques et caetera, notamment la table de caractères UTF-8. Ne pas la télécharger pourrait entrainez des problèmes d'affichage si vous n'avez pas un langage germanique comme l'anglais ou l'allemand.
 
 Le site fonctionnera avec MySQL à la place de MariaDB mais nous recommendons fortement MariaDB car cela fonctionne directement, contrairement à MySQL que vous devrez modifier.
 
