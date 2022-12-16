@@ -1,2 +1,0 @@
-Filter
-DESCRIPTION: Directives for turning filters on and off, or specifying custom filters.

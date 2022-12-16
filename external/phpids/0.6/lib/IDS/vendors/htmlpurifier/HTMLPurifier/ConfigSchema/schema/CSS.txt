@@ -1,2 +1,0 @@
-CSS
-DESCRIPTION: Configuration regarding allowed CSS.

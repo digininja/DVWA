@@ -1,2 +1,0 @@
-Test
-DESCRIPTION: Developer testing configuration for our unit tests.

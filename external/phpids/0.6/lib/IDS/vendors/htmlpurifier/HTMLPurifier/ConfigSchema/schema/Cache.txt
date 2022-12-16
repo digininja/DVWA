@@ -1,2 +1,0 @@
-Cache
-DESCRIPTION: Configuration for DefinitionCache and related subclasses.
