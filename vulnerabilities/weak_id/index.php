@@ -43,7 +43,7 @@ $page[ 'body' ] .= <<<EOF
 		<input type="submit" value="Generate" />
 	</form>
 $html
-
+</div>
 EOF;
 
 /*
