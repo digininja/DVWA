@@ -42,6 +42,7 @@ $page[ 'body' ] .= <<<EOF
 	<form method="post">
 		<input type="submit" value="Generate" />
 	</form>
+</div>
 $html
 
 EOF;
