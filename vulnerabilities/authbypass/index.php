@@ -40,7 +40,11 @@ $page[ 'body' ] .= '
 
 	<div class="vulnerable_code_area">
 	<div style="font-weight: bold;color: red;font-size: 120%;" id="save_result"></div>
-	<div id="user_form"></div>';
+	<div id="user_form"></div>
+	<p>
+		Welcome to the user manager, please enjoy updating your user\'s details.
+	</p>
+	';
 
 $page[ 'body' ] .= "
 <script src='authbypass.js'></script>
@@ -62,7 +66,6 @@ $page[ 'body' ] .= "
 ";
 
 $page[ 'body' ] .= '
-		<p>Put rest of function here.</p>
 		' . 
 		$html
 		. '

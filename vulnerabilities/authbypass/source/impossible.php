@@ -1,6 +1,8 @@
 <?php
 /*
+
 Only the admin user is allowed to access this page
+
 */
 
 if (dvwaCurrentUser() != "admin") {

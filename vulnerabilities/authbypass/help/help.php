@@ -1,62 +1,72 @@
 <div class="body_padded">
-	<h1>Help - Brute Force (Login)</h1>
+	<h1>Help - Authorisation Bypass</h1>
 
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
 	<tr>
 	<td><div id="code">
 		<h3>About</h3>
-		<p>Password cracking is the process of recovering passwords from data that has been stored in or transmitted by a computer system.
-			A common approach is to repeatedly try guesses for the password.</p>
+		<p>
+			When developers have to build authorisation matrices into complex systems it is easy for them to miss adding the right checks in every place, especially those
+			which are not directly accessible through a browser, for example API calls.
+		</p>
 
-		<p>Users often choose weak passwords. Examples of insecure choices include single words found in dictionaries, family names, any too short password
-			(usually thought to be less than 6 or 7 characters), or predictable patterns
-			(e.g. alternating vowels and consonants, which is known as leetspeak, so "password" becomes "p@55w0rd").</p>
-
-		<p>Creating a targeted wordlists, which is generated towards the target, often gives the highest success rate. There are public tools out there that will create a dictionary
-			based on a combination of company websites, personal social networks and other common information (such as birthdays or year of graduation).
-
-		<p>A last resort is to try every possible password, known as a brute force attack. In theory, if there is no limit to the number of attempts, a brute force attack will always
-			be successful since the rules for acceptable passwords must be publicly known; but as the length of the password increases, so does the number of possible passwords
-			making the attack time longer.</p>
+		<p>
+			As a tester, you need to be looking at every call a system makes and then testing it using every level of user to ensure that the checks are being carried out correctly.
+			This can often be a long and boring task, especially with a large matrix with lots of different user types, but it is critical that the testing is carried out as one missed
+			check could lead to an attacker gaining access to confidential data or functions.
+		</p>
 
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Your goal is to get the administrator’s password by brute forcing. Bonus points for getting the other four user passwords!</p>
+		<p>Your goal is to test this user management system at all four security levels to identify any areas where authorisation checks have been missed.</p>
+		<p>The system is only designed to be accessed by the admin user, so have a look at all the calls made while logged in as the admin, and then try to reproduce them while logged in as different user.</p>
+		<p>If you need a second user, you can use <i>gordonb / abc123</i>.
 
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>The developer has completely missed out <u>any protections methods</u>, allowing for anyone to try as many times as they wish, to login to any user without any repercussions.</p>
+		<p>Non-admin users do not have the 'Authorisation Bypass' menu option.</p>
+		<p>Spoiler: <span class="spoiler">Try browsing directly to /vulnerabilities/authbypass/</span>.</p>
+
 
 		<br />
 
 		<h3>Medium Level</h3>
-		<p>This stage adds a sleep on the failed login screen. This mean when you login incorrectly, there will be an extra two second wait before the page is visible.</p>
-
-		<p>This will only slow down the amount of requests which can be processed a minute, making it longer to brute force.</p>
+		<p>The developer has locked down access to the HTML for the page, but have a look how the page is populated when logged in as the admin.</p>
+		<p>Spoiler: <span class="spoiler">Try browsing directly to /vulnerabilities/authbypass/get_user_data.php to access the API which returns the user data for the page.</span></p>
 
 		<br />
 
 		<h3>High Level</h3>
-		<p>There has been an "anti Cross-Site Request Forgery (CSRF) token" used. There is a old myth that this protection will stop brute force attacks. This is not the case.
-			This level also extends on the medium level, by waiting when there is a failed login but this time it is a random amount of time between two and four seconds.
-			The idea of this is to try and confuse any timing predictions.</p>
+		<p>Both the HTML page and the API to retrieve data have been locked down, but what about updating data? You have to make sure you test every call to the site.</p>
+		<p>Spoiler: <span class="spoiler">GET calls to retrieve data have been locked down but the POST to update the data has been missed, can you figure out how to call it?</span></p>
 
-		<p>Using a <?php echo dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/CAPTCHA', 'CAPTCHA' ); ?> form could have a similar effect as a CSRF token.</p>
+		<p>Spoiler: <span class="spoiler">This is one way to do it:</p>
+
+		<pre><span class="spoiler">fetch('change_user_details.php', {
+method: 'POST',
+headers: {
+'Accept': 'application/json',
+'Content-Type': 'application/json'
+},
+body: JSON.stringify({ 'id':1, "first_name": "Harry", "surname": "Hacker" })
+}
+)
+.then((response) => response.json())
+.then((data) => console.log(data));
+</span></pre>
 
 		<br />
 
 		<h3>Impossible Level</h3>
-		<p>Brute force (and user enumeration) should not be possible in the impossible level. The developer has added a "lock out" feature, where if there are five bad logins within
-			the last 15 minutes, the locked out user cannot log in.</p>
-
-		<p>If the locked out user tries to login, even with a valid password, it will say their username or password is incorrect. This will make it impossible to know
-			if there is a valid account on the system, with that password, and if the account is locked.</p>
-
-		<p>This can cause a "Denial of Service" (DoS), by having someone continually trying to login to someone's account.
-			This level would need to be extended by blacklisting the attacker (e.g. IP address, country, user-agent).</p>
+		<p>
+			Hopefully on this level all the functions correctly check authorisation before allowing access to the data.
+		</p>
+		<p>
+			There may however be some non-authorisation related issues on the page, so do not write it off as fully secure.
+		</p>
 	</div></td>
 	</tr>
 	</table>
@@ -65,5 +75,8 @@
 
 	<br />
 
-	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/Password_cracking' ); ?></p>
+	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/02-Testing_for_Bypassing_Authorization_Schema' ); ?></p>
+	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/04-Testing_for_Bypassing_Authentication_Schema' ); ?></p>
+	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication' ); ?></p>
+	
 </div>

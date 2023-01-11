@@ -1,8 +1,11 @@
 <?php
 /*
+
 Only the admin user is allowed to access this page.
 
-Make sure to remember to add checks to get and update data.
+Have a look at this file for possible vulnerabilities: 
+
+* vulnerabilities/authbypass/change_user_details.php
 
 */
 
