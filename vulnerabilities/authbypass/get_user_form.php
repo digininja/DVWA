@@ -4,6 +4,13 @@ require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
 dvwaDatabaseConnect();
 
+/*
+On high and impossible, only the admin is allowed to retrieve the data.
+*/
+if ((dvwaSecurityLevelGet() == "high" || dvwaSecurityLevelGet() == "impossible") && dvwaCurrentUser() != "admin") {
+	print json_encode (array ("result" => "fail", "error" => "Access denied"));
+}
+
 $query  = "SELECT user_id, first_name, last_name FROM users";
 $result = mysqli_query($GLOBALS["___mysqli_ston"],  $query );
 
@@ -29,8 +36,6 @@ while ($row = mysqli_fetch_row($result) ) {
 	$users[] = $user;
 }
 
-foreach ($users as $user) {
-	?>
-	<p><input type="text" id="first_name_<?=$user['user_id']?>" name="first_name" value="<?=$user['first_name']?>" /><input type="text" name="surname" id="surname_<?=$user['user_id']?>" value="<?=$user['surname']?>" /><input type="button" value="Update" onclick="submit_change(<?=$user['user_id']?>)" /></p>
-	<?php
-}
+print json_encode ($users);
+exit;
+?>
