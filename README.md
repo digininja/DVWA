@@ -63,7 +63,8 @@ Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/maste
 ### Installation Videos
 
 - [Installing DVWA on Kali running in VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
-- [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo) [12:39 minutes]
+- [Installing DVWA on Windows using XAMPP](https://youtu.be/Yzksa_WjnY0)
+- [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo)
 
 ### Windows + XAMPP
 
@@ -71,10 +72,7 @@ The easiest way to install DVWA is to download and install [XAMPP](https://www.a
 
 XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows and Mac OS X. The package includes the Apache web server, MySQL, PHP, Perl, a FTP server and phpMyAdmin.
 
-XAMPP can be downloaded from:
-<https://www.apachefriends.org/>
-
-Simply unzip dvwa.zip, place the unzipped files in your public html folder, then point your browser to: `http://127.0.0.1/dvwa/setup.php`
+This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation process for Windows but it should be similar for other OSs.
 
 ### Config File
 
