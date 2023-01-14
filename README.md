@@ -138,6 +138,22 @@ mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
+### Disable Authentication
+
+Some tools don't work well with authentication so can't be used with DVWA. To get around this, there is a config option to disable authentication checking. To do this, simply set the following in the config file:
+
+```php
+$_DVWA[ 'disable_authentication' ] = true;
+```
+
+You will also need to set the security level to one that is appropriate to the testing you want to do:
+
+```php
+$_DVWA[ 'default_security_level' ] = 'low';
+```
+
+In this state, you can access all the features without needing to log in and set any cookies.
+
 ### Other Configuration
 
 Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
