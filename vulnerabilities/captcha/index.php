@@ -15,7 +15,7 @@ $page[ 'source_button' ] = 'captcha';
 dvwaDatabaseConnect();
 
 $vulnerabilityFile = '';
-switch( $_COOKIE[ 'security' ] ) {
+switch( dvwaSecurityLevelGet() ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;

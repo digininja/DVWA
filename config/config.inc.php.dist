@@ -47,6 +47,11 @@ $_DVWA[ 'default_phpids_verbose' ] = 'false';
 #   The default is 'en'. You may wish to set this to either 'en' or 'zh'.
 $_DVWA[ 'default_locale' ] = 'en';
 
+# Disable authentication
+#   Some tools don't like working with authentication and passing cookies around
+#   so this setting lets you turn off authentication.
+$_DVWA[ 'disable_authentication' ] = true;
+
 define ("MYSQL", "mysql");
 define ("SQLITE", "sqlite");
 

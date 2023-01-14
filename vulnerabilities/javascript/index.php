@@ -14,7 +14,7 @@ $page[ 'source_button' ] = 'javascript';
 dvwaDatabaseConnect();
 
 $vulnerabilityFile = '';
-switch( $_COOKIE[ 'security' ] ) {
+switch( dvwaSecurityLevelGet() ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$token = $_POST['token'];
 
 		if ($phrase == "success") {
-			switch( $_COOKIE[ 'security' ] ) {
+			switch( dvwaSecurityLevelGet() ) {
 				case 'low':
 					if ($token == md5(str_rot13("success"))) {
 						$message = "<p style='color:red'>Well done!</p>";
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	}
 }
 
-if ( $_COOKIE[ 'security' ] == "impossible" ) {
+if ( dvwaSecurityLevelGet() == "impossible" ) {
 $page[ 'body' ] = <<<EOF
 <div class="body_padded">
 	<h1>Vulnerability: JavaScript Attacks</h1>

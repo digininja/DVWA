@@ -14,7 +14,7 @@ $page[ 'source_button' ] = 'csrf';
 dvwaDatabaseConnect();
 
 $vulnerabilityFile = '';
-switch( $_COOKIE[ 'security' ] ) {
+switch( dvwaSecurityLevelGet() ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;

@@ -5,8 +5,6 @@ if( !defined( 'DVWA_WEB_PAGE_TO_ROOT' ) ) {
 	exit;
 }
 
-session_start(); // Creates a 'Full Path Disclosure' vuln.
-
 if (!file_exists(DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php')) {
 	die ("DVWA System error - config file not found. Copy config/config.inc.php.dist to config/config.inc.php and configure to your environment.");
 }
@@ -26,8 +24,7 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 	// Set security cookie to impossible if no cookie exists
 	if( in_array( $_DVWA[ 'default_security_level' ], $security_levels) ) {
 		dvwaSecurityLevelSet( $_DVWA[ 'default_security_level' ] );
-	}
-	else {
+	} else {
 		dvwaSecurityLevelSet( 'impossible' );
 	}
 
@@ -36,6 +33,31 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 	else
 		dvwaPhpIdsEnabledSet( false );
 }
+
+// This will setup the session cookie based on
+// the security level.
+
+if (dvwaSecurityLevelGet() == 'impossible') {
+	$httponly = true;
+	$samesite = true;
+}
+else {
+	$httponly = false;
+	$samesite = false;
+}
+
+$maxlifetime = 86400;
+$secure = false;
+
+session_set_cookie_params([
+	'lifetime' => $maxlifetime,
+	'path' => '/',
+	'domain' => $_SERVER['HTTP_HOST'],
+	'secure' => $secure,
+	'httponly' => $httponly,
+	'samesite' => $samesite
+]);
+session_start();
 
 if (!array_key_exists ("default_locale", $_DVWA)) {
 	$_DVWA[ 'default_locale' ] = "en";
@@ -65,7 +87,7 @@ function &dvwaSessionGrab() {
 
 
 function dvwaPageStartup( $pActions ) {
-	if( in_array( 'authenticated', $pActions ) ) {
+	if (in_array('authenticated', $pActions)) {
 		if( !dvwaIsLoggedIn()) {
 			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'login.php' );
 		}
@@ -103,6 +125,11 @@ function dvwaLogin( $pUsername ) {
 
 
 function dvwaIsLoggedIn() {
+	global $_DVWA;
+
+	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+		return true;
+	}
 	$dvwaSession =& dvwaSessionGrab();
 	return isset( $dvwaSession[ 'username' ] );
 }
@@ -120,7 +147,7 @@ function dvwaPageReload() {
 
 function dvwaCurrentUser() {
 	$dvwaSession =& dvwaSessionGrab();
-	return ( isset( $dvwaSession[ 'username' ]) ? $dvwaSession[ 'username' ] : '') ;
+	return ( isset( $dvwaSession[ 'username' ]) ? $dvwaSession[ 'username' ] : 'Unknown') ;
 }
 
 // -- END (Session functions)
@@ -139,7 +166,21 @@ function &dvwaPageNewGrab() {
 
 
 function dvwaSecurityLevelGet() {
-	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'impossible';
+	global $_DVWA;
+
+	// If there is a security cookie, that takes priority.
+	if (isset($_COOKIE['security'])) {
+		return $_COOKIE[ 'security' ];
+	}
+
+	// If not, check to see if authentication is disabled, if it is, use
+	// the default security level.
+	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+		return $_DVWA[ 'default_security_level' ];
+	}
+
+	// Worse case, set the level to impossible.
+	return 'impossible';
 }
 
 
@@ -150,7 +191,7 @@ function dvwaSecurityLevelSet( $pSecurityLevel ) {
 	else {
 		$httponly = false;
 	}
-	setcookie( session_name(), session_id(), 0, '/', "", false, $httponly );
+
 	setcookie( 'security', $pSecurityLevel, 0, "/", "", false, $httponly );
 }
 
@@ -560,6 +601,12 @@ function dvwaGuestbook() {
 
 // Token functions --
 function checkToken( $user_token, $session_token, $returnURL ) {  # Validate the given (CSRF) token
+	global $_DVWA;
+
+	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+		return true;
+	}
+
 	if( $user_token !== $session_token || !isset( $session_token ) ) {
 		dvwaMessagePush( 'CSRF token is incorrect' );
 		dvwaRedirect( $returnURL );

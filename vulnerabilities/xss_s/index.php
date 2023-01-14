@@ -19,7 +19,7 @@ if (array_key_exists ("btnClear", $_POST)) {
 }
 
 $vulnerabilityFile = '';
-switch( $_COOKIE[ 'security' ] ) {
+switch( dvwaSecurityLevelGet() ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';
 		break;
