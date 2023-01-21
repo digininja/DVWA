@@ -137,42 +137,42 @@ $_DVWA[ 'default_security_level' ] = 'low';
 
 در این حالت شما می‌توانید از تمامی امکانات بدون نیاز به ورود و تنظیم کوکی‌ها بهره ببید.
 
-### Other Configuration
+### سایر تنظیمات
+بسته به سیستم عامل و نسخه‌ای از پی‌اچ‌پی که اجرا می‌‌کنید، ممکن است بخواهید در تنظیمات پیش‌فرض تغییراتی ایجاد کنید. محل قرارگیری فایل ها از ماشینی تا ماشین دیگر ممکن است متفاوت باشد. 
 
-Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
 
-**Folder Permissions**:
+**سطح دسترسی به پوشه‌ها**:
 
-* `./hackable/uploads/` - Needs to be writeable by the web service (for File Upload).
-* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
+* `./hackable/uploads/` - باید توسط سرویس وب قابل نوشتن باشد (برای آپلود فایل).
+* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - باید توسط سرویس وب قابل نوشتن باشد (اگر قصد استفاده از PHPIDS را دارید ).
 
-**PHP configuration**:
+**تنظیمات پی‌اچ‌پی**:
 
-* `allow_url_include = on` - Allows for Remote File Inclusions (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
-* `allow_url_fopen = on` -  Allows for Remote File Inclusions (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* `safe_mode = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
-* `magic_quotes_gpc = off` - (If PHP <= v5.4) Allows for SQL Injection (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
-* `display_errors = off` - (Optional) Hides PHP warning messages to make it less verbose [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
+* `allow_url_include = on` - اجازه واردکردن فایل ریموت را می‌دهد (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
+* `allow_url_fopen = on` -  اجازه بازکردن فایل ریموت را می‌دهد (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
+* `safe_mode = off` - (تا نسخه ۵.۴ پی‌اج‌پی) اجازه تزریق اس‌کیو‌ال را می‌دهد (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
+* `magic_quotes_gpc = off` - (تا نسخه ۵.۴ پی‌اج‌پی) اجازه تزریق اس‌کیو‌ال را می‌دهد (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
+* `display_errors = off` - (دلخواه) هشدار‌های پی‌اچ‌پی را خاموش می‌کند تا کمتر شلوغ باشد [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
 
 **File: `config/config.inc.php`**:
 
-* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - These values need to be generated from: https://www.google.com/recaptcha/admin/create
+* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - این مقادیر باید از اینجا ایجاد شوند: https://www.google.com/recaptcha/admin/create
 
-### Default Credentials
+### اطلاعات ورود پیش‌فرض
 
-**Default username = `admin`**
+**نام کاریری پیش‌فرض = `admin`**
 
-**Default password = `password`**
+**کلمه عبور پیش‌فرض = `password`**
 
-_...can easily be brute forced ;)_
+_...که به راحتی می‌تواند مورد حملات بروت‌فورس قرار گیرد ;)_
 
-Login URL: http://127.0.0.1/login.php
+نشانی ورود: http://127.0.0.1/login.php
 
-_Note: This will be different if you installed DVWA into a different directory._
+_نکته: اگر DVWA را در مسیرمتفاوتی نصب کرده باشد، این نیز برای شما تفاوت خواهد داشت._
 
 - - -
 
-## Docker Container
+## کانتینر داکر
 
 _This section of the readme was added by @thegrims, for support on Docker issues, please contact them or @opsxcq who is the maintainer of the Docker image and repo. Any issue tickets will probably be pointed at this and closed._
 
