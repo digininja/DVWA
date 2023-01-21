@@ -1,14 +1,15 @@
-# DAMN VULNERABLE WEB APPLICATION
+# اپلیکیشن وبی وحشتناک آسیب‌پذیر
 
-Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is damn vulnerable. Its main goal is to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and to aid both students & teachers to learn about web application security in a controlled class room environment.
+اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA)، یک اپلیکیشن وبی مبتنی بر پی‌اچ‌پی/مای‌اسکیوال است که به شدت آسیب‌پذیر طراحی شده است. اهداف اصلی آن  یاری رساندن به متخصصین حوزهٔ امنیت برای محک‌زدن مهارت‌ها و ابزارهایشان در محیطی قانونی، کمک کردن به توسعه‌دهنگان برا درک بهتر فرایند ایمن‌سازی اپلیکیشن‌های وبی و همچنین کمک کردن به مدرسین و دانشجویان برای یادگیری امنیست اپلیکیشن وبی در محیط کنترل‌شدهٔ کلاسی را شامل می‌شود.  
 
-The aim of DVWA is to **practice some of the most common web vulnerabilities**, with **various levels of difficulty**, with a simple straightforward interface.
-Please note, there are **both documented and undocumented vulnerabilities** with this software. This is intentional. You are encouraged to try and discover as many issues as possible.
+هدف DVWA، **تمرین بخشی از متداول‌ترین نفوذپذیری‌های وبی**، در **سطح‌های متفاوتی از دشواری**، با بهرا‌گیری از یک رابط سرراست و آسان است. لطفاً در نظر داشته‌باشید که در این نرم‌افزار **هم نفوذپذیری‌های مستند‌سازی‌شده و هم غیرمستندسازی‌شده** وجود دارند. این موضوع تعمدی است. از شما دعوت می‌شود که تلاش کنید و اشکالات را تا هرآنقدر که میسر است بیابید.   
+
 - - -
 
-## WARNING!
+## هشدار!
 
-Damn Vulnerable Web Application is damn vulnerable! **Do not upload it to your hosting provider's public html folder or any Internet facing servers**, as they will be compromised. It is recommended using a virtual machine (such as [VirtualBox](https://www.virtualbox.org/) or [VMware](https://www.vmware.com/)), which is set to NAT networking mode. Inside a guest machine, you can download and install [XAMPP](https://www.apachefriends.org/) for the web server and database.
+اپلیکیشن وبی وحشتناک آسیب‌پذیر، به‌ شکل وحشتناکی آسیب‌پذیر است! **آن را در پوشه‌های اچ‌تی‌ام‌ال عمومی سرویس دهندهٔ میزبانی خود یا هر سروری که در اینترنت قرار دارد بارگذاری نکنید**، چراکه مورد نفوذ قرار خواهند گرفت. برای این کار استفاده از یک ماشین مجازی پیشنهاد می‌شود (مثل [ورچوال باکس](https://www.virtualbox.org/) یا [وی‌ام‌ویر](https://www.vmware.com/)) که در حالت شبکه‌ای NAT پیکربندی شده باشد. در داخل ماشین مجازی می‌توانید زمپ را برای سرور وب و پایگاه دادهٔ خود دانلود کنید.
+
 
 ### Disclaimer
 
