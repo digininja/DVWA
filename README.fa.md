@@ -8,42 +8,31 @@
 
 ## هشدار!
 
-اپلیکیشن وبی وحشتناک آسیب‌پذیر، به‌ شکل وحشتناکی آسیب‌پذیر است! **آن را در پوشه‌های اچ‌تی‌ام‌ال عمومی سرویس دهندهٔ میزبانی خود یا هر سروری که در اینترنت قرار دارد بارگذاری نکنید**، چراکه مورد نفوذ قرار خواهند گرفت. برای این کار استفاده از یک ماشین مجازی پیشنهاد می‌شود (مثل [ورچوال باکس](https://www.virtualbox.org/) یا [وی‌ام‌ویر](https://www.vmware.com/)) که در حالت شبکه‌ای NAT پیکربندی شده باشد. در داخل ماشین مجازی می‌توانید زمپ را برای سرور وب و پایگاه دادهٔ خود دانلود کنید.
+اپلیکیشن وبی وحشتناک آسیب‌پذیر، به‌ شکل وحشتناکی آسیب‌پذیر است! **آن را در پوشه‌های اچ‌تی‌ام‌ال عمومی سرویس دهندهٔ میزبانی خود یا هر سروری که در اینترنت قرار دارد بارگذاری نکنید**، چراکه مورد نفوذ قرار خواهند گرفت. برای این کار استفاده از یک ماشین مجازی پیشنهاد می‌شود (مثل [ورچوال باکس](https://www.virtualbox.org/) یا [وی‌ام‌ویر](https://www.vmware.com/)) که در حالت شبکه‌ای NAT پیکربندی شده باشد. در داخل ماشین مجازی می‌توانید [زمپ](https://www.apachefriends.org/) را برای سرور وب و پایگاه دادهٔ خود دانلود کنید.
 
 
-### Disclaimer
+### تکذیب‌نامه
+ما در مورد اینکه از این اپلیکیشن (DVWA) چگونه استفاده می‌شود هیچ مسؤولیتی نمی‌پذیریم. ما هدف این برنامه را به صراحت بیان کرده‌ایم و از آن نباید برای مقاصد بدخواهانه استفاده شود. ما هشدارها و اقدامات خود را در جهت جلوگیری از نصب DVWA بر روی سرویس‌دهندگان وب برخط انجام داده‌ایم. اگر به سرور وب شما از طریق یک نسخه از DVWA نفوذ شد، تقصیری متوجه ما نیست. مسؤولیت آن بر عهدهٔ کسی است که آن را بارگذاری و نصب کرده است.
+- - -
 
-We do not take responsibility for the way in which any one uses this application (DVWA). We have made the purposes of the application clear and it should not be used maliciously. We have given warnings and taken measures to prevent users from installing DVWA on to live web servers. If your web server is compromised via an installation of DVWA, it is not our responsibility, it is the responsibility of the person/s who uploaded and installed it.
+## مجوز
+این فایل بخشی از اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) است.
+اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) یک نرم‌افزار آزاد است. شما می‌توانید آن را تحت مجوز نسخه سوم‌ یا به‌اختیر خودتان نسخه‌های جدید‌تری از مجوز عمومی گنو (GNU) که توسط بنیاد نرم‌افزار آزاد منشر شده است، توزیع کنید و/یا تغییر دهید. 
+اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) به امید اینکه سودمند واقع شود توزیع شده است، لیکن بدون هیچگونه تضمینی، حتی به صورت ضمنی که برای مقاصد خاصی مناسب باشد ارائه می‌شود. مجوز عمومی گنو را برای اطلاعات بیشتر ببینید.  
+شما می‌بایست یک رونوشت از مجوز عمومی گنو را همرا با اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) دریافت کرده‌باشید. اگر این اتفاق نیفتاده است، <https://www.gnu.org/licenses/> را ببینید. 
+
+
+
 
 - - -
 
-## License
+## بین‌المللی کردن
 
-This file is part of Damn Vulnerable Web Application (DVWA).
-
-Damn Vulnerable Web Application (DVWA) is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Damn Vulnerable Web Application (DVWA) is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Damn Vulnerable Web Application (DVWA).  If not, see <https://www.gnu.org/licenses/>.
-
-- - -
-
-## Internationalisation
-
-This file is available in multiple languages:
-
-- Chinese: [简体中文](README.zh.md)
-- Turkish: [Türkçe](README.tr.md)
-
-If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected.
+این فایل به زبان‌های مختلف دیگری موجود است:
+- انگلیسی: [English](README.md)
+- چینی: [简体中文](README.zh.md)
+- ترکی: [Türkçe](README.tr.md)
+اگر شما نیز می‌خواهید به ترجمه‌کردن این مستند به زبان‌های دیگر کمک کنید، لطفاً یک PR‌ ارسال کنید. این بدان معنا نیست که فایل را به ترجمه‌گر گوگل بدهید و خروجی آن را ارسال کنید، اینگونه ترجمه‌‌‌ها مردود می‌شوند.
 
 - - -
 
