@@ -1,20 +1,14 @@
 # اپلیکیشن وبی وحشتناک آسیب‌پذیر
-
 اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA)، یک اپلیکیشن وبی مبتنی بر پی‌اچ‌پی/مای‌اسکیوال است که به شدت آسیب‌پذیر طراحی شده است. اهداف اصلی آن  یاری رساندن به متخصصین حوزهٔ امنیت برای محک‌زدن مهارت‌ها و ابزارهایشان در محیطی قانونی، کمک کردن به توسعه‌دهنگان برا درک بهتر فرایند ایمن‌سازی اپلیکیشن‌های وبی و همچنین کمک کردن به مدرسین و دانشجویان برای یادگیری امنیست اپلیکیشن وبی در محیط کنترل‌شدهٔ کلاسی را شامل می‌شود.  
 
 هدف DVWA، **تمرین بخشی از متداول‌ترین نفوذپذیری‌های وبی**، در **سطح‌های متفاوتی از دشواری**، با بهرا‌گیری از یک رابط سرراست و آسان است. لطفاً در نظر داشته‌باشید که در این نرم‌افزار **هم نفوذپذیری‌های مستند‌سازی‌شده و هم غیرمستندسازی‌شده** وجود دارند. این موضوع تعمدی است. از شما دعوت می‌شود که تلاش کنید و اشکالات را تا هرآنقدر که میسر است بیابید.   
-
 - - -
-
 ## هشدار!
-
 اپلیکیشن وبی وحشتناک آسیب‌پذیر، به‌ شکل وحشتناکی آسیب‌پذیر است! **آن را در پوشه‌های اچ‌تی‌ام‌ال عمومی سرویس دهندهٔ میزبانی خود یا هر سروری که در اینترنت قرار دارد بارگذاری نکنید**، چراکه مورد نفوذ قرار خواهند گرفت. برای این کار استفاده از یک ماشین مجازی پیشنهاد می‌شود (مثل [ورچوال باکس](https://www.virtualbox.org/) یا [وی‌ام‌ویر](https://www.vmware.com/)) که در حالت شبکه‌ای NAT پیکربندی شده باشد. در داخل ماشین مجازی می‌توانید [زمپ](https://www.apachefriends.org/) را برای سرور وب و پایگاه دادهٔ خود دانلود کنید.
-
 
 ### تکذیب‌نامه
 ما در مورد اینکه از این اپلیکیشن (DVWA) چگونه استفاده می‌شود هیچ مسؤولیتی نمی‌پذیریم. ما هدف این برنامه را به صراحت بیان کرده‌ایم و از آن نباید برای مقاصد بدخواهانه استفاده شود. ما هشدارها و اقدامات خود را در جهت جلوگیری از نصب DVWA بر روی سرویس‌دهندگان وب برخط انجام داده‌ایم. اگر به سرور وب شما از طریق یک نسخه از DVWA نفوذ شد، تقصیری متوجه ما نیست. مسؤولیت آن بر عهدهٔ کسی است که آن را بارگذاری و نصب کرده است.
 - - -
-
 ## مجوز
 این فایل بخشی از اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) است.
 اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) یک نرم‌افزار آزاد است. شما می‌توانید آن را تحت مجوز نسخه سوم‌ یا به‌اختیر خودتان نسخه‌های جدید‌تری از مجوز عمومی گنو (GNU) که توسط بنیاد نرم‌افزار آزاد منشر شده است، توزیع کنید و/یا تغییر دهید. 
@@ -30,53 +24,56 @@
 
 این فایل به زبان‌های مختلف دیگری موجود است:
 - انگلیسی: [English](README.md)
-- چینی: [简体中文](README.zh.md)
 - ترکی: [Türkçe](README.tr.md)
+- چینی: [简体中文](README.zh.md)
+- عربی: [العربیه](README.ar.md)
+- فرانسوی: [French](README.fr.md)
+
 اگر شما نیز می‌خواهید به ترجمه‌کردن این مستند به زبان‌های دیگر کمک کنید، لطفاً یک PR‌ ارسال کنید. این بدان معنا نیست که فایل را به ترجمه‌گر گوگل بدهید و خروجی آن را ارسال کنید، اینگونه ترجمه‌‌‌ها مردود می‌شوند.
 
 - - -
 
-## Download
+## دانلود
+در حالیکه ممکن است نسخه‌های متفاوتی از DVWA در اطراف پراکنده شده باشند، تنها نسخه پشتیبانی شده،آخرین نسخه از مخزن رسمی گیت‌هاب است. شما یا می‌توانید آن را از طریق کلون کردن مخزن:
 
-While there are various versions of DVWA around, the only supported version is the latest source from the official GitHub repository. You can either clone it from the repo:
+
 
 ```
 git clone https://github.com/digininja/DVWA.git
 ```
 
-Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/master.zip).
+یا [بارگیری نسخهٔ زیپ‌شدهٔ فایلها](https://github.com/digininja/DVWA/archive/master.zip) دانلود کنید.
 
 - - -
 
-## Installation
+## نصب
 
-### Installation Videos
+### ویدئو‌های نصب
 
-- [Installing DVWA on Kali running in VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
-- [Installing DVWA on Windows using XAMPP](https://youtu.be/Yzksa_WjnY0)
-- [Installing Damn Vulnerable Web Application (DVWA) on Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo)
+- [نصب بر کالی‌لینوکس در ورچوال‌باکس](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
+- [نصب در وینوز با استفاده از زمپ](https://youtu.be/Yzksa_WjnY0)
+- [نصب بر روی ویندوز ۱۰](https://www.youtube.com/watch?v=cak2lQvBRAo)
 
-### Windows + XAMPP
+### ویندوز+زمپ
+اگر در حال حاضر یک وب‌سرور راه‌اندازی‌شده در اختیار ندارید، راحت‌ترین روش نصب DVWA از طریق دانلود و نصب [زمپ](https://www.apachefriends.org/) است
 
-The easiest way to install DVWA is to download and install [XAMPP](https://www.apachefriends.org/) if you do not already have a web server setup.
+زمپ یک توزیع از آپاچی است که نصب بسیار آسانی دارد و برای لینوکس، سولاریس، ویندوز و مک‌او‌اس‌ اکس عرضه شده است. این بسته شامل سرویس‌دهندهٔ وب آپاچی، مای‌اس‌کیوال، پی‌اچ‌پی، پرل، یک سرویس‌دهندهٔ اف‌‌تی‌پی و پی‌اج‌پی‌مای‌ادمین است.
+این [ویدئو](https://youtu.be/Yzksa_WjnY0) شما را قدم به قدم در مراحل نصب آن برای ویندوز هدایت می‌کند، البته برای سایر سیستم‌عامل‌ها نیز کمابیش به همین‌ شکل است.
 
-XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows and Mac OS X. The package includes the Apache web server, MySQL, PHP, Perl, a FTP server and phpMyAdmin.
 
-This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation process for Windows but it should be similar for other OSs.
 
-### Config File
-
-DVWA ships with a dummy copy of its config file which you will need to copy into place and then make the appropriate changes. On Linux, assuming you are in the DVWA directory, this can be done as follows:
+### فایل کانفیگ
+برنامهٔ DVWA همرا با یک فایل کانفیگ دم‌دستی توزیع می‌شود که لازم است شما آن را در جای مناسب کپی کنید و تغییرات لازم را بر روی آن اعمال کنید. در لینوکس با فرض بر اینکه در پوشهٔ DVWAقرار دارید، به این طریق می‌توانید فایل را کپی کنید:
 
 `cp config/config.inc.php.dist config/config.inc.php`
 
-On Windows, this can be a bit harder if you are hiding file extensions, if you are unsure about this, this blog post explains more about it:
+در ویندوز، اگر پسوند فایل‌ها مخفی باشد، کار اندکی دشوارتر می‌شود. اگر در این مورد مطمئن نیستید، برای توضیحات بیشتر این پست وبلاگ را ببینید:
 
-[How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
+[چگونه به ویندوز بگوییم پسوند فایل‌ها را نمایش دهد](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
 
-### Linux Packages
+### پکیج‌های لینوکس
 
-If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
+اگر از یک توزیع لینوکس مبتنی بر دبیان استفاده می کنید، لازم است بسته‌های نرم‌افزاری زیر _(یا مشابه آنها)_ را نصب کنید:
 
 - apache2
 - libapache2-mod-php
@@ -85,22 +82,20 @@ If you are using a Debian based Linux distribution, you will need to install the
 - php php-mysqli
 - php-gd
 
-I would recommend doing an update before this, just so you make sure you are going to get the latest version of everything.
+جهت اطمینان از ایکنکه آخرین نسخه از همه‌چیز را دریافت خواهید کرد، اجرای یک Update‌ قبل از هر کاری توصیه می‌شود.
 
 ```
 apt update
 apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libapache2-mod-php
 ```
+سایت با مای‌اسکیوال بجای ماریا‌دی‌بی کار می‌کند، اما ما قویاً ماریاد‌ی‌بی را توصیه می‌کنیم، چرا که بدون نیاز به تغییرات مستقیما کار خواهد کرد در حالیه برای راه‌اناختن صحیح مای‌اس‌کیو‌ال نیاز است تغییراتی در آن بدهید.
 
-The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
 
-### Database Setup
+### نصب پایگاه داده
+برای نصب پایگاه داده کافیست بر روی دکمهٔ  `Setup DVWA` در منوی اصلی کلیک کنید و پس از آن دکمهٔ `Create / Reset Database` را فشار دهید. این کار پایگاه داده را به همراه مقداری داده در آن ایجاد/بازسازی می‌کند.
+اگر در حین ساختن پایگاه داده خطایی دریافت می‌کنید، مطمئن باشید اطلاعات اعتبارسنجی تنظیم‌شده در `./config/config.inc.php` صحیح باشد. *‌دقت کنید که این فایل با config.inc.php.dis که صرفاً یک فایل نمونه است تفاوت دارد.*  
 
-To set up the database, simply click on the `Setup DVWA` button in the main menu, then click on the `Create / Reset Database` button. This will create / reset the database for you with some data in.
-
-If you receive an error while trying to create your database, make sure your database credentials are correct within `./config/config.inc.php`. *This differs from config.inc.php.dist, which is an example file.*
-
-The variables are set to the following by default:
+متغیرها به صورت پیش‌فرض با مقادیر زیر تنظیم می‌شوند:
 
 ```php
 $_DVWA[ 'db_server'] = '127.0.0.1';
@@ -110,7 +105,7 @@ $_DVWA[ 'db_password' ] = 'p@ssw0rd';
 $_DVWA[ 'db_database' ] = 'dvwa';
 ```
 
-Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), then you can't use the database root user, you must create a new database user. To do this, connect to the database as the root user then use the following commands:
+دقت کنید که، اگر از ماریادی‌بی بجای مای‌اس‌کیو‌ال استفاده می‌کنید (در  کالی‌لبنوکس ماریادی‌بی پیش‌فرض است)، نخواهید توانست از کاربر root‌ پایگاه داده استفاده کنید و می‌بایست کاربر جدیدی ایجاد کنید. برای این کار با کاربر روت به پایگاه داده وصل شوید و دستورات زیر را اجرا کنید:
 
 ```mysql
 mysql> create database dvwa;
@@ -126,21 +121,21 @@ mysql> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-### Disable Authentication
-
-Some tools don't work well with authentication so can't be used with DVWA. To get around this, there is a config option to disable authentication checking. To do this, simply set the following in the config file:
+### غیر فعال کردن ورود
+بعضی از ابزارها با بخش ورود به خوبی کار نمی‌کنند و با DVWA نمی‌توانند استفاده شوند. برای رفع این مشکل، گزینه‌ای در کانفیگ وجود دارد که بتوانید کنترل ورود را غیر فعال کنید. برای این کار کافیست تنظیم زیر را در فایل کانفیگ انجام دهید:
 
 ```php
 $_DVWA[ 'disable_authentication' ] = true;
 ```
 
-You will also need to set the security level to one that is appropriate to the testing you want to do:
+همچنین لازم است سطح امنیت را به مقداری که برای آزمونتان مد نظر دارید تغییر دهید:
+
 
 ```php
 $_DVWA[ 'default_security_level' ] = 'low';
 ```
 
-In this state, you can access all the features without needing to log in and set any cookies.
+در این حالت شما می‌توانید از تمامی امکانات بدون نیاز به ورود و تنظیم کوکی‌ها بهره ببید.
 
 ### Other Configuration
 
