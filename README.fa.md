@@ -326,76 +326,73 @@ Database Error #2054: The server requested authentication method unknown to the 
 برای اطلاعات بیشتر صفحهٔ زیر را دنبال کنید:
  <https://www.php.net/manual/en/mysqli.requirements.php>.
 
-### خطای #2002 پایگاه داده: چنین فایل یا پوشه‌ای وجود ندارد
-
-The database server is not running. In a Debian based distro this can be done with:
+### خطای شماره ۲۰۰۲ پایگاه داده: چنین فایل یا پوشه‌ای وجود ندارد
+سرور پایگاه داده در حال اجرا نیستو در توزیع‌های مبتنی بر دبیان می‌توانید اینگونه مشکل را برطرف کنید:
 
 ```sh
 sudo service mysql start
 ```
 
-### Errors "MySQL server has gone away" and "Packets out of order"
+### خطاهای "MySQL server has gone away" و "Packets out of order"
+چندین دلیل ممکن است برای گرفتن خطاهای بالا وجود داشته باشد. اما شایع‌ترینشان این است که نسخهٔ سرور پایگاه دادهٔ شما با نسخهٔ پی‌اچ‌پی سازگاری ندارد.
 
-There are a few reasons you could be getting these errors, but the most likely is the version of database server you are running is not compatible with the version of PHP.
+این ممکن است وقتی استفاده از آخرین نسخه‌های مای‌اسکیوال و پی‌اچ‌پی به خوبی پیش‌نرود مشاهده شود. بهترین توصیه کنارگذاشتن مای‌اسکیوال و نصب ماریا‌دی‌بی است چرا که این موضوعی نیست که بتوانیم پشتیبانی بیشتری در مورد آن بدهیم.
 
-This is most commonly found when you are running the latest version of MySQL as PHP and it do not get on well. Best advice, ditch MySQL and install MariaDB as this is not something we can support.
 
-For more information, see:
+برای اطلاعات بیشتر اینجا را ببینید:
 
 <https://www.ryadel.com/en/fix-mysql-server-gone-away-packets-order-similar-mysql-related-errors/>
 
-### Command Injection won't work
+### تزریق دستور کار نمی‌کند
+آپاچی ممکن است سطح دسترسی کافی برای اجرای دستورات روی سرور وبی را نداشته باشد. اگر DVWA را تحت لینوکس اجرا می‌کنید، اطمینان حاصل کنید که با کاربر روت وارد شده‌اید. در ویندوز از ورود به صورت Administrator   اطمینان حاصل کنید.
 
-Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
-### Why can't the database connect on CentOS?
-
-You may be running into problems with SELinux.  Either disable SELinux or run this command to allow the web server to talk to the database:
+### چرا در سنت‌اواس نمی‌توان به پایگاه داده وصل شد
+مشکل شما ممکن است به selinux‌ مربوط باشد. یا آن را غیر فعال کنید، یا با دستور زیر مجوز اتصال به پایگاه داده را فراهم کنید:
 
 ```
 setsebool -P httpd_can_network_connect_db 1
 ```
 
-### Anything else
-
-For the latest troubleshooting information please read both open and closed tickets in the git repo:
+### سایر مسائل
+برای دیدن آخرین مطالب اشکال‌زدایی تیکت‌های باز و بسته را در مخزن گیت مطالعه کنید:
 
 <https://github.com/digininja/DVWA/issues>
 
-Before submitting a ticket, please make sure you are running the latest version of the code from the repo. This is not the latest release, this is the latest code from the master branch.
+لطفاً قبل از ارسال تیکت جدید اطمینان حاصل کنید که از آخرین نسخهٔ کد موجود در مخزن استفاده می‌کنید. این با آخرین انتشار فرق دارد، منظور آخرین کد از شاخهٔ مستر است.
+اگر قضد ارسال تیکتی دارید، حداقل اطلاعات زیر را فراهم کنید:
 
-If raising a ticket, please submit at least the following information:
+- سیستم عامل
+- آخرین پنج خط از لاگ سرور در جایی که مربوط به گزارش خطای شما است.
+- اگر گزارشتان مربوط به ورود به پایگاه داده است، مراحل مرتبط ذکر شده برای رفع اشکالات پایگاه داده که در بالا آمده است را طی کنید و از هر مرحله اسکرین‌شات بگیرید. آنها را به همراه اسکرین‌شات از بخشی از فایل کانفیگ که نام کاریری، کلمهٔ عبور و نام پایگاه داده را برای اتصال به سرور مشخص می‌کند ضمیمه کنید.
+- توضیح کاملی از اینکه چه مشکلی وجود دارد، چه انتظاری داشتید، و چه تلاش‌هایی تا کنون برای رفع آن انجام داده‌اید. بیان اینکه "ورود کار نمی‌کند" برای درک مشکل و کمک به شما برای برطرف کردن آن کافی نیست.
 
-- Operating System
-- The last 5 lines from the web server error log directly after whatever error you are reporting occurs
-- If it is a database authentication problem, go through the steps above and screenshot each step. Submit these along with a screenshot of the section of the config file showing the database user and password.
-- A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
 
 - - -
 
-## SQLite3 SQL Injection
+##  تزریق اس‌کیوال در SQLite3
 
-_Support for this is limited, before raising issues, please ensure you are prepared to work on debugging, do not simply claim "it does not work"._
+_پشتیبانی از این موضوع بسیار محدود است. قبل از ثبت خطا باید اطمینان داشته‌باشید برای کارکردن بر روی اشکالزدایی آمادگی کافی را داشته باشید. از مطرح‌کردن "فلان چیز کار نمی‌کند"  بپرهیزید_
+به طور پیش‌فرض SQLi و Blind SQLi بر روی سرور ماریا‌دی‌بی یا مای‌اسکیوال استفاده شده در سایت انجام می‌شوند. اما این امکان وجود دارد که تست SQLi را بجای آن بر روی یک SQLite3‌ انجام دهید.
+در اینجا چگونگی راه‌اندازی و کارکردن SQLite3 با PHP‌ توضیح داده نمی‌شود، اما چیز ساده‌ای در حد نصب `php-sqlite3` و اطمینان از فعال بودن آن را یادآوری می‌کنیم. 
 
-By default, SQLi and Blind SQLi are done against the MariaDB/MySQL server used by the site but it is possible to switch to do the SQLi testing against SQLite3 instead.
+برای تغییر، کافیست فایل کانفیگ را ویرایش کنید و خطوط زیر را تغییر داده یا اضافه کنید:
 
-I am not going to cover how to get SQLite3 working with PHP, but it should be a simple case of installing the `php-sqlite3` package and making sure it is enabled.
-
-To make the switch, simply edit the config file and add or edit these lines:
 
 ```
 $_DVWA["SQLI_DB"] = "sqlite";
 $_DVWA["SQLITE_DB"] = "sqli.db";
 ```
 
-By default it uses the file `database/sqli.db`, if you mess it up, simply copy `database/sqli.db.dist` over the top.
+به طور پیش‌فرض از فایل `database/sqli.db` استفاده می‌شود. اگر به طور اتفاقی به این فایل آسب زدید، آن را از مبدا `database/sqli.db.dist` بازنویسی کنید 
+باقی مسائل همانند مای‌اس‌کیو‌ال است با این تفاوت که از SQLite3 بجای آن استفاده کرده‌ایم.  
 
-The challenges are exactly the same as for MySQL, they just run against SQLite3 instead.
+
 
 - - -
 
-## Links
+## پیوندها
 
-Project Home: <https://github.com/digininja/DVWA>
+صفحهٔ اصلی پروژه: <https://github.com/digininja/DVWA>
 
-*Created by the DVWA team*
+*تهیه‌شده توسط تیم DVWA*
