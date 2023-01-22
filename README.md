@@ -165,10 +165,7 @@ Depending on your Operating System, as well as version of PHP, you may wish to a
 * To allow  Remote File Inclusions (RFI):
     * `allow_url_include = on` [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
     * `allow_url_fopen = on` [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* To allow for SQL Injection (SQLi), if PHP <= v5.4:
-    * `safe_mode = off`  [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
-    * `magic_quotes_gpc = off` [[magic_quotes_gpc](https://web.archive.org/web/20210111094526/https://www.php.net/manual/en/security.magicquotes.php)]
-* To optinally reduce verbosity by hiding PHP warning messages:
+* To optionally reduce verbosity by hiding PHP warning messages:
     * `display_errors = off` [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
 
 **File: `config/config.inc.php`**:
