@@ -15,28 +15,21 @@
 اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) به امید اینکه سودمند واقع شود توزیع شده است، لیکن بدون هیچگونه تضمینی، حتی به صورت ضمنی که برای مقاصد خاصی مناسب باشد ارائه می‌شود. مجوز عمومی گنو را برای اطلاعات بیشتر ببینید.  
 شما می‌بایست یک رونوشت از مجوز عمومی گنو را همرا با اپلیکیشن وبی وحشتناک آسیب‌پذیر (DVWA) دریافت کرده‌باشید. اگر این اتفاق نیفتاده است، <https://www.gnu.org/licenses/> را ببینید. 
 
-
-
-
 - - -
-
 ## بین‌المللی کردن
 
 این فایل به زبان‌های مختلف دیگری موجود است:
-- انگلیسی: [English](README.md)
+- انگلیسی: [English](README.md) (نسخهٔ مرجع)
 - ترکی: [Türkçe](README.tr.md)
 - چینی: [简体中文](README.zh.md)
-- عربی: [العربیه](README.ar.md)
+- عربی: [العربية](README.ar.md)
 - فرانسوی: [French](README.fr.md)
 
 اگر شما نیز می‌خواهید به ترجمه‌کردن این مستند به زبان‌های دیگر کمک کنید، لطفاً یک PR‌ ارسال کنید. این بدان معنا نیست که فایل را به ترجمه‌گر گوگل بدهید و خروجی آن را ارسال کنید، اینگونه ترجمه‌‌‌ها مردود می‌شوند.
 
 - - -
-
 ## دانلود
 در حالیکه ممکن است نسخه‌های متفاوتی از DVWA در اطراف پراکنده شده باشند، تنها نسخه پشتیبانی شده،آخرین نسخه از مخزن رسمی گیت‌هاب است. شما یا می‌توانید آن را از طریق کلون کردن مخزن:
-
-
 
 ```
 git clone https://github.com/digininja/DVWA.git
@@ -147,12 +140,11 @@ $_DVWA[ 'default_security_level' ] = 'low';
 * `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - باید توسط سرویس وب قابل نوشتن باشد (اگر قصد استفاده از PHPIDS را دارید ).
 
 **تنظیمات پی‌اچ‌پی**:
-
-* `allow_url_include = on` - اجازه واردکردن فایل ریموت را می‌دهد (RFI)   [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
-* `allow_url_fopen = on` -  اجازه بازکردن فایل ریموت را می‌دهد (RFI)    [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* `safe_mode = off` - (تا نسخه ۵.۴ پی‌اج‌پی) اجازه تزریق اس‌کیو‌ال را می‌دهد (SQLi) [[safe_mode](https://secure.php.net/manual/en/features.safe-mode.php)]
-* `magic_quotes_gpc = off` - (تا نسخه ۵.۴ پی‌اج‌پی) اجازه تزریق اس‌کیو‌ال را می‌دهد (SQLi) [[magic_quotes_gpc](https://secure.php.net/manual/en/security.magicquotes.php)]
-* `display_errors = off` - (دلخواه) هشدار‌های پی‌اچ‌پی را خاموش می‌کند تا کمتر شلوغ باشد [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
+* برای مجاز شمردن اینکلودهای ریموت (RFI)    
+     * تنظیم `allow_url_include = on` مستندات: [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)] 
+     * تنظیم `allow_url_fopen = on` مستندات: [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
+* برای  خاموش‌کردن هشدار‌های پی‌اچ‌پی که کمتر شلوغ باشد (در صورت نیاز)
+     * تنظیم `display_errors = off` مستندات:  [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
 
 **File: `config/config.inc.php`**:
 
@@ -233,7 +225,7 @@ SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
 mysql -u dvwa -pp@ssw0rd -D dvwa
 ```
 
-*دقت کنید که هیچ فاصلهٔ خالی بعد از -p قرار ندارد *
+*دقت کنید که هیچ فاصلهٔ خالی بعد از p- قرار ندارد*
 
 اگر یک چنین چیزی می‌بینید، کلمهٔ عبور شما صحیح است:
 
