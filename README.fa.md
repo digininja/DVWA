@@ -173,67 +173,70 @@ _نکته: اگر DVWA را در مسیرمتفاوتی نصب کرده باشد
 - - -
 
 ## کانتینر داکر
+_این بخش از راهمنما توسط @thegrims برای پوشش مسائل مربوط به داکر ایجاد شده است. لطفاً در این رابطه با آنها یا@opsxcq، کسی که نگهداری‌کنندهٔ ایمیج داکر و مخزن است تماس بگیرید. هر تیکتی که در اینجا بزنید احتمالاً با همین مضمون بسته خواهد شد._
 
-_This section of the readme was added by @thegrims, for support on Docker issues, please contact them or @opsxcq who is the maintainer of the Docker image and repo. Any issue tickets will probably be pointed at this and closed._
 
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
+- [صفحهٔ داکرهاب](https://hub.docker.com/r/vulnerables/web-dvwa/)
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
-
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
+لطفاً  به علت مشکلات قدیمی‌تر مای‌اسکیوال، اطمینان حاصل کنید که از aufs استفاده می‌کنید.  دستور `docker info` را برای اطلاع از راه‌انداز استوریج خود اجرا کنید. اگر از این درایور استفاده نمی‌شود طوری تغییر دهید که این اتفاق بیفتد. برای سیستم‌عامل‌های مختلف راهنمایی در مورد چگونگی انجام این کار وجود دارد. لیکن به علت تنوع روشها در این بخش پوشش داده نمی‌شوند.
 
 - - -
 
-## Troubleshooting
+## اشکال‌زدایی
+در اینجا فرض بر این است که شما از یک توزیع لینوکس مبتنی بر دبیان، از جمله خود دبیان، ابونتو یا کالی استفاده می‌کنید. برای سایر توزیع‌ها نیز می‌توانید این راهنما را دنبال کنید ولی دقت کنید که دستورات را به شکل مقتضی تغییر دهید.
 
-These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
 
-### I browsed to the site and got a 404
 
-If you are having this problem you need to understand file locations. By default, the Apache document root (the place it starts looking for web content) is `/var/www/html`. If you put the file `hello.txt` in this directory, to access it you would browse to `http://localhost/hello.txt`.
+### سایت را مرور می‌کنم، ولی خطای ۴۰۴ می‌گیرم
+اگر شما این خطا را دریافت می‌کنید، نیاز است تسبت به محل فایل‌ها آگاهی بیشتری کسب کنید. به‌شکل پیش‌فرض، پوشهٔ ریشهٔ فایلهای آپاچی (جایی که آن را به‌دنبال محتوای وبی جستجو می‌کند)، در `/var/www/html` واقع شده است. اگر شما فایل `hello.txt` را در آن قرار دهید، برای مرور آن می‌بایست از آدرس `http://localhost/hello.txt` استفاده کنید.   
 
-If you created a directory and put the file in there - `/var/www/html/mydir/hello.txt` - you would then need to browse to `http://localhost/mydir/hello.txt`.
+لیکن اگر یک پوشه در آنجا ساخته‌اید و فایل را دروت آن قرار داده‌اید - `/var/www/html/mydir/hello.txt` - می‌بایست برای مرور آن از آدرس `http://localhost/mydir/hello.txt` استفاده کنید. 
 
-Linux is by default case sensitive and so in the example above, if you tried to browse to any of these, you would get a `404 Not Found`:
+سیستم عامل لینوکس، نسبت به بزرگی و کوچکی حروف حساس است. لذا در مثال بالا تلاش برای مرور هرکدام از آدرس‌های زیر نیز به شما خطای ۴۰۴ را گزارش خواهد داد: 
+
+
 
 - `http://localhost/MyDir/hello.txt`
 - `http://localhost/mydir/Hello.txt`
 - `http://localhost/MYDIR/hello.txt`
 
-How does this affect DVWA? Most people use git to checkout DVWA into `/var/www/html`, this gives them the directory `/var/www/html/DVWA/` with all the DVWA files inside it. They then browse to `http://localhost/` and get either a `404` or the default Apache welcome page. As the files are in DVWA, you must browse to `http://localhost/DVWA`.
+این چه تأثیری بر روی DVWA‌خواهد داشت؟ بسیاری از مردم با استفاده از گیت، DVWA  را در پوشهٔ `/var/www/html` دانلود می‌کنند. این منجر به ایجاد پوشهٔ `/var/www/html/DVWA/` خواهد شد که تمام فایل‌های DVWA درون آن قرار می‌گیرند. پس از آن سراغ آپاچی رفته و `http://localhost/` را مرور کرده و با خطای ۴۰۴ یا صفحهٔ خوش‌آمدگویی آپاچی مواجه می‌شوند. از آنجایی که فایل‌ها درون پوشهٔ DVWA قرار دارند، باید بجای آن، آدرس `http://localhost/DVWA` را مرور کرد.    
 
-The other common mistake is to browse to `http://localhost/dvwa` which will give a `404` because `dvwa` is not `DVWA` as far as Linux directory matching is concerned.
+اشتباه رایج دیگر استفاده از آدرس `http://localhost/dvwa` است که باز هم خطای ۴۰۴ را خواهد داد. چراکه  `dvwa` با `DVWA`  طبق معیارهای تطبیق نام پوشه در لینوکس یکی نیستند.
 
-So after setup, if you try to visit the site and get a `404`, think about where you installed the files to, where they are relative to the document root, and what the case of the directory you used is.
+بنابرین وقتی پس از نصب با خطای `404` مواجه شدید، یک مرتبه مرور کنید که فایها را در کجا نصب کرده‌اید، نسبت به پوشهٔ ریشهٔ فایلها در چه موقعیتی قرار گرفته‌اند و بزرگی و کوچکی حروف در نام پوشه‌های استفاده‌شده چه شکلی است. 
 
-### "Access denied" running setup
 
-If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
+### خطای"Access denied" موقع اجرای نصب
+اگر حین اجرای اسکریپت نصب این خطا را دریافت می‌کنید، بدان معنی است که نام کاربری و کلمهٔ عبور تنظیم‌شده در قایل تنظیمات با آنچه در پایگاه داده تنظیم شده است تطابق ندارد: 
 
 ```
 Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
 ```
 
-The error is telling you that you are using the username `notdvwa`.
+این پیام خطا به شما می‌گوید که در حال استفاده از نام کاربری `notdvwa` هستید. 
 
-The following error says you have pointed the config file at the wrong database.
+
+پیام خطای بعدی به شما می‌گوید در فایل کانفیگ به پایگاه دادهٔ اشتباهی اشاره کرده‌اید.
 
 ```
 SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
 ```
 
-It is saying that you are using the user `dvwa` and trying to connect to the database `notdvwa`.
+این به شما می‌گوید که با استفاده از نام کاربری `dvwa` در حال تلاش برای اتصال به پایگاه دادهٔ `notdvwa` هستید.  
+اولین قدم این است که کنترل کنید آیا آن چیزی که فکر می‌کنید در کانفیگ فایل تنظیم کرده‌اید واقعاً در آنجا وجود دارد یا خیر.
 
-The first thing to do is to double check what you think you put in the config file is what is actually there.
+اگر تنظیمات با آنچه انتظارش را داشتید مطابقت می‌کند، مرحلهٔ بعدی تلاش برای ورود با نام کاریری از طریق خط فرمان است. با فرض بر اینکه شما یک نام کاربری با نام `dvwa` و یک کلمهٔ عبور با مقدار `p@ssw0rd` دارید، می‌توانید دستور زیر را اجرا کنید:  
 
-If it matches what you expect, the next thing to do is to check you can log in as the user on the command line. Assuming you have a database user of `dvwa` and a password of `p@ssw0rd`, run the following command:
 
 ```
 mysql -u dvwa -pp@ssw0rd -D dvwa
 ```
 
-*Note: There is no space after the -p*
+*دقت کنید که هیچ فاصلهٔ خالی بعد از -p قرار ندارد *
 
-If you see the following, the password is correct:
+اگر یک چنین چیزی می‌بینید، کلمهٔ عبور شما صحیح است:
+
 
 ```
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
@@ -247,51 +250,50 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 MariaDB [dvwa]>
 ```
 
-As you can connect on the command line, it is likely something wrong in the config file, double check that and then raise an issue if you still can't get things working.
+از آنجا که از طریق خط فرمان به شکل موفقیت آمیز توانسته‌اید متصل شوید، به احتمال زیاد چیزی در فایل کانفیگ اشتباه است. مجدداً آن را کنترل کنید و اگر همچنان نتوانستید موفق شوید یک issue برای رسیدگی ایجاد کنید.
 
-If you see the following, the username or password you are using is wrong. Repeat the [Database Setup](#database-setup) steps and make sure you use the same username and password throughout the process.
+اگر چنین چیزی می‌بینید، یا نام کاربری یا کلمهٔ عبورتان اشتباه است. مراحل [نصب پایگاه داده](#database-setup)  را مجدداً تکرار کنید و اطمینان حاصل کنید که در کل این فرایند از همان نام کاربری و کلمهٔ عبور استفاده می‌کنید.
 
 ```
 ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
 ```
-
-If you get the following, the user credentials are correct but the user does not have access to the database. Again, repeat the setup steps and check the database name you are using.
+اگر خطای زیر را می‌گیرید، بدین معنا است که نام کاربری و کلمهٔ عبور شما صحیح است، لبکن سطح دسترسی آن به پایگاه داده کافی نیست. در این حالت نیز مراحل نصب را تکرار کنید و نام پایگاه داده‌ای که به آن متصل می‌شوید را چک کنید. 
 
 ```
 ERROR 1044 (42000): Access denied for user 'dvwa'@'localhost' to database 'dvwa'
 ```
 
-The final error you could get is this:
+آخرین خطایی که ممکن است دریافت کنید نیز به شرح زیر است:
 
 ```
 ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
 ```
+این یک خطای ورود نیست، لیکن به شما می‌گوید که سرور پایگاه داده در حال اجرا نیست. آن را با دستور زیر اجرا کنید:
 
-This is not an authentication issue but tells you that the database server is not running. Start it with the following
 
 ```sh
 sudo service mysql start
 ```
 
-### Unknown authentication method
+### روش ورود ناشتاخته
+در نسخه‌های جدیدتر مای‌اس‌کیوال، پی‌اچ‌پی دیگر نمی‌تواند در حالت تنظیمات پیش‌فرض با پایگاه داده ارتباط برقرار کند. اگر حین تلاش برای اجرای اسکریپت نصب این خطا را می‌گیرید به این موضوع بیندیشید.
 
 With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
 
 ```
 Database Error #2054: The server requested authentication method unknown to the client.
 ```
-
-You have two options, the easiest is to uninstall MySQL and install MariaDB. The following is the official guide from the MariaDB project:
+دو راه حل پیش رو دارید که آسان‌ترین آنها حذف مای‌اس‌کیو‌ال و نصب ماریادی‌بی بجای آن است. در پایین می‌توانید راهنمای رسمی پروژهٔ ماریادی‌بی را  ببینید:
 
 <https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
 
-Alternatively, follow these steps:
-
-1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
-1. Under the line `[mysqld]`, add the following:
-  `default-authentication-plugin=mysql_native_password`
-1. Restart the database: `sudo service mysql restart`
-1. Check the authentication method for your database user:
+راه‌حل دیگر اجرای مراحل زیر است:
+1. با کاربر روت، فایل `/etc/mysql/mysql.conf.d/mysqld.cnf` را برای ویرایش باز کنید.
+2. زیر سطر `[mysqld]`، عبارت زیر را بیفزایید:  `default-authentication-plugin=mysql_native_password`
+3. سرویس پایگاه داده را ریستارت کنید:  `sudo service mysql restart`
+4. حالت ارزیابی ورود را برای کاربرتان بررسی کنید:
+   
+  
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -302,14 +304,14 @@ Alternatively, follow these steps:
     +-----------+------------------+-----------------------+
     1 rows in set (0.00 sec)
     ```
-
-1. You'll likely see `caching_sha2_password`. If you do, run the following command:
+1. احتمالاً `caching_sha2_password` به چشمتان خواهد خورد در این صورت دستور زیر را اجرا کنید:
 
     ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
 
-1. Re-running the check, you should now see `mysql_native_password`.
+1. اگر دوباره بررسی کنید، ایندفعه می‌بایست `mysql_native_password` را ببینید.  
+
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -320,12 +322,11 @@ Alternatively, follow these steps:
     +-----------+------+-----------------------+
     1 row in set (0.00 sec)
     ```
+پس از تمام این کارها، الان فرایند نصب باید بتواند به صورت عادی انجام شود.
+برای اطلاعات بیشتر صفحهٔ زیر را دنبال کنید:
+ <https://www.php.net/manual/en/mysqli.requirements.php>.
 
-After all that, the setup process should now work as normal.
-
-If you want more information see the following page: <https://www.php.net/manual/en/mysqli.requirements.php>.
-
-### Database Error #2002: No such file or directory.
+### خطای #2002 پایگاه داده: چنین فایل یا پوشه‌ای وجود ندارد
 
 The database server is not running. In a Debian based distro this can be done with:
 
