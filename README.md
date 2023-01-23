@@ -38,11 +38,13 @@ along with Damn Vulnerable Web Application (DVWA).  If not, see <https://www.gnu
 ## Internationalisation
 
 This file is available in multiple languages:
-
+- Arabic: [العربية](README.ar.md)
 - Chinese: [简体中文](README.zh.md)
+- French: [Français](README.fr.md)
+- Persian: [فارسی](README.fa.md)
 - Turkish: [Türkçe](README.tr.md)
 
-If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected.
+If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected. Submit your translated version by adding a new 'README.xx.md' file where xx is the two-letter code of your desired language (based on [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
 
 - - -
 
