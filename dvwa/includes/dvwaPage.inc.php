@@ -49,14 +49,14 @@ else {
 $maxlifetime = 86400;
 $secure = false;
 
-session_set_cookie_params([
+session_set_cookie_params(array(
 	'lifetime' => $maxlifetime,
 	'path' => '/',
 	'domain' => $_SERVER['HTTP_HOST'],
 	'secure' => $secure,
 	'httponly' => $httponly,
 	'samesite' => $samesite
-]);
+));
 session_start();
 
 if (!array_key_exists ("default_locale", $_DVWA)) {
