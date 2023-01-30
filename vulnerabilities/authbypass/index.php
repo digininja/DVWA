@@ -36,7 +36,7 @@ $page[ 'body' ] .= '
 <div class="body_padded">
 	<h1>Vulnerability: Authorisation Bypass</h1>
 
-	<p>This page should only be accessible by the admin user. Your challenge is to gain access to the fetures using one of the other users, for example <i>gordonb</i> / <i>abc123</i>.</p>
+	<p>This page should only be accessible by the admin user. Your challenge is to gain access to the features using one of the other users, for example <i>gordonb</i> / <i>abc123</i>.</p>
 
 	<div class="vulnerable_code_area">
 	<div style="font-weight: bold;color: red;font-size: 120%;" id="save_result"></div>
