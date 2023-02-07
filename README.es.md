@@ -59,9 +59,9 @@ O [descargar un ZIP con todos los archivos](https://github.com/digininja/DVWA/ar
 
 ### Videos de Instalación
 
-- Instalando DVWA en Kali corriendo en VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
-- Instalación de DVWA en Windows usando XAMPP](https://youtu.be/Yzksa_WjnY0)
-- Instalación de Damn Vulnerable Web Application (DVWA) en Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo)
+- [Instalando DVWA en Kali corriendo en VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
+- [Instalación de DVWA en Windows usando XAMPP](https://youtu.be/Yzksa_WjnY0)
+- [Instalación de Damn Vulnerable Web Application (DVWA) en Windows 10](https://www.youtube.com/watch?v=cak2lQvBRAo)
 
 ### Windows + XAMPP
 
@@ -75,7 +75,9 @@ Este [video](https://youtu.be/Yzksa_WjnY0) le guiará a través del proceso de i
 
 DVWA se entrega con una plantilla del archivo de configuración que tendrá que copiar en su lugar y luego hacer los cambios apropiados. En Linux, suponiendo que se encuentra en el directorio DVWA, esto se puede hacer de la siguiente manera:
 
-`cp config/config.inc.php.dist config/config.inc.php`.
+```bash
+cp config/config.inc.php.dist config/config.inc.php
+```
 
 En Windows, esto puede ser un poco más difícil si está ocultando las extensiones de archivo, si no está seguro acerca de esto, esta publicación de blog explica más sobre eso:
 
@@ -322,7 +324,7 @@ Alternativamente, siga estos pasos:
 
 6. Al volver a ejecutar la verificación, ahora debería ver `mysql_native_password`.
 
-    ``sql
+    ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
     +-----------+------+-----------------------+
     | Host      | User | plugin                |
