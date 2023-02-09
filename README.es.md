@@ -406,6 +406,21 @@ Los retos son exactamente los mismos que para MySQL, sólo que se ejecutan contr
 
 - - -
 
+👨‍💻 Contribuyentes
+-----
+
+Gracias por todas sus contribuciones y por mantener este proyecto actualizado. :heart:
+
+Si tienes una idea, algún tipo de mejora o simplemente quieres colaborar, eres bienvenido de contribuir y participar en el proyecto, siéntete libre de enviar tu PR.
+
+<p align="center">
+<a href="https://github.com/digininja/DVWA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=digininja/DVWA&max=500">
+</a>
+</p>
+
+- - -
+
 ## Enlaces
 
 Inicio del proyecto: <https://github.com/digininja/DVWA>
