@@ -410,6 +410,21 @@ The challenges are exactly the same as for MySQL, they just run against SQLite3 
 
 - - -
 
+👨‍💻 Contributors
+-----
+
+Thanks for all your contributions and keeping this project updated. :heart:
+
+If you have an idea, some kind of improvement or just simply want to collaborate, you are welcome to contribute and participate in the Project, feel free to send your PR.
+
+<p align="center">
+<a href="https://github.com/digininja/DVWA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=digininja/DVWA&max=500">
+</a>
+</p>
+
+- - -
+
 ## Links
 
 Project Home: <https://github.com/digininja/DVWA>
