@@ -372,7 +372,7 @@ You may be running into problems with SELinux.  Either disable SELinux or run th
 setsebool -P httpd_can_network_connect_db 1
 ```
 
-### Anything else
+### Anything Else
 
 For the latest troubleshooting information please read both open and closed tickets in the git repo:
 
@@ -386,6 +386,14 @@ If raising a ticket, please submit at least the following information:
 - The last 5 lines from the web server error log directly after whatever error you are reporting occurs
 - If it is a database authentication problem, go through the steps above and screenshot each step. Submit these along with a screenshot of the section of the config file showing the database user and password.
 - A full description of what is going wrong, what you expect to happen, and what you have tried to do to fix it. "login broken" is no enough for us to understand your problem and to help fix it.
+
+- - -
+
+## Tutorials
+
+I am going to try to put together some tutorial videos that walk through some of the vulnerabilities and show how to detect them and then how to exploit them. Here are the ones I've made so far:
+
+[Finding and Exploiting Reflected XSS](https://youtu.be/V4MATqtdxss)
 
 - - -
 
