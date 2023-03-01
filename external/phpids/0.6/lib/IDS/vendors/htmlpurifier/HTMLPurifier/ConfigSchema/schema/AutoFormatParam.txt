@@ -1,2 +1,0 @@
-AutoFormatParam
-DESCRIPTION: Configuration for customizing auto-formatting functionality

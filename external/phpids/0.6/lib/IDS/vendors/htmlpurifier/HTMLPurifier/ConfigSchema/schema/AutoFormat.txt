@@ -1,2 +1,0 @@
-AutoFormat
-DESCRIPTION: Configuration for activating auto-formatting functionality (also known as <code>Injector</code>s)
