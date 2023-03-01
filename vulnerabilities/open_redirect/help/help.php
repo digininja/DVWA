@@ -1,62 +1,50 @@
 <div class="body_padded">
-	<h1>Help - Brute Force (Login)</h1>
+	<h1>Help - Open HTTP Redirect</h1>
 
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
 	<tr>
 	<td><div id="code">
 		<h3>About</h3>
-		<p>Password cracking is the process of recovering passwords from data that has been stored in or transmitted by a computer system.
-			A common approach is to repeatedly try guesses for the password.</p>
+		<p>
+		OWASP define this as:
+		</p>
+		<blockquote cite="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+			Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials.
+		</blockquote>
 
-		<p>Users often choose weak passwords. Examples of insecure choices include single words found in dictionaries, family names, any too short password
-			(usually thought to be less than 6 or 7 characters), or predictable patterns
-			(e.g. alternating vowels and consonants, which is known as leetspeak, so "password" becomes "p@55w0rd").</p>
-
-		<p>Creating a targeted wordlists, which is generated towards the target, often gives the highest success rate. There are public tools out there that will create a dictionary
-			based on a combination of company websites, personal social networks and other common information (such as birthdays or year of graduation).
-
-		<p>A last resort is to try every possible password, known as a brute force attack. In theory, if there is no limit to the number of attempts, a brute force attack will always
-			be successful since the rules for acceptable passwords must be publicly known; but as the length of the password increases, so does the number of possible passwords
-			making the attack time longer.</p>
+		<p>As suggested above, a common use for this is to create a URL which initially goes to the real site but then redirects the victim off to a site controlled by the attacker. This site could be a clone of the target's login page to steal credentials, a request for credit card details to pay for a service on the target site, or simply a spam page full of advertising.</p>
 
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Your goal is to get the administrator’s password by brute forcing. Bonus points for getting the other four user passwords!</p>
+		<p>Abuse the redirect page to move the user off the DVWA site or onto a different page on the site than expected.</p>
 
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>The developer has completely missed out <u>any protections methods</u>, allowing for anyone to try as many times as they wish, to login to any user without any repercussions.</p>
+		<p>The redirect page has no limitations, you can redirect to anywhere you want.</p>
+		<p>Spoiler: <span class="spoiler">Try browsing to /vulnerabilities/open_redirect/source/low.php?redirect=https://digi.ninja</span></p>
 
 		<br />
 
 		<h3>Medium Level</h3>
-		<p>This stage adds a sleep on the failed login screen. This mean when you login incorrectly, there will be an extra two second wait before the page is visible.</p>
+		<p>The code prevents you from using absolute URLs to take the user off the site, so you can either use relative URLs to take them to other pages on the same site or a <a href="https://en.wikipedia.org/wiki/Wikipedia:Protocol-relative_URL" target="_blank">Protocol-relative URL</a>.</p>
 
-		<p>This will only slow down the amount of requests which can be processed a minute, making it longer to brute force.</p>
+		<p>Spoiler: <span class="spoiler">Try browsing to /vulnerabilities/open_redirect/source/low.php?redirect=//digi.ninja</span></p>
 
 		<br />
 
 		<h3>High Level</h3>
-		<p>There has been an "anti Cross-Site Request Forgery (CSRF) token" used. There is a old myth that this protection will stop brute force attacks. This is not the case.
-			This level also extends on the medium level, by waiting when there is a failed login but this time it is a random amount of time between two and four seconds.
-			The idea of this is to try and confuse any timing predictions.</p>
+		<p>The redirect page tries to lock you to only redirect to the info.php page, but does this by checking that the URL contains "info.php".</p>
 
-		<p>Using a <?php echo dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/CAPTCHA', 'CAPTCHA' ); ?> form could have a similar effect as a CSRF token.</p>
+		<p>Spoiler: <span class="spoiler">Try browsing to /vulnerabilities/open_redirect/source/low.php?redirect=https://digi.ninja/?a=info.php</span></p>
 
 		<br />
 
 		<h3>Impossible Level</h3>
-		<p>Brute force (and user enumeration) should not be possible in the impossible level. The developer has added a "lock out" feature, where if there are five bad logins within
-			the last 15 minutes, the locked out user cannot log in.</p>
+		<p>Rather than accepting a page or URL as the redirect target, the system uses ID values to tell the redirect page where to redirect to. This ties the system down to only redirect to pages it knows about and so there is no way for an attacker to modify things to go to a page of their choosing.</p>
 
-		<p>If the locked out user tries to login, even with a valid password, it will say their username or password is incorrect. This will make it impossible to know
-			if there is a valid account on the system, with that password, and if the account is locked.</p>
-
-		<p>This can cause a "Denial of Service" (DoS), by having someone continually trying to login to someone's account.
-			This level would need to be extended by blacklisting the attacker (e.g. IP address, country, user-agent).</p>
 	</div></td>
 	</tr>
 	</table>
