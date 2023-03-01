@@ -11,7 +11,6 @@ if (!file_exists(DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php')) {
 
 // Include configs
 require_once DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php';
-require_once( 'dvwaPhpIds.inc.php' );
 
 // Declare the $html variable
 if( !isset( $html ) ) {
@@ -27,11 +26,6 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 	} else {
 		dvwaSecurityLevelSet( 'impossible' );
 	}
-
-	if( $_DVWA[ 'default_phpids_level' ] == 'enabled' )
-		dvwaPhpIdsEnabledSet( true );
-	else
-		dvwaPhpIdsEnabledSet( false );
 }
 
 // This will setup the session cookie based on
@@ -92,31 +86,7 @@ function dvwaPageStartup( $pActions ) {
 			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'login.php' );
 		}
 	}
-
-	if( in_array( 'phpids', $pActions ) ) {
-		if( dvwaPhpIdsIsEnabled() ) {
-			dvwaPhpIdsTrap();
-		}
-	}
 }
-
-
-function dvwaPhpIdsEnabledSet( $pEnabled ) {
-	$dvwaSession =& dvwaSessionGrab();
-	if( $pEnabled ) {
-		$dvwaSession[ 'php_ids' ] = 'enabled';
-	}
-	else {
-		unset( $dvwaSession[ 'php_ids' ] );
-	}
-}
-
-
-function dvwaPhpIdsIsEnabled() {
-	$dvwaSession =& dvwaSessionGrab();
-	return isset( $dvwaSession[ 'php_ids' ] );
-}
-
 
 function dvwaLogin( $pUsername ) {
 	$dvwaSession =& dvwaSessionGrab();
@@ -324,7 +294,6 @@ function dvwaHtmlEcho( $pPage ) {
 	}
 	// -- END (security cookie)
 
-	$phpIdsHtml   = '<em>PHPIDS:</em> ' . ( dvwaPhpIdsIsEnabled() ? 'enabled' : 'disabled' );
 	$userInfoHtml = '<em>Username:</em> ' . ( dvwaCurrentUser() );
 	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
 	$localeHtml = '<em>Locale:</em> ' . ( dvwaLocaleGet() );
@@ -338,7 +307,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 	$systemInfoHtml = "";
 	if( dvwaIsLoggedIn() ) 
-		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br />{$securityLevelHtml}<br />{$localeHtml}<br />{$phpIdsHtml}<br />{$sqliDbHtml}</div>";
+		$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br />{$securityLevelHtml}<br />{$localeHtml}<br />{$sqliDbHtml}</div>";
 	if( $pPage[ 'source_button' ] ) {
 		$systemInfoHtml = dvwaButtonSourceHtmlGet( $pPage[ 'source_button' ] ) . " $systemInfoHtml";
 	}
@@ -636,7 +605,6 @@ function tokenField() {  # Return a field for the (CSRF) token
 
 // Setup Functions --
 $PHPUploadPath    = realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_TO_ROOT . "hackable" . DIRECTORY_SEPARATOR . "uploads" ) . DIRECTORY_SEPARATOR;
-$PHPIDSPath       = realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_TO_ROOT . "external" . DIRECTORY_SEPARATOR . "phpids" . DIRECTORY_SEPARATOR . dvwaPhpIdsVersionGet() . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR . "IDS" . DIRECTORY_SEPARATOR . "tmp" . DIRECTORY_SEPARATOR . "phpids_log.txt" );
 $PHPCONFIGPath       = realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_TO_ROOT . "config");
 
 
@@ -652,7 +620,6 @@ $DVWARecaptcha    = 'reCAPTCHA key: <span class="' . ( ( isset( $_DVWA[ 'recaptc
 
 $DVWAUploadsWrite = '[User: ' . get_current_user() . '] Writable folder ' . $PHPUploadPath . ': <span class="' . ( is_writable( $PHPUploadPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';                                     // File Upload
 $bakWritable = '[User: ' . get_current_user() . '] Writable folder ' . $PHPCONFIGPath . ': <span class="' . ( is_writable( $PHPCONFIGPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';   // config.php.bak check                                  // File Upload
-$DVWAPHPWrite     = '[User: ' . get_current_user() . '] Writable file ' . $PHPIDSPath . ': <span class="' . ( is_writable( $PHPIDSPath ) ? 'success">Yes' : 'failure">No' ) . '</span>';                                              // PHPIDS
 
 $DVWAOS           = 'Operating system: <em>' . ( strtoupper( substr (PHP_OS, 0, 3)) === 'WIN' ? 'Windows' : '*nix' ) . '</em>';
 $SERVER_NAME      = 'Web Server SERVER_NAME: <em>' . $_SERVER[ 'SERVER_NAME' ] . '</em>';                                                                                                          // CSRF
