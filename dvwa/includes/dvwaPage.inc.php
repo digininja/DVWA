@@ -279,6 +279,7 @@ function dvwaHtmlEcho( $pPage ) {
 		if (dvwaCurrentUser() == "admin") {
 			$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'authbypass', 'name' => 'Authorisation Bypass', 'url' => 'vulnerabilities/authbypass/' );
 		}
+		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'open_redirect', 'name' => 'Open HTTP Redirect', 'url' => 'vulnerabilities/open_redirect/' );
 	}
 
 	$menuBlocks[ 'meta' ] = array();
