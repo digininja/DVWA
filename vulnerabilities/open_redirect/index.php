@@ -12,8 +12,6 @@ $page[ 'help_button' ]   = 'open_redirect';
 $page[ 'source_button' ] = 'open_redirect';
 dvwaDatabaseConnect();
 
-$method            = 'GET';
-$vulnerabilityFile = '';
 switch( dvwaSecurityLevelGet() ) {
 	case 'low':
 		$link1 = "source/low.php?redirect=info.php?id=1";
@@ -38,22 +36,22 @@ $page[ 'body' ] .= "
 	<h1>Vulnerability: Open HTTP Redirect</h1>
 
 	<div class=\"vulnerable_code_area\">
-		<h2>Change Pages</h2>
+		<h2>Hacker History</h2>
 		<p>
-			Here are two redirects to get you started.
+			Here are two links to some famous hacker quotes, see if you can hack them.
 		</p>
 		<ul>
-			<li><a href='{$link1}'>Info 1</a></li>
-			<li><a href='{$link2}'>Info 2</a></li>
+			<li><a href='{$link1}'>Quote 1</a></li>
+			<li><a href='{$link2}'>Quote 2</a></li>
 		</ul>
 		{$html}
 	</div>
 
 	<h2>More Information</h2>
 	<ul>
-		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-community/attacks/Brute_force_attack' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://www.symantec.com/connect/articles/password-crackers-ensuring-security-your-password' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://www.sillychicken.co.nz/Security/how-to-brute-force-http-forms-in-windows.html' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html', "OWASP Unvalidated Redirects and Forwards Cheat Sheet" ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/11-Client-side_Testing/04-Testing_for_Client-side_URL_Redirect', "WSTG - Testing for Client-side URL Redirect") . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://cwe.mitre.org/data/definitions/601.html', "Mitre - CWE-601: URL Redirection to Untrusted Site ('Open Redirect')" ) . "</li>
 	</ul>
 </div>\n";
 

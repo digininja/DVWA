@@ -5,12 +5,17 @@ if (array_key_exists ("redirect", $_GET) && $_GET['redirect'] != "") {
 		header ("location: " . $_GET['redirect']);
 		exit;
 	} else {
+		http_response_code (500);
 		?>
-		You can only redirect to the info page.
+		<p>You can only redirect to the info page.</p>
 		<?php
 		exit;
 	}
 }
 
+http_response_code (500);
 ?>
-Missing redirect target.
+<p>Missing redirect target.</p>
+<?php
+exit;
+?>

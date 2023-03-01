@@ -5,5 +5,9 @@ if (array_key_exists ("redirect", $_GET) && $_GET['redirect'] != "") {
 	exit;
 }
 
+http_response_code (500);
 ?>
-Missing redirect target.
+<p>Missing redirect target.</p>
+<?php
+exit;
+?>
