@@ -81,7 +81,6 @@ $page[ 'body' ] .= "
 	{$DVWARecaptcha}<br />
 	<br />
 	{$DVWAUploadsWrite}<br />
-	{$DVWAPHPWrite}<br />
 	<br />
 	<br />
 	{$bakWritable}
