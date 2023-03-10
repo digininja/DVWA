@@ -47,6 +47,12 @@ if (array_key_exists ("id", $_GET) && array_key_exists ("security", $_GET)) {
 		case "javascript" :
 			$vuln = 'JavaScript';
 			break;
+		case "authbypass" :
+			$vuln = 'Authorisation Bypass';
+			break;
+		case "open_redirect" :
+			$vuln = 'Open HTTP Redirect';
+			break;
 		default:
 			$vuln = "Unknown Vulnerability";
 	}

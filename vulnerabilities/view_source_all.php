@@ -61,6 +61,12 @@ if (array_key_exists ("id", $_GET)) {
 		case "weak_id" :
 			$vuln = 'Weak Session IDs';
 			break;
+		case "authbypass" :
+			$vuln = 'Authorisation Bypass';
+			break;
+		case "open_redirect" :
+			$vuln = 'Open HTTP Redirect';
+			break;
 		default:
 			$vuln = "Unknown Vulnerability";
 	}
