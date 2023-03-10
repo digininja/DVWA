@@ -4,7 +4,7 @@ define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
 require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/Parsedown.php';
 
-dvwaPageStartup( array( 'phpids' ) );
+dvwaPageStartup( array( ) );
 
 $page = dvwaPageNewGrab();
 $page[ 'title' ]   = 'Instructions' . $page[ 'title_separator' ].$page[ 'title' ];
@@ -15,7 +15,6 @@ $docs = array(
 	'PDF'            => array( 'type' => 'html' ,'legend' => 'PDF Guide', 'file' => 'docs/pdf.html' ),
 	'changelog'      => array( 'type' => 'markdown', 'legend' => 'Change Log', 'file' => 'CHANGELOG.md' ),
 	'copying'        => array( 'type' => 'markdown', 'legend' => 'Copying', 'file' => 'COPYING.txt' ),
-	'PHPIDS-license' => array( 'type' => 'markdown', 'legend' => 'PHPIDS License', 'file' => DVWA_WEB_PAGE_TO_PHPIDS . 'LICENSE' ),
 );
 
 $selectedDocId = isset( $_GET[ 'doc' ] ) ? $_GET[ 'doc' ] : '';

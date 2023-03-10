@@ -1,2 +1,0 @@
-Core
-DESCRIPTION: Core features that are always available.
