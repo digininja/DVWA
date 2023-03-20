@@ -42,11 +42,12 @@ else {
 
 $maxlifetime = 86400;
 $secure = false;
+$domain = $domain = ($_SERVER['HTTP_HOST'] == 'localhost') ? false : $_SERVER['HTTP_HOST'];
 
 session_set_cookie_params([
 	'lifetime' => $maxlifetime,
 	'path' => '/',
-	'domain' => $_SERVER['HTTP_HOST'],
+	'domain' => $domain,
 	'secure' => $secure,
 	'httponly' => $httponly,
 	'samesite' => $samesite
