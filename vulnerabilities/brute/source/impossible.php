@@ -70,7 +70,7 @@ if( isset( $_POST[ 'Login' ] ) && isset ($_POST['username']) && isset ($_POST['p
 		// Had the account been locked out since last login?
 		if( $failed_login >= $total_failed_login ) {
 			$html .= "<p><em>Warning</em>: Someone might of been brute forcing your account.</p>";
-			$html .= "<p>Number of login attempts: <em>{$failed_login}</em>.<br />Last login attempt was at: <em>${last_login}</em>.</p>";
+			$html .= "<p>Number of login attempts: <em>{$failed_login}</em>.<br />Last login attempt was at: <em>{$last_login}</em>.</p>";
 		}
 
 		// Reset bad login count
