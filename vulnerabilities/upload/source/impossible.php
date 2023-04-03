@@ -39,7 +39,7 @@ if( isset( $_POST[ 'Upload' ] ) ) {
 		// Can we move the file to the web root from the temp folder?
 		if( rename( $temp_file, ( getcwd() . DIRECTORY_SEPARATOR . $target_path . $target_file ) ) ) {
 			// Yes!
-			$html .= "<pre><a href='${target_path}${target_file}'>${target_file}</a> succesfully uploaded!</pre>";
+			$html .= "<pre><a href='{$target_path}{$target_file}'>{$target_file}</a> succesfully uploaded!</pre>";
 		}
 		else {
 			// No
