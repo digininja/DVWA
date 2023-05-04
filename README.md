@@ -42,6 +42,7 @@ This file is available in multiple languages:
 - Chinese: [简体中文](README.zh.md)
 - French: [Français](README.fr.md)
 - Persian: [فارسی](README.fa.md)
+- Portuguese: [Português](README.pt.md)
 - Spanish: [Español](README.es.md)
 - Turkish: [Türkçe](README.tr.md)
 
