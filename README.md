@@ -156,25 +156,34 @@ $_DVWA[ 'default_security_level' ] = 'low';
 
 In this state, you can access all the features without needing to log in and set any cookies.
 
-### Other Configuration
-
-Depending on your Operating System, as well as version of PHP, you may wish to alter the default configuration. The location of the files will be different on a per-machine basis.
-
-**Folder Permissions**:
+### Folder Permissions
 
 * `./hackable/uploads/` - Needs to be writeable by the web service (for File Upload).
-* `./external/phpids/0.6/lib/IDS/tmp/phpids_log.txt` - Needs to be writable by the web service (if you wish to use PHPIDS).
 
-**PHP configuration**:
+### PHP configuration
+
+On Linux systems, likely found in `/etc/php/x.x/fpm/php.ini` or `/etc/php/x.x/apache2/php.ini`.
+
 * To allow  Remote File Inclusions (RFI):
     * `allow_url_include = on` [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
     * `allow_url_fopen = on` [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
-* To optionally reduce verbosity by hiding PHP warning messages:
-    * `display_errors = off` [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
 
-**File: `config/config.inc.php`**:
+* To make sure PHP shows all error messages:
+    * `display_errors = on` [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
+    * `display_startup_errors = on` [[display_startup_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-startup-errors)]
 
-* `$_DVWA[ 'recaptcha_public_key' ]` & `$_DVWA[ 'recaptcha_private_key' ]` - These values need to be generated from: https://www.google.com/recaptcha/admin/create
+Make sure you restart the php service or Apache after making the changes.
+
+### reCAPTCHA
+
+This is only required for the "Insecure CAPTCHA" lab, if you aren't playing with that lab, you can ignore this section.
+
+Generated a pair of API keys from <https://www.google.com/recaptcha/admin/create>.
+
+These then go in the following sections of `./config/config.inc.php`:
+
+* `$_DVWA[ 'recaptcha_public_key' ]` 
+* `$_DVWA[ 'recaptcha_private_key' ]`
 
 ### Default Credentials
 
@@ -204,6 +213,16 @@ Please ensure you are using aufs due to previous MySQL issues. Run `docker info`
 ## Troubleshooting
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
+
+### Log files
+
+On Linux systems Apache generates two log files by default, `access.log` and `error.log` and on Debian based system these are usually found in `/var/log/apache2/`.
+
+When submitting error reports, problems, anything like that, please include at least the last five lines from each of these files. On Debian based systems you can get these like this:
+
+```
+tail -n 5 /var/log/apache2/access.log /var/log/apache2/error.log
+```
 
 ### I browsed to the site and got a 404
 
