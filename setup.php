@@ -63,10 +63,9 @@ $page[ 'body' ] .= "
 	<br />
 	PHP version: <em>" . phpversion() . "</em><br />
 	{$phpDisplayErrors}<br />
-	{$phpSafeMode}<br/ >
+	{$phpDisplayStartupErrors}<br />
 	{$phpURLInclude}<br/ >
 	{$phpURLFopen}<br />
-	{$phpMagicQuotes}<br />
 	{$phpGD}<br />
 	{$phpMySQL}<br />
 	{$phpPDO}<br />
@@ -81,9 +80,8 @@ $page[ 'body' ] .= "
 	{$DVWARecaptcha}<br />
 	<br />
 	{$DVWAUploadsWrite}<br />
-	<br />
-	<br />
 	{$bakWritable}
+	<br />
 	<br />
 	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
 	<br />
