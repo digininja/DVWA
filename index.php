@@ -36,7 +36,7 @@ $page[ 'body' ] .= "
 	<p>DVWA aims to cover the most commonly seen vulnerabilities found in today's web applications. However there are plenty of other issues with web applications. Should you wish to explore any additional attack vectors, or want more difficult challenges, you may wish to look into the following other projects:</p>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'https://github.com/webpwnized/mutillidae', 'Mutillidae') . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-broken-web-applications/migrated_content', 'OWASP Vulnerable Web Applications Directory') . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-vulnerable-web-applications-directory', 'OWASP Vulnerable Web Applications Directory') . "</li>
 	</ul>
 	<hr />
 	<br />
