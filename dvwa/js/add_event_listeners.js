@@ -17,6 +17,7 @@ function addEventListeners() {
 		help_button.addEventListener("click", function() {
 			var url=help_button.dataset.helpUrl;
 			popUp (url);
+			console.log("hello world");
 		});
 	}
 }
