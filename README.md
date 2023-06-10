@@ -78,15 +78,54 @@ XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows 
 
 This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation process for Windows but it should be similar for other OSs.
 
-### Config File
+### Docker
 
-DVWA ships with a dummy copy of its config file which you will need to copy into place and then make the appropriate changes. On Linux, assuming you are in the DVWA directory, this can be done as follows:
+It is possible to run DVWA with containers.
 
-`cp config/config.inc.php.dist config/config.inc.php`
+Prerequisites: Docker and Docker Compose.
 
-On Windows, this can be a bit harder if you are hiding file extensions, if you are unsure about this, this blog post explains more about it:
+- If you are using Docker Desktop, both of these should be already installed.
+- If you prefer Docker Engine on Linux, make sure to follow their [installation guide](https://docs.docker.com/engine/install/#server).
 
-[How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
+**We provide support for the latest Docker release as shown above.**
+If you are using Linux and the Docker package that came with your package manager, it will probably work too, but support will only be best-effort.
+
+Upgrading Docker from the package manager version to upstream requires that you uninstall the old versions as seen in their manuals for [Ubuntu](https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions), [Fedora](https://docs.docker.com/engine/install/fedora/#uninstall-old-versions) and others.
+Your Docker data (containers, images, volumes, etc.) should not be affected, but in case you do run into a problem, make sure to [tell Docker](https://www.docker.com/support) and use search engines in the mean time.
+
+Then, to get started:
+
+1. Run `docker version` and `docker compose version` to see if you have Docker and Docker Compose properly installed. You should be able to see the version of Docker in the output.
+
+    For example:
+
+    ```text
+    >>> docker version
+    Client:
+     [...]
+     Version:           23.0.5
+     [...]
+
+    Server: Docker Desktop 4.19.0 (106363)
+     Engine:
+      [...]
+      Version:          23.0.5
+      [...]
+
+    >>> docker compose version
+    Docker Compose version v2.17.3
+    ```
+
+    If you don't see anything or get a command not found error, follow the prerequisites to setup Docker and Docker Compose.
+
+2. Clone or download this repository and extract (see [Download](#download)).
+3. Open a terminal of your choice and change its working directory to `DVWA`.
+4. `docker compose up -d`.
+
+DVWA is now available at `http://localhost:4280`.
+
+**Notice that for running DVWA in containers, the web server is listening on port 4280 instead of the usual port of 80.**
+For more information on this decision, see [I want to run DVWA on a different port](#i-want-to-run-dvwa-on-a-different-port).
 
 ### Linux Packages
 
@@ -107,6 +146,18 @@ apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libap
 ```
 
 The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
+
+## Configurations
+
+### Config File
+
+DVWA ships with a dummy copy of its config file which you will need to copy into place and then make the appropriate changes. On Linux, assuming you are in the DVWA directory, this can be done as follows:
+
+`cp config/config.inc.php.dist config/config.inc.php`
+
+On Windows, this can be a bit harder if you are hiding file extensions, if you are unsure about this, this blog post explains more about it:
+
+[How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
 
 ### Database Setup
 
@@ -182,7 +233,7 @@ Generated a pair of API keys from <https://www.google.com/recaptcha/admin/create
 
 These then go in the following sections of `./config/config.inc.php`:
 
-* `$_DVWA[ 'recaptcha_public_key' ]` 
+* `$_DVWA[ 'recaptcha_public_key' ]`
 * `$_DVWA[ 'recaptcha_private_key' ]`
 
 ### Default Credentials
@@ -199,20 +250,67 @@ _Note: This will be different if you installed DVWA into a different directory._
 
 - - -
 
-## Docker Container
-
-_This section of the readme was added by @thegrims, for support on Docker issues, please contact them or @opsxcq who is the maintainer of the Docker image and repo. Any issue tickets will probably be pointed at this and closed._
-
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
-
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
-
-- - -
-
 ## Troubleshooting
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
+
+### Containers
+
+#### I want to access the logs
+
+If you are using Docker Desktop, logs can be accessed from the graphical application.
+Some minor details may change with newer versions, but the access method should be the same.
+
+![Overview of DVWA compose](./docs/graphics/docker/overview.png)
+![Viewing DVWA logs](docs/graphics/docker/detail.png)
+
+Logs can also be accessed from the terminal.
+
+1. Open a terminal and change its working directory to DVWA
+2. Show the merged logs
+
+    ```shell
+    docker compose logs
+    ```
+
+   In case you want to export the logs to a file, e.g. `dvwa.log`
+
+   ```shell
+   docker compose logs >dvwa.log
+   ```
+
+#### I want to run DVWA on a different port
+
+We don't use port 80 by default for a few reasons:
+
+- Some users might already be running something on port 80.
+- Some users might be using a rootless container engine (like Podman), and 80 is a privileged port (< 1024). Additional configuration (e.g. setting `net.ipv4.ip_unprivileged_port_start`) is required, but you will have to research on your own.
+
+You can expose DVWA on a different port by changing the port binding in the `compose.yml` file.
+For example, you can change
+
+```yml
+ports:
+  - 4280:80
+```
+
+to
+
+```yml
+ports:
+  - 8806:80
+```
+
+DVWA is now accessible at `http://localhost:8806`.
+
+#### DVWA auto starts when Docker runs
+
+The included [`compose.yml`](./compose.yml) file automatically runs DVWA and its database when Docker starts.
+
+To disable this, you can delete or comment out the `restart: unless-stopped` lines in the [`compose.yml`](./compose.yml) file.
+
+If you want to disable this behavior temporarily, you can run `docker compose stop`, or use Docker Desktop, find `dvwa` and click Stop.
+Additionally, you can delete the containers, or run `docker compose down`.
 
 ### Log files
 
