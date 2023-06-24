@@ -1,0 +1,6 @@
+**/.git
+**/.gitignore
+**/.github
+**/Dockerfile*
+**/.dockerignore
+**/compose*
