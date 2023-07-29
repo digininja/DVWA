@@ -41,8 +41,8 @@ Este arquivo está disponível em vários idiomas.
 - Chinês: [简体中文](README.zh.md)
 - Espanhol: [Español](README.es.md)
 - Francês: [Français](README.fr.md)
+- Inglês: [English](README.md)
 - Persa: [فارسی](README.fa.md)
-- Português: [Português] (README.pt.md)
 - Turco: [Türkçe](README.tr.md)
 
 Se você deseja contribuir com uma tradução, por favor envie uma solicitação de pull. No entanto, isso não significa apenas executar a tradução pelo Google Translate e enviar, pois essas serão rejeitadas. Envie a versão traduzida adicionando um novo arquivo 'README.xx.md' onde xx é o código de duas letras do idioma desejado (com base no [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
