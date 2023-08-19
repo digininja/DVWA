@@ -82,6 +82,22 @@ This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation pr
 
 It is possible to run DVWA with containers.
 
+#### Automated Build
+
+Thanks to [JGillam](https://github.com/JGillam), every commit now causes a docker image to be build ready to be pulled down from GitHub.
+
+You can pull the latest version by doing this:
+
+```
+docker pull ghcr.io/digininja/dvwa:latest
+```
+
+And for more information on what you are getting, see [here](https://github.com/digininja/DVWA/pkgs/container/dvwa).
+
+#### Manual Build
+
+If you would rather build the package manually, [hoang-himself](https://github.com/hoang-himself) did all the hard work setting all the docker stuff up to hopefully make it as easy as possible for you.
+
 Prerequisites: Docker and Docker Compose.
 
 - If you are using Docker Desktop, both of these should be already installed.
