@@ -11,3 +11,7 @@ RUN apt-get update \
 
 COPY --chown=www-data:www-data . .
 COPY --chown=www-data:www-data config/config.inc.php.dist config/config.inc.php
+
+LABEL org.opencontainers.image.source=https://github.com/digininja/DVWA
+LABEL org.opencontainers.image.description="DVWA pre-built container."
+LABEL org.opencontainers.image.licenses="gpl-3.0"
