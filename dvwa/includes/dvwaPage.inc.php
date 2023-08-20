@@ -484,23 +484,13 @@ function dvwaButtonSourceHtmlGet( $pId ) {
 
 if( $DBMS == 'MySQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
-	$DBMS_errorFunc = 'mysqli_error()';
 }
 elseif( $DBMS == 'PGSQL' ) {
 	$DBMS = htmlspecialchars(strip_tags( $DBMS ));
-	$DBMS_errorFunc = 'pg_last_error()';
 }
 else {
 	$DBMS = "No DBMS selected.";
-	$DBMS_errorFunc = '';
 }
-
-//$DBMS_connError = '
-//	<div align="center">
-//		<img src="' . DVWA_WEB_PAGE_TO_ROOT . 'dvwa/images/logo.png" />
-//		<pre>Unable to connect to the database.<br />' . $DBMS_errorFunc . '<br /><br /></pre>
-//		Click <a href="' . DVWA_WEB_PAGE_TO_ROOT . 'setup.php">here</a> to setup the database.
-//	</div>';
 
 function dvwaDatabaseConnect() {
 	global $_DVWA;
@@ -514,7 +504,7 @@ function dvwaDatabaseConnect() {
 		|| !@((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $_DVWA[ 'db_database' ])) ) {
 			//die( $DBMS_connError );
 			dvwaLogout();
-			dvwaMessagePush( 'Unable to connect to the database.<br />' . $DBMS_errorFunc );
+			dvwaMessagePush( 'Unable to connect to the database.<br />' . mysqli_error($GLOBALS["___mysqli_ston"]));
 			dvwaRedirect( DVWA_WEB_PAGE_TO_ROOT . 'setup.php' );
 		}
 		// MySQL PDO Prepared Statements (for impossible levels)
