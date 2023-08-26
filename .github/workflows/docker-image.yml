@@ -27,6 +27,6 @@ jobs:
         [ "$VERSION" == "master" ] && VERSION=latest
         echo IMAGE_ID=$IMAGE_ID
         echo VERSION=$VERSION
-        docker build . --tag dvwa
-        docker tag dvwa $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION
+        docker image build --tag dvwa .
+        docker image tag dvwa $IMAGE_ID:$VERSION
+        docker image push $IMAGE_ID:$VERSION
