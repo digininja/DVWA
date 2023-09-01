@@ -80,23 +80,11 @@ This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation pr
 
 ### Docker
 
-It is possible to run DVWA with containers.
+Thanks to [hoang-himself](https://github.com/hoang-himself) and [JGillam](https://github.com/JGillam), every commit to the `master` branch causes a Docker image to be built and ready to be pulled down from GitHub Container Registry.
 
-#### Automated Build
+For more information on what you are getting, you can browse [the prebuilt Docker images](https://github.com/digininja/DVWA/pkgs/container/dvwa).
 
-Thanks to [JGillam](https://github.com/JGillam), every commit now causes a docker image to be build ready to be pulled down from GitHub.
-
-You can pull the latest version by doing this:
-
-```
-docker pull ghcr.io/digininja/dvwa:latest
-```
-
-And for more information on what you are getting, see [here](https://github.com/digininja/DVWA/pkgs/container/dvwa).
-
-#### Manual Build
-
-If you would rather build the package manually, [hoang-himself](https://github.com/hoang-himself) did all the hard work setting all the docker stuff up to hopefully make it as easy as possible for you.
+#### Getting Started
 
 Prerequisites: Docker and Docker Compose.
 
@@ -111,7 +99,7 @@ Your Docker data (containers, images, volumes, etc.) should not be affected, but
 
 Then, to get started:
 
-1. Run `docker version` and `docker compose version` to see if you have Docker and Docker Compose properly installed. You should be able to see the version of Docker in the output.
+1. Run `docker version` and `docker compose version` to see if you have Docker and Docker Compose properly installed. You should be able to see their versions in the output.
 
     For example:
 
@@ -135,13 +123,22 @@ Then, to get started:
     If you don't see anything or get a command not found error, follow the prerequisites to setup Docker and Docker Compose.
 
 2. Clone or download this repository and extract (see [Download](#download)).
-3. Open a terminal of your choice and change its working directory to `DVWA`.
-4. `docker compose up -d`.
+3. Open a terminal of your choice and change its working directory into this folder (`DVWA`).
+4. Run `docker compose up -d`.
 
 DVWA is now available at `http://localhost:4280`.
 
 **Notice that for running DVWA in containers, the web server is listening on port 4280 instead of the usual port of 80.**
 For more information on this decision, see [I want to run DVWA on a different port](#i-want-to-run-dvwa-on-a-different-port).
+
+#### Local Build
+
+If you made local changes and want to build the project from local, go to `compose.yml` and change `pull_policy: always` to `pull_policy: build`.
+
+Running `docker compose up -d` should trigger Docker to build an image from local regardless of what is available in the registry.
+
+See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy
+).
 
 ### Linux Packages
 

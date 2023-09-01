@@ -1,20 +1,16 @@
 name: Docker Image CI
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [master]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v1
       with:
@@ -29,8 +25,12 @@ jobs:
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         [ "$VERSION" == "master" ] && VERSION=latest
+        COMMIT=$(echo "${{ github.sha }}" | cut -c 1-7)
         echo IMAGE_ID=$IMAGE_ID
         echo VERSION=$VERSION
-        docker build . --tag dvwa
-        docker tag dvwa $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION
+        echo COMMIT=$COMMIT
+        docker image build --tag dvwa .
+        docker image tag dvwa $IMAGE_ID:$VERSION
+        docker image tag dvwa $IMAGE_ID:$COMMIT
+        docker image push $IMAGE_ID:$VERSION
+        docker image push $IMAGE_ID:$COMMIT

@@ -1,0 +1,31 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+
+# Documents
+*.pdf diff=astextplain
+*.PDF diff=astextplain
+*.md text diff=markdown
+
+# Graphics
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+
+# Archives
+*.db binary
+
+# Text files where line endings should be preserved
+*.patch -text
+
+#
+# Exclude files from exporting
+#
+
+.gitattributes export-ignore
+.gitignore export-ignore
+.gitkeep export-ignore
