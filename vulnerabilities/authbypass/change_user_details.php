@@ -10,6 +10,7 @@ On impossible only the admin is allowed to retrieve the data.
 
 if (dvwaSecurityLevelGet() == "impossible" && dvwaCurrentUser() != "admin") {
 	print json_encode (array ("result" => "fail", "error" => "Access denied"));
+	exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] != "POST") {
