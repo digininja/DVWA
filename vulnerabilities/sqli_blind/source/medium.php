@@ -11,7 +11,12 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 
 			// Check database
 			$query  = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
-			$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ); // Removed 'or die' to suppress mysql errors
+			try {
+				$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ); // Removed 'or die' to suppress mysql errors
+			} catch (Exception $e) {
+				print "There was an error.";
+				exit;
+			}
 
 			$exists = false;
 			if ($result !== false) {

@@ -9,7 +9,11 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 		case MYSQL:
 			// Check database
 			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;";
-			$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ); // Removed 'or die' to suppress mysql errors
+			try {
+				$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ); // Removed 'or die' to suppress mysql errors
+			} catch (Exception $e) {
+				$result = false;
+			}
 
 			$exists = false;
 			if ($result !== false) {
