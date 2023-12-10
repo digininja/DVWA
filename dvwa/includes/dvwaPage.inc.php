@@ -113,7 +113,12 @@ function dvwaLogout() {
 
 
 function dvwaPageReload() {
-	dvwaRedirect( $_SERVER[ 'PHP_SELF' ] );
+	if  ( array_key_exists( 'HTTP_X_FORWARDED_PREFIX' , $_SERVER )) {
+		dvwaRedirect( $_SERVER[ 'HTTP_X_FORWARDED_PREFIX' ] . $_SERVER[ 'PHP_SELF' ] );
+	}
+	else {
+		dvwaRedirect( $_SERVER[ 'PHP_SELF' ] );
+	}
 }
 
 function dvwaCurrentUser() {
