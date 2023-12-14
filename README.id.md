@@ -1,4 +1,4 @@
-# DAMN VULNERABLE WEB APPLICATION / APLIKASI WEB YANG RENTAN TERHADAP ANCAMAAN 
+# DAMN VULNERABLE WEB APPLICATION / APLIKASI WEB YANG RENTAN TERHADAP ANCAMAN
 
 Damn Vulnerable Web Application (DVWA) atau yang dapat diartikan sebagai Aplikasi Web Yang Rentan Terhadap Ancaman merupakan aplikasi web berbasis PHP/MySQL yang sangat rentan. 
 Tujuan utamanya adalah menjadi alat bantu bagi para profesional keamanan untuk menguji keterampilan dan alat mereka dalam lingkungan hukum. 
