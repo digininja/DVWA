@@ -161,5 +161,5 @@ echo -e "Username: \033[93madmin\033[0m"
 echo -e "Password: \033[93mpassword\033[0m"
 
 echo
-final_message=$(get_language_message "\033[91mWith ♡ by Iamcarron" "\033[91mCon ♡ by Iamcarron")
+final_message=$(get_language_message "\033[91mWith ♡ by IamCarron" "\033[91mCon ♡ by IamCarron")
 echo -e "$final_message"
