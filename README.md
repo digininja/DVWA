@@ -173,18 +173,6 @@ On Windows, this can be a bit harder if you are hiding file extensions, if you a
 
 [How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
 
-### Config with Environment variables
-
-Instead of modifing the config file you can also set most of the settings using environment variables. In a docker setup this allows to change the configuration without creating a new docker image. You can find the variables in the `config/config.inc.php.dist` file.
-
-If you want to set the default security level to "low", just add the line to the docker-compose.yml:
-
-```yml
-environment:
-  - DB_SERVER=db
-  - DEFAULT_SECURITY_LEVEL=low
-```
-
 ### Database Setup
 
 To set up the database, simply click on the `Setup DVWA` button in the main menu, then click on the `Create / Reset Database` button. This will create / reset the database for you with some data in.
