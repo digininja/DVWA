@@ -88,7 +88,7 @@ sleep 2
 dvwa_config_message=$(get_language_message "\e[96mConfiguring DVWA...\e[0m" "\e[96mConfigurando DVWA...\e[0m")
 echo -e "$dvwa_config_message"
 cp /var/www/html/DVWA/config/config.inc.php.dist /var/www/html/DVWA/config/config.inc.php
-sed -i "s/\(\$_DVWA\[ 'db_password' \] = '\).*\('\)/\1abc123\2/" /var/www/html/DVWA/config/config.inc.php
+sed -i "s/\(\$_DVWA\[ 'db_password' \] = getenv('DVWA_DB_PASSWORD') ?: '\).*\('\)/\1abc123\2/" /var/www/html/DVWA/config/config.inc.php
 sleep 2
 
 permissions_config_message=$(get_language_message "\e[96mConfiguring permissions...\e[0m" "\e[96mConfigurando permisos...\e[0m")
