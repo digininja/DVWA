@@ -79,7 +79,7 @@ check_program php-gd
 check_program libapache2-mod-php
 check_program git
 
-# Downaload the repo
+# Download the repo
 download_message=$(get_language_message "\e[96mDownloading DVWA from GitHub...\e[0m" "\e[96mDescargando DVWA desde GitHub...\e[0m")
 echo -e "$download_message"
 git clone https://github.com/digininja/DVWA.git /var/www/html/DVWA
