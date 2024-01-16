@@ -41,7 +41,7 @@ echo
 # Function to display instructions in English
 show_english_instructions() {
 	echo -e "\e[96mUpdating repositories...\e[0m"
-	apt update
+	apt update > /dev/null 2>&1
 	clear
     
 	echo -e "\e[96mVerifying and installing necessary dependencies...\e[0m"
