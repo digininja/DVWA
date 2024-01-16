@@ -14,7 +14,7 @@ get_language_message() {
 
 # Verificar si el usuario es root
 if [ "$EUID" -ne 0 ]; then
-    error_message=$(get_language_message "\e[91mEste script debe ejecutarse como usuario root.\e[0m" "\e[91mThis script must be run by the root user.\e[0m")
+    error_message=$(get_language_message "\e[91mThis script must be run by the root user.\e[0m" "\e[91mEste script debe ejecutarse como usuario root.\e[0m")
     echo -e "$error_message"
     exit 1
 fi
@@ -22,11 +22,11 @@ fi
 # Función para verificar la existencia de un programa
 check_program() {
     if ! command -v "$1" &>/dev/null; then
-        message=$(get_language_message "\033[91m$1 KO." "\033[91m$1 KO")
+        message=$(get_language_message "\033[91m$1 is not installed. Installing it now..." "\033[91m$1 no está instalado. Instalándolo ahora...")
         echo -e >&2 "$message"
         apt install -y "$1"
     else
-        success_message=$(get_language_message "\033[92m$1 OK.\033[0m" "\033[92m$1 OK.\033[0m")
+        success_message=$(get_language_message "\033[92m$1 is installed!\033[0m" "\033[92m$1 !Está instalado!\033[0m")
         echo -e "$success_message"
     fi
 }
@@ -56,7 +56,7 @@ echo -e "\033[96m\033[1m
 \033[0m"
 
 # Resto del script
-welcome_message=$(get_language_message "\033[96mWelcome to the DVWA installer!\033[0m" "\033[96mBienvenido al instalador de DVWA!\033[0m")
+welcome_message=$(get_language_message "\033[96mWelcome to the DVWA installer!\033[0m" "\033[96m¡Bienvenido al instalador de DVWA!\033[0m")
 echo -e "$welcome_message"
 
 echo
@@ -161,4 +161,5 @@ echo -e "Username: \033[93madmin\033[0m"
 echo -e "Password: \033[93mpassword\033[0m"
 
 echo
-echo -e "\033[91mCon ♡ by Iamcarron"
+final_message=$(get_language_message "\033[91mWith ♡ by Iamcarron" "\033[91mCon ♡ by Iamcarron")
+echo -e "$final_message"
