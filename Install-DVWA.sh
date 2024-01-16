@@ -42,7 +42,7 @@ echo -e "\033[96m\033[1m
 ⣛⣛⠛⠛⠛⣛⡑⡿⢻⢻⠲⢆⢹⣿⣿⣿⣿⣿⣿⠿⠿⠟⡴⢻⢋⠻⣟⠈⠿⠿
 ⣿⡿⡿⣿⢷⢤⠄⡔⡘⣃⢃⢰⡦⡤⡤⢤⢤⢤⠒⠞⠳⢸⠃⡆⢸⠄⠟⠸⠛⢿
 ⡟⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸
-\033[0m""
+\033[0m"
 
 # Resto del script
 welcome_message=$(get_language_message "\033[96mWelcome to the DVWA installer!\033[0m" "\033[96mBienvenido al instalador de DVWA!\033[0m")
