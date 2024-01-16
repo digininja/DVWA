@@ -24,7 +24,11 @@ check_program() {
         apt install -y "$1"
     }
 }
-
+# Función para prompt de contraseña de MySQL root
+get_mysql_root_password() {
+    read -s -p "$(get_language_message "Enter MySQL root password: " "Ingrese la contraseña de root de MySQL: ")" mysql_root_password
+    echo "$mysql_root_password"
+}
 # Arte ASCII
 echo -e "\033[96m\033[1m
 ⠄⠄⠄⠄⠄⠄⠄⢀⣠⣶⣾⣿⣶⣦⣤⣀⠄⢀⣀⣤⣤⣤⣤⣄⠄⠄⠄⠄⠄⠄
@@ -77,12 +81,19 @@ echo -e "$mysql_start_message"
 systemctl start mysql.service
 sleep 2
 
-db_config_message=$(get_language_message "\e[96mConfiguring the database for DVWA...\e[0m" "\e[96mConfigurando la base de datos para DVWA...\e[0m")
-echo -e "$db_config_message"
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS dvwa;"
-mysql -u root -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'abc123';"
-mysql -u root -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';"
-mysql -u root -e "FLUSH PRIVILEGES;"
+# Prompt del usuario para la contraseña de MySQL root
+mysql_root_password=$(get_mysql_root_password)
+
+# Ejecutar comandos MySQL
+mysql -u root -p$mysql_root_password -e "CREATE DATABASE IF NOT EXISTS dvwa;"
+mysql -u root -p$mysql_root_password -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'abc123';"
+mysql -u root -p$mysql_root_password -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';"
+mysql -u root -p$mysql_root_password -e "FLUSH PRIVILEGES;"
+
+# Mensaje de éxito
+success_message=$(get_language_message "\e[92mMySQL commands executed successfully.\e[0m" "\e[92mComandos MySQL ejecutados correctamente.\e[0m")
+echo -e "$success_message"
+
 sleep 2
 
 dvwa_config_message=$(get_language_message "\e[96mConfiguring DVWA...\e[0m" "\e[96mConfigurando DVWA...\e[0m")
