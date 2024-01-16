@@ -5,7 +5,7 @@ lang_prefix="${LANG:0:2}"
 
 # Función para verificar el idioma y mostrar el mensaje correspondiente
 get_language_message() {
-    if [[ $lang_prefix == "es" ]]; then
+    if [[ $lang_prefix -eq "es" ]]; then
         echo -e "$1"
     else
         echo -e "$2"
@@ -22,11 +22,11 @@ fi
 # Función para verificar la existencia de un programa
 check_program() {
     if ! command -v "$1" &>/dev/null; then
-        message=$(get_language_message "\033[91m$1 no está instalado. Instalándolo ahora..." "\033[91m$1 is not installed. Installing it now...")
+        message=$(get_language_message "\033[91m$1 KO." "\033[91m$1 KO")
         echo -e >&2 "$message"
         apt install -y "$1"
     else
-        success_message=$(get_language_message "\033[92m$1 está instalado.\033[0m" "\033[92m$1 is installed.\033[0m")
+        success_message=$(get_language_message "\033[92m$1 OK.\033[0m" "\033[92m$1 OK.\033[0m")
         echo -e "$success_message"
     fi
 }
