@@ -120,4 +120,10 @@ success_message=$(get_language_message "\e[92mDVWA has been installed successful
 echo -e "$success_message"
 
 credentials_after_setup_message=$(get_language_message "\e[92mCredentials after setup:\e[0m" "\e[92mCredenciales después de la configuración:\e[0m")
-echo -e "$credentials
+echo -e "$credentials_after_setup_message"
+echo -e "Username: \033[93madmin\033[0m"
+echo -e "Password: \033[93mpassword\033[0m"
+
+echo
+echo
+echo -e "\033[91mCon ♡ by Iamcarron"
