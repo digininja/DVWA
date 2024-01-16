@@ -1,5 +1,4 @@
 #!/bin/bash
-clear
 
 # Verify if the user is root
 if [ "$EUID" -ne 0 ]; then
@@ -11,7 +10,7 @@ fi
 check_program() {
     command -v "$1" >/dev/null 2>&1 || {
         echo -e >&2 "\033[91m$1 is not installed. Installing it now..."
-        apt install -y "$1" > /dev/null 2>&1
+        apt install -y "$1"
     }
 }
 
@@ -41,8 +40,8 @@ echo
 # Function to display instructions in English
 show_english_instructions() {
 	echo -e "\e[96mUpdating repositories...\e[0m"
-	apt update > /dev/null 2>&1
-	clear
+	apt update
+	
     
 	echo -e "\e[96mVerifying and installing necessary dependencies...\e[0m"
     
@@ -54,18 +53,16 @@ show_english_instructions() {
     check_program php-gd
     check_program libapache2-mod-php
     check_program git
-    sleep 2
-	clear
     
 	echo -e "\e[96mDownloading DVWA from GitHub...\e[0m"
-    git clone https://github.com/ethicalhack3r/DVWA.git /var/www/html/DVWA
+    git clone https://github.com/digininja/DVWA.git /var/www/html/DVWA
 	sleep 2
-	clear
+	
     
 	echo -e "\e[96mStarting MySQL...\e[0m"
     systemctl start mysql.service
 	sleep 2
-	clear
+	
     
 	echo -e "\e[96mConfiguring the database for DVWA...\e[0m"
     mysql -u root -e "CREATE DATABASE IF NOT EXISTS dvwa;"
@@ -114,7 +111,7 @@ show_spanish_instructions() {
 	# Mensajes informativos con formato en color para resaltar
 	echo -e "\e[96mActualizando repositorios...\e[0m"
 	apt update
-	clear
+	
 
 	echo -e "\e[96mVerificando e instalando dependencias necesarias...\e[0m"
 
@@ -128,17 +125,17 @@ show_spanish_instructions() {
 	check_program libapache2-mod-php
 	check_program git
 	sleep 2
-	clear
+	
 
 	echo -e "\e[96mDescargando DVWA desde GitHub...\e[0m"
 	git clone https://github.com/ethicalhack3r/DVWA.git /var/www/html/DVWA
 	sleep 2
-	clear
+	
 
 	echo -e "\e[96mIniciando MySQL...\e[0m"
 	systemctl start mysql.service
 	sleep 2
-	clear
+	
 
 	echo -e "\e[96mConfigurando la base de datos para DVWA...\e[0m"
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS dvwa;"
