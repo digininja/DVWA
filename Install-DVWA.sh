@@ -31,18 +31,34 @@ check_program() {
     fi
 }
 
-# MySQL root password prompt function
-get_mysql_root_password() {
-    read -s -p "$(get_language_message "Enter MySQL root password (press Enter for no password): " "Ingrese la contraseña de root de MySQL (presione Enter para ninguna contraseña): ")" mysql_root_password
+run_mysql_commands() {
+    local mysql_user
+    local mysql_password
 
-    # Verificar si la contraseña está vacía
-    if [ -z "$mysql_root_password" ]; then
-        echo -e "\n$(get_language_message "No password provided." "No se proporcionó contraseña.")"
+    read -p "$(get_language_message "\e[96mEnter MySQL user:\e[0m " "\e[96mIngrese el usuario de MySQL:\e[0m ")" mysql_user
+    read -s -p "$(get_language_message "\e[96mEnter MySQL password (press Enter for no password):\e[96m " "\e[96mIngrese la contraseña de MySQL (presiona Enter si no hay contraseña):\e[0m ")" mysql_password
+    echo -e "\n$(get_language_message "\e[96mCredentials provided.\e[0m" "\e[96mCredenciales proporcionadas.\e[0m")"
+
+    # Check if a password was provided
+    if [ -n "$mysql_password" ]; then
+        # Execute MySQL commands with password
+        mysql -u "$mysql_user" -p"$mysql_password" -e "CREATE DATABASE IF NOT EXISTS dvwa;" &>/dev/null &&
+        mysql -u "$mysql_user" -p"$mysql_password" -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'p@ssw0rd';" &>/dev/null &&
+        mysql -u "$mysql_user" -p"$mysql_password" -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';" &>/dev/null &&
+        mysql -u "$mysql_user" -p"$mysql_password" -e "FLUSH PRIVILEGES;" &>/dev/null
     else
-        echo -e "\n$(get_language_message "Password provided." "Contraseña proporcionada.")"
+        # Execute MySQL commands without password
+        mysql -u "$mysql_user" -e "CREATE DATABASE IF NOT EXISTS dvwa;" &>/dev/null &&
+        mysql -u "$mysql_user" -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'p@ssw0rd';" &>/dev/null &&
+        mysql -u "$mysql_user" -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';" &>/dev/null &&
+        mysql -u "$mysql_user" -e "FLUSH PRIVILEGES;" &>/dev/null
     fi
 
-    echo -e "$mysql_root_password"
+    if [ $? -eq 0 ]; then
+        echo "$(get_language_message "\033[92mMySQL commands executed successfully.\033[0m" "\033[92mComandos MySQL ejecutados con éxito.\033[0m")"
+    else
+        echo -e "$(get_language_message "\033[91mError: Unable to execute MySQL commands. Please check your MySQL credentials." "\033[91mError: No se pueden ejecutar los comandos de MySQL. Por favor, verifique sus credenciales de MySQL.")"
+    fi
 }
 
 # ASCII Art
@@ -81,7 +97,7 @@ check_program apache2
 check_program mariadb-server
 check_program mariadb-client
 check_program php
-check_program php-mysqli
+check_program php-mysql
 check_program php-gd
 check_program libapache2-mod-php
 check_program git
@@ -98,19 +114,8 @@ echo -e "$mysql_start_message"
 systemctl start mysql.service
 sleep 2
 
-# User Prompt for the MySQL root password
-mysql_root_password=$(get_mysql_root_password)
-
-# Run MySQL commands
-mysql -u root -p"$mysql_root_password" -e "CREATE DATABASE IF NOT EXISTS dvwa;"
-mysql -u root -p"$mysql_root_password" -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'p@ssw0rd';"
-mysql -u root -p"$mysql_root_password" -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';"
-mysql -u root -p"$mysql_root_password" -e "FLUSH PRIVILEGES;"
-echo
-
-# Success message
-success_message=$(get_language_message "\e[92mMySQL commands executed successfully.\e[0m" "\e[92mComandos MySQL ejecutados correctamente.\e[0m")
-echo -e "$success_message"
+# Calls the function
+run_mysql_commands
 
 sleep 2
 
