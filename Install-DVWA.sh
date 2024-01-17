@@ -33,9 +33,18 @@ check_program() {
 
 # MySQL root password prompt function
 get_mysql_root_password() {
-    read -s -p "$(get_language_message "Enter MySQL root password: " "Ingrese la contraseña de root de MySQL: ")" mysql_root_password
+    read -s -p "$(get_language_message "Enter MySQL root password (press Enter for no password): " "Ingrese la contraseña de root de MySQL (presione Enter para ninguna contraseña): ")" mysql_root_password
+
+    # Verificar si la contraseña está vacía
+    if [ -z "$mysql_root_password" ]; then
+        echo -e "\n$(get_language_message "No password provided." "No se proporcionó contraseña.")"
+    else
+        echo -e "\n$(get_language_message "Password provided." "Contraseña proporcionada.")"
+    fi
+
     echo -e "$mysql_root_password"
 }
+
 # ASCII Art
 echo -e "\033[96m\033[1m
                   ██████╗ ██╗   ██╗██╗    ██╗ █████╗                    
@@ -93,10 +102,10 @@ sleep 2
 mysql_root_password=$(get_mysql_root_password)
 
 # Run MySQL commands
-mysql -u root -p$mysql_root_password -e "CREATE DATABASE IF NOT EXISTS dvwa;"
-mysql -u root -p$mysql_root_password -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'p@ssw0rd';"
-mysql -u root -p$mysql_root_password -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';"
-mysql -u root -p$mysql_root_password -e "FLUSH PRIVILEGES;"
+mysql -u root -p"$mysql_root_password" -e "CREATE DATABASE IF NOT EXISTS dvwa;"
+mysql -u root -p"$mysql_root_password" -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'p@ssw0rd';"
+mysql -u root -p"$mysql_root_password" -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';"
+mysql -u root -p"$mysql_root_password" -e "FLUSH PRIVILEGES;"
 echo
 
 # Success message
