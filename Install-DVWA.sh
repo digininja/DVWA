@@ -94,7 +94,7 @@ mysql_root_password=$(get_mysql_root_password)
 
 # Run MySQL commands
 mysql -u root -p$mysql_root_password -e "CREATE DATABASE IF NOT EXISTS dvwa;"
-mysql -u root -p$mysql_root_password -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'abc123';"
+mysql -u root -p$mysql_root_password -e "CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'p@ssw0rd';"
 mysql -u root -p$mysql_root_password -e "GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';"
 mysql -u root -p$mysql_root_password -e "FLUSH PRIVILEGES;"
 echo
@@ -109,7 +109,6 @@ sleep 2
 dvwa_config_message=$(get_language_message "\e[96mConfiguring DVWA...\e[0m" "\e[96mConfigurando DVWA...\e[0m")
 echo -e "$dvwa_config_message"
 cp /var/www/html/DVWA/config/config.inc.php.dist /var/www/html/DVWA/config/config.inc.php
-sed -i "s/\(\$_DVWA\[ 'db_password' \] = getenv('DVWA_DB_PASSWORD') ?: '\).*\('\)/\1abc123\2/" /var/www/html/DVWA/config/config.inc.php
 sleep 2
 
 # Assign the right permissions to DVWA
@@ -157,7 +156,7 @@ sleep 2
 credentials_message=$(get_language_message "\e[92mUsername and password for the first use:\e[0m" "\e[92mUsuario y contraseña para el primer uso:\e[0m")
 echo -e "$credentials_message"
 echo -e "Username: \033[93mdvwa\033[0m"
-echo -e "Password: \033[93mabc123\033[0m"
+echo -e "Password: \033[93mp@ssw0rd\033[0m"
 
 success_message=$(get_language_message "\e[92mDVWA has been installed successfully. Access \e[93mhttp://localhost/DVWA\e[0m \e[92mto get started." "\e[92mDVWA se ha instalado correctamente. Accede a \e[93mhttp://localhost/DVWA\e[0m \e[92mpara comenzar.")
 echo -e "$success_message"
