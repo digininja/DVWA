@@ -142,7 +142,8 @@ elif [ -f "$php_config_file_fpm" ]; then
     sed -i 's/^\(display_startup_errors =\).*/\1 on/' $php_config_file
 else
     # Warning message if not found in any of the folders
-    echo -e "\e[91mWarning: PHP configuration file not found in Apache or FPM folders.\e[0m"
+    php_file_message=$(get_language_message "\e[91mWarning: PHP configuration file not found in Apache or FPM folders.\e[0m" "\e[91mAdvertencia: No se encuentra el fichero de configuración PHP en las carpetas de Apache o FPM.\e[0m")
+    echo -e "$php_file_message"
 fi
 sleep 2
 
