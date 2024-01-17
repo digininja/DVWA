@@ -21,7 +21,7 @@ fi
 
 # Function to verify the existence of a program
 check_program() {
-    if ! command -v "$1" &>/dev/null; then
+    if ! dpkg-query -W -f='${Status}' "$1" 2>/dev/null | grep -q "install ok installed"; then
         message=$(get_language_message "\033[91m$1 is not installed. Installing it now..." "\033[91m$1 no está instalado. Instalándolo ahora...")
         echo -e >&2 "$message"
         apt install -y "$1"
