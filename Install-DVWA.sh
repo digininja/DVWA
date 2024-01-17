@@ -153,12 +153,6 @@ echo -e "$apache_restart_message"
 systemctl restart apache2
 sleep 2
 
-# Show to user the credentials for first use
-credentials_message=$(get_language_message "\e[92mUsername and password for the first use:\e[0m" "\e[92mUsuario y contraseña para el primer uso:\e[0m")
-echo -e "$credentials_message"
-echo -e "Username: \033[93mdvwa\033[0m"
-echo -e "Password: \033[93mp@ssw0rd\033[0m"
-
 success_message=$(get_language_message "\e[92mDVWA has been installed successfully. Access \e[93mhttp://localhost/DVWA\e[0m \e[92mto get started." "\e[92mDVWA se ha instalado correctamente. Accede a \e[93mhttp://localhost/DVWA\e[0m \e[92mpara comenzar.")
 echo -e "$success_message"
 
