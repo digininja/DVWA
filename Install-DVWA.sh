@@ -63,7 +63,6 @@ run_mysql_commands() {
         echo -e "\n$(get_language_message "Password: \033[93m[No password just hit Enter]\033[0m" "Password: \033[93m[Sin contraseña solo presiona Enter.]\033[0m")"
         read -p "$(get_language_message "\e[96mEnter MySQL user:\e[0m " "\e[96mIngrese el usuario de MySQL:\e[0m ")" mysql_user
         read -s -p "$(get_language_message "\e[96mEnter MySQL password (press Enter for no password):\e[96m " "\e[96mIngrese la contraseña de MySQL (presiona Enter si no hay contraseña):\e[0m ")" mysql_password
-        echo -e "\n$(get_language_message "\e[96mCredentials provided.\e[0m" "\e[96mCredenciales proporcionadas.\e[0m")"
 
         # Verificar si las credenciales son válidas antes de ejecutar comandos MySQL
         if ! mysql -u "$mysql_user" -p"$mysql_password" -e ";" &>/dev/null; then
@@ -73,14 +72,22 @@ run_mysql_commands() {
         fi
     done
 
-    # Ejecutar comandos MySQL
-    mysql_commands_output=$(mysql_commands "$mysql_user" "$mysql_password")
+    local success=false
+    while [ "$success" != true ]; do
+        # Ejecutar comandos MySQL
+        mysql_commands_output=$(mysql_commands "$mysql_user" "$mysql_password")
 
-    if [ $? -eq 0 ]; then
-        echo -e "$(get_language_message "\033[92mMySQL commands executed successfully.\033[0m" "\033[92mComandos MySQL ejecutados con éxito.\033[0m")"
-    else
-        echo -e "$(get_language_message "\033[91mError: Unable to execute MySQL commands. $mysql_commands_output" "\033[91mError: No se pueden ejecutar los comandos de MySQL. $mysql_commands_output")"
-    fi
+        if [ $? -eq 0 ]; then
+            echo -e "$(get_language_message "\033[92mMySQL commands executed successfully.\033[0m" "\033[92mComandos MySQL ejecutados con éxito.\033[0m")"
+            success=true
+        else
+            echo -e "$(get_language_message "\033[91mError: Unable to execute MySQL commands. $mysql_commands_output" "\033[91mError: No se pueden ejecutar los comandos de MySQL. $mysql_commands_output")"
+            read -p "$(get_language_message "\e[96mDo you want to retry? (yes/no):\e[0m " "\e[96m¿Quieres intentarlo de nuevo? (sí/no):\e[0m ")" choice
+            if [ "$choice" != "yes" ]; then
+                break
+            fi
+        fi
+    done
 }
 
 mysql_commands() {
