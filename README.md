@@ -66,9 +66,17 @@ Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/maste
 ## Installation
 
 ## Automated Installation 🛠️
-Automatic setup Script for DVWA on Debian based machines, such as Kali, Ubuntu, Kubuntu, Linux Mint, Zorin OS...
+## Installation
 
-**This script must always be run as root**
+## Automated Setup 🛠️
+An automated configuration script for DVWA on Debian-based machines, including Kali, Ubuntu, Kubuntu, Linux Mint, Zorin OS...
+
+**Note: This script requires root privileges and is tailored for Debian-based systems. Ensure you are running it as the root user.**
+
+### Installation Requirements
+
+- **Operating System:** Debian-based system (Kali, Ubuntu, Kubuntu, Linux Mint, Zorin OS)
+- **Privileges:** Execute as root user
 
 ### Installation Steps
 
