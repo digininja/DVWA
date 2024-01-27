@@ -26,50 +26,76 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
 	} else {
 		dvwaSecurityLevelSet( 'impossible' );
 	}
+	// If the cookie wasn't set then the session flags need updating.
+	dvwa_start_session();
 }
 
-// This will setup the session cookie based on
-// the security level.
+/*
+ * This function is called after login and when you change the security level.
+ * It gets the security level and sets the httponly and samesite cookie flags
+ * appropriately.
+ * You can only change the flags by calling session_regenerate_id(), just
+ * setting them and doing a session_start() does not change anything.
+ * session_regenerate_id() keeps the existing session values, so nothing is lost
+ * it just causes a new Set-Cookie header to be sent with the new right flags.
+*/
 
-if (dvwaSecurityLevelGet() == 'impossible') {
-	$httponly = true;
-	$samesite = true;
+function dvwa_start_session() {
+	// This will setup the session cookie based on
+	// the security level.
+
+	$security_level = dvwaSecurityLevelGet();
+	if ($security_level == 'impossible') {
+		$httponly = true;
+		$samesite = "Strict";
+	}
+	else {
+		$httponly = false;
+		$samesite = "";
+	}
+
+	$maxlifetime = 86400;
+	$secure = false;
+	$domain = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
+
+	/*
+	 * Need to do this as you can't update the settings of a session
+	 * while it is open. So check if one is open, close it if needed
+	 * then update the values and start it again.
+	*/
+
+	if (session_id()) {
+		session_write_close();
+	}
+
+	session_set_cookie_params([
+		'lifetime' => $maxlifetime,
+		'path' => '/',
+		'domain' => $domain,
+		'secure' => $secure,
+		'httponly' => $httponly,
+		'samesite' => $samesite
+	]);
+
+	session_start();
+
+	// This is the call that will force a new Set-Cookie header with the right flags
+	session_regenerate_id();
 }
-else {
-	$httponly = false;
-	$samesite = false;
+
+if (array_key_exists ("Login", $_POST) && $_POST['Login'] == "Login") {
+	dvwa_start_session();
+} else {
+	if (!session_id()) {
+		session_start();
+	}
 }
-
-$maxlifetime = 86400;
-$secure = false;
-$domain = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
-
-session_set_cookie_params([
-	'lifetime' => $maxlifetime,
-	'path' => '/',
-	'domain' => $domain,
-	'secure' => $secure,
-	'httponly' => $httponly,
-	'samesite' => $samesite
-]);
-session_start();
 
 if (!array_key_exists ("default_locale", $_DVWA)) {
 	$_DVWA[ 'default_locale' ] = "en";
 }
 
 dvwaLocaleSet( $_DVWA[ 'default_locale' ] );
-
-// DVWA version
-function dvwaVersionGet() {
-	return '1.10 *Development*';
-}
-
-// DVWA release date
-function dvwaReleaseDateGet() {
-	return '2015-10-08';
-}
-
 
 // Start session functions --
 
@@ -169,6 +195,7 @@ function dvwaSecurityLevelSet( $pSecurityLevel ) {
 	}
 
 	setcookie( 'security', $pSecurityLevel, 0, "/", "", false, $httponly );
+	$_COOKIE['security'] = $pSecurityLevel;
 }
 
 function dvwaLocaleGet() {	
