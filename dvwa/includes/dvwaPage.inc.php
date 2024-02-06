@@ -124,7 +124,7 @@ function dvwaLogin( $pUsername ) {
 function dvwaIsLoggedIn() {
 	global $_DVWA;
 
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (isset($_DVWA['disable_authentication']) && $_DVWA['disable_authentication'] === true) {
 		return true;
 	}
 	$dvwaSession =& dvwaSessionGrab();
