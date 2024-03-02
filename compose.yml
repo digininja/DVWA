@@ -7,19 +7,33 @@ networks:
 
 
 services:
+  nginx:
+      build:
+        context: ./nginx
+        dockerfile: Dockerfile
+      container_name: dvwa_nginx
+      volumes:
+        - ./nginx/config/:/etc/nginx/conf.d/
+      networks: 
+        - dvwa
+      ports:
+        - "80:80"
+      depends_on:
+      - dvwa
   dvwa:
     build: .
     image: ghcr.io/digininja/dvwa:latest
     # Change `always` to `build` to build from local source
-    pull_policy: always
+    pull_policy: build
     environment:
       - DB_SERVER=db
+      - SERVER_NAME=localhost.local
     depends_on:
       - db
     networks:
       - dvwa
     ports:
-      - 4280:80
+      - "4280"
     restart: unless-stopped
 
   db:
