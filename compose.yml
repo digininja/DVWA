@@ -19,7 +19,7 @@ services:
     networks:
       - dvwa
     ports:
-      - 4280:80
+      - 127.0.0.1:4280:80
     restart: unless-stopped
 
   db:

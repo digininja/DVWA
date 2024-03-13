@@ -300,14 +300,14 @@ Sebagai contoh, Anda dapat mengubah
 
 ```
 ports:
-  - 4280:80
+  - 127.0.0.1:4280:80
 ```
 
 Menjadi
 
 ```
 ports:
-  - 8806:80
+  - 127.0.0.1:8806:80
 ```
 
 DVWA sekarang dapat diakses di `http://localhost:8806`.

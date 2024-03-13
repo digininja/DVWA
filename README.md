@@ -335,17 +335,23 @@ For example, you can change
 
 ```yml
 ports:
-  - 4280:80
+  - 127.0.0.1:4280:80
 ```
 
 to
 
 ```yml
 ports:
-  - 8806:80
+  - 127.0.0.1:8806:80
 ```
 
 DVWA is now accessible at `http://localhost:8806`.
+
+In cases in which you want DVWA to not only be accessible exclusively from your own device, but
+on your local network too (e.g. because you are setting up a test machine for a workshop), you
+can remove the `127.0.0.1:` from the port mapping (or replace it with you LAN IP). This way it
+will listen on all available device. The safe default should always be to only listen on your
+local loopback device. After all, it is a damn vulnerable web application, running on your machine.
 
 #### DVWA auto starts when Docker runs
 
