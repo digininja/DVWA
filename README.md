@@ -458,6 +458,46 @@ This is not an authentication issue but tells you that the database server is no
 sudo service mysql start
 ```
 
+### Connection Refused
+
+An error similar to this one:
+
+```
+Fatal error: Uncaught mysqli_sql_exception: Connection refused in /var/sites/dvwa/non-secure/htdocs/dvwa/includes/dvwaPage.inc.php:535
+```
+
+Means your database server is not running or you've got the wrong IP address in the config file.
+
+Check this line in the config file to see where the database server is expected to be:
+
+```
+$_DVWA[ 'db_server' ]   = '127.0.0.1';
+```
+
+Then go to this server and check that it is running. In Linux this can be done with:
+
+```
+systemctl status mariadb.service
+```
+
+And you are looking for something like this, the important bit is that it says `active (running)`.
+
+```
+● mariadb.service - MariaDB 10.5.19 database server
+     Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2024-03-14 16:04:25 GMT; 1 week 5 days ago
+```
+
+If it is not running, you can start it with:
+
+```
+sudo systemctl stop mariadb.service 
+```
+
+Note the `sudo` and make sure you put your Linux user password in if requested.
+
+In Windows, check the status in the XAMPP console.
+
 ### Unknown authentication method
 
 With the most recent versions of MySQL, PHP can no longer talk to the database in its default configuration. If you try to run the setup script and get the following message it means you have configuration.
