@@ -163,8 +163,13 @@ div#main_menu li {
 div#main_menu li a {
 	color: #000000;
 	text-decoration: none;
-	text-decoration: none;
+	display: block;
 }
+
+div#main_menu li:hover {
+    background-color: #ccc;
+}
+
 
 div#main_menu li.selected {
 	border-color: #758DAE #758DAE #758DAE #758DAE;
@@ -195,15 +200,26 @@ div#footer {
 	border-top: 5px solid #A1CC33;
 }
 
-input.popup_button {
-	border-width: 1px;
-	border-style: solid;
-	border-color: #D2D4D4 #6B778C #6B778C #D2D4D4;
-	padding: 3px 5px 3px 5px;
-	margin-bottom: 3px;
-	background-color: #C3C3C3;
-	float: right;
+.popup_button {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #D2D4D4 #6B778C #6B778C #D2D4D4;
+    padding: 3px 5px;
+    margin-bottom: 3px;
+    background-color: #bebebe;
+    font-weight: bold;
+    float: right;
+    cursor: pointer;
+    color: #000000;
 }
+
+.popup_button:hover {
+	color: white;
+    background-color: #A1CC33;
+}
+
+
+
 
 div.vulnerable_code_area {
 	background-color: #f8fafa;
