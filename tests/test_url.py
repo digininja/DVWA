@@ -9,7 +9,7 @@ def get_php_files():
     files = []
     ignore_files = ["dvwa/includes/Parsedown.php"]
     for pattern in patterns:
-        files.extend(glob.glob(pattern))
+        files.extend(glob.glob(pattern)
     for ignore_file in ignore_files:
         if ignore_file in files:
             files.remove(ignore_file)
