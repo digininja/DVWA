@@ -45,6 +45,7 @@ This file is available in multiple languages:
 - Portuguese: [Português](README.pt.md)
 - Spanish: [Español](README.es.md)
 - Turkish: [Türkçe](README.tr.md)
+- Indonesia: [Indonesia](README.id.md)
 
 If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected. Submit your translated version by adding a new 'README.xx.md' file where xx is the two-letter code of your desired language (based on [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
 
@@ -64,6 +65,36 @@ Or [download a ZIP of the files](https://github.com/digininja/DVWA/archive/maste
 
 ## Installation
 
+### Automated Installation 🛠️
+
+**Note, this is not an official DVWA script, it was written by [IamCarron](https://github.com/iamCarron/). A lot of work went into creating the script and, when it was created, it did not do anything malicious, however it is recommended you review the script before blindly running it on your system, just in case. Please report any bugs to [IamCarron](https://github.com/iamCarron/), not here.**
+
+An automated configuration script for DVWA on Debian-based machines, including Kali, Ubuntu, Kubuntu, Linux Mint, Zorin OS...
+
+**Note: This script requires root privileges and is tailored for Debian-based systems. Ensure you are running it as the root user.**
+
+#### Installation Requirements
+
+- **Operating System:** Debian-based system (Kali, Ubuntu, Kubuntu, Linux Mint, Zorin OS)
+- **Privileges:** Execute as root user
+
+#### Installation Steps
+
+1. **Download the script:**
+   ```bash
+   wget https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh
+   ```
+
+2. **Make the script executable:**
+   ```bash
+   chmod +x Install-DVWA.sh
+   ```
+
+3. **Run the script as root:**
+   ```bash
+   sudo ./Install-DVWA.sh
+   ```
+
 ### Installation Videos
 
 - [Installing DVWA on Kali running in VirtualBox](https://www.youtube.com/watch?v=WkyDxNJkgQ4)
@@ -78,15 +109,67 @@ XAMPP is a very easy to install Apache Distribution for Linux, Solaris, Windows 
 
 This [video](https://youtu.be/Yzksa_WjnY0) walks you through the installation process for Windows but it should be similar for other OSs.
 
-### Config File
+### Docker
 
-DVWA ships with a dummy copy of its config file which you will need to copy into place and then make the appropriate changes. On Linux, assuming you are in the DVWA directory, this can be done as follows:
+Thanks to [hoang-himself](https://github.com/hoang-himself) and [JGillam](https://github.com/JGillam), every commit to the `master` branch causes a Docker image to be built and ready to be pulled down from GitHub Container Registry.
 
-`cp config/config.inc.php.dist config/config.inc.php`
+For more information on what you are getting, you can browse [the prebuilt Docker images](https://github.com/digininja/DVWA/pkgs/container/dvwa).
 
-On Windows, this can be a bit harder if you are hiding file extensions, if you are unsure about this, this blog post explains more about it:
+#### Getting Started
 
-[How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
+Prerequisites: Docker and Docker Compose.
+
+- If you are using Docker Desktop, both of these should be already installed.
+- If you prefer Docker Engine on Linux, make sure to follow their [installation guide](https://docs.docker.com/engine/install/#server).
+
+**We provide support for the latest Docker release as shown above.**
+If you are using Linux and the Docker package that came with your package manager, it will probably work too, but support will only be best-effort.
+
+Upgrading Docker from the package manager version to upstream requires that you uninstall the old versions as seen in their manuals for [Ubuntu](https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions), [Fedora](https://docs.docker.com/engine/install/fedora/#uninstall-old-versions) and others.
+Your Docker data (containers, images, volumes, etc.) should not be affected, but in case you do run into a problem, make sure to [tell Docker](https://www.docker.com/support) and use search engines in the mean time.
+
+Then, to get started:
+
+1. Run `docker version` and `docker compose version` to see if you have Docker and Docker Compose properly installed. You should be able to see their versions in the output.
+
+    For example:
+
+    ```text
+    >>> docker version
+    Client:
+     [...]
+     Version:           23.0.5
+     [...]
+
+    Server: Docker Desktop 4.19.0 (106363)
+     Engine:
+      [...]
+      Version:          23.0.5
+      [...]
+
+    >>> docker compose version
+    Docker Compose version v2.17.3
+    ```
+
+    If you don't see anything or get a command not found error, follow the prerequisites to setup Docker and Docker Compose.
+
+2. Clone or download this repository and extract (see [Download](#download)).
+3. Open a terminal of your choice and change its working directory into this folder (`DVWA`).
+4. Run `docker compose up -d`.
+
+DVWA is now available at `http://localhost:4280`.
+
+**Notice that for running DVWA in containers, the web server is listening on port 4280 instead of the usual port of 80.**
+For more information on this decision, see [I want to run DVWA on a different port](#i-want-to-run-dvwa-on-a-different-port).
+
+#### Local Build
+
+If you made local changes and want to build the project from local, go to `compose.yml` and change `pull_policy: always` to `pull_policy: build`.
+
+Running `docker compose up -d` should trigger Docker to build an image from local regardless of what is available in the registry.
+
+See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy
+).
 
 ### Linux Packages
 
@@ -107,6 +190,18 @@ apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libap
 ```
 
 The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
+
+## Configurations
+
+### Config File
+
+DVWA ships with a dummy copy of its config file which you will need to copy into place and then make the appropriate changes. On Linux, assuming you are in the DVWA directory, this can be done as follows:
+
+`cp config/config.inc.php.dist config/config.inc.php`
+
+On Windows, this can be a bit harder if you are hiding file extensions, if you are unsure about this, this blog post explains more about it:
+
+[How to Make Windows Show File Extensions](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
 
 ### Database Setup
 
@@ -182,7 +277,7 @@ Generated a pair of API keys from <https://www.google.com/recaptcha/admin/create
 
 These then go in the following sections of `./config/config.inc.php`:
 
-* `$_DVWA[ 'recaptcha_public_key' ]` 
+* `$_DVWA[ 'recaptcha_public_key' ]`
 * `$_DVWA[ 'recaptcha_private_key' ]`
 
 ### Default Credentials
@@ -199,20 +294,73 @@ _Note: This will be different if you installed DVWA into a different directory._
 
 - - -
 
-## Docker Container
-
-_This section of the readme was added by @thegrims, for support on Docker issues, please contact them or @opsxcq who is the maintainer of the Docker image and repo. Any issue tickets will probably be pointed at this and closed._
-
-- [dockerhub page](https://hub.docker.com/r/vulnerables/web-dvwa/)
-`docker run --rm -it -p 80:80 vulnerables/web-dvwa`
-
-Please ensure you are using aufs due to previous MySQL issues. Run `docker info` to check your storage driver. If it isn't aufs, please change it as such. There are guides for each operating system on how to do that, but they're quite different so we won't cover that here.
-
-- - -
-
 ## Troubleshooting
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
+
+### Containers
+
+#### I want to access the logs
+
+If you are using Docker Desktop, logs can be accessed from the graphical application.
+Some minor details may change with newer versions, but the access method should be the same.
+
+![Overview of DVWA compose](./docs/graphics/docker/overview.png)
+![Viewing DVWA logs](docs/graphics/docker/detail.png)
+
+Logs can also be accessed from the terminal.
+
+1. Open a terminal and change its working directory to DVWA
+2. Show the merged logs
+
+    ```shell
+    docker compose logs
+    ```
+
+   In case you want to export the logs to a file, e.g. `dvwa.log`
+
+   ```shell
+   docker compose logs >dvwa.log
+   ```
+
+#### I want to run DVWA on a different port
+
+We don't use port 80 by default for a few reasons:
+
+- Some users might already be running something on port 80.
+- Some users might be using a rootless container engine (like Podman), and 80 is a privileged port (< 1024). Additional configuration (e.g. setting `net.ipv4.ip_unprivileged_port_start`) is required, but you will have to research on your own.
+
+You can expose DVWA on a different port by changing the port binding in the `compose.yml` file.
+For example, you can change
+
+```yml
+ports:
+  - 127.0.0.1:4280:80
+```
+
+to
+
+```yml
+ports:
+  - 127.0.0.1:8806:80
+```
+
+DVWA is now accessible at `http://localhost:8806`.
+
+In cases in which you want DVWA to not only be accessible exclusively from your own device, but
+on your local network too (e.g. because you are setting up a test machine for a workshop), you
+can remove the `127.0.0.1:` from the port mapping (or replace it with you LAN IP). This way it
+will listen on all available device. The safe default should always be to only listen on your
+local loopback device. After all, it is a damn vulnerable web application, running on your machine.
+
+#### DVWA auto starts when Docker runs
+
+The included [`compose.yml`](./compose.yml) file automatically runs DVWA and its database when Docker starts.
+
+To disable this, you can delete or comment out the `restart: unless-stopped` lines in the [`compose.yml`](./compose.yml) file.
+
+If you want to disable this behavior temporarily, you can run `docker compose stop`, or use Docker Desktop, find `dvwa` and click Stop.
+Additionally, you can delete the containers, or run `docker compose down`.
 
 ### Log files
 
@@ -309,6 +457,46 @@ This is not an authentication issue but tells you that the database server is no
 ```sh
 sudo service mysql start
 ```
+
+### Connection Refused
+
+An error similar to this one:
+
+```
+Fatal error: Uncaught mysqli_sql_exception: Connection refused in /var/sites/dvwa/non-secure/htdocs/dvwa/includes/dvwaPage.inc.php:535
+```
+
+Means your database server is not running or you've got the wrong IP address in the config file.
+
+Check this line in the config file to see where the database server is expected to be:
+
+```
+$_DVWA[ 'db_server' ]   = '127.0.0.1';
+```
+
+Then go to this server and check that it is running. In Linux this can be done with:
+
+```
+systemctl status mariadb.service
+```
+
+And you are looking for something like this, the important bit is that it says `active (running)`.
+
+```
+● mariadb.service - MariaDB 10.5.19 database server
+     Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2024-03-14 16:04:25 GMT; 1 week 5 days ago
+```
+
+If it is not running, you can start it with:
+
+```
+sudo systemctl stop mariadb.service 
+```
+
+Note the `sudo` and make sure you put your Linux user password in if requested.
+
+In Windows, check the status in the XAMPP console.
 
 ### Unknown authentication method
 
@@ -452,6 +640,16 @@ If you have an idea, some kind of improvement or just simply want to collaborate
 </p>
 
 - - -
+
+## Reporting Vulnerabilities
+
+To put it simply, please don't!
+
+Once a year or so, someone will submit a report for a vulnerability they've found in the app, some are well written, sometimes better than I've seen in paid pen test reports, some are just "you are missing headers, pay me".
+
+In 2023, this elevated to a whole new level when someone decided to request a CVE for one of the vulnerabities, they were given [CVE-2023-39848](https://nvd.nist.gov/vuln/detail/CVE-2023-39848). Much hilarity ensued and time was wasted getting this corrected.
+
+The app has vulnerabilities, it is deliberate. Most are the well documented ones that you work through as lessons, others are "hidden" ones, ones to find on your own. If you really want to show off your skills at finding the hidden extras, write a blog post or create a video as there are probably people out there who would be interested in learning about them and about how your found them. If you send us the link, we may even include it in the references.
 
 ## Links
 

@@ -16,7 +16,8 @@ if( isset( $_GET[ 'Change' ] ) ) {
 
 	// Check that the current password is correct
 	$data = $db->prepare( 'SELECT password FROM users WHERE user = (:user) AND password = (:password) LIMIT 1;' );
-	$data->bindParam( ':user', dvwaCurrentUser(), PDO::PARAM_STR );
+	$current_user = dvwaCurrentUser();
+	$data->bindParam( ':user', $current_user, PDO::PARAM_STR );
 	$data->bindParam( ':password', $pass_curr, PDO::PARAM_STR );
 	$data->execute();
 
@@ -30,7 +31,8 @@ if( isset( $_GET[ 'Change' ] ) ) {
 		// Update database with new password
 		$data = $db->prepare( 'UPDATE users SET password = (:password) WHERE user = (:user);' );
 		$data->bindParam( ':password', $pass_new, PDO::PARAM_STR );
-		$data->bindParam( ':user', dvwaCurrentUser(), PDO::PARAM_STR );
+		$current_user = dvwaCurrentUser();
+		$data->bindParam( ':user', $current_user, PDO::PARAM_STR );
 		$data->execute();
 
 		// Feedback for the user

@@ -9,6 +9,7 @@ On high and impossible, only the admin is allowed to retrieve the data.
 */
 if ((dvwaSecurityLevelGet() == "high" || dvwaSecurityLevelGet() == "impossible") && dvwaCurrentUser() != "admin") {
 	print json_encode (array ("result" => "fail", "error" => "Access denied"));
+	exit;
 }
 
 $query  = "SELECT user_id, first_name, last_name FROM users";

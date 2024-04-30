@@ -13,7 +13,7 @@ Basically, the more details you give, the more chance of getting an answer. We n
 
 - Where did you get DVWA from?
 - What OS are you installing it on?
-- Last five lines from the web server access and error log from the time the error occured if you got that far.
+- Last five lines from the web server access and error log from the time the error occurred if you got that far.
 - The error you got when you got stuck.
 - Any previous errors.
 - What you have tried to do yourself to fix the problem.

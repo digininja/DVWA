@@ -120,7 +120,6 @@ echo "<!DOCTYPE html>
 	<br />
 	<br />
 
-	<!-- <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/RandomStorm.png\" /> -->
 	</div > <!--<div id=\"content\">-->
 
 	<div id=\"footer\">
