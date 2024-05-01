@@ -19,7 +19,7 @@ $page[ 'body' ] .= "
 
 	<h2>General Instructions</h2>
 	<p>It is up to the user how they approach DVWA. Either by working through every module at a fixed level, or selecting any module and working up to reach the highest level they can before moving onto the next one. There is not a fixed object to complete a module; however users should feel that they have successfully exploited the system as best as they possible could by using that particular vulnerability.</p>
-	<p>Please note, there are <em>both documented and undocumented vulnerability</em> with this software. This is intentional. You are encouraged to try and discover as many issues as possible.</p>
+	<p>Please note, there are <em>both documented and undocumented vulnerabilities</em> with this software. This is intentional. You are encouraged to try and discover as many issues as possible.</p>
 	<p>There is a help button at the bottom of each page, which allows you to view hints & tips for that vulnerability. There are also additional links for further background reading, which relates to that security issue.</p>
 	<hr />
 	<br />
