@@ -12,9 +12,9 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 	$octet = explode( ".", $target );
 
 	// Check IF each octet is an integer
-	if( ( is_numeric( $octet[0] ) ) && ( is_numeric( $octet[1] ) ) && ( is_numeric( $octet[2] ) ) && ( is_numeric( $octet[3] ) ) && ( sizeof( $octet ) == 4 ) ) {
+	if( $octet === array_filter( $octet, 'is_numeric' ) && ( sizeof( $octet ) === 4 ) ) {
 		// If all 4 octets are int's put the IP back together.
-		$target = $octet[0] . '.' . $octet[1] . '.' . $octet[2] . '.' . $octet[3];
+		$target = implode('.', $octet);
 
 		// Determine OS and execute the ping command.
 		if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
