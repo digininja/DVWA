@@ -1,29 +1,23 @@
 <?php
 
-$target = "";
+$redirects = [
+    1 => "info.php?id=1",
+    2 => "info.php?id=2",
+    99 => "https://digi.ninja",
+];
 
-if (array_key_exists ("redirect", $_GET) && is_numeric($_GET['redirect'])) {
-	switch (intval ($_GET['redirect'])) {
-		case 1:
-			$target = "info.php?id=1";
-			break;
-		case 2:
-			$target = "info.php?id=2";
-			break;
-		case 99:
-			$target = "https://digi.ninja";
-			break;
-	}
-	if ($target != "") {
-		header ("location: " . $target);
-		exit;
-	} else {
-		?>
-		Unknown redirect target.
-		<?php
-		exit;
-	}
+if (!empty($_GET['redirect'])) {
+    $redirectId = $_GET['redirect'];
+    $target = $redirects[$redirectId] ?? "";
+    if ($target !== "") {
+        header("Location: " . $target);
+        exit;
+    } else {
+        echo "Unknown redirect target.";
+        exit;
+    }
 }
 
+echo "Missing redirect target.";
+exit;
 ?>
-Missing redirect target.

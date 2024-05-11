@@ -1,11 +1,9 @@
 <?php
 
-if (array_key_exists ("redirect", $_GET) && $_GET['redirect'] != "") {
+if (!empty($_GET['redirect'])) {
 	if (preg_match ("/http:\/\/|https:\/\//i", $_GET['redirect'])) {
 		http_response_code (500);
-		?>
-		<p>Absolute URLs not allowed.</p>
-		<?php
+		echo "Absolute URLs not allowed.";
 		exit;
 	} else {
 		header ("location: " . $_GET['redirect']);
@@ -14,8 +12,6 @@ if (array_key_exists ("redirect", $_GET) && $_GET['redirect'] != "") {
 }
 
 http_response_code (500);
-?>
-<p>Missing redirect target.</p>
-<?php
+echo "Missing redirect target.";
 exit;
 ?>
