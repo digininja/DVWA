@@ -58,7 +58,7 @@ $page[ 'body' ] .= "
 	<h2>More Information</h2>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-community/attacks/Brute_force_attack' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://www.symantec.com/connect/articles/password-crackers-ensuring-security-your-password' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.symantec.com/connect/articles/password-crackers-ensuring-security-your-password' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.golinuxcloud.com/brute-force-attack-web-forms' ) . "</li>
 	</ul>
 </div>\n";

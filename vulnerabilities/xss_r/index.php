@@ -56,8 +56,8 @@ $page[ 'body' ] .= "
 		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-community/attacks/xss/' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-community/xss-filter-evasion-cheatsheet' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/Cross-site_scripting' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://www.cgisecurity.com/xss-faq.html' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://www.scriptalert1.com/' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.cgisecurity.com/xss-faq.html' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.scriptalert1.com/' ) . "</li>
 	</ul>
 </div>\n";
 
