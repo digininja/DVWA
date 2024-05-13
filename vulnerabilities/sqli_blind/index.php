@@ -86,7 +86,7 @@ $page[ 'body' ] .= "
 	<h2>More Information</h2>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/SQL_injection' ) . "</li>
-		<li>" . dvwaExternalLinkUrlGet( 'http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet' ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-community/attacks/Blind_SQL_Injection' ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://bobby-tables.com/' ) . "</li>
 	</ul>

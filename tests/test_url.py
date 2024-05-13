@@ -55,7 +55,10 @@ def test_url():
     ignore_urls = [
         "https://wpscan.com/", # Cloudflare doesn't like GitHub checking it
         "http://www.w3.org/TR/html4/loose.dtd", # Don't need to check the DTD
-        "https://www.vmware.com/" # Throwing a 403 for some reason, but can't see it going anywhere
+        "https://www.vmware.com/", # Throwing a 403 for some reason, but can't see it going anywhere
+        "https://twitter.com/digininja", # Twitter doesn't like GitHub checking it
+        "https://www.cgisecurity.com/xss-faq.html", # Throwing a 403 for some reason, but can't see it going anywhere
+        "https://www.cgisecurity.com/csrf-faq.html", # Throwing a 403 for some reason, but can't see it going anywhere
     ]
     all_urls = []
     broken_urls = []
