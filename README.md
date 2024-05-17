@@ -171,6 +171,14 @@ Running `docker compose up -d` should trigger Docker to build an image from loca
 See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy
 ).
 
+### PHP Versions
+
+Ideally you should be using the latest stable version of PHP as that is the version that this app will be developed and tested on.
+
+Support will not be given for anyone trying to use PHP 5.x.
+
+Versions less than 7.3 have known issues that will cause problems, most of the app will work, but random things may not. Unless you have a very good reason for using such an old version, support will not be given.
+
 ### Linux Packages
 
 If you are using a Debian based Linux distribution, you will need to install the following packages _(or their equivalent)_:
