@@ -34,10 +34,13 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
  * This function is called after login and when you change the security level.
  * It gets the security level and sets the httponly and samesite cookie flags
  * appropriately.
- * You can only change the flags by calling session_regenerate_id(), just
- * setting them and doing a session_start() does not change anything.
- * session_regenerate_id() keeps the existing session values, so nothing is lost
- * it just causes a new Set-Cookie header to be sent with the new right flags.
+ *
+ * To force an update of the cookie flags we need to update the session id,
+ * just setting the flags and doing a session_start() does not change anything.
+ * For this, session_id() or session_regenerate_id() can be used.
+ * Both keep the existing session values, so nothing is lost,
+ * it will just cause a new Set-Cookie header to be sent with the new right flags
+ * and the new id (or the same one if we wish to keep it).
 */
 
 function dvwa_start_session() {
@@ -63,8 +66,7 @@ function dvwa_start_session() {
 	 * while it is open. So check if one is open, close it if needed
 	 * then update the values and start it again.
 	*/
-
-	if (session_id()) {
+	if (session_status() == PHP_SESSION_ACTIVE) {
 		session_write_close();
 	}
 
@@ -77,10 +79,17 @@ function dvwa_start_session() {
 		'samesite' => $samesite
 	]);
 
-	session_start();
-
-	// This is the call that will force a new Set-Cookie header with the right flags
-	session_regenerate_id();
+	// We need to force a new Set-Cookie header with the updated flags by updating the session id
+	// because session_start() might not generate a Set-Cookie header if a cookie already exists
+	if ($security_level == 'impossible') {
+		session_start();
+		session_regenerate_id(); // generate a new id, this will prevent session fixation attacks
+	}
+	else {
+		if (isset($_COOKIE[session_name()])) // if id already exists
+			session_id($_COOKIE[session_name()]); // keep the same id
+		session_start(); // otherwise a new one will be generated
+	}
 }
 
 if (array_key_exists ("Login", $_POST) && $_POST['Login'] == "Login") {
