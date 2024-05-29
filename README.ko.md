@@ -294,4 +294,361 @@ _참고: DVWA를 다른 디렉토리에 설치한 경우 이 URL이 다를 수 �
 
 - - -
 
-## Troubleshooting
+## 문제 해결
+
+이 문제 해결 방법은 Debian 기반 배포판인 Debian, Ubuntu 및 Kali를 사용한다고 가정합니다. 다른 배포판의 경우 해당 명령을 업데이트하여 따르세요.
+
+### 컨테이너
+
+#### 로그에 접근하고 싶어요
+
+Docker Desktop을 사용하는 경우 로그는 그래픽 애플리케이션에서 접근할 수 있습니다.
+새로운 버전에서 약간의 세부 사항이 변경될 수 있지만 접근 방법은 동일해야 합니다.
+
+![DVWA compose 개요](./docs/graphics/docker/overview.png)
+![DVWA 로그 보기](docs/graphics/docker/detail.png)
+
+로그는 터미널에서도 확인할 수 있습니다.
+
+1. 터미널을 열고 작업 디렉토리를 DVWA로 변경하세요.
+2. 병합된 로그 표시
+
+    ```shell
+    docker compose logs
+    ```
+
+   로그를 파일로 내보내려는 경우, 예를 들어 `dvwa.log`
+
+   ```shell
+   docker compose logs >dvwa.log
+   ```
+
+#### 다른 포트에서 DVWA 실행하고 싶어요
+
+기본적으로 포트 80을 사용하지 않는 이유는 몇 가지 있습니다.
+
+- 일부 사용자는 이미 포트 80에서 무언가를 실행 중일 수 있습니다.
+- 일부 사용자는 루트리스 컨테이너 엔진(예: Podman)을 사용할 수 있으며 80은 특권 포트(< 1024)입니다. 추가 구성(예: `net.ipv4.ip_unprivileged_port_start` 설정)이 필요하지만 직접 조사해야 합니다.
+
+`compose.yml` 파일에서 포트 바인딩을 변경하여 DVWA를 다른 포트에서 노출할 수 있습니다.
+예를 들어,
+
+```yml
+ports:
+  - 127.0.0.1:4280:80
+```
+
+를
+
+```yml
+ports:
+  - 127.0.0.1:8806:80
+```
+
+로 변경할 수 있습니다.
+
+DVWA는 이제 `http://localhost:8806`에서 접근할 수 있습니다.
+
+디바이스에서만 독점적으로 DVWA에 액세스하고 싶을 때가 있습니다(예: 워크샵을 위한 테스트 머신을 설정하는 경우), 로컬 네트워크에서도 액세스할 수 있도록 하려면 포트 매핑에서 `127.0.0.1:`을 제거하거나(또는 LAN IP로 대체)하세요. 이렇게 하면 모든 사용 가능한 디바이스에서 수신됩니다. 안전한 기본 설정은 항상 로컬 루프백 디바이스에서만 수신하는 것입니다. 결국, 이것은 사용자의 머신에서 실행되는 위험한 웹 응용 프로그램입니다.
+
+#### Docker 실행 시 DVWA 자동 시작
+
+포함된 [`compose.yml`](./compose.yml) 파일은 Docker가 시작될 때 자동으로 DVWA와 해당 데이터베이스를 실행합니다.
+
+이 기능을 비활성화하려면 [`compose.yml`](./compose.yml) 파일에서 `restart: unless-stopped` 라인을 삭제하거나 주석 처리하세요.
+
+이 동작을 일시적으로 비활성화하려면 `docker compose stop`을 실행하거나 Docker Desktop을 사용하여 `dvwa`를 찾아 중지를 클릭하세요.
+또는 컨테이너를 삭제하거나 `docker compose down`을 실행할 수 있습니다.
+
+### 로그 파일
+
+리눅스 시스템에서는 Apache가 기본적으로 두 가지 로그 파일을 생성합니다. `access.log`와 `error.log`로, 데비안 기반 시스템에서는 보통 `/var/log/apache2/`에 있습니다.
+
+에러 보고서, 문제 등을 제출할 때, 적어도 각각의 파일의 마지막 다섯 줄을 포함해야 합니다. 데비안 기반 시스템에서는 다음과 같이 가져올 수 있습니다.
+
+```
+tail -n 5 /var/log/apache2/access.log /var/log/apache2/error.log
+```
+
+### 사이트에 접속하여 404 오류가 발생했습니다
+
+이 문제가 발생하면 파일 위치를 이해해야 합니다. 기본적으로 Apache 문서 루트(웹 콘텐츠를 찾는 곳)는 `/var/www/html`입니다. 이 디렉토리에 파일 `hello.txt`을 넣은 경우에는 `http://localhost/hello.txt`로 접속해야 합니다.
+
+디렉토리를 만들고 파일을 넣은 경우 - `/var/www/html/mydir/hello.txt` - 그러면 `http://localhost/mydir/hello.txt`로 접속해야 합니다.
+
+리눅스는 기본적으로 대소문자를 구분하므로 위의 예에서는 다음에 대한 `404 Not Found`가 발생합니다.
+
+- `http://localhost/MyDir/hello.txt`
+- `http://localhost/mydir/Hello.txt`
+- `http://localhost/MYDIR/hello.txt`
+
+이것이 DVWA에 어떻게 영향을 미치는가요? 대부분의 사람들은 DVWA를 `/var/www/html`에 체크아웃하기 때문에 모든 DVWA 파일이 들어 있는 `/var/www/html/DVWA/` 디렉토리가 생깁니다. 그런 다음 `http://localhost/`로 접속하면 `404` 또는 기본 Apache 환영 페이지를 받게 됩니다. 파일이 DVWA에 있으므로 `http://localhost/DVWA`로 접속해야 합니다.
+
+다른 흔한 실수는 `http://localhost/dvwa`로 접속하는 것입니다. 이는 리눅스 디렉토리 매칭에 따라 `dvwa`가 `DVWA`가 아니기 때문에 `404`가 발생합니다.
+
+따라서 설치 후에 사이트에 접속하여 `404`를 받는 경우, 파일을 어디에 설치했는지, 문서 루트와의 관계는 무엇인지, 사용한 디렉토리의 경우를 고려하세요.
+
+### 설정 실행 중 "Access denied" 오류가 발생했습니다
+
+설치 스크립트를 실행하는 도중 다음을 보게 되면, 설정 파일의 사용자 이름 또는 비밀번호가 데이터베이스에 구성된 것과 일치하지 않는다는 것입니다.
+
+```
+Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
+```
+
+이 오류는 사용자 이름이 `notdvwa`임을 알려줍니다.
+
+다음 오류는 설정 파일을 잘못된 데이터베이스에 연결한 것입니다.
+
+```
+SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
+```
+
+이것은 사용자가 `dvwa` 사용자를 사용하고 `notdvwa` 데이터베이스에 연결하려고 시도했다고 말하고 있습니다.
+
+첫 번째 할 일은 설정 파일에 입력한 것이 실제로 있는지 확인하는 것입니다.
+
+예상한 대로 맞는다면, 다음으로 할 일은 명령 줄에서 사용자로 로그인할 수 있는지 확인하는 것입니다. 데이터베이스 사용자가 `dvwa`이고 암호가 `p@ssw0rd`인 경우 다음 명령을 실행하세요.
+
+```
+mysql -u dvwa -pp@ssw0rd -D dvwa
+```
+
+*참고: `-p` 뒤에 공백이 없습니다.*
+
+다음과 같이 보인다면, 암호가 올바릅니다.
+
+```
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 14
+Server version: 10.3.22-MariaDB-0ubuntu0.19.10.1 Ubuntu 19.10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [dvwa]>
+```
+
+명령 줄에서 연결할 수 있다면, 설정 파일에 무엇인가 잘못된 것이 있을 확률이 높습니다. 그러면 설정을 다시 확인한 후 문제를 해결할 수 없으면 문제를 제기하세요.
+
+다음과 같은 내용을 보게 되면 사용자 이름 또는 비밀번호가 잘못되었습니다. [Database Setup](#database-setup) 단계를 반복하고 전체 과정에서 동일한 사용자 이름과 암호를 사용했는지 확인하세요.
+
+```
+ERROR 1045 (28000): Access denied for user 'dvwa'@'localhost' (using password: YES)
+```
+
+다음과 같은 내용을 보게 되면 사용자 자격 증명은 올바르지만 사용자가 데이터베이스에 액세스할 수 없습니다. 다시 설정 단계를 반복하고 사용 중인 데이터베이스 이름을 확인하세요.
+
+```
+ERROR 1044 (42000): Access denied for user 'dvwa'@'localhost' to database 'dvwa'
+```
+
+마지막으로 다음과 같은 오류를 볼 수 있습니다.
+
+```
+ERROR 2002 (HY000): 로컬 MySQL 서버에 소켓 '/var/run/mysqld/mysqld.sock'을(를) 통해 연결할 수 없습니다 (2)
+```
+
+이것은 인증 문제가 아니라 데이터베이스 서버가 실행되지 않았음을 나타냅니다. 다음 명령으로 시작하세요.
+
+```sh
+sudo service mysql start
+```
+
+### 연결 거부
+
+다음과 유사한 오류가 발생하는 경우:
+
+```
+Fatal error: Uncaught mysqli_sql_exception: Connection refused in /var/sites/dvwa/non-secure/htdocs/dvwa/includes/dvwaPage.inc.php:535
+```
+
+데이터베이스 서버가 실행되지 않거나 구성 파일에 잘못된 IP 주소가 있는 것을 의미합니다.
+
+구성 파일에서 데이터베이스 서버가 예상되는 위치를 확인하려면 이 줄을 확인하십시오:
+
+```
+$_DVWA[ 'db_server' ]   = '127.0.0.1';
+```
+
+그런 다음이 서버로 이동하여 실행 중인지 확인하십시오. Linux에서는 다음과 같이 수행할 수 있습니다:
+
+```
+systemctl status mariadb.service
+```
+
+다음과 같은 내용을 찾으시면 됩니다. 중요한 부분은 `active (running)`이라고 명시된 부분입니다.
+
+```
+● mariadb.service - MariaDB 10.5.19 database server
+     Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2024-03-14 16:04:25 GMT; 1 week 5 days ago
+```
+
+실행 중이 아니라면 다음과 같이 시작할 수 있습니다:
+
+```
+sudo systemctl stop mariadb.service 
+```
+
+`sudo`에 유의하고 요청 시 Linux 사용자 암호를 입력하십시오.
+
+Windows에서는 XAMPP 콘솔에서 상태를 확인하십시오.
+
+### 알려지지 않은 인증 방법
+
+가장 최신 버전의 MySQL에서 PHP는 기본 구성으로 데이터베이스와 통신할 수 없게 되었습니다. 설정 스크립트를 실행하려고 하고 다음 메시지가 표시되는 경우 구성이 잘못되었음을 의미합니다.
+
+```
+Database Error #2054: The server requested authentication method unknown to the client.
+```
+
+두 가지 옵션이 있습니다. 가장 쉬운 방법은 MySQL을 제거하고 MariaDB를 설치하는 것입니다. 다음은 MariaDB 프로젝트의 공식 가이드입니다:
+
+<https://mariadb.com/resources/blog/how-to-migrate-from-mysql-to-mariadb-on-linux-in-five-steps/>
+
+또는 다음 단계를 따르세요:
+
+1. 루트로 다음 파일을 편집하십시오: `/etc/mysql/mysql.conf.d/mysqld.cnf`
+2. `[mysqld]` 아래에 다음을 추가하십시오:
+   `default-authentication-plugin=mysql_native_password`
+3. 데이터베이스를 다시 시작하십시오: `sudo service mysql restart`
+4. 데이터베이스 사용자의 인증 방법을 확인하십시오:
+
+    ```sql
+    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
+    +-----------+------------------+-----------------------+
+    | Host      | User             | plugin                |
+    +-----------+------------------+-----------------------+
+    | localhost | dvwa             | caching_sha2_password |
+    +-----------+------------------+-----------------------+
+    1 rows in set (0.00 sec)
+    ```
+
+5. `caching_sha2_password`를 보게 될 것입니다. 그렇다면 다음 명령을 실행하십시오:
+
+    ```sql
+    mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
+    ```
+
+6. 다시 확인을 실행하면 이제 `mysql_native_password`를 볼 수 있어야 합니다.
+
+    ```sql
+    mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
+    +-----------+------+-----------------------+
+    | Host      | User | plugin                |
+    +-----------+------+-----------------------+
+    | localhost | dvwa | mysql_native_password |
+    +-----------+------+-----------------------+
+    1 row in set (0.00 sec)
+    ```
+
+이 모든 과정을 거친 후 설정 프로세스가 정상적으로 작동해야 합니다.
+
+더 많은 정보가 필요하면 다음 페이지를 참조하십시오: <https://www.php.net/manual/en/mysqli.requirements.php>.
+
+### 데이터베이스 오류 #2002: 해당 파일 또는 디렉터리가 없습니다.
+
+데이터베이스 서버가 실행되지 않습니다. Debian 기반 배포판에서는 다음 명령을 사용하여 실행할 수 있습니다:
+
+```sh
+sudo service mysql start
+```
+
+### "MySQL 서버가 종료되었습니다" 및 "패킷 순서가 잘못되었습니다" 오류
+
+이러한 오류가 발생하는 몇 가지 이유가 있지만, 가장 가능성이 높은 이유는 실행 중인 데이터베이스 서버 버전이 PHP 버전과 호환되지 않기 때문입니다.
+
+이는 MySQL의 최신 버전을 실행 중일 때 가장 흔하게 발생하는 현상입니다. PHP와 MySQL이 잘 동작하지 않습니다. 가장 좋은 조언은 MySQL을 버리고 MariaDB를 설치하는 것입니다. 이는 우리가 지원할 수 없는 문제입니다.
+
+더 많은 정보는 다음을 참조하십시오:
+
+<https://www.ryadel.com/en/fix-mysql-server-gone-away-packets-order-similar-mysql-related-errors/>
+
+### 명령 삽입이 작동하지 않습니다
+
+Apache가 웹 서버에서 명령을 실행할 충분한 권한을 갖고 있지 않을 수 있습니다. Linux에서 DVWA를 실행 중인 경우 root로 로그인했는지 확인하십시오. Windows에서는 관리자로 로그인하십시오.
+
+### CentOS에서 데이터베이스가 연결되지 않는 이유는 무엇입니까?
+
+SELinux와 관련된 문제로 인해 문제가 발생할 수 있습니다. SELinux를 비활성화하거나 다음 명령을 실행하여 웹 서버가 데이터베이스와 통신할 수 있도록 합니다:
+
+```
+setsebool -P httpd_can_network_connect_db 1
+```
+
+### 그 외 문제
+
+최신 문제 해결 정보를 위해 git 저장소의 열린 및 닫힌 티켓을 모두 읽어보십시오:
+
+<https://github.com/digininja/DVWA/issues>
+
+티켓을 제출하기 전에 저장소에서 최신 코드를 실행 중인지 확인하십시오. 이것은 최신 릴리스가 아니라 master 브랜치의 최신 코드입니다.
+
+티켓을 제출할 때 다음 정보를 적어도 제출하십시오:
+
+- 운영 체제
+- 오류가 발생한 직후 웹 서버 오류 로그의 마지막 5줄
+- 데이터베이스 인증 문제인 경우 위의 단계를 따라서 각 단계의 스크린샷을 찍어 제출하십시오. 이것들을 데이터베이스 사용자 및 암호가 표시된 구성 파일 섹션의 스크린샷과 함께 제출하십시오.
+- 문제가 발생한 상황에 대한 완전한 설명, 기대하는 동작 및 문제를 해결하기 위해 시도한 내용에 대한 설명입니다. "로그인이 고장나 있음"만으로는 문제를 이해하고 해결하는 데 충분하지 않습니다.
+
+- - -
+
+## 튜토리얼
+
+일부 취약점을 식별하고 그것을 감지하고 그것을 악용하는 방법을 보여주는 튜토리얼 비디오를 만들어 보겠습니다. 지금까지 제작한 튜토리얼은 다음과 같습니다:
+
+[Reflected XSS 찾기 및 악용하기](https://youtu.be/V4MATqtdxss)
+
+- - -
+
+## SQLite3 SQL Injection
+
+_SQL Injection과 Blind SQL Injection은 기본적으로 사이트에서 사용하는 MariaDB/MySQL 서버에 대해 수행됩니다. 그러나 SQLite3에 대한 SQL Injection 테스트를 수행할 수도 있습니다._
+
+_SQLite3를 PHP와 함께 작동시키는 방법에 대해 다루지 않겠지만, `php-sqlite3` 패키지를 설치하고 활성화하는 것으로 간단히 설정할 수 있습니다._
+
+_전환하기 위해 구성 파일을 수정하고 다음 라인을 추가하거나 편집하십시오:_
+
+```
+$_DVWA["SQLI_DB"] = "sqlite";
+$_DVWA["SQLITE_DB"] = "sqli.db";
+```
+
+_기본적으로 `database/sqli.db` 파일을 사용하며, 문제가 발생하면 단순히 `database/sqli.db.dist` 파일을 덮어쓰면 됩니다._
+
+_도전 과제는 MySQL과 정확히 동일하며, SQLite3에서 실행됩니다._
+
+- - -
+
+👨‍💻 기여자
+-----
+
+_모든 기여하신 분들께 감사드립니다. :heart:_
+
+_아이디어, 개선 사항 또는 단순히 협력하고자 하시면 언제든지 기여하고 프로젝트에 참여할 수 있습니다. PR을 보내 주시기 바랍니다._
+
+<p align="center">
+<a href="https://github.com/digininja/DVWA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=digininja/DVWA&max=500">
+</a>
+</p>
+
+- - -
+
+## 취약점 보고
+
+_간단히 말해서, 부디 그러지 마십시오!_
+
+_매년 누군가가 앱에서 발견한 취약점을 보고하는 경우가 있습니다. 어떤 것은 잘 쓰여진 보고서이며 유료 펜 테스트 보고서보다 나을 때도 있습니다. 어떤 것은 그저 "헤더가 누락되었습니다, 제게 돈을 주세요"입니다._
+
+_2023년에는 누군가가 CVE 요청을 통해 하나의 취약점에 대한 CVE를 받았습니다. 그들에게 [CVE-2023-39848](https://nvd.nist.gov/vuln/detail/CVE-2023-39848)가 부여되었습니다. 많은 재미있는 일이 일어나고 시간이 소비되었습니다._
+
+_앱에는 취약점이 있습니다. 이는 고의입니다. 대부분은 교훈으로 작동하는 잘 알려진 것들이며, 다른 것들은 "숨겨진" 것들입니다. 당신의 기술로 숨겨진 추가 기능을 찾아내고 싶다면, 블로그 포스트를 작성하거나 비디오를 만들어 찾은 방법 및 이들을 알아보는 사람들이 있을 수 있습니다. 우리에게 링크를 보내주시면 참조 목록에 포함할 수도 있습니다._
+
+## 링크
+
+프로젝트 홈: <https://github.com/digininja/DVWA>
+
+*DVWA 팀 제작*
