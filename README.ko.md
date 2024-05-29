@@ -152,3 +152,146 @@ Docker 데이터(컨테이너, 이미지, 볼륨 등)는 영향을 받지 않아
 
 **컨테이너에서 DVWA를 실행할 때, 웹 서버는 일반적인 포트 80 대신 포트 4280에서 수신 대기하고 있습니다.**
 이 결정에 대한 자세한 내용은 [다른 포트에서 DVWA를 실행하고 싶습니다](#i-want-to-run-dvwa-on-a-different-port)를 참조하세요.
+
+#### 로컬 빌드
+
+로컬에서 변경 사항을 적용하고 프로젝트를 빌드하려면 `compose.yml` 파일에서 `pull_policy: always`를 `pull_policy: build`로 변경하십시오.
+
+`docker compose up -d`를 실행하면 레지스트리에 무엇이 있든 상관없이 Docker가 로컬에서 이미지를 빌드하도록 트리거됩니다.
+
+참조: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy).
+
+### PHP 버전
+
+이상적으로는 최신 안정 버전의 PHP를 사용하는 것이 좋습니다. 이는 이 앱이 개발 및 테스트되는 버전입니다.
+
+PHP 5.x를 사용하려는 사람에게는 지원이 제공되지 않습니다.
+
+7.3 미만의 버전은 문제가 발생할 수 있는 알려진 이슈가 있으며, 대부분의 앱은 작동하겠지만 무작위로 문제가 발생할 수 있습니다. 아주 좋은 이유가 없는 한, 그렇게 오래된 버전을 사용하는 경우 지원이 제공되지 않습니다.
+
+### Linux 패키지
+
+Debian 기반 Linux 배포판을 사용하는 경우, 다음 패키지 _(또는 이에 상응하는 것)_ 를 설치해야 합니다:
+
+- apache2
+- libapache2-mod-php
+- mariadb-server
+- mariadb-client
+- php
+- php-mysqli
+- php-gd
+
+모든 최신 버전을 받기 위해 설치 전에 업데이트를 수행하는 것이 좋습니다.
+
+```
+apt update
+apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libapache2-mod-php
+```
+
+이 사이트는 MariaDB 대신 MySQL로도 작동하지만, MySQL을 올바르게 작동시키기 위해 변경해야 하는 반면, MariaDB는 별다른 설정 없이 바로 작동하므로 MariaDB를 강력히 추천합니다.
+
+## 구성
+
+### 설정 파일
+
+DVWA에는 해당 위치에 복사한 다음 적절한 변경 사항을 가할 필요가 있는 설정 파일의 더미 복사본이 함께 제공됩니다. 리눅스에서는 DVWA 디렉토리에 있는 것으로 가정하면 다음과 같이 수행할 수 있습니다:
+
+`cp config/config.inc.php.dist config/config.inc.php`
+
+Windows에서는 파일 확장자를 숨기는 경우 조금 더 어려울 수 있습니다. 이에 대해 자세히 알아보려면 다음 블로그 포스트를 참조하세요:
+
+[Windows에서 파일 확장자 표시하는 방법](https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/)
+
+### 데이터베이스 설정
+
+데이터베이스를 설정하려면, 단순히 주 메뉴의 `Setup DVWA` 버튼을 클릭한 다음 `Create / Reset Database` 버튼을 클릭하면 됩니다. 이렇게 하면 데이터베이스가 생성되거나 재설정되며 일부 데이터가 포함됩니다.
+
+데이터베이스를 생성하는 동안 오류가 발생하면 `./config/config.inc.php` 내의 데이터베이스 자격 증명이 올바른지 확인하십시오. *이는 예제 파일인 config.inc.php.dist와 다릅니다.*
+
+변수는 다음과 같이 기본값으로 설정됩니다:
+
+```php
+$_DVWA[ 'db_server'] = '127.0.0.1';
+$_DVWA[ 'db_port'] = '3306';
+$_DVWA[ 'db_user' ] = 'dvwa';
+$_DVWA[ 'db_password' ] = 'p@ssw0rd';
+$_DVWA[ 'db_database' ] = 'dvwa';
+```
+
+참고로, MySQL 대신 MariaDB를 사용하는 경우 (Kali의 기본값은 MariaDB입니다), 데이터베이스 루트 사용자를 사용할 수 없으므로 새 데이터베이스 사용자를 생성해야 합니다. 이를 위해 루트 사용자로 데이터베이스에 연결한 다음 다음 명령을 사용하십시오:
+
+```mysql
+mysql> create database dvwa;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> grant all on dvwa.* to dvwa@localhost;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+```
+
+### 인증 비활성화
+
+일부 도구는 인증을 사용할 수 없으므로 DVWA와 함께 사용할 수 없습니다. 이를 해결하기 위해 인증 확인을 비활성화하는 구성 옵션이 있습니다. 이를 위해 설정 파일에서 다음을 설정하면 됩니다:
+
+```php
+$_DVWA[ 'disable_authentication' ] = true;
+```
+
+또한 테스트하려는 내용에 적합한 보안 수준으로 보안 수준을 설정해야 합니다:
+
+```php
+$_DVWA[ 'default_security_level' ] = 'low';
+```
+
+이 상태에서는 로그인할 필요 없이 모든 기능에 액세스할 수 있습니다.
+
+### 폴더 권한
+
+* `./hackable/uploads/` - 웹 서비스에 의해 쓰기 가능해야 합니다 (파일 업로드를 위해).
+
+### PHP 구성
+
+리눅스 시스템에서는 일반적으로 `/etc/php/x.x/fpm/php.ini` 또는 `/etc/php/x.x/apache2/php.ini`에서 찾을 수 있습니다.
+
+* 원격 파일 포함 (RFI)을 허용하려면:
+    * `allow_url_include = on` [[allow_url_include](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include)]
+    * `allow_url_fopen = on` [[allow_url_fopen](https://secure.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen)]
+
+* PHP가 모든 오류 메시지를 표시하도록 하려면:
+    * `display_errors = on` [[display_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-errors)]
+    * `display_startup_errors = on` [[display_startup_errors](https://secure.php.net/manual/en/errorfunc.configuration.php#ini.display-startup-errors)]
+
+변경 사항을 적용한 후 php 서비스 또는 Apache를 다시 시작하는지 확인하세요.
+
+### reCAPTCHA
+
+이는 "Insecure CAPTCHA" 랩에서만 필요하며 해당 랩을 사용하지 않는다면 이 섹션을 무시할 수 있습니다.
+
+<https://www.google.com/recaptcha/admin/create>에서 API 키 쌍을 생성합니다.
+
+그런 다음 이 키는 `./config/config.inc.php`의 다음 섹션에 들어갑니다:
+
+* `$_DVWA[ 'recaptcha_public_key' ]`
+* `$_DVWA[ 'recaptcha_private_key' ]`
+
+### 기본 자격 증명
+
+**기본 사용자 이름 = `admin`**
+
+**기본 암호 = `password`**
+
+_... 쉽게 브루트 포스될 수 있음 ;)_
+
+로그인 URL: http://127.0.0.1/login.php
+
+_참고: DVWA를 다른 디렉토리에 설치한 경우 이 URL이 다를 수 있습니다._
+
+
+- - -
+
+## Troubleshooting
