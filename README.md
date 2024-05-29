@@ -41,6 +41,7 @@ This file is available in multiple languages:
 - Arabic: [العربية](README.ar.md)
 - Chinese: [简体中文](README.zh.md)
 - French: [Français](README.fr.md)
+- Korean: [한국어](README.ko.md)
 - Persian: [فارسی](README.fa.md)
 - Portuguese: [Português](README.pt.md)
 - Spanish: [Español](README.es.md)
