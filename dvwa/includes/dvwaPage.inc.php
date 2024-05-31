@@ -42,7 +42,6 @@ if( !isset( $_COOKIE[ 'security' ] ) || !in_array( $_COOKIE[ 'security' ], $secu
  * it will just cause a new Set-Cookie header to be sent with the new right
  * flags and the new id (or the same one if we wish to keep it).
 */
-
 function dvwa_start_session() {
 	// This will setup the session cookie based on
 	// the security level.
@@ -65,7 +64,7 @@ function dvwa_start_session() {
 	 * Need to do this as you can't update the settings of a session
 	 * while it is open. So check if one is open, close it if needed
 	 * then update the values and start it again.
-	 */
+	*/
 	if (session_status() == PHP_SESSION_ACTIVE) {
 		session_write_close();
 	}
@@ -94,7 +93,7 @@ function dvwa_start_session() {
 	 * already exists, we don't want it to change after authentication. We thus
 	 * set the id to its previous value using session_id(), which will force
 	 * the Set-Cookie header.
-	 */
+	*/
 	if ($security_level == 'impossible') {
 		session_start();
 		session_regenerate_id(); // force a new id to be generated
