@@ -79,7 +79,15 @@ An automated configuration script for DVWA on Debian-based machines, including K
 - **Operating System:** Debian-based system (Kali, Ubuntu, Kubuntu, Linux Mint, Zorin OS)
 - **Privileges:** Execute as root user
 
-#### Installation Steps
+#### Installing with One Command
+
+This is a modified version of  [IamCarron](https://github.com/iamCarron/) made by [its-ashu-otf](its-ashu-otf) which runs in English Language.
+
+```bash
+sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/its-ashu-otf/Hacking-Lab/main/Install-DVWA.sh)"
+ ```
+
+#### If Above script doesn't works then Follow these Installation Steps
 
 1. **Download the script:**
    ```bash
