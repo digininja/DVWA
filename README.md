@@ -81,7 +81,7 @@ An automated configuration script for DVWA on Debian-based machines, including K
 
 #### Installing with One Command
 
-This is a modified version of  [IamCarron](https://github.com/iamCarron/) made by [its-ashu-otf](its-ashu-otf) which runs in English Language.
+This is a modified version of  [IamCarron](https://github.com/iamCarron/) made by [its-ashu-otf](https://github.com/its-ashu-otf) which runs in English Language.
 
 ```bash
 sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/its-ashu-otf/Hacking-Lab/main/Install-DVWA.sh)"
