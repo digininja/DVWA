@@ -81,11 +81,15 @@ An automated configuration script for DVWA on Debian-based machines, including K
 
 #### Installation Steps
 
-# One-Command Install to directly invoke the script in your Terminal.
-   ```bash
-   sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh)"
-   ```
-# Manually Running the Script
+##### One-Liner
+
+This will download an install script written by [@IamCarron](https://github.com/IamCarron) and run it automatically. This would not be included here if we did not trust the author and the script as it was when we reviewed it, but there is always the chance of someone going rogue, and so if you don't feel safe running someone else's code without reviewing it yourself, follow the manual process and you can review it once downloaded.
+
+```bash
+sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh)"
+```
+
+##### Manually Running the Script
 1. **Download the script:**
    ```bash
    wget https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh
