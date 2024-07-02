@@ -31,6 +31,12 @@ switch( dvwaSecurityLevelGet() ) {
 
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/encryption/source/{$vulnerabilityFile}";
 
+$page[ 'body' ] .= "<div class=\"body_padded\">
+	<h1>Vulnerability: Encryption Problems</h1>
+
+	<div class=\"vulnerable_code_area\">
+";
+
 $page[ 'body' ] .= $content;
 
 $page[ 'body' ] .= "

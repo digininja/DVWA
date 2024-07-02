@@ -1,0 +1,5 @@
+<?php
+
+$content = "Coming Soon";
+
+?>

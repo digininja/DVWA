@@ -42,10 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 $content = "
-<div class=\"body_padded\">
-	<h1>Vulnerability: Encryption Problems</h1>
-
-	<div class=\"vulnerable_code_area\">
 		<p>
 		You have managed to get hold of three session tokens for an application you think is using poor cryptography to protect its secrets:
 		</p>
