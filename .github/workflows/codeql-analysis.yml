@@ -29,6 +29,10 @@ jobs:
         # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#overriding-automatic-language-detection
 
     steps:
+    - name: Inject slug/short variables
+      uses: rlespinasse/github-slug-action@v2
+      with:
+        short-length: 8
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
