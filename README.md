@@ -239,17 +239,17 @@ $_DVWA[ 'db_database' ] = 'dvwa';
 
 Note, if you are using MariaDB rather than MySQL (MariaDB is default in Kali), then you can't use the database root user, you must create a new database user. To do this, connect to the database as the root user then use the following commands:
 
-```mysql
-mysql> create database dvwa;
+```mariadb
+MariaDB [(none)]> create database dvwa;
 Query OK, 1 row affected (0.00 sec)
 
-mysql> create user dvwa@localhost identified by 'p@ssw0rd';
+MariaDB [(none)]> create user dvwa@localhost identified by 'p@ssw0rd';
 Query OK, 0 rows affected (0.01 sec)
 
-mysql> grant all on dvwa.* to dvwa@localhost;
+MariaDB [(none)]> grant all on dvwa.* to dvwa@localhost;
 Query OK, 0 rows affected (0.01 sec)
 
-mysql> flush privileges;
+MariaDB [(none)]> flush privileges;
 Query OK, 0 rows affected (0.00 sec)
 ```
 
