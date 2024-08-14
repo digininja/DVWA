@@ -305,6 +305,7 @@ function dvwaHtmlEcho( $pPage ) {
 			$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'authbypass', 'name' => 'Authorisation Bypass', 'url' => 'vulnerabilities/authbypass/' );
 		}
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'open_redirect', 'name' => 'Open HTTP Redirect', 'url' => 'vulnerabilities/open_redirect/' );
+		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'encryption', 'name' => 'Encryption', 'url' => 'vulnerabilities/encryption/' );
 	}
 
 	$menuBlocks[ 'meta' ] = array();
