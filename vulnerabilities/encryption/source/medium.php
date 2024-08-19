@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	}
 }
 
-$content = "
+$html = "
 		<p>
 		You have managed to get hold of three session tokens for an application you think is using poor cryptography to protect its secrets:
 		</p>
@@ -85,18 +85,18 @@ To ensure your security, we use aes-128-ecb throughout our application.
 ";
 
 if ($errors != "") {
-	$content .= '<div class="warning">' . $errors . '</div>';
+	$html .= '<div class="warning">' . $errors . '</div>';
 }
 
 if ($messages != "") {
-	$content .= '<div class="nearly">' . $messages . '</div>';
+	$html .= '<div class="nearly">' . $messages . '</div>';
 }
 
 if ($success != "") {
-	$content .= '<div class="success">' . $success . '</div>';
+	$html .= '<div class="success">' . $success . '</div>';
 }
 
-$content .= "
+$html .= "
 		<form name=\"ecb\" method='post' action=\"" . $_SERVER['PHP_SELF'] . "\">
 			<p>
 				<label for='token'>Token:</lable><br />
