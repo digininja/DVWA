@@ -37,8 +37,6 @@ $page[ 'body' ] .= "<div class=\"body_padded\">
 	<div class=\"vulnerable_code_area\">
 ";
 
-$page[ 'body' ] .= $content;
-
 $page[ 'body' ] .= "
 		{$html}
 	</div>
