@@ -1,5 +1,5 @@
 <div class="body_padded">
-	<h1>Help - Encryption Problems</h1>
+	<h1>Help - Cryptographic Problems</h1>
 
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
@@ -10,24 +10,58 @@
 		Cryptography is key area of security and is used to keep secrets secret. When implemented badly these secrets can be leaked or the crypto manipulated to bypass protections.
 		</p>
 		<p>
-		This module will look at three weaknesses, using encoding istead of crypto, using algorithms with known weaknesses, and padding oracle attacks.
+		This module will look at three weaknesses, using encoding instead of encryption, using algorithms with known weaknesses, and padding oracle attacks.
 		</p>
 
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Each level has its own objective but the general idea is to exploit weak cryptographic implementaions.</p>
+		<p>Each level has its own objective but the general idea is to exploit weak cryptographic implementations.</p>
 
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>Low level will not check the requested input, before including it to be used in the output text.</p>
-		<pre>Spoiler: <span class="spoiler">?name=&lt;script&gt;alert("XSS");&lt;/script&gt;</span>.</pre>
+		<p>The first thing to notice is the mention of encoding rather than encryption, that should give you a hint about the vulnerability here.</p>
+		<p>Start by encoding a few messages and looking at the output, if you have spent any time around encoding standards you should be able to tell that it is in Base64. Could it be that simple? Try Base64 decoding some test strings to find out:</p>
+		<pre><code>encode (hello) -> HwQPBBs=
+base64decode (HwQPBBs=) -> 0x1f 0x04 0x0f 0x04 0x1b</code></pre>
+		<pre><code>encode (a secret) -> FkEQDRcFChs=
+base64decode (FkEQDRcFChs=) -> 0x16 0x41 0x10 0x0d 0x17 0x05 0x0a 0x1b</code></pre>
+<p>
+That failed, but what you might notice is that the number of output characters matches the number of input characters. Another common encoding method that is sometimes mistaken for encryption is XOR, this takes the clear text input and XORs each character with a key which is repeated or truncated to be the same length as the input.</p>
+<p>
+XOR is associative, this means that if you XOR the clear text with the key you get the cipher text and if you XOR the cipher text with the key you get the clear text, what it also means is if you XOR the clear text with the cipher text, you get the key. Let's try this with our examples:
+</p>
+		<pre><code>encode (hello) -> HwQPBBs=
+xor (HwQPBBs=, hello) -> wacht</code></pre>
+<p>
+This looks promising, let's try the second example:
+</p>
+		<pre><code>encode (a secret) -> FkEQDRcFChs=
+xor (FkEQDRcFChs=, a secret) -> wachtwoo</code></pre>
 
-		<br />
+<p>
+There is no repetition in the key yet so let's try with a longer string.
+</p>
+
+		<pre><code>encode (thisisaverylongstringtofindthepassword) -> AwkKGx0EDhkXFg4NDAYTBBsdGwoQFQwOHRkLGxoBBwAQGwMYHQs=
+xor (thisisaverylongstringtofindthepassword, base64decode (AwkKGx0EDhkXFg4NDAYTBBsdGwoQFQwOHRkLGxoBBwAQGwMYHQs=)) -> wachtwoordwachtwoordwachtwoordwachtwoo</code></pre>
+
+<p>
+It looks like we have found our key "wachtwoord". Let's give it a try on our challenge string:
+</p>
+
+<pre><code>xor (base64decode(Lg4WGlQZChhSFBYSEB8bBQtPGxdNQSwEHREOAQY=), wachtwoord) -> Your new password is: Olifant</code></pre>
+
+
+<p>
+And there we have it, the message we are looking for and the password we need to login.
+</p>
+
+		<p>Another lesson here, do not assume that the messages or the underlying system you are working with is in English. The key "wachtwoord" is Dutch for password.</p>
 
 		<h3>Medium Level</h3>
-		<p>The tokens are encrypted using an Electronic Code Book based algorithm (aes-128-ecb). In this mode, the clear text is broken down into fixed sized blocks and each block is encrypted independantly of the rest. This results in a ciphertext block that is made up from a number of individual blocks with no way to tie them together. Worse than this, any two blocks, from any two clear text inputs, are interchangable as long as they have been ecrypted with the same key. In our example, this means you can take blocks from the three different tokens to make your own token. </p>
+		<p>The tokens are encrypted using an Electronic Code Book based algorithm (aes-128-ecb). In this mode, the clear text is broken down into fixed sized blocks and each block is encrypted independently of the rest. This results in a cipher text block that is made up from a number of individual blocks with no way to tie them together. Worse than this, any two blocks, from any two clear text inputs, are interchangeable as long as they have been encrypted with the same key. In our example, this means you can take blocks from the three different tokens to make your own token. </p>
 		<p>
 			How do you know the block size? This is given in the algorithm name. aes-128-ebc is a 128 bit block cipher. 128 bits is 16 bytes, but to make things human readable, the bytes are represented as hex characters meaning each byte is two characters. This gives you a block size of 32 characters. Sooty's token is 192 characters long, 192 / 32 = 6 and so Sooty's token has six code blocks.
 		</p>
@@ -96,7 +130,7 @@ caeb574f10f349ed839fbfd223903368 <- Finish off with Sweep's bio
 		This is a very contrived setup with the tokens tweaked to force blocks to map to the JSON object so manipulation is easier to do, in the real world it is unlikely to be this easy however as data is often formed from fixed sized blocks overlaps can happen in a way that mixing blocks up results in valid data. Sometimes just being able to pass invalid data is enough so all that is needed is to swap blocks in a way that they can be decrypted and then passed on to the rest of the system where they will cause errors.
 		</p>
 		<p>
-		If you want to play with this some more, there is a script calle ecb_theory.php in the sources directory which shows how the tokens were generated and lets you combine them in different ways to create custom tokens.
+		If you want to play with this some more, there is a script called ecb_theory.php in the sources directory which shows how the tokens were generated and lets you combine them in different ways to create custom tokens.
 		</p>
 		<pre>Spoiler: <span class="spoiler">
 

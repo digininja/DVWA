@@ -6,10 +6,10 @@ require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Vulnerability: Encryption Problems' . $page[ 'title_separator' ].$page[ 'title' ];
-$page[ 'page_id' ] = 'encryption';
-$page[ 'help_button' ]   = 'encryption';
-$page[ 'source_button' ] = 'encryption';
+$page[ 'title' ]   = 'Vulnerability: Cryptography Problems' . $page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'page_id' ] = 'cryptography';
+$page[ 'help_button' ]   = 'cryptography';
+$page[ 'source_button' ] = 'cryptography';
 
 dvwaDatabaseConnect();
 
@@ -29,10 +29,10 @@ switch( dvwaSecurityLevelGet() ) {
 		break;
 }
 
-require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/encryption/source/{$vulnerabilityFile}";
+require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/cryptography/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "<div class=\"body_padded\">
-	<h1>Vulnerability: Encryption Problems</h1>
+	<h1>Vulnerability: Cryptography Problems</h1>
 
 	<div class=\"vulnerable_code_area\">
 ";
