@@ -69,11 +69,28 @@ function decrypt ($ciphertext, $key, $iv) {
 
 	# Using the NO_PADDING so that the padding is returned, not stripped, so that it can 
 	# be compared later
-	$e = openssl_decrypt($ciphertext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING, $iv);
+	$e = openssl_decrypt($ciphertext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA, $iv);
 	if ($e === false) {
 		throw new Exception ("Decryption failed");
 	}
 	return $e;
+}
+
+# Using this function in the attack as it does not return
+# any encrypted data, just true if it works, exception
+# if it can't decrypt. This stops anything accidentally
+# leaking to the hacking code below.
+
+function can_decrypt ($ciphertext, $key, $iv) {
+	try {
+		$d = decrypt ($ciphertext, $key, $iv); 
+		if (preg_match ("/^u:(\d+) l:([01])$/", $d, $matches)) {
+			return "User ID: " . $matches[1] . " Level: " . $matches[2] . "\n";
+		}
+		return false;
+	} catch(Exception $exp) {
+		throw ($exp);
+	}
 }
 
 /*
@@ -115,6 +132,7 @@ $key = "my key 16 bytes.";
 $init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
 $clear = "hello";
 $clear = "hello world";
+$clear = "u:123 l:0";
 print "Clear text: " . $clear . "\n";
 print "Encryption key: " . $key . "\n";
 print "Encryption IV: " . byte_array_to_string ($init_iv) . "\n";
@@ -138,22 +156,58 @@ for ($padding = 1; $padding <= 16; $padding++) {
 		}
 		try {
 			# print "IV: " . bin2hex($iv) . "\n";
-			$d = decrypt ($e, $key, $iv);
+			$d = can_decrypt ($e, $key, $iv);
 
 			# Only get here if the decrypt works correctly
-			# Check for edge case that the IV byte we are checking
-			# just happens to match data and is not part of the padding.
 
-			if (ord($d[$offset]) == $padding && ord($d[15]) == $padding) {
-				print "There was a match\n";
-				# var_dump ($d);
-				$zeroing[$offset] = $i ^ $padding; 
-				print "IV: " . byte_array_to_string ($iv) . "\n";
-				#print "Zero: " . byte_array_to_string ($zeroing) . "\n";
-				break (1);
+			/*
+			Check for edge case on offset 15 (right most byte).
+			The decrypted data could look like this:
+
+			0x44 ... 0x02 0x02
+						  ^^^^ Real last byte of value 2 byte padding
+
+			In this situation, if we happen to land on a value 
+			that sets the last byte to 0x02 then that will
+			look like valid padding as it will make the data end
+			in 0x02 0x02 as it already does:
+
+			0x44 ... 0x02 0x02
+						  ^^^^ Fluke, we want 0x01 for 1 byte padding
+
+			This is what we want:
+
+			0x44 ... 0x02 0x01
+						  ^^^^ Valid 1 byte padding
+
+			To do this, change the IV value for offset 14 which will
+			change the second to last byte and make the call again.
+			If we were in the edge case we would now have:
+
+			0x44 ... 0xf3 0x02
+						  ^^^^ No longer valid padding
+
+			This is no longer valid padding so it will fail and we can 
+			continue looking till we find the value that gives us
+			valid 1 byte padding.
+
+			*/
+
+			if ($offset == 15) {
+				print "Got a valid decrypt for offset 15, checking edge case\n";
+				$temp_iv = $iv;
+				$temp_iv[14] = 0xff;
+				$temp_d = decrypt ($e, $key, $temp_iv);
+				print "Not edge case, can continue\n";
 			}
+
+			print "There was a match\n";
+			$zeroing[$offset] = $i ^ $padding; 
+			# print "IV: " . byte_array_to_string ($iv) . "\n";
+			# print "Zero: " . byte_array_to_string ($zeroing) . "\n";
+			break (1);
 		} catch(Exception $exp) {
-			#print "Fail\n";
+			# print "Fail\n";
 			# var_dump ($e);
 		}
 	}
@@ -168,3 +222,23 @@ print "Zeroing array is: " . byte_array_to_string ($zeroing) . "\n";
 $x = xor_byte_array ($init_iv, $zeroing);
 print "\n";
 print "Decrypted string: " . byte_array_to_string ($x) . "\n";
+
+/*
+Trying to modify decrypted data by playing with the zeroing array.
+*/
+
+print "\n";
+print "Trying to modify string\n";
+
+$hacked_token = $zeroing;
+$hacked_token[8] = $hacked_token[8] ^ 0x01;
+
+print byte_array_to_string ($hacked_token) . "\n";
+
+$result = can_decrypt (byte_array_to_string ($hacked_token), $key, $iv);
+
+if ($result === false) {
+	print "Hack failed\n";
+} else {
+	print $result . "\n";
+}
