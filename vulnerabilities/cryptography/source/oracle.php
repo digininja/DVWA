@@ -132,7 +132,7 @@ $key = "my key 16 bytes.";
 $init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
 $clear = "hello";
 $clear = "hello world";
-$clear = "u:123 l:1";
+$clear = "u:123 l:0";
 print "Clear text: " . $clear . "\n";
 print "Encryption key: " . $key . "\n";
 print "Encryption IV: " . byte_array_to_string ($init_iv) . "\n";
