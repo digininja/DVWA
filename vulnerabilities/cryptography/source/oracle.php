@@ -132,7 +132,7 @@ $key = "my key 16 bytes.";
 $init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
 $clear = "hello";
 $clear = "hello world";
-$clear = "u:123 l:0";
+$clear = "u:123 l:1";
 print "Clear text: " . $clear . "\n";
 print "Encryption key: " . $key . "\n";
 print "Encryption IV: " . byte_array_to_string ($init_iv) . "\n";
@@ -197,7 +197,7 @@ for ($padding = 1; $padding <= 16; $padding++) {
 				print "Got a valid decrypt for offset 15, checking edge case\n";
 				$temp_iv = $iv;
 				$temp_iv[14] = 0xff;
-				$temp_d = decrypt ($e, $key, $temp_iv);
+				$temp_d = can_decrypt ($e, $key, $temp_iv);
 				print "Not edge case, can continue\n";
 			}
 
@@ -231,11 +231,17 @@ print "\n";
 print "Trying to modify string\n";
 
 $hacked_token = $zeroing;
-$hacked_token[8] = $hacked_token[8] ^ 0x01;
 
-print byte_array_to_string ($hacked_token) . "\n";
+$padding = 0x02;
+$offset = 16 - $padding;
+	for ($k = $offset + 1; $k < 16; $k++) {
+		$iv[$k] = $zeroing[$k] ^ $padding;
+	}
+#$iv[0] = 0xaa;
 
-$result = can_decrypt (byte_array_to_string ($hacked_token), $key, $iv);
+print "Derived IV is: " . byte_array_to_string ($iv) . "\n";
+
+$result = can_decrypt ($e, $key, $iv);
 
 if ($result === false) {
 	print "Hack failed\n";
