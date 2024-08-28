@@ -31,11 +31,6 @@ function xor_byte_array ($a1, $a2) {
 	return $out;
 }
 
-function hex_string_to_nice ($in) {
-	$out = preg_replace ("/(..)/", '0x${1} ', bin2hex($in));
-	return $out;
-}
-
 function byte_array_to_string ($array) {
 	$str = "";
 	foreach ($array as $c) {
@@ -70,6 +65,7 @@ function decrypt ($ciphertext, $key, $iv) {
 	# Using the NO_PADDING so that the padding is returned, not stripped, so that it can 
 	# be compared later
 	$e = openssl_decrypt($ciphertext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA, $iv);
+	#$e = openssl_decrypt($ciphertext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING, $iv);
 	if ($e === false) {
 		throw new Exception ("Decryption failed");
 	}
@@ -85,14 +81,61 @@ function can_decrypt ($ciphertext, $key, $iv) {
 	try {
 		$d = decrypt ($ciphertext, $key, $iv); 
 		if (preg_match ("/^u:(\d+) l:([01])$/", $d, $matches)) {
-			return "User ID: " . $matches[1] . " Level: " . $matches[2] . "\n";
+			$id = $matches[1];
+			$level = $matches[2];
+			if ($level == 1) {
+				$privs = "admin";
+			} else {
+				$privs = "user";
+			}
+			$message = "Welcome user " . $id . " (" . $privs . ")";
+			return $message;
 		}
-		return false;
+		return "Login Unsuccessful";
 	} catch(Exception $exp) {
 		throw ($exp);
 	}
 }
 
+/*
+$key = "my key 16 bytes.";
+$init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
+$clear = "u:123 l:0";
+$e = encrypt ($clear, $key, $init_iv);
+
+$iv = [0x64,0x28,0x22,0x26,0x26,0x36,0x7b,0x22,0x21,0x15,0x14,0x13,0x12,0x11,0x10,0x1f];
+$zeroing = [0x74,0x38,0x32,0x36,0x36,0x26,0x6b,0x32,0x31,0x05,0x04,0x03,0x02,0x01,0x00,0x0f];
+
+$new_clear = "u:123 l:1";
+
+for ($i = 0; $i < strlen($new_clear); $i++) {
+	$zeroing[$i] = $zeroing[$i] ^ ord($new_clear[$i]);
+}
+$padding = 16 - strlen($new_clear);
+$offset = 16 - $padding;
+for ($i = $offset; $i < 16; $i++) {
+	$zeroing[$i] = $zeroing[$i] ^ $padding;
+}
+#$zeroing[0] = $zeroing[0] ^ ord("u");
+#$zeroing[0] = $zeroing[0] ^ 117;
+print "Derived IV is: " . byte_array_to_string ($iv) . "\n";
+
+$result = decrypt ($e, $key, $zeroing);
+var_dump ($result);
+$result = can_decrypt ($e, $key, $zeroing);
+var_dump ($result);
+exit;
+
+if ($result === false) {
+	print "Hack failed\n";
+} else {
+	print $result . "\n";
+}
+
+
+exit;
+
+*/
 /*
 
 This is a test decrypt of a message encrypted on the command line using openssl.
@@ -138,7 +181,6 @@ print "Encryption key: " . $key . "\n";
 print "Encryption IV: " . byte_array_to_string ($init_iv) . "\n";
 
 $e = encrypt ($clear, $key, $init_iv);
-print "Encrypted data: " . hex_string_to_nice ($e) . "\n";
 print "\n";
 
 print "Trying to decrypt\n";
@@ -161,6 +203,7 @@ for ($padding = 1; $padding <= 16; $padding++) {
 			# Only get here if the decrypt works correctly
 
 			/*
+
 			Check for edge case on offset 15 (right most byte).
 			The decrypted data could look like this:
 
@@ -215,13 +258,33 @@ for ($padding = 1; $padding <= 16; $padding++) {
 
 print "\n";
 print "Derived IV is: " . byte_array_to_string ($iv) . "\n";
-$x = xor_byte_array ($iv, $zeroing);
-print "Derived IV XOR and zeroing string: " . byte_array_to_string ($x) . "\n";
+
+# If you want to check this, it should be all 16 to show it is all padding
+#$x = xor_byte_array ($iv, $zeroing);
+#print "Derived IV XOR and zeroing string: " . byte_array_to_string ($x) . "\n";
+
 print "Real IV is: " . byte_array_to_string ($init_iv) . "\n";
 print "Zeroing array is: " . byte_array_to_string ($zeroing) . "\n";
+
 $x = xor_byte_array ($init_iv, $zeroing);
+print "Decrypted string with padding: " . byte_array_to_string ($x) . "\n";
+$number_of_padding_bytes = $x[15];
+$without_padding = array_slice ($x, 0, 16 - $number_of_padding_bytes);
 print "\n";
-print "Decrypted string: " . byte_array_to_string ($x) . "\n";
+print "Decrypted string dump: " . byte_array_to_string ($without_padding) . "\n";
+
+$str = '';
+for ($i = 0; $i < count ($without_padding); $i++) {
+	$c = $without_padding[$i];
+	if ($c > 0x19 && $c < 0x7f) {
+		$str .= chr($c);
+	} else {
+		$str .= "0x" . sprintf ("%02x", $c) . " ";
+	}
+}
+
+print "Decrypted string as text: " . $str . "\n";
+print "\n";
 
 /*
 Trying to modify decrypted data by playing with the zeroing array.
@@ -230,21 +293,27 @@ Trying to modify decrypted data by playing with the zeroing array.
 print "\n";
 print "Trying to modify string\n";
 
-$hacked_token = $zeroing;
+$new_clear = "u:1 l:1";
+print "New clear text: " . $new_clear . "\n";
 
-$padding = 0x02;
+for ($i = 0; $i < strlen($new_clear); $i++) {
+	$zeroing[$i] = $zeroing[$i] ^ ord($new_clear[$i]);
+}
+$padding = 16 - strlen($new_clear);
 $offset = 16 - $padding;
-	for ($k = $offset + 1; $k < 16; $k++) {
-		$iv[$k] = $zeroing[$k] ^ $padding;
-	}
-#$iv[0] = 0xaa;
+for ($i = $offset; $i < 16; $i++) {
+	$zeroing[$i] = $zeroing[$i] ^ $padding;
+}
 
-print "Derived IV is: " . byte_array_to_string ($iv) . "\n";
+print "New IV is: " . byte_array_to_string ($zeroing) . "\n";
 
-$result = can_decrypt ($e, $key, $iv);
+print "Sending new data to server\n";
 
-if ($result === false) {
+$result = can_decrypt ($e, $key, $zeroing);
+print $result . "\n";
+
+if (strpos ($result, "admin") === false) {
 	print "Hack failed\n";
 } else {
-	print $result . "\n";
+	print "Hack success!\n";
 }
