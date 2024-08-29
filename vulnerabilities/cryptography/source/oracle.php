@@ -47,95 +47,135 @@ function zero_array($length) {
 	return $array;
 }
 
-function encrypt ($plaintext, $key, $iv) {
-	$iv = implode(array_map("chr", $iv));
+define ("KEY", "my key 16 bytes.");
 
+function encrypt ($plaintext, $iv) {
 	# Default padding is PKCS#7 which is interchangable with PKCS#5
 	# https://en.wikipedia.org/wiki/Padding_%28cryptography%29#PKCS#5_and_PKCS#7
 
-	$e = openssl_encrypt($plaintext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA, $iv);
+	if (strlen ($iv) != 16) {
+		throw new Exception ("IV must be 16 bytes, " . strlen ($iv) . " passed");
+	}
+	$e = openssl_encrypt($plaintext, 'aes-128-cbc', KEY, OPENSSL_RAW_DATA, $iv);
 	if ($e === false) {
 		throw new Exception ("Encryption failed");
 	}
 	return $e;
 }
-function decrypt ($ciphertext, $key, $iv) {
-	$iv = implode(array_map("chr", $iv));
 
-	# Using the NO_PADDING so that the padding is returned, not stripped, so that it can 
-	# be compared later
-	$e = openssl_decrypt($ciphertext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA, $iv);
-	#$e = openssl_decrypt($ciphertext, 'aes-128-cbc', $key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING, $iv);
+function decrypt ($ciphertext, $iv) {
+	if (strlen ($iv) != 16) {
+		throw new Exception ("IV must be 16 bytes, " . strlen ($iv) . " passed");
+	}
+	$e = openssl_decrypt($ciphertext, 'aes-128-cbc', KEY, OPENSSL_RAW_DATA, $iv);
 	if ($e === false) {
 		throw new Exception ("Decryption failed");
 	}
 	return $e;
 }
 
-# Using this function in the attack as it does not return
-# any encrypted data, just true if it works, exception
-# if it can't decrypt. This stops anything accidentally
-# leaking to the hacking code below.
+function create_token () {
+	$token = "userid:2";
 
-function can_decrypt ($ciphertext, $key, $iv) {
+	# This gives a string of 16 random bytes
+	$iv_string = random_bytes(16);
+
+	$e = encrypt ($token, $iv_string);
+	$data = array (
+					"token" => base64_encode ($e),
+					"iv" => base64_encode ($iv_string)
+				);
+	return json_encode($data);
+}
+
+$t = json_decode (create_token(), true);
+var_dump ($t);
+$token = $t['token'];
+$iv_string_b64 = $t['iv'];
+$iv_string = base64_decode ($iv_string_b64);
+$iv = unpack('C*', $iv_string);
+
+$o = make_call ($token, $iv);
+
+var_dump ($o);
+exit;
+
+function make_call ($token, $iv) {
+	# This maps the IV byte array down to a string
+	$iv_string = implode(array_map("chr", $iv));
+
+	# Now base64 encode it so it is safe to send
+	$iv_string_b64 = base64_encode ($iv_string);
+
+	$data = array (
+					"token" => $token,
+					"iv" => $iv_string_b64
+				);
+	$ret = check_token (json_encode ($data));
+	return $ret;
+}
+
+function check_token ($data) {
+	$users = array ();
+	$users[1] = array ("name" => "Geoffery", "level" => "admin");
+	$users[2] = array ("name" => "Bungle", "level" => "user");
+	$users[3] = array ("name" => "Zippy", "level" => "user");
+	$users[4] = array ("name" => "George", "level" => "user");
+
+	$data_array = false;
 	try {
-		$d = decrypt ($ciphertext, $key, $iv); 
-		if (preg_match ("/^u:(\d+) l:([01])$/", $d, $matches)) {
-			$id = $matches[1];
-			$level = $matches[2];
-			if ($level == 1) {
-				$privs = "admin";
-			} else {
-				$privs = "user";
-			}
-			$message = "Welcome user " . $id . " (" . $privs . ")";
-			return $message;
-		}
-		return "Login Unsuccessful";
-	} catch(Exception $exp) {
-		throw ($exp);
+		$data_array = json_decode ($data, true);
+	} catch (TypeError $exp) {
+		$ret = array (
+						"status" => 503,
+						"message" => "Data in wrong format",
+						"extra" => $exp->getMessage()
+					);
 	}
+	var_dump ($data_array);
+
+	if ($data_array === false) {
+		$ret = array (
+						"status" => 502,
+						"message" => "Data in wrong format"
+					);
+	} else {
+		$ciphertext = base64_decode ($data_array['token']);
+		$iv = base64_decode ($data_array['iv']);
+
+		$ret = array (
+						"status" => 500,
+						"message" => "Unknown error"
+					);
+		try {
+			$d = decrypt ($ciphertext, $iv); 
+			if (preg_match ("/^userid:(\d+)$/", $d, $matches)) {
+				$id = $matches[1];
+				if (array_key_exists ($id, $users)) {
+					$user = $users[$id];
+					$ret = array (
+									"status" => 200,
+									"user" => $user["name"],
+									"level" => $user['level']
+								);
+				} else {
+					$ret = array (
+									"status" => 500,
+									"message" => "User not found"
+								);
+				}
+			}
+		} catch(Exception $exp) {
+			$ret = array (
+							"status" => 501,
+							"message" => "Unable to decrypt token",
+							"extra" => $exp->getMessage()
+						);
+		}
+	}
+	return json_encode ($ret);
 }
 
-/*
-$key = "my key 16 bytes.";
-$init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
-$clear = "u:123 l:0";
-$e = encrypt ($clear, $key, $init_iv);
-
-$iv = [0x64,0x28,0x22,0x26,0x26,0x36,0x7b,0x22,0x21,0x15,0x14,0x13,0x12,0x11,0x10,0x1f];
-$zeroing = [0x74,0x38,0x32,0x36,0x36,0x26,0x6b,0x32,0x31,0x05,0x04,0x03,0x02,0x01,0x00,0x0f];
-
-$new_clear = "u:123 l:1";
-
-for ($i = 0; $i < strlen($new_clear); $i++) {
-	$zeroing[$i] = $zeroing[$i] ^ ord($new_clear[$i]);
-}
-$padding = 16 - strlen($new_clear);
-$offset = 16 - $padding;
-for ($i = $offset; $i < 16; $i++) {
-	$zeroing[$i] = $zeroing[$i] ^ $padding;
-}
-#$zeroing[0] = $zeroing[0] ^ ord("u");
-#$zeroing[0] = $zeroing[0] ^ 117;
-print "Derived IV is: " . byte_array_to_string ($iv) . "\n";
-
-$result = decrypt ($e, $key, $zeroing);
-var_dump ($result);
-$result = can_decrypt ($e, $key, $zeroing);
-var_dump ($result);
-exit;
-
-if ($result === false) {
-	print "Hack failed\n";
-} else {
-	print $result . "\n";
-}
-
-
-exit;
-
-*/
 /*
 
 This is a test decrypt of a message encrypted on the command line using openssl.
@@ -147,7 +187,7 @@ xxd shows the 0x0b padding bytes at the end of the message.
 $key = chr(0xCA) . chr(0x97) . chr(0x81) . chr(0x12) . chr(0xCA) . chr(0x1B) . chr(0xBD) . chr(0xCA) . chr(0xFA) . chr(0xC2) . chr(0x31) . chr(0xB3) . chr(0x9A) . chr(0x23) . chr(0xDC) . chr(0x4D);
 $iv = [ 0xA7, 0x86, 0xEF, 0xF8, 0x14, 0x7C, 0x4E, 0x72, 0xB9, 0x80, 0x77, 0x85, 0xAF, 0xEE, 0x48, 0xBB];
 $data = chr(0x74) . chr(0x55) . chr(0x06) . chr(0xd1) . chr(0xa3) . chr(0x78) . chr(0x7f) . chr(0x98) . chr(0xc7) . chr(0xec) . chr(0x06) . chr(0x47) . chr(0x64) . chr(0xad) . chr(0x94) . chr(0xad);
-$d = decrypt ($data, $key, $iv);
+$d = decrypt ($data, $iv);
 var_dump ($d);
 exit;
 
@@ -164,23 +204,22 @@ xxd shows the 0x07 padding bytes at the end of the message.
 $key = "my key 16 bytes.";
 $iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
 $clear_text = "a message";
-$e = encrypt ($clear_text, $key, $iv);
-$d = decrypt ($e, $key, $iv);
+$e = encrypt ($clear_text, $iv);
+$d = decrypt ($e, $iv);
 var_dump ($d);
 exit;
 
 */
 
-$key = "my key 16 bytes.";
 $init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
 $clear = "hello";
 $clear = "hello world";
 $clear = "u:123 l:0";
 print "Clear text: " . $clear . "\n";
-print "Encryption key: " . $key . "\n";
+print "Encryption key: " . KEY . "\n";
 print "Encryption IV: " . byte_array_to_string ($init_iv) . "\n";
 
-$e = encrypt ($clear, $key, $init_iv);
+$e = encrypt ($clear, $init_iv);
 print "\n";
 
 print "Trying to decrypt\n";
@@ -198,7 +237,7 @@ for ($padding = 1; $padding <= 16; $padding++) {
 		}
 		try {
 			# print "IV: " . bin2hex($iv) . "\n";
-			$d = can_decrypt ($e, $key, $iv);
+			$d = check_token ($e, $iv);
 
 			# Only get here if the decrypt works correctly
 
@@ -240,7 +279,7 @@ for ($padding = 1; $padding <= 16; $padding++) {
 				print "Got a valid decrypt for offset 15, checking edge case\n";
 				$temp_iv = $iv;
 				$temp_iv[14] = 0xff;
-				$temp_d = can_decrypt ($e, $key, $temp_iv);
+				$temp_d = check_token ($e, $temp_iv);
 				print "Not edge case, can continue\n";
 			}
 
@@ -309,7 +348,7 @@ print "New IV is: " . byte_array_to_string ($zeroing) . "\n";
 
 print "Sending new data to server\n";
 
-$result = can_decrypt ($e, $key, $zeroing);
+$result = check_token ($e, $zeroing);
 print $result . "\n";
 
 if (strpos ($result, "admin") === false) {
