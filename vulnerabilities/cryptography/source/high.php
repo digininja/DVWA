@@ -1,5 +1,5 @@
 <?php
 
-$content = "Coming Soon";
+$html = "Coming Soon";
 
 ?>
