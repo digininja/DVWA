@@ -513,7 +513,7 @@ function dvwaSourceHtmlEcho( $pPage ) {
 
 // To be used on all external links --
 function dvwaExternalLinkUrlGet( $pLink,$text=null ) {
-	if(is_null( $text )) {
+	if(is_null( $text ) || $text == "") {
 		return '<a href="' . $pLink . '" target="_blank">' . $pLink . '</a>';
 	}
 	else {
