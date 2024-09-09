@@ -1,33 +1,6 @@
 <?php
 
-define ("KEY", "rainbowclimbing.");
-
-function encrypt ($plaintext, $iv) {
-	# Default padding is PKCS#7 which is interchangable with PKCS#5
-	# https://en.wikipedia.org/wiki/Padding_%28cryptography%29#PKCS#5_and_PKCS#7
-
-	if (strlen ($iv) != 16) {
-		throw new Exception ("IV must be 16 bytes, " . strlen ($iv) . " passed");
-	}
-	$e = openssl_encrypt($plaintext, 'aes-128-cbc', KEY, OPENSSL_RAW_DATA, $iv);
-	if ($e === false) {
-		throw new Exception ("Encryption failed");
-	}
-	return $e;
-}
-
-function create_token () {
-	$token = "userid:2";
-
-	$iv_string = "1234567812345678";
-
-	$e = encrypt ($token, $iv_string);
-	$data = array (
-					"token" => base64_encode ($e),
-					"iv" => base64_encode ($iv_string)
-				);
-	return json_encode($data);
-}
+require ("oracle_library.php");
 
 $message = "";
 
@@ -76,7 +49,7 @@ $html = "
 			You have managed to steal the following token from a user of the Prognostication application.
 		</p>
 		<p>
-			<textarea style='width: 600px; height: 18px'>" . htmlentities ($token_data) . "</textarea>
+			<textarea style='width: 600px; height: 23px'>" . htmlentities ($token_data) . "</textarea>
 		</p>
 		<p>
 			You can use the form below to provide the token to access the system. You have two challenges, first, decrypt the token to find out the secret it contains, and then create a new token to access the system as a other users. See if you can make yourself an administrator.
@@ -86,7 +59,7 @@ $html = "
 			<div id='message'></div>
 			<p>
 				<label for='token'>Token:</lable><br />
-				<textarea id='token' name='token' style='width: 600px; height: 18px'>" . htmlentities ($token_data) . "</textarea>
+				<textarea id='token' name='token' style='width: 600px; height: 23px'>" . htmlentities ($token_data) . "</textarea>
 			</p>
 			<p>
 				<input type=\"button\" value=\"Submit\" onclick='send_token();'>
