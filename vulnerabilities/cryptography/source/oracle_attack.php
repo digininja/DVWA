@@ -229,7 +229,7 @@ function do_attack ($iv_string_b64, $token, $url) {
 	try {
 		$ret_obj = make_call ($token, $zeroing, $url);
 
-		print "Response from server:";
+		print "Response from server:\n";
 		var_dump ($ret_obj);
 
 		if ($ret_obj['status'] == 200 && $ret_obj['level'] == "admin") {
@@ -270,7 +270,7 @@ To test locally, pass --local, otherwise pass the IV, token and URL for the remo
 } elseif (array_key_exists ("l", $options) || array_key_exists ("local", $options)) {
 	print "Creating the token locally\n\n";
 
-	$token_data = json_decode (create_token(), true);
+	$token_data = json_decode (create_token(true), true);
 
 	$token = $token_data['token'];
 	$iv = $token_data['iv'];

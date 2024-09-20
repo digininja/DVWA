@@ -29,12 +29,17 @@ function decrypt ($ciphertext, $iv) {
 	return $e;
 }
 
-function create_token () {
+// Added the debug flag so that when calling from the script
+// the function can print the data used to create the token
+
+function create_token ($debug = false) {
 	$token = "userid:2";
 
-	print "Clear text token: " . $token . "\n";
-	print "Encryption key: " . KEY . "\n";
-	print "IV: " . (IV) . "\n";
+	if ($debug) {
+		print "Clear text token: " . $token . "\n";
+		print "Encryption key: " . KEY . "\n";
+		print "IV: " . (IV) . "\n";
+	}
 
 	$e = encrypt ($token, IV);
 	$data = array (
