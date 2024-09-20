@@ -3,7 +3,6 @@
 define ("KEY", "rainbowclimbinghigh");
 define ("IV", "1234567812345678");
 
-
 function encrypt ($plaintext, $iv) {
 	# Default padding is PKCS#7 which is interchangable with PKCS#5
 	# https://en.wikipedia.org/wiki/Padding_%28cryptography%29#PKCS#5_and_PKCS#7
@@ -129,4 +128,3 @@ function check_token ($data) {
 	}
 	return json_encode ($ret);
 }
-
