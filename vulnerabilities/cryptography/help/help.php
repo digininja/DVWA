@@ -160,7 +160,7 @@ caeb574f10f349ed839fbfd223903368 <- Finish off with Sweep's bio
 		This is a very contrived setup with the tokens tweaked to force blocks to map to the JSON object so manipulation is easier to do, in the real world it is unlikely to be this easy however as data is often formed from fixed sized blocks overlaps can happen in a way that mixing blocks up results in valid data. Sometimes just being able to pass invalid data is enough so all that is needed is to swap blocks in a way that they can be decrypted and then passed on to the rest of the system where they will cause errors.
 		</p>
 		<p>
-		If you want to play with this some more, there is a script called ecb_theory.php in the sources directory which shows how the tokens were generated and lets you combine them in different ways to create custom tokens.
+		If you want to play with this some more, there is a script called <a href="cryptography/source/ecb_attack.php" download>ecb_attack.php</a> in the sources directory which shows how the tokens were generated and lets you combine them in different ways to create custom tokens.
 		</p>
 		</div>
 
@@ -174,6 +174,9 @@ caeb574f10f349ed839fbfd223903368 <- Finish off with Sweep's bio
 		<div id="high_answer">
 		<p>Rather than try to explain this here, go read this excelent write up on the attack by Eli Sohl.</p>
 		<p><a target="_blank" href="https://www.nccgroup.com/uk/research-blog/cryptopals-exploiting-cbc-padding-oracles/">Cryptopals: Exploiting CBC Padding Oracles</a></p>
+		<p>
+		If you want to play with this some more, there is a script called <a href="cryptography/source/oracle_attack.php" download>oracle_attack.php</a> in the sources directory which runs through the full attack with debug. You can run this either against the DVWA site or it will run locally against its own pretend web server.
+		</p>
 		</div>
 
 		<h3>Impossible Level</h3>
