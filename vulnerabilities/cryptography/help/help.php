@@ -1,3 +1,24 @@
+<script>
+function show_answer(which) {
+	var x = document.getElementById(which + "_answer");
+	if (x.style.display === "" || x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
+}
+</script>
+<style>
+	pre {
+		overflow-x: auto;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+	#low_answer,#medium_answer,#high_answer {
+		display: none;
+	}
+</style>
+
 <div class="body_padded">
 	<h1>Help - Cryptographic Problems</h1>
 
@@ -21,7 +42,11 @@
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>The first thing to notice is the mention of encoding rather than encryption, that should give you a hint about the vulnerability here.</p>
+		<p>The thing to notice is the mention of encoding rather than encryption, that should give you a hint about the vulnerability here.</p>
+		<p>
+		<button onclick="show_answer('low')">Show Answer</button>
+		</p>
+		<div id="low_answer">
 		<p>Start by encoding a few messages and looking at the output, if you have spent any time around encoding standards you should be able to tell that it is in Base64. Could it be that simple? Try Base64 decoding some test strings to find out:</p>
 		<pre><code>encode (hello) -> HwQPBBs=
 base64decode (HwQPBBs=) -> 0x1f 0x04 0x0f 0x04 0x1b</code></pre>
@@ -59,9 +84,14 @@ And there we have it, the message we are looking for and the password we need to
 </p>
 
 		<p>Another lesson here, do not assume that the messages or the underlying system you are working with is in English. The key "wachtwoord" is Dutch for password.</p>
+		</div>
 
 		<h3>Medium Level</h3>
-		<p>The tokens are encrypted using an Electronic Code Book based algorithm (aes-128-ecb). In this mode, the clear text is broken down into fixed sized blocks and each block is encrypted independently of the rest. This results in a cipher text block that is made up from a number of individual blocks with no way to tie them together. Worse than this, any two blocks, from any two clear text inputs, are interchangeable as long as they have been encrypted with the same key. In our example, this means you can take blocks from the three different tokens to make your own token. </p>
+		<p>The tokens are encrypted using an Electronic Code Book based algorithm (aes-128-ecb). In this mode, the clear text is broken down into fixed sized blocks and each block is encrypted independently of the rest. This results in a cipher text that is made up from a number of individual blocks with no way to tie them together. Worse than this, any two blocks, from any two clear text inputs, are interchangeable as long as they have been encrypted with the same key. In our example, this means you can take blocks from the three different tokens to make your own token. </p>
+		<p>
+		<button onclick="show_answer('medium')">Show Answer</button>
+		</p>
+		<div id="medium_answer">
 		<p>
 			How do you know the block size? This is given in the algorithm name. aes-128-ebc is a 128 bit block cipher. 128 bits is 16 bytes, but to make things human readable, the bytes are represented as hex characters meaning each byte is two characters. This gives you a block size of 32 characters. Sooty's token is 192 characters long, 192 / 32 = 6 and so Sooty's token has six code blocks.
 		</p>
@@ -132,31 +162,29 @@ caeb574f10f349ed839fbfd223903368 <- Finish off with Sweep's bio
 		<p>
 		If you want to play with this some more, there is a script called ecb_theory.php in the sources directory which shows how the tokens were generated and lets you combine them in different ways to create custom tokens.
 		</p>
-		<pre>Spoiler: <span class="spoiler">
-
-
-
-		</span></pre>
-
-		<br />
+		</div>
 
 		<h3>High Level</h3>
-		<p>The developer now believes they can disable all JavaScript by removing the pattern "&lt;s*c*r*i*p*t".</p>
-		<pre>Spoiler: <span class="spoiler">HTML events</span>.</pre>
+		<p>The system is using AES-128-CBC which means it is vulnerable to a padding oracle attack.</p>
 
-		<br />
+		<p>
+		<button onclick="show_answer('high')">Show Answer</button>
+		</p>
+
+		<div id="high_answer">
+		<p>Rather than try to explain this here, go read this excelent write up on the attack by Eli Sohl.</p>
+		<p><a target="_blank" href="https://www.nccgroup.com/uk/research-blog/cryptopals-exploiting-cbc-padding-oracles/">Cryptopals: Exploiting CBC Padding Oracles</a></p>
+		</div>
 
 		<h3>Impossible Level</h3>
-		<p>Using inbuilt PHP functions (such as "<?php echo dvwaExternalLinkUrlGet( 'https://secure.php.net/manual/en/function.htmlspecialchars.php', 'htmlspecialchars()' ); ?>"),
-			its possible to escape any values which would alter the behaviour of the input.</p>
+		<p>You can never say impossible in crypto as something that would take years today could take minutes in the future when a new attack is found or when processing power takes a giant leam forward.</p>
+		<p>
+		The current recommended alternative to AES-CBC is AES-GCM and so the system uses that here. 256 bit blocks rather than 128 bit blocks are used, and a unique IV used for every message. This may be secure today but who knows what tomorrow brings?
+		</p>
 	</div></td>
 	</tr>
 	</table>
 
 	</div>
-
-	<br />
-
-	<p>Reference: <?php echo dvwaExternalLinkUrlGet( 'https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)' ); ?></p>
+	
 </div>
-
