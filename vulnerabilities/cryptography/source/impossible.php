@@ -46,13 +46,13 @@ $html = "
 		}
 	</script>
 		<p>
-			You have managed to steal the following token from a user of the Prognostication application.
+			You have managed to steal the following token from a user of the Impervious application.
 		</p>
 		<p>
 			<textarea style='width: 600px; height: 23px'>" . htmlentities ($token_data) . "</textarea>
 		</p>
 		<p>
-			You can use the form below to provide the token to access the system. You have two challenges, first, decrypt the token to find out the secret it contains, and then create a new token to access the system as a other users. See if you can make yourself an administrator.
+			This being the impossible level, you should not be able to mess with the token in any useful way but feel free to try below.
 		</p>
 		<hr>
 		<form name=\"check_token\" action=\"\">
