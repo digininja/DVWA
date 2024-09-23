@@ -86,6 +86,22 @@ ul + ul, ul + ul.menuBlocks, ul + h1, ul + h2, ul + p {
 	font-size: 13px;
 }
 
+div.nearly {
+	border: 2px solid #0000ff;
+	padding: 10px 20px 10px 20px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+div.success {
+	border: 2px solid #00ff00;
+	padding: 10px 20px 10px 20px;
+	text-align: center;
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
 div.warning {
 	border: 2px solid #ff0000;
 	padding: 10px 20px 10px 20px;
