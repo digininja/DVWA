@@ -1,6 +1,9 @@
 <?php
 
-require_once ("oracle_library.php");
+define ("KEY", "rainbowclimbinghigh");
+define ("ALGO", "aes-128-cbc");
+
+require_once ("token_library.php");
 
 $ret = "";
 

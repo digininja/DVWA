@@ -1,7 +1,9 @@
 <?php
 
-define ("KEY", "rainbowclimbinghigh");
-define ("IV", "1234567812345678");
+if (!defined ("KEY") || !defined ("ALGO")) {
+	print "Missing definitions, bailing out\n";
+	exit;
+}
 
 function encrypt ($plaintext, $iv) {
 	# Default padding is PKCS#7 which is interchangable with PKCS#5
@@ -10,7 +12,7 @@ function encrypt ($plaintext, $iv) {
 	if (strlen ($iv) != 16) {
 		throw new Exception ("IV must be 16 bytes, " . strlen ($iv) . " passed");
 	}
-	$e = openssl_encrypt($plaintext, 'aes-128-cbc', KEY, OPENSSL_RAW_DATA, $iv);
+	$e = openssl_encrypt($plaintext, ALGO, KEY, OPENSSL_RAW_DATA, $iv);
 	if ($e === false) {
 		throw new Exception ("Encryption failed");
 	}
@@ -21,7 +23,7 @@ function decrypt ($ciphertext, $iv) {
 	if (strlen ($iv) != 16) {
 		throw new Exception ("IV must be 16 bytes, " . strlen ($iv) . " passed");
 	}
-	$e = openssl_decrypt($ciphertext, 'aes-128-cbc', KEY, OPENSSL_RAW_DATA, $iv);
+	$e = openssl_decrypt($ciphertext, ALGO, KEY, OPENSSL_RAW_DATA, $iv);
 	if ($e === false) {
 		throw new Exception ("Decryption failed");
 	}
@@ -31,19 +33,19 @@ function decrypt ($ciphertext, $iv) {
 // Added the debug flag so that when calling from the script
 // the function can print the data used to create the token
 
-function create_token ($debug = false) {
+function create_token ($iv, $debug = false) {
 	$token = "userid:2";
 
 	if ($debug) {
 		print "Clear text token: " . $token . "\n";
 		print "Encryption key: " . KEY . "\n";
-		print "IV: " . (IV) . "\n";
+		print "IV: " . ($iv) . "\n";
 	}
 
-	$e = encrypt ($token, IV);
+	$e = encrypt ($token, $iv);
 	$data = array (
 					"token" => base64_encode ($e),
-					"iv" => base64_encode (IV)
+					"iv" => base64_encode ($iv)
 				);
 	return json_encode($data);
 }

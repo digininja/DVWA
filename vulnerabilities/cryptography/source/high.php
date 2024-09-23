@@ -1,16 +1,20 @@
 <?php
 
-require ("oracle_library.php");
+define ("KEY", "rainbowclimbinghigh");
+define ("ALGO", "aes-128-cbc");
+
+require ("token_library.php");
 
 $message = "";
 
-$token_data = create_token();
+$iv = "1234567812345678";
+$token_data = create_token($iv);
 
 $html = "
 	<script>
 		function send_token() {
 
-			const url = 'source/check_token.php';
+			const url = 'source/check_token_high.php';
 			const data = document.getElementById ('token').value;
 
 			console.log (data);
