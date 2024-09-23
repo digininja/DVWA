@@ -1,14 +1,10 @@
 <?php
 
-define ("KEY", "rainbowclimbinghigh");
-define ("ALGO", "aes-128-cbc");
-
-require ("token_library.php");
+require ("token_library_high.php");
 
 $message = "";
 
-$iv = "1234567812345678";
-$token_data = create_token($iv);
+$token_data = create_token();
 
 $html = "
 	<script>

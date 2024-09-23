@@ -1,10 +1,6 @@
 <?php
 
-define ("KEY", "rainbowclimbinghigh");
-define ("IV", "1234567812345678");
-define ("ALGO", "aes-128-cbc");
-
-require_once ("token_library.php");
+require_once ("token_library_high.php");
 
 function xor_byte_array ($a1, $a2) {
 	if (count ($a1) != count ($a2)) {
@@ -301,8 +297,7 @@ To test locally, pass --local, otherwise pass the IV, token and URL for the remo
 } elseif (array_key_exists ("l", $options) || array_key_exists ("local", $options)) {
 	print "Creating the token locally\n\n";
 
-	$iv = "1234567812345678";
-	$token_data = json_decode (create_token($iv, true), true);
+	$token_data = json_decode (create_token(true), true);
 
 	$token = $token_data['token'];
 	$iv = $token_data['iv'];

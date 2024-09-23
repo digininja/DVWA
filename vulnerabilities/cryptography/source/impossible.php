@@ -1,20 +1,16 @@
 <?php
 
-define ("KEY", "rainbowclimbinghigh");
-define ("ALGO", "aes-256-gcm");
-
-require ("token_library.php");
+require ("token_library_impossible.php");
 
 $message = "";
 
-$iv = openssl_random_pseudo_bytes(16, $cstrong);
-$token_data = create_token($iv);
+$token_data = create_token();
 
 $html = "
 	<script>
 		function send_token() {
 
-			const url = 'source/check_token.php';
+			const url = 'source/check_token_impossible.php';
 			const data = document.getElementById ('token').value;
 
 			console.log (data);

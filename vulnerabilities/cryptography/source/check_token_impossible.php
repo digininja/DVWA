@@ -1,10 +1,6 @@
 <?php
 
-define ("KEY", "rainbowclimbinghigh");
-define ("IV", "1234567812345678");
-define ("ALGO", "aes-128-cbc");
-
-require_once ("token_library.php");
+require_once ("token_library_impossible.php");
 
 $ret = "";
 
