@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "require": {
+        "zircote/swagger-php": "^4.10"
+    }
+}
