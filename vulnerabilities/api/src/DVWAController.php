@@ -6,10 +6,14 @@
 
 namespace Src;
 
-use OpenApi\Attributes as OA;
+use OpenApi\Attributes as OAT;
 
 # This is the definition for the whole file.
-#[OA\Info(title: "DVWA Sample API", version: "0.1")]
+#[OAT\Info(title: "DVWA Sample API", version: "0.1")]
+#[OAT\Contact(email: "robin@digi.ninja", url: "https://github.com/digininja/DVWA/")]
+
+#[OAT\Tag(name: "user", description: "User operations.")]
+#[OAT\Tag(name: "health", description: "Health operatons.")]
 
 class DVWAController
 {
@@ -26,32 +30,9 @@ class DVWAController
 		$this->userId = $userId;
 	}
 
-	public function getData()
-	{
-		return $this->data;
-	}
-	
-	#[OA\Post(path: '/api/data.json')]
-	#[OA\Response(response: '200', description: 'Data updated')]
-	public function setData($data)
-	{
-		$this->data = $data;
-	}
-
-	private function getAllUsers() {
-		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode($this->data);
-		return $response;
-	}
-
-	#[OA\Get(path: '/dvwaapi/data.json')]
-	#[OA\Response(response: '200', description: 'The data')]
-	private function getUser($id) {
-		if (!array_key_exists ($id, $this->data)) {
-			return $this->notFoundResponse();
-		}
-		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode($this->data[$id]);
+	private function notFoundResponse() {
+		$response['status_code_header'] = 'HTTP/1.1 404 Not Found';
+		$response['body'] = null;
 		return $response;
 	}
 
@@ -78,7 +59,94 @@ class DVWAController
 		return true;
 	}
 
-	# curl -X POST --data '{"name": "sue", "level": 2}'  http://localhost:8000/dvwaapi -i
+    #[OAT\Get(
+		tags: ["user"],
+        path: '/vulnerabilities/api/user/{id}',
+        operationId: 'getUserByID',
+		description: 'Get a user by ID.',
+        parameters: [
+            new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+                content: new OAT\JsonContent (ref: '#/components/schemas/User'),
+
+            ),
+            new OAT\Response(
+                response: 404,
+                description: 'User not found.',
+            ),
+        ]
+    )   
+    ]  
+	
+	private function getUser($id)
+	{
+		if (!array_key_exists ($id, $this->data)) {
+			return $this->notFoundResponse();
+		}
+		$response['status_code_header'] = 'HTTP/1.1 200 OK';
+		$response['body'] = json_encode ($this->data[$id]);
+		return $response;
+	}	
+
+    #[OAT\Get(
+		tags: ["user"],
+        path: '/vulnerabilities/api/user/',
+        operationId: 'getUsers',
+		description: 'Get all users.',
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+                content: new OAT\JsonContent(
+                    type: 'array',
+                    items: new OAT\Items(ref: '#/components/schemas/User')
+                )
+            ),
+        ]
+    )   
+    ]  
+	private function getAllUsers() {
+		$response['status_code_header'] = 'HTTP/1.1 200 OK';
+		$response['body'] = json_encode($this->data);
+		return $response;
+	}
+
+
+	# curl -X POST --data '{"name": "sue", "level": 2}'  http://localhost:8000/user -i
+	
+    #[OAT\Post(
+		tags: ["user"],
+        path: '/vulnerabilities/api/user/',
+        operationId: 'addUser',
+		description: 'Create a new user.',
+        parameters: [
+                new OAT\RequestBody (
+					description: 'User data.',
+                    content: new OAT\MediaType(
+                        mediaType: 'application/json',
+                        schema: new OAT\Schema(ref: UserAdd::class)
+                    )
+                ),
+
+        ],
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+                content: new OAT\JsonContent (ref: '#/components/schemas/User'),
+            ),
+            new OAT\Response(
+                response: 422,
+                description: 'Invalid user object provided',
+            ),
+        ]
+    )   
+    ]  
+
 	private function createUserFromRequest()
 	{
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
@@ -91,7 +159,42 @@ class DVWAController
 		return $response;
 	}
 
-	# curl -X PUT --data '{"name": "sue", "level": 2}'  http://localhost:8000/dvwaapi/3 -i
+	# curl -X PUT --data '{"name": "sue", "level": 2}'  http://localhost:8000/user/3 -i
+
+    #[OAT\Put(
+		tags: ["user"],
+        path: '/vulnerabilities/api/user/{id}',
+        operationId: 'updateUser',
+		description: 'Update a user by ID.',
+        parameters: [
+            new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
+                new OAT\RequestBody (
+					description: 'New user data.',
+                    content: new OAT\MediaType(
+                        mediaType: 'application/json',
+                        schema: new OAT\Schema(ref: UserUpdate::class)
+                    )
+                ),
+
+        ],
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+                content: new OAT\JsonContent (ref: '#/components/schemas/User'),
+            ),
+            new OAT\Response(
+                response: 404,
+                description: 'User not found',
+            ),
+            new OAT\Response(
+                response: 422,
+                description: 'Invalid user object provided',
+            ),
+        ]
+    )   
+    ]  
+	
 	private function updateUserFromRequest($id)
 	{
 		if (!array_key_exists ($id, $this->data)) {
@@ -107,7 +210,29 @@ class DVWAController
 		return $response;
 	}	
 
-	# curl -X DELETE http://localhost:8000/dvwaapi/2 -i
+	# curl -X DELETE http://localhost:8000/user/2 -i
+
+    #[OAT\Delete(
+		tags: ["user"],
+        path: '/vulnerabilities/api/user/{id}',
+        operationId: 'deleteUserById',
+		description: 'Delete user by ID.',
+        parameters: [
+            new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+            ),
+            new OAT\Response(
+                response: 404,
+                description: 'User not found',
+            ),
+        ]
+    )   
+    ]  
+	
 	private function deleteUser($id) {
 		if (!array_key_exists ($id, $this->data)) {
 			return $this->notFoundResponse();
@@ -144,11 +269,5 @@ class DVWAController
 		if ($response['body']) {
 			echo $response['body'];
 		}
-	}
-
-	private function notFoundResponse() {
-		$response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-		$response['body'] = null;
-		return $response;
 	}
 }

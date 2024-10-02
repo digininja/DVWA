@@ -2,6 +2,7 @@
 
 require '../bootstrap.php';
 use Src\DVWAController;
+use Src\HealthController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -17,26 +18,45 @@ $uri = explode( '/', $uri );
 
 $local_uri = array();
 foreach ($uri as $pos => $dir) {
-	if ($dir == "dvwaapi") {
+	if ($dir == "user" || $dir == "health") {
 		$local_uri = array_slice ($uri, $pos);
+		break;
 	}
 }
 
 // all of our endpoints start with /dvwaapi
 // everything else results in a 404 Not Found
 
-if ($local_uri[0] !== 'dvwaapi') {
+if (count($local_uri) == 0) {
 	header("HTTP/1.1 404 Not Found");
 	exit();
 }
 
-// the user id is, of course, optional and must be a number:
-$userId = null;
-if (isset($local_uri[1])) {
-	$userId = (int) $local_uri[1];
-}
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-// pass the request method and user ID to the DVWAController and process the HTTP request:
-$controller = new DVWAController($requestMethod, $userId);
-$controller->processRequest();
+switch ($local_uri[0]) {
+	case "user":
+		// the user id is, of course, optional and must be a number:
+		$userId = null;
+		if (isset($local_uri[1])) {
+			$userId = (int) $local_uri[1];
+		}
+
+		// pass the request method and user ID to the DVWAController and process the HTTP request:
+		$controller = new DVWAController($requestMethod, $userId);
+		$controller->processRequest();
+		break;
+	case "health":
+		if (!isset($local_uri[1])) {
+			header("HTTP/1.1 404 Not Found");
+			exit();
+		}
+
+		$command = $local_uri[1];
+		$controller = new HealthController($requestMethod, $command);
+		$controller->processRequest();
+		break;
+	default:
+		header("HTTP/1.1 404 Not Found");
+		exit();
+}
