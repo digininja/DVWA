@@ -22,6 +22,24 @@ final class User
 
     #[OAT\Property(type: 'integer', example: 1)]
     public int $level;
+
+	function __construct ($id, $name, $level) {
+		if (is_null ($id)) {
+			$id = mt_rand(50,100);
+		}
+		$this->id = $id;
+		$this->name = $name;
+		$this->level = $level;
+	}
+
+	public function toArray() {
+		$a = array (
+			"id" => $this->id,
+			"name" => $this->name,
+			"level" => $this->level,
+		);
+		return $a;
+	}
 }
 
 #[OAT\Schema(required: ['level', 'name'])]
@@ -39,7 +57,4 @@ final class UserUpdate
 {
     #[OAT\Property(example: "fred")]
     public string $name;
-
-    #[OAT\Property(type: 'integer', example: 1)]
-    public int $level;
 }

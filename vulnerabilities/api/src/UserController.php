@@ -1,51 +1,39 @@
 <?php
 
-# Start the app with:
-#
-# php -S localhost:8000 -t public
-
 namespace Src;
 
 use OpenApi\Attributes as OAT;
 
 # This is the definition for the whole file.
-#[OAT\Info(title: "DVWA Sample API", version: "0.1")]
+#[OAT\Info(title: "DVWA API", version: "0.1")]
 #[OAT\Contact(email: "robin@digi.ninja", url: "https://github.com/digininja/DVWA/")]
 
-#[OAT\Tag(name: "user", description: "User operations.")]
-#[OAT\Tag(name: "health", description: "Health operatons.")]
+# It would be good if this could be dynamic but the $_SERVER variables
+# aren't available when the Swagger generator scripts run so I can't
+# get the HTTP_HOST value from them. For now I'm hard coding it to make
+# my dev life easier.
+#[OAT\Server(url: 'http://dvwa.test', description: "API server")]
 
-class DVWAController
+#[OAT\Tag(name: "user", description: "User operations.")]
+#[OAT\Tag(name: "health", description: "Health operations.")]
+
+class UserController
 {
-	private $data = array (
-		1 => array ("name" => "Admin", "level" => 1),
-		2 => array ("name" => "Robin", "level" => 0),
-		3 => array ("name" => "Fred", "level" => 0)
-	);
+	private $data = array ();
 	private $userId = null;
 	private $requestMethod = "GET";
 
 	public function __construct($requestMethod, $userId) {
+		$this->data = array (
+			1 => new User (1, "admin", 0),
+			2 => new User (2, "robin", 1),
+			3 => new User (3, "fred", 1),
+		);
 		$this->requestMethod = $requestMethod;
 		$this->userId = $userId;
 	}
 
-	private function notFoundResponse() {
-		$response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-		$response['body'] = null;
-		return $response;
-	}
-
-    private function unprocessableEntityResponse()
-    {
-        $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
-        $response['body'] = json_encode([
-            'error' => 'Invalid input'
-        ]);
-        return $response;
-    }
-
-	private function validatePerson($input)
+	private function validateAdd($input)
 	{
 		if (! isset($input['name'])) {
 			return false;
@@ -54,6 +42,14 @@ class DVWAController
 			return false;
 		}
 		if (!is_numeric ($input['level'])) {
+			return false;
+		}
+		return true;
+	}
+
+	private function validateUpdate($input)
+	{
+		if (! isset($input['name'])) {
 			return false;
 		}
 		return true;
@@ -85,10 +81,12 @@ class DVWAController
 	private function getUser($id)
 	{
 		if (!array_key_exists ($id, $this->data)) {
-			return $this->notFoundResponse();
+			$gc = new GenericController("notFound");
+			$gc->processRequest();
+			exit();
 		}
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode ($this->data[$id]);
+		$response['body'] = json_encode ($this->data[$id]->toArray());
 		return $response;
 	}	
 
@@ -109,15 +107,17 @@ class DVWAController
         ]
     )   
     ]  
+
 	private function getAllUsers() {
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode($this->data);
+		$all = array();
+		foreach ($this->data as $user) {
+			$all[] = $user->toArray();
+		}
+		$response['body'] = json_encode($all);
 		return $response;
 	}
 
-
-	# curl -X POST --data '{"name": "sue", "level": 2}'  http://localhost:8000/user -i
-	
     #[OAT\Post(
 		tags: ["user"],
         path: '/vulnerabilities/api/user/',
@@ -147,19 +147,20 @@ class DVWAController
     )   
     ]  
 
-	private function createUserFromRequest()
+	private function addUser()
 	{
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
-		if (! $this->validatePerson($input)) {
-			return $this->unprocessableEntityResponse();
+		if (! $this->validateAdd($input)) {
+			$gc = new GenericController("unprocessable");
+			$gc->processRequest();
+			exit();
 		}
-		$this->data[] = $input;
+		$user = new User(null, $input['name'], intval ($input['level']));
+		$this->data[] = $user;
 		$response['status_code_header'] = 'HTTP/1.1 201 Created';
-		$response['body'] = null;
+		$response['body'] = json_encode($user->toArray());
 		return $response;
 	}
-
-	# curl -X PUT --data '{"name": "sue", "level": 2}'  http://localhost:8000/user/3 -i
 
     #[OAT\Put(
 		tags: ["user"],
@@ -195,22 +196,29 @@ class DVWAController
     )   
     ]  
 	
-	private function updateUserFromRequest($id)
+	private function updateUser($id)
 	{
 		if (!array_key_exists ($id, $this->data)) {
-			return $this->notFoundResponse();
+			$gc = new GenericController("notFound");
+			$gc->processRequest();
+			exit();
 		}
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
-		if (! $this->validatePerson($input)) {
-			return $this->unprocessableEntityResponse();
+		if (! $this->validateUpdate($input)) {
+			$gc = new GenericController("unprocessable");
+			$gc->processRequest();
+			exit();
 		}
-		$this->data[$id] = $input;
+		if (array_key_exists ("name", $input)) {
+			$this->data[$id]->name = $input['name'];
+		}
+		if (array_key_exists ("level", $input)) {
+			$this->data[$id]->level = intval ($input['level']);
+		}
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = null;
+		$response['body'] = json_encode ($this->data[$id]->toArray());
 		return $response;
 	}	
-
-	# curl -X DELETE http://localhost:8000/user/2 -i
 
     #[OAT\Delete(
 		tags: ["user"],
@@ -235,9 +243,17 @@ class DVWAController
 	
 	private function deleteUser($id) {
 		if (!array_key_exists ($id, $this->data)) {
-			return $this->notFoundResponse();
+			$gc = new GenericController("notFound");
+			$gc->processRequest();
+			exit();
 		}
 		unset ($this->data[$id]);
+		$response['status_code_header'] = 'HTTP/1.1 200 OK';
+		$response['body'] = null;
+		return $response;
+	}
+
+	private function options() {
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
 		$response['body'] = null;
 		return $response;
@@ -253,16 +269,21 @@ class DVWAController
 				};
 				break;
 			case 'POST':
-				$response = $this->createUserFromRequest();
+				$response = $this->addUser();
 				break;
 			case 'PUT':
-				$response = $this->updateUserFromRequest($this->userId);
+				$response = $this->updateUser($this->userId);
 				break;
 			case 'DELETE':
 				$response = $this->deleteUser($this->userId);
 				break;
+			case 'OPTIONS':
+				$response = $this->options();
+				break;
 			default:
-				$response = $this->notFoundResponse();
+				$gc = new GenericController("notSupported");
+				$gc->processRequest();
+				exit();
 				break;
 		}
 		header($response['status_code_header']);

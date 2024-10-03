@@ -1,7 +1,7 @@
 <?php
 
 require '../bootstrap.php';
-use Src\DVWAController;
+use Src\UserController;
 use Src\HealthController;
 
 header("Access-Control-Allow-Origin: *");
@@ -42,14 +42,15 @@ switch ($local_uri[0]) {
 			$userId = (int) $local_uri[1];
 		}
 
-		// pass the request method and user ID to the DVWAController and process the HTTP request:
-		$controller = new DVWAController($requestMethod, $userId);
+		// pass the request method and user ID to the UserController and process the HTTP request:
+		$controller = new UserController($requestMethod, $userId);
 		$controller->processRequest();
 		break;
 	case "health":
 		if (!isset($local_uri[1])) {
-			header("HTTP/1.1 404 Not Found");
-			exit();
+			$gc = new GenericController("notFound");
+			$gc->processRequest();
+			break;
 		}
 
 		$command = $local_uri[1];
@@ -57,6 +58,7 @@ switch ($local_uri[0]) {
 		$controller->processRequest();
 		break;
 	default:
-		header("HTTP/1.1 404 Not Found");
-		exit();
+		$gc = new GenericController("notFound");
+		$gc->processRequest();
+		break;
 }

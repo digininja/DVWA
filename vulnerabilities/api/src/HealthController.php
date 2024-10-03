@@ -18,12 +18,6 @@ class HealthController
 		$this->command = $command;
 	}
 
-	private function notFoundResponse() {
-		$response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-		$response['body'] = null;
-		return $response;
-	}
-
     #[OAT\Get(
 		tags: ["health"],
         path: '/vulnerabilities/api/health/status',
@@ -59,7 +53,7 @@ class HealthController
     ]
 	private function ping() {
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = "pong";
+		$response['body'] = json_encode (array ("Ping" => "Pong"));
 		return $response;
 	}
 
@@ -74,13 +68,15 @@ class HealthController
 						$response = $this->ping();
 						break;
 					default:
-						$response = $this->notFoundResponse();
-						break;
+						$gc = new GenericController("notFound");
+						$gc->processRequest();
+						exit();
 				};
 				break;
 			default:
-				$response = $this->notFoundResponse();
-				break;
+				$gc = new GenericController("notSupported");
+				$gc->processRequest();
+				exit();
 		}
 		header($response['status_code_header']);
 		if ($response['body']) {
