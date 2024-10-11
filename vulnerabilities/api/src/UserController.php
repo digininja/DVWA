@@ -21,16 +21,18 @@ class UserController
 {
 	private $data = array ();
 	private $userId = null;
+	private $version = null;
 	private $requestMethod = "GET";
 
-	public function __construct($requestMethod, $userId) {
+	public function __construct($requestMethod, $version, $userId) {
 		$this->data = array (
-			1 => new User (1, "admin", 0),
-			2 => new User (2, "robin", 1),
-			3 => new User (3, "fred", 1),
+			1 => new User (1, "tony", 0, '1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032'),
+			2 => new User (2, "morph", 1, 'e5326ba4359f77c2623244acb04f6ac35c4dfca330ebcccdf9b734e5b1df90a8'),
+			3 => new User (3, "chas", 1, 'a89237fc1f9dd8d424d8b8b98b890dbc4a817bfde59af17c39debcc4a14c21de'),
 		);
 		$this->requestMethod = $requestMethod;
 		$this->userId = $userId;
+		$this->version = $version;
 	}
 
 	private function validateAdd($input)
@@ -86,7 +88,7 @@ class UserController
 			exit();
 		}
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode ($this->data[$id]->toArray());
+		$response['body'] = json_encode ($this->data[$id]->toArray($this->version));
 		return $response;
 	}	
 
@@ -112,7 +114,7 @@ class UserController
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
 		$all = array();
 		foreach ($this->data as $user) {
-			$all[] = $user->toArray();
+			$all[] = $user->toArray($this->version);
 		}
 		$response['body'] = json_encode($all);
 		return $response;
@@ -158,7 +160,7 @@ class UserController
 		$user = new User(null, $input['name'], intval ($input['level']));
 		$this->data[] = $user;
 		$response['status_code_header'] = 'HTTP/1.1 201 Created';
-		$response['body'] = json_encode($user->toArray());
+		$response['body'] = json_encode($user->toArray($this->version));
 		return $response;
 	}
 
@@ -216,7 +218,7 @@ class UserController
 			$this->data[$id]->level = intval ($input['level']);
 		}
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode ($this->data[$id]->toArray());
+		$response['body'] = json_encode ($this->data[$id]->toArray($this->version));
 		return $response;
 	}	
 

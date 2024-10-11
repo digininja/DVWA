@@ -20,42 +20,52 @@ $uri = explode( '/', $uri );
 $local_uri = array();
 foreach ($uri as $pos => $dir) {
 	if ($dir == "user" || $dir == "health") {
-		$local_uri = array_slice ($uri, $pos);
+		$local_uri = array_slice ($uri, $pos - 1);
 		break;
 	}
 }
 
-// all of our endpoints start with /dvwaapi
+// all of our endpoints start with /api/v[0-9]
 // everything else results in a 404 Not Found
 
-if (count($local_uri) == 0) {
+if (count($local_uri) < 2) {
 	header("HTTP/1.1 404 Not Found");
 	exit();
 }
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-switch ($local_uri[0]) {
+$version = $local_uri[0];
+
+if (preg_match ("/v([0-9]*)/", $version, $matches)) {
+	$version = intval ($matches[1]);
+} else {
+	header("HTTP/1.1 404 Not Found");
+	exit();
+}
+$controller = $local_uri[1];
+
+switch ($controller) {
 	case "user":
 		// the user id is, of course, optional and must be a number:
 		$userId = null;
-		if (isset($local_uri[1])) {
-			$userId = (int) $local_uri[1];
+		if (isset($local_uri[2])) {
+			$userId = (int) $local_uri[2];
 		}
 
 		// pass the request method and user ID to the UserController and process the HTTP request:
-		$controller = new UserController($requestMethod, $userId);
+		$controller = new UserController($requestMethod, $version, $userId);
 		$controller->processRequest();
 		break;
 	case "health":
-		if (!isset($local_uri[1])) {
+		if (!isset($local_uri[2])) {
 			$gc = new GenericController("notFound");
 			$gc->processRequest();
 			break;
 		}
 
-		$command = $local_uri[1];
-		$controller = new HealthController($requestMethod, $command);
+		$command = $local_uri[2];
+		$controller = new HealthController($requestMethod, $version, $command);
 		$controller->processRequest();
 		break;
 	default:

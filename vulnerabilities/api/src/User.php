@@ -23,21 +23,38 @@ final class User
     #[OAT\Property(type: 'integer', example: 1)]
     public int $level;
 
-	function __construct ($id, $name, $level) {
+	public string $password;
+
+	function __construct ($id, $name, $level, $password) {
 		if (is_null ($id)) {
 			$id = mt_rand(50,100);
 		}
 		$this->id = $id;
 		$this->name = $name;
 		$this->level = $level;
+		$this->password = $password;
 	}
 
-	public function toArray() {
-		$a = array (
-			"id" => $this->id,
-			"name" => $this->name,
-			"level" => $this->level,
-		);
+	public function toArray($version) {
+		switch ($version) {
+			case 1:
+				$a = array (
+					"id" => $this->id,
+					"name" => $this->name,
+					"level" => $this->level,
+					"password" => $this->password,
+				);
+				break;
+			default:
+			case 2:
+				$a = array (
+					"id" => $this->id,
+					"name" => $this->name,
+					"level" => $this->level,
+				);
+				break;
+		}
+
 		return $a;
 	}
 }

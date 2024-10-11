@@ -13,7 +13,7 @@ class HealthController
 	private $command = null;
 	private $requestMethod = "GET";
 
-	public function __construct($requestMethod, $command) {
+	public function __construct($requestMethod, $version, $command) {
 		$this->requestMethod = $requestMethod;
 		$this->command = $command;
 	}
