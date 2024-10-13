@@ -37,17 +37,12 @@ $html = "
 				user_info.innerHTML = 'User details: unknown user';
 				name_input.value = 'unknown';
 			} else {
-				if (user_json.level == 0) {
-					level = 'admin';
-				} else {
-					level = 'user';
-				}
-				user_info.innerHTML = 'User details: ' + user_json.name + ' (' + level + ')';
+				user_info.innerHTML = 'User details: ' + user_json.name + ' (' + user_json.level + ')';
 				name_input.value = user_json.name;
 			}
 
 			const message_line = document.getElementById ('message');
-			if (user_json.id == 2 && user_json.level == 0) {
+			if (user_json.id == 2 && user_json.level == 'admin') {
 				message_line.style.display = 'block';
 			} else {
 				message_line.style.display = 'none';
@@ -72,7 +67,6 @@ $html = "
 				.catch(error => { 
 					console.error('There was a problem with your fetch operation:', error); 
 			}); 
-
 		}
 
 		function update_name() {
@@ -99,7 +93,6 @@ $html = "
 				.catch(error => { 
 					console.error('There was a problem with your fetch operation:', error); 
 			}); 
-
 		}
 	</script>
 ";

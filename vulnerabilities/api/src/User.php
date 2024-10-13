@@ -20,8 +20,8 @@ final class User
     #[OAT\Property(example: "fred")]
     public string $name;
 
-    #[OAT\Property(type: 'integer', example: 1)]
-    public int $level;
+    #[OAT\Property(type: 'integer', example: "user")]
+    public string $level;
 
 	public string $password;
 
@@ -65,8 +65,8 @@ final class UserAdd
     #[OAT\Property(example: "fred")]
     public string $name;
 
-    #[OAT\Property(type: 'integer', example: 1)]
-    public int $level;
+    #[OAT\Property(type: 'integer', example: "user")]
+    public string $level;
 }
 
 #[OAT\Schema()]
