@@ -59,7 +59,7 @@ class UserController
 
     #[OAT\Get(
 		tags: ["user"],
-        path: '/vulnerabilities/api/user/{id}',
+        path: '/vulnerabilities/api/v2/user/{id}',
         operationId: 'getUserByID',
 		description: 'Get a user by ID.',
         parameters: [
@@ -94,7 +94,7 @@ class UserController
 
     #[OAT\Get(
 		tags: ["user"],
-        path: '/vulnerabilities/api/user/',
+        path: '/vulnerabilities/api/v2/user/',
         operationId: 'getUsers',
 		description: 'Get all users.',
         responses: [
@@ -122,7 +122,7 @@ class UserController
 
     #[OAT\Post(
 		tags: ["user"],
-        path: '/vulnerabilities/api/user/',
+        path: '/vulnerabilities/api/v2/user/',
         operationId: 'addUser',
 		description: 'Create a new user.',
         parameters: [
@@ -166,7 +166,7 @@ class UserController
 
     #[OAT\Put(
 		tags: ["user"],
-        path: '/vulnerabilities/api/user/{id}',
+        path: '/vulnerabilities/api/v2/user/{id}',
         operationId: 'updateUser',
 		description: 'Update a user by ID.',
         parameters: [
@@ -224,7 +224,7 @@ class UserController
 
     #[OAT\Delete(
 		tags: ["user"],
-        path: '/vulnerabilities/api/user/{id}',
+        path: '/vulnerabilities/api/v2/user/{id}',
         operationId: 'deleteUserById',
 		description: 'Delete user by ID.',
         parameters: [
@@ -255,12 +255,6 @@ class UserController
 		return $response;
 	}
 
-	private function options() {
-		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = null;
-		return $response;
-	}
-
 	public function processRequest() {
 		switch ($this->requestMethod) {
 			case 'GET':
@@ -280,7 +274,8 @@ class UserController
 				$response = $this->deleteUser($this->userId);
 				break;
 			case 'OPTIONS':
-				$response = $this->options();
+				$gc = new GenericController("options");
+				$gc->processRequest();
 				break;
 			default:
 				$gc = new GenericController("notSupported");

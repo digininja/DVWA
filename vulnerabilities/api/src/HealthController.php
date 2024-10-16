@@ -18,9 +18,54 @@ class HealthController
 		$this->command = $command;
 	}
 
+    #[OAT\Post(
+		tags: ["health"],
+        path: '/vulnerabilities/api/v2/health/connectivity',
+        operationId: 'checkConnectivity',
+		description: 'Check connectivity.',
+        parameters: [
+                new OAT\RequestBody (
+					description: 'Remote host.',
+                    content: new OAT\MediaType(
+                        mediaType: 'application/json',
+                        schema: new OAT\Schema(ref: Target::class)
+                    )
+                ),
+
+        ],
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+            ),
+        ]
+    )   
+    ]
+	
+	private function checkConnectivity() {
+		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
+		if (array_key_exists ("target", $input)) {
+			$target = $input['target'];
+
+			exec ("ping -c 4 " . $target, $output, $ret_var);
+
+			if ($ret_var == 0) {
+				$response['status_code_header'] = 'HTTP/1.1 200 OK';
+				$response['body'] = json_encode (array ("status" => "OK"));
+			} else {
+				$response['status_code_header'] = 'HTTP/1.1 500 Internal Server Error';
+				$response['body'] = json_encode (array ("status" => "Connection failed"));
+			}
+		} else {
+			$response['status_code_header'] = 'HTTP/1.1 500 Internal Server Error';
+			$response['body'] = json_encode (array ("status" => "Target not specified"));
+		}
+		return $response;
+	}
+
     #[OAT\Get(
 		tags: ["health"],
-        path: '/vulnerabilities/api/health/status',
+        path: '/vulnerabilities/api/v2/health/status',
         operationId: 'getHealthStatus',
 		description: 'Get the health of the system.',
         responses: [
@@ -40,7 +85,7 @@ class HealthController
 
     #[OAT\Get(
 		tags: ["health"],
-        path: '/vulnerabilities/api/health/ping',
+        path: '/vulnerabilities/api/v2/health/ping',
         operationId: 'ping',
 		description: 'Simple ping/pong to check connectivity.',
         responses: [
@@ -59,6 +104,17 @@ class HealthController
 
 	public function processRequest() {
 		switch ($this->requestMethod) {
+			case 'POST':
+				switch ($this->command) {
+					case "connectivity":
+						$response = $this->checkConnectivity();
+						break;
+					default:
+						$gc = new GenericController("notFound");
+						$gc->processRequest();
+						exit();
+				};
+				break;
 			case 'GET':
 				switch ($this->command) {
 					case "status":
@@ -73,10 +129,14 @@ class HealthController
 						exit();
 				};
 				break;
+			case 'OPTIONS':
+				$gc = new GenericController("options");
+				$gc->processRequest();
+				break;
 			default:
 				$gc = new GenericController("notSupported");
 				$gc->processRequest();
-				exit();
+				break;
 		}
 		header($response['status_code_header']);
 		if ($response['body']) {
@@ -84,3 +144,10 @@ class HealthController
 		}
 	}
 }
+
+#[OAT\Schema(required: ['target'])]
+final class Target {
+    #[OAT\Property(example: "digi.ninja")]
+    public string $target;
+}
+

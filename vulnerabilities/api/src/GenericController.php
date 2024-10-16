@@ -17,6 +17,12 @@ class GenericController
 		$this->command = $command;
 	}
 
+	private function optionsResponse() {
+		$response['status_code_header'] = 'HTTP/1.1 200 OK';
+		$response['body'] = null;
+		return $response;
+	}
+
     private function unprocessableEntityResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
@@ -38,8 +44,17 @@ class GenericController
 		return $response;
 	}
 
+	private function teapotResponse() {
+		$response['status_code_header'] = "HTTP/1.1 418 I'm a teapot";
+		$response['body'] = null;
+		return $response;
+	}
+
 	public function processRequest() {
 		switch ($this->command) {
+			case "teapot":
+				$response = $this->teapotResponse();
+				break;
 			case "notfound":
 				$response = $this->notFoundResponse();
 				break;
@@ -49,6 +64,9 @@ class GenericController
 			case "unprocessable":
 				$response = $this->unprocessableEntityResponse();
 				break;
+			case "options":
+				$response = $this->optionsResponse();
+				break;
 			default:
 				$response = $this->notFoundResponse();
 				break;
@@ -57,5 +75,6 @@ class GenericController
 		if ($response['body']) {
 			echo $response['body'];
 		}
+		exit();
 	}
 }
