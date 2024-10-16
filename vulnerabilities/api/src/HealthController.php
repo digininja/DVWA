@@ -22,7 +22,7 @@ class HealthController
 		tags: ["health"],
         path: '/vulnerabilities/api/v2/health/connectivity',
         operationId: 'checkConnectivity',
-		description: 'Check connectivity.',
+		description: 'The server occasionally loses connectivity to other systems and so this can be used to check connectivity status.',
         parameters: [
                 new OAT\RequestBody (
 					description: 'Remote host.',
