@@ -28,7 +28,7 @@ services:
       - MYSQL_ROOT_PASSWORD=dvwa
       - MYSQL_DATABASE=dvwa
       - MYSQL_USER=dvwa
-      - MYSQL_PASSWORD=p@ssw0rd
+      - MYSQL_PASSWORD=
     volumes:
       - dvwa:/var/lib/mysql
     networks:
