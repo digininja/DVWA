@@ -43,6 +43,7 @@ This file is available in multiple languages:
 - French: [Français](README.fr.md)
 - Korean: [한국어](README.ko.md)
 - Persian: [فارسی](README.fa.md)
+- Polish: [Polski](README.pl.md)
 - Portuguese: [Português](README.pt.md)
 - Spanish: [Español](README.es.md)
 - Turkish: [Türkçe](README.tr.md)
