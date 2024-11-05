@@ -1,6 +1,6 @@
-# DAMN VULNERABLE WEB APPLICATION - ỨNG DỤNG WEB DỄ BỊ TẤN CÔNG VÃI LỒN
+# DAMN VULNERABLE WEB APPLICATION - ỨNG DỤNG WEB DỄ BỊ TẤN CÔNG
 
-Damn Vulnerable Web Application (DVWA) là một ứng dụng web PHP/MySQL cực kỳ dễ bị tấn công. Mục tiêu chính của ứng dụng này là hỗ trợ các chuyên gia bảo mật kiểm tra kỹ năng và công cụ của họ trong môi trường pháp lý, giúp các web dev hiểu rõ hơn về quy trình bảo mật ứng dụng web và hỗ trợ cả học sinh và giáo viên tìm hiểu về bảo mật ứng dụng web trong một môi trường được kiểm soát.
+Damn Vulnerable Web Application (DVWA) là một ứng dụng web PHP/MySQL cực kỳ dễ bị tấn công. Mục tiêu chính của ứng dụng này là hỗ trợ các chuyên gia bảo mật kiểm tra kỹ năng và công cụ của họ trong môi trường pháp lý, giúp các web dev hiểu rõ hơn về quy trình bảo mật ứng dụng web và hỗ trợ cả học sinh/sinh viên và giáo viên tìm hiểu về bảo mật ứng dụng web trong một môi trường được kiểm soát.
 
 Mục đích của DVWA là **thực hành với một số lỗ hổng web phổ biến nhất**, với **mức độ khó khác nhau** và giao diện đơn giản, dễ hiểu.
 Xin lưu ý, có **cả lỗ hổng được ghi lại và không** với phần mềm này. Đây là có chủ đích. Bạn nên thử và khám phá càng nhiều vấn đề càng tốt.
@@ -9,7 +9,7 @@ Xin lưu ý, có **cả lỗ hổng được ghi lại và không** với phần
 
 ## Cảnh báo!
 
-Damn Vulnerable Web Application dễ bị tấn công vãi lồn! **Không tải nó lên folder public của nhà cung cấp dịch vụ lưu trữ của bạn hoặc bất kỳ máy chủ nào có kết nối Internet**, vì chúng sẽ bị xâm phạm. Bạn nên sử dụng máy ảo (vd như [VirtualBox](https://www.virtualbox.org/) hoặc [VMware](https://www.vmware.com/)), để sử dụng chế độ NAT networking. Trên máy khác, bạn tải và cài đặt [XAMPP](https://www.apachefriends.org/) cho web server và database.
+Damn Vulnerable Web Application dễ bị tấn công! **Không tải nó lên folder public của nhà cung cấp dịch vụ lưu trữ của bạn hoặc bất kỳ máy chủ nào có kết nối Internet**, vì chúng sẽ bị xâm phạm. Bạn nên sử dụng máy ảo (vd như [VirtualBox](https://www.virtualbox.org/) hoặc [VMware](https://www.vmware.com/)), để sử dụng chế độ NAT networking. Trên máy khác, bạn tải và cài đặt [XAMPP](https://www.apachefriends.org/) cho web server và database.
 
 ### Tuyên bố miễn trừ trách nhiệm
 
@@ -375,7 +375,7 @@ Trong trường hợp bạn muốn DVWA không chỉ có thể truy cập đư�
 trên mạng local của bạn (ví dụ: vì bạn đang thiết lập máy thử nghiệm cho workshop), bạn
 có thể xóa `127.0.0.1:` khỏi port mapping (hoặc thay thế nó bằng IP LAN của bạn). Bằng cách này
 sẽ nghe trên tất cả các thiết bị có sẵn. Mặc định an toàn phải luôn là chỉ listen trên
-thiết bị loopback local. Xét cho cùng, đây là một ứng dụng web dễ bị tấn công vãi lồn, chạy trên máy của bạn.
+thiết bị loopback local. Xét cho cùng, đây là một ứng dụng web dễ bị tấn công, chạy trên máy của bạn.
 
 #### DVWA tự động chạy khi Docker chạy
 
