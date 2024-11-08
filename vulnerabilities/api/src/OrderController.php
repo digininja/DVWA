@@ -4,25 +4,10 @@ namespace Src;
 
 use OpenApi\Attributes as OAT;
 
-# This is the definition for the whole file.
-#[OAT\Info(title: "DVWA API", version: "0.1")]
-#[OAT\Contact(email: "robin@digi.ninja", url: "https://github.com/digininja/DVWA/")]
-
-# It would be good if this could be dynamic but the $_SERVER variables
-# aren't available when the Swagger generator scripts run so I can't
-# get the HTTP_HOST value from them. For now I'm hard coding it to make
-# my dev life easier.
-#[OAT\Server(url: 'http://dvwa.test', description: "API server")]
-
-#[OAT\Tag(name: "user", description: "User operations.")]
-#[OAT\Tag(name: "health", description: "Health operations.")]
-#[OAT\Tag(name: "order", description: "Order operations.")]
-
-class UserController
+class OrderController
 {
 	private $data = array ();
-	private $userId = null;
-	private $version = null;
+	private $orderId = null;
 	private $requestMethod = "GET";
 
 	public function __construct($requestMethod, $version, $userId) {

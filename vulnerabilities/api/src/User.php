@@ -17,10 +17,10 @@ final class User
     #[OAT\Property(type: 'integer', example: 1)]
     public int $id;
 
-    #[OAT\Property(example: "fred")]
+    #[OAT\Property(type: "string", example: "fred")]
     public string $name;
 
-    #[OAT\Property(type: 'integer', example: "user")]
+    #[OAT\Property(type: 'string', example: "user")]
     public string $level;
 
 	public string $password;
