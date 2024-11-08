@@ -292,7 +292,7 @@ In this state, you can access all the features without needing to log in and set
 
 - `./hackable/uploads/` - Needs to be writeable by the web service (for File Upload).
 
-### PHP configuration
+### PHP Configuration
 
 On Linux systems, likely found in `/etc/php/x.x/fpm/php.ini` or `/etc/php/x.x/apache2/php.ini`.
 
@@ -421,7 +421,7 @@ Linux is by default case sensitive and so in the example above, if you tried to 
 - `http://localhost/mydir/Hello.txt`
 - `http://localhost/MYDIR/hello.txt`
 
-How does this affect DVWA? Most people use git to checkout DVWA into `/var/www/html`, this gives them the directory `/var/www/html/DVWA/` with all the DVWA files inside it. They then browse to `http://localhost/` and get either a `404` or the default Apache welcome page. As the files are in DVWA, you must browse to `http://localhost/DVWA`.
+How does this affect DVWA? Most people use git to clone DVWA into `/var/www/html`, this gives them the directory `/var/www/html/DVWA/` with all the DVWA files inside it. They then browse to `http://localhost/` and get either a `404` or the default Apache welcome page. As the files are in DVWA, you must browse to `http://localhost/DVWA`.
 
 The other common mistake is to browse to `http://localhost/dvwa` which will give a `404` because `dvwa` is not `DVWA` as far as Linux directory matching is concerned.
 
