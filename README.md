@@ -427,6 +427,12 @@ The other common mistake is to browse to `http://localhost/dvwa` which will give
 
 So after setup, if you try to visit the site and get a `404`, think about where you installed the files to, where they are relative to the document root, and what the case of the directory you used is.
 
+### I browsed to the site and got a blank screen
+
+This is usually one configuration issue hiding another issue. By default, PHP does not display errors, and so if you forgot to turn error display on during the setup process, any other problems, such as failure to connect to the database, will stop the app from loading but the message to tell you what is wrong will be hidden.
+
+To fix this, make sure you set `display_errors` and `display_startup_errors` as covered in [PHP Configuration](#php-configuration) and then restart Apache.
+
 ### "Access denied" running setup
 
 If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
