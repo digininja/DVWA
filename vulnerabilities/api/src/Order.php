@@ -21,7 +21,7 @@ final class Order
     public string $name;
 
     #[OAT\Property(type: "string", example: "BBC Television Centre, London W3 6XZ")]
-    public string $name;
+    public string $address;
 
     #[OAT\Property(type: "string", example: "1 * brush, 2 * paints, 1 * easel")]
     public string $items;

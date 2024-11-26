@@ -1,31 +1,5 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-	try {
-		if (array_key_exists ('message', $_POST)) {
-			$message = $_POST['message'];
-			if (array_key_exists ('direction', $_POST) && $_POST['direction'] == "decode") {
-				$encoded = xor_this (base64_decode ($message), $key);
-				$encode_radio_selected = " ";
-				$decode_radio_selected = " checked='checked' ";
-			} else {
-				$encoded = base64_encode(xor_this ($message, $key));
-			}
-		}
-		if (array_key_exists ('password', $_POST)) {
-			$password = $_POST['password'];
-			$decoded = xor_this (base64_decode ($password), $key);
-			if ($password == "Olifant") {
-				$success = "Welcome back user";
-			} else {
-				$errors = "Login Failed";
-			}
-		}
-	} catch(Exception $e) {
-		$errors = $e->getMessage();
-	}
-}
-
 $html = "
 	<script>
 		function update_username(user_json) {
@@ -37,15 +11,16 @@ $html = "
 				user_info.innerHTML = 'User details: unknown user';
 				name_input.value = 'unknown';
 			} else {
-				user_info.innerHTML = 'User details: ' + user_json.name + ' (' + user_json.level + ')';
+				var level = 'unknown';
+				if (user_json.level == 0) {
+					level = 'admin';
+					successDiv = document.getElementById ('message');
+					successDiv.style.display = 'block';
+				} else {
+					level = 'user';
+				}
+				user_info.innerHTML = 'User details: ' + user_json.name + ' (' + level + ')';
 				name_input.value = user_json.name;
-			}
-
-			const message_line = document.getElementById ('message');
-			if (user_json.id == 2 && user_json.level == 'admin') {
-				message_line.style.display = 'block';
-			} else {
-				message_line.style.display = 'none';
 			}
 		}
 
@@ -101,7 +76,6 @@ $html .= "
 		<p>
 			Look at the call used to update your name and exploit it to elevate your user to level 0, admin.
 		</p>
-		<div class='success' style='display:none' id='message'>Well done, you elevated your user to admin.</div>
 		<p id='user_info'></p>
 		<form method='post' action=\"" . $_SERVER['PHP_SELF'] . "\">
 			<p>
@@ -112,6 +86,7 @@ $html .= "
 				<input type=\"button\" value=\"Submit\" onclick='update_name();'>
 			</p>
 		</form>
+		<div class='success' style='display:none' id='message'>Well done, you elevated your user to admin.</div>
 		<script>
 			get_user();
 		</script>

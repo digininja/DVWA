@@ -27,9 +27,9 @@ class UserController
 
 	public function __construct($requestMethod, $version, $userId) {
 		$this->data = array (
-			1 => new User (1, "tony", "admin", '1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032'),
-			2 => new User (2, "morph", "user", 'e5326ba4359f77c2623244acb04f6ac35c4dfca330ebcccdf9b734e5b1df90a8'),
-			3 => new User (3, "chas", "user", 'a89237fc1f9dd8d424d8b8b98b890dbc4a817bfde59af17c39debcc4a14c21de'),
+			1 => new User (1, "tony", 0, '1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032'),
+			2 => new User (2, "morph", 1, 'e5326ba4359f77c2623244acb04f6ac35c4dfca330ebcccdf9b734e5b1df90a8'),
+			3 => new User (3, "chas", 1, 'a89237fc1f9dd8d424d8b8b98b890dbc4a817bfde59af17c39debcc4a14c21de'),
 		);
 		$this->requestMethod = $requestMethod;
 		$this->userId = $userId;
