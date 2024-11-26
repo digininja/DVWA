@@ -1,21 +1,8 @@
-<script>
-function show_answer(which) {
-	var x = document.getElementById(which + "_answer");
-	if (x.style.display === "" || x.style.display === "none") {
-		x.style.display = "block";
-	} else {
-		x.style.display = "none";
-	}
-}
-</script>
 <style>
 	pre {
 		overflow-x: auto;
 		white-space: pre-wrap;
 		word-wrap: break-word;
-	}
-	#low_answer,#medium_answer,#high_answer {
-		display: none;
 	}
 </style>
 
@@ -44,7 +31,7 @@ function show_answer(which) {
 		<h3>Low Level</h3>
 		<p>The call being made by the JavaScript is for version 2 of the endpoint, could there be other, earlier, versions available?</p>
 		<p>
-		<button onclick="show_answer('low')">Show Answer</button>
+		<button id="low_button" onclick="show_answer('low')">Show Answer</button>
 		</p>
 		<div id="low_answer">
 		<p>Either by looking at the JavaScript or watching network traffic, you should notice that there is a call being made to <code>/vulnerabilities/api/v2/user/</code> to retrieve the data used to generate the user table.</p>
@@ -59,7 +46,7 @@ function show_answer(which) {
 		<h3>Medium Level</h3>
 		<p>The tokens are encrypted using an Electronic Code Book based algorithm (aes-128-ecb). In this mode, the clear text is broken down into fixed sized blocks and each block is encrypted independently of the rest. This results in a cipher text that is made up from a number of individual blocks with no way to tie them together. Worse than this, any two blocks, from any two clear text inputs, are interchangeable as long as they have been encrypted with the same key. In our example, this means you can take blocks from the three different tokens to make your own token. </p>
 		<p>
-		<button onclick="show_answer('medium')">Show Answer</button>
+		<button id="medium_button" onclick="show_answer('medium')">Show Answer</button>
 		</p>
 		<div id="medium_answer">
 		<p>
@@ -138,7 +125,7 @@ caeb574f10f349ed839fbfd223903368 <- Finish off with Sweep's bio
 		<p>The system is using AES-128-CBC which means it is vulnerable to a padding oracle attack.</p>
 
 		<p>
-		<button onclick="show_answer('high')">Show Answer</button>
+		<button id="high_button" onclick="show_answer('high')">Show Answer</button>
 		</p>
 
 		<div id="high_answer">
