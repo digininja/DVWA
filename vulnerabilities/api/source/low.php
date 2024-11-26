@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 $html = "
 <p>
-	Versioning is important in APIs, running multiple versions of an API can allow for backward compatibility and can allow new services to be added without affecting existing users. The downside to keeping old versions alive though is when those older versions contain vulnerabilities.
+	Versioning is important in APIs, running multiple versions of an API can allow for backward compatibility and can allow new services to be added without affecting existing users. The downside to keeping old versions alive is when those older versions contain vulnerabilities.
 </p>
 ";
 
@@ -41,7 +41,7 @@ $html .= "
 	}
 
 	function get_users() {
-		const url = '/vulnerabilities/api/v1/user/';
+		const url = '/vulnerabilities/api/v2/user/';
 		 
 		fetch(url, { 
 				method: 'GET',
@@ -53,7 +53,6 @@ $html .= "
 			return response.json(); 
 			}) 
 			.then(data => { 
-				// data.forEach(loadTableData);
 				loadTableData(data);
 			}) 
 			.catch(error => { 
@@ -77,6 +76,10 @@ $html .= "
 		Object.keys(item).forEach(function(k){
 			let cell = row.insert_th_Cell(-1);
 			cell.innerHTML = k;
+			if (k == 'password') {
+				successDiv = document.getElementById ('message');
+				successDiv.style.display = 'block';
+			}
 		});
 
 		const tableBody = document.getElementById('tableBody');
@@ -104,9 +107,9 @@ $html .= "
 
 
 		<p>
-			Look at the call used to update your name and exploit it to elevate your user to level 0, admin.
+			Look at the call used to create this table and see if you can exploit it to return some additional information.
 		</p>
-		<div class='success' style='display:none' id='message'>Well done, you elevated your user to admin.</div>
+		<div class='success' style='display:none' id='message'>Well done, you found the password hashes.</div>
 		<script>
 			get_users();
 		</script>

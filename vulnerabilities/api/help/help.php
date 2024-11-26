@@ -20,7 +20,7 @@ function show_answer(which) {
 </style>
 
 <div class="body_padded">
-	<h1>Help - Cryptographic Problems</h1>
+	<h1>Help - API Security</h1>
 
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
@@ -28,62 +28,32 @@ function show_answer(which) {
 	<td><div id="code">
 		<h3>About</h3>
 		<p>
-		Cryptography is key area of security and is used to keep secrets secret. When implemented badly these secrets can be leaked or the crypto manipulated to bypass protections.
+		Most modern web apps use some kind of API, either as Single Page Apps (SPAs) or to retrieve data to populate traditional apps. As these APIs are behind the scenes, developers sometimes feel they can cut corners in areas such as authentication, authorisation or data validation. As testers, we can get behind the curtains and directly access these seemingly hidden calls to take advantage of these weaknesses.
 		</p>
 		<p>
-		This module will look at three weaknesses, using encoding instead of encryption, using algorithms with known weaknesses, and padding oracle attacks.
+		This module will look at three weaknesses, versioning, mass assignment, and ..... 
 		</p>
 
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Each level has its own objective but the general idea is to exploit weak cryptographic implementations.</p>
+		<p>Each level has its own objective but the general idea is to exploit weak API implementations.</p>
 
 		<br /><hr /><br />
 
 		<h3>Low Level</h3>
-		<p>The thing to notice is the mention of encoding rather than encryption, that should give you a hint about the vulnerability here.</p>
+		<p>The call being made by the JavaScript is for version 2 of the endpoint, could there be other, earlier, versions available?</p>
 		<p>
 		<button onclick="show_answer('low')">Show Answer</button>
 		</p>
 		<div id="low_answer">
-		<p>Start by encoding a few messages and looking at the output, if you have spent any time around encoding standards you should be able to tell that it is in Base64. Could it be that simple? Try Base64 decoding some test strings to find out:</p>
-		<pre><code>encode (hello) -> HwQPBBs=
-base64decode (HwQPBBs=) -> 0x1f 0x04 0x0f 0x04 0x1b</code></pre>
-		<pre><code>encode (a secret) -> FkEQDRcFChs=
-base64decode (FkEQDRcFChs=) -> 0x16 0x41 0x10 0x0d 0x17 0x05 0x0a 0x1b</code></pre>
-<p>
-That failed, but what you might notice is that the number of output characters matches the number of input characters. Another common encoding method that is sometimes mistaken for encryption is XOR, this takes the clear text input and XORs each character with a key which is repeated or truncated to be the same length as the input.</p>
-<p>
-XOR is associative, this means that if you XOR the clear text with the key you get the cipher text and if you XOR the cipher text with the key you get the clear text, what it also means is if you XOR the clear text with the cipher text, you get the key. Let's try this with our examples:
-</p>
-		<pre><code>encode (hello) -> HwQPBBs=
-xor (HwQPBBs=, hello) -> wacht</code></pre>
-<p>
-This looks promising, let's try the second example:
-</p>
-		<pre><code>encode (a secret) -> FkEQDRcFChs=
-xor (FkEQDRcFChs=, a secret) -> wachtwoo</code></pre>
-
-<p>
-There is no repetition in the key yet so let's try with a longer string.
-</p>
-
-		<pre><code>encode (thisisaverylongstringtofindthepassword) -> AwkKGx0EDhkXFg4NDAYTBBsdGwoQFQwOHRkLGxoBBwAQGwMYHQs=
-xor (thisisaverylongstringtofindthepassword, base64decode (AwkKGx0EDhkXFg4NDAYTBBsdGwoQFQwOHRkLGxoBBwAQGwMYHQs=)) -> wachtwoordwachtwoordwachtwoordwachtwoo</code></pre>
-
-<p>
-It looks like we have found our key "wachtwoord". Let's give it a try on our challenge string:
-</p>
-
-<pre><code>xor (base64decode(Lg4WGlQZChhSFBYSEB8bBQtPGxdNQSwEHREOAQY=), wachtwoord) -> Your new password is: Olifant</code></pre>
-
-
-<p>
-And there we have it, the message we are looking for and the password we need to login.
-</p>
-
-		<p>Another lesson here, do not assume that the messages or the underlying system you are working with is in English. The key "wachtwoord" is Dutch for password.</p>
+		<p>Either by looking at the JavaScript or watching network traffic, you should notice that there is a call being made to <code>/vulnerabilities/api/v2/user/</code> to retrieve the data used to generate the user table.</p>
+		<p>
+			As the call is being made against version two (<code>v2</code>) of the endpoint, the obvious thing to try is to see if version one is available, and what it offers. The easiest way to do this is to access it directly in the browser by visiting <a href="//<?=$_SERVER['SERVER_NAME']?>/vulnerabilities/api/v1/user/">/vulnerabilities/api/v1/user/</a>, but sometimes API calls require extra headers or authentication tokens which it is easier to let the site add rather than trying to do it manually. Two ways to do this are to modify the URL used in the JavaScript as the page loads by setting a breakpoint on it and changing it before the request is made, or to intercept the call in a proxy, such as BurpSuite.
+		</p>
+		<p>
+			Whatever approach you try, by accessing version one of the endpoint, you should be able to see the password hashes as part of the data.
+		</p>
 		</div>
 
 		<h3>Medium Level</h3>
