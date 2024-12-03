@@ -4,6 +4,7 @@ require '../bootstrap.php';
 use Src\UserController;
 use Src\HealthController;
 use Src\GenericController;
+use Src\OrderController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -19,13 +20,13 @@ $uri = explode( '/', $uri );
 
 $local_uri = array();
 foreach ($uri as $pos => $dir) {
-	if ($dir == "user" || $dir == "health") {
+	if ($dir == "order" || $dir == "user" || $dir == "health") {
 		$local_uri = array_slice ($uri, $pos - 1);
 		break;
 	}
 }
 
-// all of our endpoints start with /api/v[0-9]
+// All of our endpoints start with /api/v[0-9]
 // everything else results in a 404 Not Found
 
 if (count($local_uri) < 2) {
@@ -46,6 +47,17 @@ if (preg_match ("/v([0-9]*)/", $version, $matches)) {
 $controller = $local_uri[1];
 
 switch ($controller) {
+	case "order":
+		// the user id is, of course, optional and must be a number:
+		$orderId = null;
+		if (isset($local_uri[2]) && $local_uri[2] != "") {
+			$orderId = intval($local_uri[2]);
+		}
+
+		// pass the request method and order ID to the OrderController and process the HTTP request:
+		$controller = new OrderController($requestMethod, $version, $orderId);
+		$controller->processRequest();
+		break;
 	case "user":
 		// the user id is, of course, optional and must be a number:
 		$userId = null;

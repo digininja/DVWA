@@ -10,14 +10,14 @@ class OrderController
 	private $orderId = null;
 	private $requestMethod = "GET";
 
-	public function __construct($requestMethod, $version, $userId) {
+	public function __construct($requestMethod, $version, $orderId) {
 		$this->data = array (
-			1 => new User (1, "tony", "admin", '1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032'),
-			2 => new User (2, "morph", "user", 'e5326ba4359f77c2623244acb04f6ac35c4dfca330ebcccdf9b734e5b1df90a8'),
-			3 => new User (3, "chas", "user", 'a89237fc1f9dd8d424d8b8b98b890dbc4a817bfde59af17c39debcc4a14c21de'),
+			1 => new Order (1, "Tony", "BBC Television Centre, London W3 6XZ", "5 * brushes", 0),
+			2 => new Order (2, "Morph", "Wooden Box, Corner of the table, The Studio", "plasticine", 0),
+			3 => new Order (3, "Nailbrush", "BBC Television Centre, London W3 6XZ", "Spare bristles", 1),
 		);
 		$this->requestMethod = $requestMethod;
-		$this->userId = $userId;
+		$this->orderId = $orderId;
 		$this->version = $version;
 	}
 
@@ -26,10 +26,10 @@ class OrderController
 		if (! isset($input['name'])) {
 			return false;
 		}
-		if (! isset($input['level'])) {
+		if (! isset($input['address'])) {
 			return false;
 		}
-		if (!is_numeric ($input['level'])) {
+		if (! isset($input['items'])) {
 			return false;
 		}
 		return true;
@@ -37,17 +37,17 @@ class OrderController
 
 	private function validateUpdate($input)
 	{
-		if (! isset($input['name'])) {
-			return false;
+		if (isset($input['name']) || isset($input['address']) || isset ($input['items'])) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
     #[OAT\Get(
-		tags: ["user"],
-        path: '/vulnerabilities/api/v2/user/{id}',
-        operationId: 'getUserByID',
-		description: 'Get a user by ID.',
+		tags: ["order"],
+        path: '/vulnerabilities/api/v2/order/{id}',
+        operationId: 'getOrderByID',
+		description: 'Get a order by ID.',
         parameters: [
             new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
         ],
@@ -55,18 +55,18 @@ class OrderController
             new OAT\Response(
                 response: 200,
                 description: 'Successful operation.',
-                content: new OAT\JsonContent (ref: '#/components/schemas/User'),
+                content: new OAT\JsonContent (ref: '#/components/schemas/Order'),
 
             ),
             new OAT\Response(
                 response: 404,
-                description: 'User not found.',
+                description: 'Order not found.',
             ),
         ]
     )   
     ]  
 	
-	private function getUser($id)
+	private function getOrder($id)
 	{
 		if (!array_key_exists ($id, $this->data)) {
 			$gc = new GenericController("notFound");
@@ -79,44 +79,44 @@ class OrderController
 	}	
 
     #[OAT\Get(
-		tags: ["user"],
-        path: '/vulnerabilities/api/v2/user/',
-        operationId: 'getUsers',
-		description: 'Get all users.',
+		tags: ["order"],
+        path: '/vulnerabilities/api/v2/order/',
+        operationId: 'getOrders',
+		description: 'Get all orders.',
         responses: [
             new OAT\Response(
                 response: 200,
                 description: 'Successful operation.',
                 content: new OAT\JsonContent(
                     type: 'array',
-                    items: new OAT\Items(ref: '#/components/schemas/User')
+                    items: new OAT\Items(ref: '#/components/schemas/Order')
                 )
             ),
         ]
     )   
     ]  
 
-	private function getAllUsers() {
+	private function getAllOrders() {
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
 		$all = array();
-		foreach ($this->data as $user) {
-			$all[] = $user->toArray($this->version);
+		foreach ($this->data as $order) {
+			$all[] = $order->toArray($this->version);
 		}
 		$response['body'] = json_encode($all);
 		return $response;
 	}
 
     #[OAT\Post(
-		tags: ["user"],
-        path: '/vulnerabilities/api/v2/user/',
-        operationId: 'addUser',
-		description: 'Create a new user.',
+		tags: ["order"],
+        path: '/vulnerabilities/api/v2/order/',
+        operationId: 'addOrder',
+		description: 'Create a new order.',
         parameters: [
                 new OAT\RequestBody (
-					description: 'User data.',
+					description: 'Order data.',
                     content: new OAT\MediaType(
                         mediaType: 'application/json',
-                        schema: new OAT\Schema(ref: UserAdd::class)
+                        schema: new OAT\Schema(ref: OrderAdd::class)
                     )
                 ),
 
@@ -125,17 +125,17 @@ class OrderController
             new OAT\Response(
                 response: 200,
                 description: 'Successful operation.',
-                content: new OAT\JsonContent (ref: '#/components/schemas/User'),
+                content: new OAT\JsonContent (ref: '#/components/schemas/Order'),
             ),
             new OAT\Response(
                 response: 422,
-                description: 'Invalid user object provided',
+                description: 'Invalid order object provided',
             ),
         ]
     )   
     ]  
 
-	private function addUser()
+	private function addOrder()
 	{
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (! $this->validateAdd($input)) {
@@ -143,25 +143,25 @@ class OrderController
 			$gc->processRequest();
 			exit();
 		}
-		$user = new User(null, $input['name'], intval ($input['level']));
-		$this->data[] = $user;
+		$order = new Order(null, $input['name'], $input['address'], $input['items'], 0);
+		$this->data[] = $order;
 		$response['status_code_header'] = 'HTTP/1.1 201 Created';
-		$response['body'] = json_encode($user->toArray($this->version));
+		$response['body'] = json_encode($order->toArray($this->version));
 		return $response;
 	}
 
     #[OAT\Put(
-		tags: ["user"],
-        path: '/vulnerabilities/api/v2/user/{id}',
-        operationId: 'updateUser',
-		description: 'Update a user by ID.',
+		tags: ["order"],
+        path: '/vulnerabilities/api/v2/order/{id}',
+        operationId: 'updateOrder',
+		description: 'Update an order by ID.',
         parameters: [
             new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
                 new OAT\RequestBody (
-					description: 'New user data.',
+					description: 'New order data.',
                     content: new OAT\MediaType(
                         mediaType: 'application/json',
-                        schema: new OAT\Schema(ref: UserUpdate::class)
+                        schema: new OAT\Schema(ref: OrderUpdate::class)
                     )
                 ),
 
@@ -170,21 +170,21 @@ class OrderController
             new OAT\Response(
                 response: 200,
                 description: 'Successful operation.',
-                content: new OAT\JsonContent (ref: '#/components/schemas/User'),
+                content: new OAT\JsonContent (ref: '#/components/schemas/Order'),
             ),
             new OAT\Response(
                 response: 404,
-                description: 'User not found',
+                description: 'Order not found',
             ),
             new OAT\Response(
                 response: 422,
-                description: 'Invalid user object provided',
+                description: 'Invalid order object provided',
             ),
         ]
     )   
     ]  
 	
-	private function updateUser($id)
+	private function updateOrder($id)
 	{
 		if (!array_key_exists ($id, $this->data)) {
 			$gc = new GenericController("notFound");
@@ -200,8 +200,11 @@ class OrderController
 		if (array_key_exists ("name", $input)) {
 			$this->data[$id]->name = $input['name'];
 		}
-		if (array_key_exists ("level", $input)) {
-			$this->data[$id]->level = intval ($input['level']);
+		if (array_key_exists ("address", $input)) {
+			$this->data[$id]->address = $input['address'];
+		}
+		if (array_key_exists ("items", $input)) {
+			$this->data[$id]->items = $input['items'];
 		}
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
 		$response['body'] = json_encode ($this->data[$id]->toArray($this->version));
@@ -209,10 +212,10 @@ class OrderController
 	}	
 
     #[OAT\Delete(
-		tags: ["user"],
-        path: '/vulnerabilities/api/v2/user/{id}',
-        operationId: 'deleteUserById',
-		description: 'Delete user by ID.',
+		tags: ["order"],
+        path: '/vulnerabilities/api/v2/order/{id}',
+        operationId: 'deleteOrderById',
+		description: 'Delete order by ID.',
         parameters: [
             new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
         ],
@@ -223,13 +226,13 @@ class OrderController
             ),
             new OAT\Response(
                 response: 404,
-                description: 'User not found',
+                description: 'Order not found',
             ),
         ]
     )   
     ]  
 	
-	private function deleteUser($id) {
+	private function deleteOrder($id) {
 		if (!array_key_exists ($id, $this->data)) {
 			$gc = new GenericController("notFound");
 			$gc->processRequest();
@@ -244,20 +247,20 @@ class OrderController
 	public function processRequest() {
 		switch ($this->requestMethod) {
 			case 'GET':
-				if ($this->userId) {
-					$response = $this->getUser($this->userId);
+				if (isset ($this->orderId) && is_numeric ($this->orderId)) {
+					$response = $this->getOrder($this->orderId);
 				} else {
-					$response = $this->getAllUsers();
+					$response = $this->getAllOrders();
 				};
 				break;
 			case 'POST':
-				$response = $this->addUser();
+				$response = $this->addOrder();
 				break;
 			case 'PUT':
-				$response = $this->updateUser($this->userId);
+				$response = $this->updateOrder($this->orderId);
 				break;
 			case 'DELETE':
-				$response = $this->deleteUser($this->userId);
+				$response = $this->deleteOrder($this->orderId);
 				break;
 			case 'OPTIONS':
 				$gc = new GenericController("options");

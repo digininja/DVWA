@@ -17,7 +17,7 @@ final class Order
     #[OAT\Property(type: 'integer', example: 1)]
     public int $id;
 
-    #[OAT\Property(type: "string", example: "Fred Blogs")]
+    #[OAT\Property(type: "string", example: "Tony Hart")]
     public string $name;
 
     #[OAT\Property(type: "string", example: "BBC Television Centre, London W3 6XZ")]
