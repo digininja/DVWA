@@ -5,6 +5,7 @@ use Src\UserController;
 use Src\HealthController;
 use Src\GenericController;
 use Src\OrderController;
+use Src\LoginController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -20,7 +21,7 @@ $uri = explode( '/', $uri );
 
 $local_uri = array();
 foreach ($uri as $pos => $dir) {
-	if ($dir == "order" || $dir == "user" || $dir == "health") {
+	if ($dir == "order" || $dir == "user" || $dir == "health" || $dir == "login") {
 		$local_uri = array_slice ($uri, $pos - 1);
 		break;
 	}
@@ -78,6 +79,17 @@ switch ($controller) {
 
 		$command = $local_uri[2];
 		$controller = new HealthController($requestMethod, $version, $command);
+		$controller->processRequest();
+		break;
+	case "login":
+		if (!isset($local_uri[2])) {
+			$gc = new GenericController("notFound");
+			$gc->processRequest();
+			break;
+		}
+
+		$command = $local_uri[2];
+		$controller = new LoginController($requestMethod, $version, $command);
 		$controller->processRequest();
 		break;
 	default:

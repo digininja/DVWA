@@ -17,6 +17,7 @@ use OpenApi\Attributes as OAT;
 #[OAT\Tag(name: "user", description: "User operations.")]
 #[OAT\Tag(name: "health", description: "Health operations.")]
 #[OAT\Tag(name: "order", description: "Order operations.")]
+#[OAT\Tag(name: "login", description: "Login operations.")]
 
 class UserController
 {

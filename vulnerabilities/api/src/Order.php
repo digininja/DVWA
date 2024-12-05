@@ -52,3 +52,29 @@ final class Order
 		return $a;
 	}
 }
+
+#[OAT\Schema(required: ['level', 'name'])]
+final class OrderAdd
+{
+    #[OAT\Property(example: "fred")]
+    public string $name;
+
+    #[OAT\Property(example: "1 High Street, Atown")]
+    public string $address;
+
+    #[OAT\Property(example: "2 * brushes")]
+    public string $items;
+}
+
+#[OAT\Schema()]
+final class OrderUpdate
+{
+    #[OAT\Property(example: "fred")]
+    public string $name;
+
+    #[OAT\Property(example: "1 High Street, Atown")]
+    public string $address;
+
+    #[OAT\Property(example: "2 * brushes")]
+    public string $items;
+}

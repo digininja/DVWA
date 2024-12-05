@@ -21,6 +21,20 @@ class OrderController
 		$this->version = $version;
 	}
 
+	private function checkToken() {
+		if (array_key_exists ("HTTP_AUTHORIZATION", $_SERVER)) {
+			$header = $_SERVER['HTTP_AUTHORIZATION'];
+			$bits = explode (" ", $header);
+			if (count ($bits) == 2) {
+				if (strtolower($bits[0]) == "bearer" && $bits[1] == "12345") {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private function validateAdd($input)
 	{
 		if (! isset($input['name'])) {
@@ -68,6 +82,12 @@ class OrderController
 	
 	private function getOrder($id)
 	{
+		if (!$this->checkToken()) {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "Invalid or missing token"));
+			return $response;
+		}
+
 		if (!array_key_exists ($id, $this->data)) {
 			$gc = new GenericController("notFound");
 			$gc->processRequest();
@@ -97,6 +117,12 @@ class OrderController
     ]  
 
 	private function getAllOrders() {
+		if (!$this->checkToken()) {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "Invalid or missing token"));
+			return $response;
+		}
+
 		$response['status_code_header'] = 'HTTP/1.1 200 OK';
 		$all = array();
 		foreach ($this->data as $order) {
@@ -137,6 +163,12 @@ class OrderController
 
 	private function addOrder()
 	{
+		if (!$this->checkToken()) {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "Invalid or missing token"));
+			return $response;
+		}
+
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (! $this->validateAdd($input)) {
 			$gc = new GenericController("unprocessable");
@@ -186,6 +218,12 @@ class OrderController
 	
 	private function updateOrder($id)
 	{
+		if (!$this->checkToken()) {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "Invalid or missing token"));
+			return $response;
+		}
+
 		if (!array_key_exists ($id, $this->data)) {
 			$gc = new GenericController("notFound");
 			$gc->processRequest();
@@ -233,6 +271,12 @@ class OrderController
     ]  
 	
 	private function deleteOrder($id) {
+		if (!$this->checkToken()) {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "Invalid or missing token"));
+			return $response;
+		}
+
 		if (!array_key_exists ($id, $this->data)) {
 			$gc = new GenericController("notFound");
 			$gc->processRequest();
