@@ -153,13 +153,18 @@ class UserController
 
 	private function addUser()
 	{
+		$ret = Helpers::check_content_type();
+		if ($ret !== true) {
+			return $ret;
+		}
+
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (! $this->validateAdd($input)) {
 			$gc = new GenericController("unprocessable");
 			$gc->processRequest();
 			exit();
 		}
-		$user = new User(null, $input['name'], intval ($input['level']));
+		$user = new User(null, $input['name'], intval ($input['level']), hash ("sha256", "password"));
 		$this->data[] = $user;
 		$response['status_code_header'] = 'HTTP/1.1 201 Created';
 		$response['body'] = json_encode($user->toArray($this->version));

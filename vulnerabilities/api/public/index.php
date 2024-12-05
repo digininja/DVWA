@@ -6,6 +6,7 @@ use Src\HealthController;
 use Src\GenericController;
 use Src\OrderController;
 use Src\LoginController;
+use Src\Helpers;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

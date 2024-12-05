@@ -1,9 +1,5 @@
 <?php
 
-# Start the app with:
-#
-# php -S localhost:8000 -t public
-
 namespace Src;
 
 use OpenApi\Attributes as OAT;
@@ -45,8 +41,13 @@ class LoginController
         ]
     )   
     ]
-	
+
 	private function login() {
+		$ret = Helpers::check_content_type();
+		if ($ret !== true) {
+			return $ret;
+		}
+
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (array_key_exists ("username", $input) && 
 			array_key_exists ("password", $input)) {
@@ -96,6 +97,11 @@ class LoginController
     ]
 	
 	private function check_token() {
+		$ret = Helpers::check_content_type();
+		if ($ret !== true) {
+			return $ret;
+		}
+
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (array_key_exists ("token", $input)) {
 			$token = $input['token'];
