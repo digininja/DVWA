@@ -42,7 +42,7 @@ class LoginController
     )   
     ]
 
-	private function login() {
+	private function loginJSON() {
 		$ret = Helpers::check_content_type();
 		if ($ret !== true) {
 			return $ret;
@@ -65,6 +65,51 @@ class LoginController
 			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
 			$response['body'] = json_encode (array ("status" => "Missing credentials"));
 		}
+		return $response;
+	}
+
+	# This is an attempt at an OAUTH2 client password authentication flow
+	private function login() {
+		# Default fail, just in case.
+		$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+		$response['body'] = json_encode (array ("status" => "Authentication failed"));
+
+		if (array_key_exists ("grant_type", $_POST) && $_POST['grant_type'] == "password") {
+			if (array_key_exists ("client_id", $_POST) && 
+				array_key_exists ("client_secret", $_POST)) {
+				$client_id = $_POST['client_id'];
+				$client_secret = $_POST['client_secret'];
+
+				if ($client_id == "1471.dvwa.digi.ninja" && $client_secret == "ABigLongSecret") {
+					if (array_key_exists ("username", $_POST) && 
+						array_key_exists ("password", $_POST)) {
+						$username = $_POST['username'];
+						$password = $_POST['password'];
+
+						if ($username == "mrbennett" && $password == "becareful") {
+							$response['status_code_header'] = 'HTTP/1.1 200 OK';
+							$response['body'] = json_encode (array ("access_token" => "12345"));
+						} else {
+							$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+							$response['body'] = json_encode (array ("status" => "Invalid user credentials"));
+						}
+					} else {
+						$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+						$response['body'] = json_encode (array ("status" => "Missing user credentials"));
+					}
+				} else {
+					$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+					$response['body'] = json_encode (array ("status" => "Invalid clientid/clientsecret credentials"));
+				}
+			} else {
+				$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+				$response['body'] = json_encode (array ("status" => "Missing clientid/clientsecret credentials"));
+			}
+		} else {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "grant_type must be 'password'"));
+		}
+
 		return $response;
 	}
 
