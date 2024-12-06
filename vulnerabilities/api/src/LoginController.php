@@ -88,7 +88,7 @@ class LoginController
 
 						if ($username == "mrbennett" && $password == "becareful") {
 							$response['status_code_header'] = 'HTTP/1.1 200 OK';
-							$response['body'] = json_encode (array ("access_token" => "12345"));
+							$response['body'] = json_encode (array ("access_token" => "12345", "refresh_token" => "98765", "token_type" => "bearer", "expires_in" => 300));
 						} else {
 							$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
 							$response['body'] = json_encode (array ("status" => "Invalid user credentials"));
@@ -109,6 +109,17 @@ class LoginController
 			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
 			$response['body'] = json_encode (array ("status" => "grant_type must be 'password'"));
 		}
+
+		return $response;
+	}
+
+	private function refresh() {
+	/*
+    echo "<p>Hello {$_SERVER['PHP_AUTH_USER']}.</p>";
+    echo "<p>You entered {$_SERVER['PHP_AUTH_PW']} as your password.</p>";
+	*/
+		$response['status_code_header'] = 'HTTP/1.1 200 OK';
+		$response['body'] = json_encode (array ("access_token" => "12345", "refresh_token" => "98765", "token_type" => "bearer", "expires_in" => 300));
 
 		return $response;
 	}
@@ -168,6 +179,9 @@ class LoginController
 		switch ($this->requestMethod) {
 			case 'POST':
 				switch ($this->command) {
+					case "refresh":
+						$response = $this->refresh();
+						break;
 					case "login":
 						$response = $this->login();
 						break;
