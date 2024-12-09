@@ -57,11 +57,24 @@ class OrderController
 		return false;
 	}
 
+	/*
+	type can be "http", "apiKey", "oauth2", "openIdConnect" 
+	* https://zircote.github.io/swagger-php/guide/cookbook.html#referencing-a-security-scheme
+	*/
+
+	#[OAT\SecurityScheme(
+		name :"authorization",
+		securityScheme :"http",
+		type :"http",
+	)
+	]
+
     #[OAT\Get(
 		tags: ["order"],
         path: '/vulnerabilities/api/v2/order/{id}',
         operationId: 'getOrderByID',
 		description: 'Get a order by ID.',
+		security: [ "basicAuth" ],
         parameters: [
             new OAT\Parameter(name: 'id', in: 'path', required: true, schema: new OAT\Schema(type: 'integer')),
         ],

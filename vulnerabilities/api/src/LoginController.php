@@ -56,7 +56,7 @@ class LoginController
 
 			if ($username == "mrbennett" && $password == "becareful") {
 				$response['status_code_header'] = 'HTTP/1.1 200 OK';
-				$response['body'] = json_encode (array ("token" => "12345"));
+				$response['body'] = json_encode (array ("token" => Login::create_token()));
 			} else {
 				$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
 				$response['body'] = json_encode (array ("status" => "Invalid credentials"));
@@ -88,7 +88,7 @@ class LoginController
 
 						if ($username == "mrbennett" && $password == "becareful") {
 							$response['status_code_header'] = 'HTTP/1.1 200 OK';
-							$response['body'] = json_encode (array ("access_token" => "12345", "refresh_token" => "98765", "token_type" => "bearer", "expires_in" => 300));
+							$response['body'] = json_encode (array ("access_token" => Login::create_token(), "refresh_token" => "98765", "token_type" => "bearer", "expires_in" => 300));
 						} else {
 							$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
 							$response['body'] = json_encode (array ("status" => "Invalid user credentials"));
@@ -161,7 +161,7 @@ class LoginController
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (array_key_exists ("token", $input)) {
 			$token = $input['token'];
-			if ($token == "12345") {
+			if (Login::check_token($token)) {
 				$response['status_code_header'] = 'HTTP/1.1 200 OK';
 				$response['body'] = json_encode (array ("token" => "Valid"));
 			} else {
