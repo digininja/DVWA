@@ -12,7 +12,7 @@ $page[ 'page_id' ] = 'home';
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Welcome to Damn Vulnerable Web Application!</h1>
-
+	Heellllooo
 
 	<h2>General Instructions</h2>
 	<p>It is up to the user how they approach DVWA. Either by working through every module at a fixed level, or selecting any module and working up to reach the highest level they can before moving onto the next one. There is not a fixed object to complete a module; however users should feel that they have successfully exploited the system as best as they possible could by using that particular vulnerability.</p>
