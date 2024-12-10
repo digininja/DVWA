@@ -14,6 +14,9 @@ class LoginController
 		$this->command = $command;
 	}
 
+	#
+	# Add one of these for refresh
+	#
     #[OAT\Post(
 		tags: ["login"],
         path: '/vulnerabilities/api/v2/login/login',
@@ -74,40 +77,70 @@ class LoginController
 		$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
 		$response['body'] = json_encode (array ("status" => "Authentication failed"));
 
-		if (array_key_exists ("grant_type", $_POST) && $_POST['grant_type'] == "password") {
-			if (array_key_exists ("client_id", $_POST) && 
-				array_key_exists ("client_secret", $_POST)) {
-				$client_id = $_POST['client_id'];
-				$client_secret = $_POST['client_secret'];
+		if (array_key_exists ("PHP_AUTH_USER", $_SERVER) && 
+			array_key_exists ("PHP_AUTH_PW", $_SERVER)) {
+			$client_id = $_SERVER['PHP_AUTH_USER'];
+			$client_secret = $_SERVER['PHP_AUTH_PW'];
 
-				if ($client_id == "1471.dvwa.digi.ninja" && $client_secret == "ABigLongSecret") {
-					if (array_key_exists ("username", $_POST) && 
-						array_key_exists ("password", $_POST)) {
-						$username = $_POST['username'];
-						$password = $_POST['password'];
+			# App auth check
+			if ($client_id == "1471.dvwa.digi.ninja" && $client_secret == "ABigLongSecret") {
 
-						if ($username == "mrbennett" && $password == "becareful") {
-							$response['status_code_header'] = 'HTTP/1.1 200 OK';
-							$response['body'] = json_encode (array ("access_token" => Login::create_token(), "refresh_token" => "98765", "token_type" => "bearer", "expires_in" => 300));
-						} else {
+				if (array_key_exists ("grant_type", $_POST)) {
+					switch ($_POST['grant_type']) {
+						case "password":
+							if (array_key_exists ("username", $_POST) && 
+								array_key_exists ("password", $_POST)) {
+								$username = $_POST['username'];
+								$password = $_POST['password'];
+
+								if ($username == "mrbennett" && $password == "becareful") {
+									$response['status_code_header'] = 'HTTP/1.1 200 OK';
+									$response['body'] = Login::create_token();
+								} else {
+									$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+									$response['body'] = json_encode (array ("status" => "Invalid user credentials"));
+								}
+							} else {
+								$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+								$response['body'] = json_encode (array ("status" => "Missing user credentials"));
+							}
+							break;
+						case "refresh_token":
+							if (array_key_exists ("refresh_token", $_POST)) {
+								$refresh_token = $_POST['refresh_token'];
+
+								# Because this is sent in a POST body, any + characters
+								# get replaced by a space when the URL decode happens. This
+								# puts them back to plus characters.
+								$ref = str_replace (" ", "+", $refresh_token);
+
+								if (Login::check_refresh_token($ref)) {
+									$response['status_code_header'] = 'HTTP/1.1 200 OK';
+									$response['body'] = Login::create_token();
+								} else {
+									$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+									$response['body'] = json_encode (array ("status" => "Invalid refresh token"));
+								}
+							} else {
+								$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+								$response['body'] = json_encode (array ("status" => "Missing refresh token"));
+							}
+							break;
+						default:
 							$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-							$response['body'] = json_encode (array ("status" => "Invalid user credentials"));
-						}
-					} else {
-						$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-						$response['body'] = json_encode (array ("status" => "Missing user credentials"));
+							$response['body'] = json_encode (array ("status" => "Unknown grant type"));
 					}
 				} else {
 					$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-					$response['body'] = json_encode (array ("status" => "Invalid clientid/clientsecret credentials"));
+					$response['body'] = json_encode (array ("status" => "Missing grant type"));
 				}
 			} else {
 				$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-				$response['body'] = json_encode (array ("status" => "Missing clientid/clientsecret credentials"));
+				$response['body'] = json_encode (array ("status" => "Invalid clientid/clientsecret credentials"));
 			}
 		} else {
 			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-			$response['body'] = json_encode (array ("status" => "grant_type must be 'password'"));
+			$response['body'] = json_encode (array ("status" => "Missing clientid/clientsecret credentials"));
 		}
 
 		return $response;
@@ -118,9 +151,30 @@ class LoginController
     echo "<p>Hello {$_SERVER['PHP_AUTH_USER']}.</p>";
     echo "<p>You entered {$_SERVER['PHP_AUTH_PW']} as your password.</p>";
 	*/
-		$response['status_code_header'] = 'HTTP/1.1 200 OK';
-		$response['body'] = json_encode (array ("access_token" => "12345", "refresh_token" => "98765", "token_type" => "bearer", "expires_in" => 300));
+		$ret = Helpers::check_content_type();
+		if ($ret !== true) {
+			return $ret;
+		}
 
+		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
+		if (array_key_exists ("refresh_token", $input)) {
+			if (array_key_exists ("grant_type", $input)) {
+				$token = $input['token'];
+				if (Login::check_access_token($token)) {
+					$response['status_code_header'] = 'HTTP/1.1 200 OK';
+					$response['body'] = json_encode (array ("token" => "Valid"));
+				} else {
+					$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+					$response['body'] = json_encode (array ("status" => "Invalid"));
+				}
+			} else {
+				$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+				$response['body'] = json_encode (array ("status" => "Missing token"));
+			}
+		} else {
+			$response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
+			$response['body'] = json_encode (array ("status" => "Missing token"));
+		}
 		return $response;
 	}
 
@@ -161,7 +215,7 @@ class LoginController
 		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
 		if (array_key_exists ("token", $input)) {
 			$token = $input['token'];
-			if (Login::check_token($token)) {
+			if (Login::check_access_token($token)) {
 				$response['status_code_header'] = 'HTTP/1.1 200 OK';
 				$response['body'] = json_encode (array ("token" => "Valid"));
 			} else {
@@ -180,7 +234,7 @@ class LoginController
 			case 'POST':
 				switch ($this->command) {
 					case "refresh":
-						$response = $this->refresh();
+						$response = $this->login();
 						break;
 					case "login":
 						$response = $this->login();
@@ -218,8 +272,11 @@ final class Credentials {
     public string $password;
 }
 
+/*
+Moving this to its own thing
 #[OAT\Schema(required: ['token'])]
 final class Token {
     #[OAT\Property(example: "11111")]
     public string $token;
 }
+*/

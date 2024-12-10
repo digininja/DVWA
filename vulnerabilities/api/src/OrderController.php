@@ -26,8 +26,8 @@ class OrderController
 			$header = $_SERVER['HTTP_AUTHORIZATION'];
 			$bits = explode (" ", $header);
 			if (count ($bits) == 2) {
-				if (strtolower($bits[0]) == "bearer" && $bits[1] == "12345") {
-					return true;
+				if (strtolower($bits[0]) == "bearer") {
+					return (Login::check_access_token($bits[1]));
 				}
 			}
 		}
