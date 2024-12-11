@@ -6,6 +6,7 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 
 	// Set blacklist
 	$substitutions = array(
+		'||' => '',
 		'&'  => '',
 		';'  => '',
 		'| ' => '',
@@ -14,7 +15,6 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 		'('  => '',
 		')'  => '',
 		'`'  => '',
-		'||' => '',
 	);
 
 	// Remove any of the characters in the array (blacklist).
