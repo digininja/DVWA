@@ -1,0 +1,46 @@
+name: TruffleHog Scan
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*' # Specify branches to scan
+  pull_request:
+    branches:
+      - main
+      - 'release/*'
+
+jobs:
+  trufflehog-scan:
+    name: Run TruffleHog
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install TruffleHog
+        run: |
+          pip install trufflehog
+
+      - name: Run TruffleHog
+        id: trufflehog
+        run: |
+          trufflehog filesystem --directory . --json > trufflehog-results.json
+
+      - name: Upload TruffleHog Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: trufflehog-results
+          path: trufflehog-results.json
+
+      - name: Analyze Results
+        if: always() # This ensures the step runs regardless of previous success/failure
+        run: |
+          if [ -s trufflehog-results.json ]; then
+            echo "Potential sensitive data detected!"
+            cat trufflehog-results.json
+            exit 1
+          else
+            echo "No sensitive data detected."
+          fi
