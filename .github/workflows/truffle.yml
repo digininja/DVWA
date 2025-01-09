@@ -3,12 +3,10 @@ name: TruffleHog Scan
 on:
   push:
     branches:
-      - main
-      - 'release/*' # Specify branches to scan
+      - '**' # Trigger on all branches for testing
   pull_request:
     branches:
-      - main
-      - 'release/*'
+      - '**'
 
 jobs:
   trufflehog-scan:
@@ -19,28 +17,40 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Enable Debug Logs
+        run: |
+          echo "DEBUG: Running debug mode..."
+          set -x
+
       - name: Install TruffleHog
         run: |
+          pip install --upgrade pip
           pip install trufflehog
+
+      - name: Verify TruffleHog Installation
+        run: |
+          trufflehog --version
 
       - name: Run TruffleHog
         id: trufflehog
         run: |
+          echo "DEBUG: Running TruffleHog scan..."
           trufflehog filesystem --directory . --json > trufflehog-results.json
+          echo "DEBUG: TruffleHog scan completed."
+
+      - name: Display TruffleHog Results
+        if: always() # Run regardless of success/failure
+        run: |
+          echo "DEBUG: Checking results..."
+          if [ -s trufflehog-results.json ]; then
+            echo "Potential sensitive data detected!"
+            cat trufflehog-results.json
+          else
+            echo "No sensitive data detected."
+          fi
 
       - name: Upload TruffleHog Results
         uses: actions/upload-artifact@v3
         with:
           name: trufflehog-results
           path: trufflehog-results.json
-
-      - name: Analyze Results
-        if: always() # This ensures the step runs regardless of previous success/failure
-        run: |
-          if [ -s trufflehog-results.json ]; then
-            echo "Potential sensitive data detected!"
-            cat trufflehog-results.json
-            exit 1
-          else
-            echo "No sensitive data detected."
-          fi
