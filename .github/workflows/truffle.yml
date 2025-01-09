@@ -1,56 +1,20 @@
-name: TruffleHog Scan
-
 on:
   push:
     branches:
-      - '**' # Trigger on all branches for testing
+      - '**' # Trigger on all branches
   pull_request:
     branches:
-      - '**'
+      - '**' # Trigger on all PRs
 
 jobs:
-  trufflehog-scan:
-    name: Run TruffleHog
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Enable Debug Logs
-        run: |
-          echo "DEBUG: Running debug mode..."
-          set -x
-
-      - name: Install TruffleHog
-        run: |
-          pip install --upgrade pip
-          pip install trufflehog
-
-      - name: Verify TruffleHog Installation
-        run: |
-          trufflehog --version
-
-      - name: Run TruffleHog
-        id: trufflehog
-        run: |
-          echo "DEBUG: Running TruffleHog scan..."
-          trufflehog filesystem --directory . --json > trufflehog-results.json
-          echo "DEBUG: TruffleHog scan completed."
-
-      - name: Display TruffleHog Results
-        if: always() # Run regardless of success/failure
-        run: |
-          echo "DEBUG: Checking results..."
-          if [ -s trufflehog-results.json ]; then
-            echo "Potential sensitive data detected!"
-            cat trufflehog-results.json
-          else
-            echo "No sensitive data detected."
-          fi
-
-      - name: Upload TruffleHog Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: trufflehog-results
-          path: trufflehog-results.json
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Secret Scanning
+      uses: trufflesecurity/trufflehog@main
+      with:
+        extra_args: --results=verified,unknown
