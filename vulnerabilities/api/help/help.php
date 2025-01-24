@@ -115,24 +115,28 @@
 		</div>
 
 		<h3>High Level</h3>
-		<p>The system is using AES-128-CBC which means it is vulnerable to a padding oracle attack.</p>
+		<p>Import the four health calls into your testing tool of choice and make sure they are running properly. When they are all working, test them for vulnerabilities.</p>
 
 		<p>
 		<button id="high_button" onclick="show_answer('high')">Show Answer</button>
 		</p>
 
 		<div id="high_answer">
-		<p>Rather than try to explain this here, go read this excelent write up on the attack by Eli Sohl.</p>
-		<p><a target="_blank" href="https://www.nccgroup.com/uk/research-blog/cryptopals-exploiting-cbc-padding-oracles/">Cryptopals: Exploiting CBC Padding Oracles</a></p>
+		<p>The connectivity call takes a target parameter and pings it to check for a connection, this is done by calling the OS ping command and is vulnerable to command injection.</p>
 		<p>
-		If you want to play with this some more, there is a script called <a href="cryptography/source/download_oracle_attack.php" download>oracle_attack.php</a> in the sources directory which runs through the full attack with debug. You can run this either against the DVWA site or it will run locally against its own pretend web server.
+		For more information on how to exploit this type of issue, see the command injection module.
 		</p>
 		</div>
 
 		<h3>Impossible Level</h3>
-		<p>You can never say impossible in crypto as something that would take years today could take minutes in the future when a new attack is found or when processing power takes a giant leam forward.</p>
 		<p>
-		The current recommended alternative to AES-CBC is AES-GCM and so the system uses that here. 256 bit blocks rather than 128 bit blocks are used, and a unique IV used for every message. This may be secure today but who knows what tomorrow brings?
+			The challenge here is just to get the login process automated in Postman or your tool of choice. Read the documentation and experiment. To help get things working I piped everything through Burp and watched each call as it was made to see if it matched what I expected.
+		</p>
+		<p>
+			When the flow works correctly, the initial login will return an access token and a refresh token along with an <code>expires_in</code> value to say how long the access token is valid for. Once the access token has expired, the refresh token will be sent to the refresh endpoint to generate a new access/refresh token pair.
+		</p>
+		<p>
+			It should be noted that as well as the access token having a fixed lifespan, the refresh token also has a fixed lifespan, once it has expired, the login process has to begin again from scratch.
 		</p>
 	</div></td>
 	</tr>
