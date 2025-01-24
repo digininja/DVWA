@@ -159,7 +159,7 @@ caeb574f10f349ed839fbfd223903368 <- Finish off with Sweep's bio
 		</p>
 
 		<div id="high_answer">
-		<p>Rather than try to explain this here, go read this excelent write up on the attack by Eli Sohl.</p>
+		<p>Rather than try to explain this here, go read this excellent write up on the attack by Eli Sohl.</p>
 		<p><a target="_blank" href="https://www.nccgroup.com/uk/research-blog/cryptopals-exploiting-cbc-padding-oracles/">Cryptopals: Exploiting CBC Padding Oracles</a></p>
 		<p>
 		If you want to play with this some more, there is a script called <a href="cryptography/source/download_oracle_attack.php" download>oracle_attack.php</a> in the sources directory which runs through the full attack with debug. You can run this either against the DVWA site or it will run locally against its own pretend web server.
