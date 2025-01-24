@@ -20,6 +20,44 @@ class HealthController
 
     #[OAT\Post(
 		tags: ["health"],
+        path: '/vulnerabilities/api/v2/health/echo',
+        operationId: 'echo',
+		description: 'Echo, echo, cho, cho, o o ....',
+        parameters: [
+                new OAT\RequestBody (
+					description: 'Your words.',
+                    content: new OAT\MediaType(
+                        mediaType: 'application/json',
+                        schema: new OAT\Schema(ref: Words::class)
+                    )
+                ),
+
+        ],
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Successful operation.',
+            ),
+        ]
+    )   
+    ]
+	
+	private function echo() {
+		$input = (array) json_decode(file_get_contents('php://input'), TRUE);
+		if (array_key_exists ("words", $input)) {
+			$words = $input['words'];
+
+			$response['status_code_header'] = 'HTTP/1.1 200 OK';
+			$response['body'] = json_encode (array ("reply" => $words));
+		} else {
+			$response['status_code_header'] = 'HTTP/1.1 500 Internal Server Error';
+			$response['body'] = json_encode (array ("status" => "Words not specified"));
+		}
+		return $response;
+	}
+
+    #[OAT\Post(
+		tags: ["health"],
         path: '/vulnerabilities/api/v2/health/connectivity',
         operationId: 'checkConnectivity',
 		description: 'The server occasionally loses connectivity to other systems and so this can be used to check connectivity status.',
@@ -106,6 +144,9 @@ class HealthController
 		switch ($this->requestMethod) {
 			case 'POST':
 				switch ($this->command) {
+					case "echo":
+						$response = $this->echo();
+						break;
 					case "connectivity":
 						$response = $this->checkConnectivity();
 						break;
@@ -149,5 +190,11 @@ class HealthController
 final class Target {
     #[OAT\Property(example: "digi.ninja")]
     public string $target;
+}
+
+#[OAT\Schema(required: ['words'])]
+final class Words {
+    #[OAT\Property(example: "Hello World")]
+    public string $words;
 }
 

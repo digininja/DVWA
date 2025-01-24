@@ -1,4 +1,3 @@
-
 openapi: 3.0.0
 info:
   title: 'DVWA API'
@@ -11,6 +10,21 @@ servers:
     url: 'http://dvwa.test'
     description: 'API server'
 paths:
+  /vulnerabilities/api/v2/health/echo:
+    post:
+      tags:
+        - health
+      description: 'Echo, echo, cho, cho, o o ....'
+      operationId: echo
+      requestBody:
+        description: 'Your words.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Words'
+      responses:
+        '200':
+          description: 'Successful operation.'
   /vulnerabilities/api/v2/health/connectivity:
     post:
       tags:
@@ -296,6 +310,14 @@ components:
         target:
           type: string
           example: digi.ninja
+      type: object
+    Words:
+      required:
+        - words
+      properties:
+        words:
+          type: string
+          example: 'Hello World'
       type: object
     Credentials:
       required:
