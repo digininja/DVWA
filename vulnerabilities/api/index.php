@@ -44,6 +44,10 @@ $page[ 'body' ] .= "
 	<h2>More Information</h2>
 	<ul>
 		<li>" . dvwaExternalLinkUrlGet( 'https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/00-API_Testing_Overview', "OWASP WSTG API Testing Overview" ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://portswigger.net/bappstore/6bf7574b632847faaaa4eb5e42f1757c', "Burp OpenAPI Parser" ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.zaproxy.org/docs/desktop/addons/openapi-support/', "ZAP OpenAPI Support" ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://swagger.io/tools/swagger-ui/', "Swagger UI" ) . "</li>
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.postman.com/', "Postman" ) . "</li>
 	</ul>
 </div>\n";
 
