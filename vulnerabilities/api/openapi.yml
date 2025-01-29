@@ -1,0 +1,435 @@
+openapi: 3.0.0
+info:
+  title: 'DVWA API'
+  contact:
+    url: 'https://github.com/digininja/DVWA/'
+    email: robin@digi.ninja
+  version: '0.1'
+servers:
+  -
+    url: 'http://dvwa.test'
+    description: 'API server'
+paths:
+  /vulnerabilities/api/v2/health/echo:
+    post:
+      tags:
+        - health
+      description: 'Echo, echo, cho, cho, o o ....'
+      operationId: echo
+      requestBody:
+        description: 'Your words.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Words'
+      responses:
+        '200':
+          description: 'Successful operation.'
+  /vulnerabilities/api/v2/health/connectivity:
+    post:
+      tags:
+        - health
+      description: 'The server occasionally loses connectivity to other systems and so this can be used to check connectivity status.'
+      operationId: checkConnectivity
+      requestBody:
+        description: 'Remote host.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Target'
+      responses:
+        '200':
+          description: 'Successful operation.'
+  /vulnerabilities/api/v2/health/status:
+    get:
+      tags:
+        - health
+      description: 'Get the health of the system.'
+      operationId: getHealthStatus
+      responses:
+        '200':
+          description: 'Successful operation.'
+  /vulnerabilities/api/v2/health/ping:
+    get:
+      tags:
+        - health
+      description: 'Simple ping/pong to check connectivity.'
+      operationId: ping
+      responses:
+        '200':
+          description: 'Successful operation.'
+  /vulnerabilities/api/v2/login/login:
+    post:
+      tags:
+        - login
+      description: 'Login as user.'
+      operationId: login
+      requestBody:
+        description: 'The login credentials.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: 'Successful operation.'
+        '401':
+          description: 'Invalid credentials.'
+  /vulnerabilities/api/v2/login/check_token:
+    post:
+      tags:
+        - login
+      description: 'Check a token is valid.'
+      operationId: check_token
+      requestBody:
+        description: 'The token to test.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        '200':
+          description: 'Successful operation.'
+        '401':
+          description: 'Token is invalid.'
+  '/vulnerabilities/api/v2/order/{id}':
+    get:
+      tags:
+        - order
+      description: 'Get a order by ID.'
+      operationId: getOrderByID
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: 'Order not found.'
+      security:
+        -
+          scalar: basicAuth
+    put:
+      tags:
+        - order
+      description: 'Update an order by ID.'
+      operationId: updateOrder
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 'New order data.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: 'Order not found'
+        '422':
+          description: 'Invalid order object provided'
+    delete:
+      tags:
+        - order
+      description: 'Delete order by ID.'
+      operationId: deleteOrderById
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Successful operation.'
+        '404':
+          description: 'Order not found'
+  /vulnerabilities/api/v2/order/:
+    get:
+      tags:
+        - order
+      description: 'Get all orders.'
+      operationId: getOrders
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      tags:
+        - order
+      description: 'Create a new order.'
+      operationId: addOrder
+      requestBody:
+        description: 'Order data.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderAdd'
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '422':
+          description: 'Invalid order object provided'
+  '/vulnerabilities/api/v2/user/{id}':
+    get:
+      tags:
+        - user
+      description: 'Get a user by ID.'
+      operationId: getUserByID
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'User not found.'
+    put:
+      tags:
+        - user
+      description: 'Update a user by ID.'
+      operationId: updateUser
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 'New user data.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'User not found'
+        '422':
+          description: 'Invalid user object provided'
+    delete:
+      tags:
+        - user
+      description: 'Delete user by ID.'
+      operationId: deleteUserById
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Successful operation.'
+        '404':
+          description: 'User not found'
+  /vulnerabilities/api/v2/user/:
+    get:
+      tags:
+        - user
+      description: 'Get all users.'
+      operationId: getUsers
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - user
+      description: 'Create a new user.'
+      operationId: addUser
+      requestBody:
+        description: 'User data.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAdd'
+      responses:
+        '200':
+          description: 'Successful operation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: 'Invalid user object provided'
+components:
+  schemas:
+    Target:
+      required:
+        - target
+      properties:
+        target:
+          type: string
+          example: digi.ninja
+      type: object
+    Words:
+      required:
+        - words
+      properties:
+        words:
+          type: string
+          example: 'Hello World'
+      type: object
+    Credentials:
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: user
+        password:
+          type: string
+          example: password
+      type: object
+    Order:
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Tony Hart'
+        address:
+          type: string
+          example: 'BBC Television Centre, London W3 6XZ'
+        items:
+          type: string
+          example: '1 * brush, 2 * paints, 1 * easel'
+        status:
+          type: integer
+          example: 1
+      type: object
+    OrderAdd:
+      required:
+        - level
+        - name
+      properties:
+        name:
+          type: string
+          example: fred
+        address:
+          type: string
+          example: '1 High Street, Atown'
+        items:
+          type: string
+          example: '2 * brushes'
+      type: object
+    OrderUpdate:
+      properties:
+        name:
+          type: string
+          example: fred
+        address:
+          type: string
+          example: '1 High Street, Atown'
+        items:
+          type: string
+          example: '2 * brushes'
+      type: object
+    Token:
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          example: '11111'
+      type: object
+    User:
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: fred
+        level:
+          type: integer
+          example: 1
+      type: object
+    UserAdd:
+      required:
+        - level
+        - name
+      properties:
+        name:
+          type: string
+          example: fred
+        level:
+          type: integer
+          example: 1
+      type: object
+    UserUpdate:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: fred
+      type: object
+  securitySchemes:
+    http:
+      type: http
+      name: authorization
+tags:
+  -
+    name: user
+    description: 'User operations.'
+  -
+    name: health
+    description: 'Health operations.'
+  -
+    name: order
+    description: 'Order operations.'
+  -
+    name: login
+    description: 'Login operations.'

@@ -28,6 +28,9 @@ if (array_key_exists ("id", $_GET) &&
 }
 
 $page[ 'body' ] .= "
+<script src='/vulnerabilities/help.js'></script>
+<link rel='stylesheet' type='text/css' href='/vulnerabilities/help.css' />
+
 <div class=\"body_padded\">
 	{$help}
 </div>\n";
