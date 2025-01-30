@@ -43,11 +43,16 @@ if( $DBMS == 'MySQL' ) {
 	$database_type_name = "PostgreSQL";
 }
 
-$git_ref = "Unknown";
+$git_ref = "<em>Unknown</em><br><br>";
 
 if (PHP_OS == "Linux") {
 	if (is_dir (".git")) {
-		$git_ref = shell_exec('cat .git/`cat .git/HEAD  | sed "s/.* \(.*\)/\1/"`');
+		$git_log = shell_exec ("git -c 'safe.directory=*' log -1");
+		if (!is_null ($git_log)) {
+			$tmp = explode ("\n", $git_log);
+			$date = str_replace ("Date: ", "Date: <em>", $tmp[2]);
+			$git_ref = "<ul><li>" . str_replace ("commit ", "Git reference: <em>", $tmp[0]) . "</em></li><li>" . $date . "</em></li></ul>";
+		}
 	}
 }
 
@@ -77,8 +82,8 @@ $page[ 'body' ] .= "
 	<br />
 	{$DVWAOS}<br />
 	<br>
-	Git reference: <em>{$git_ref}</em><br>
-	<br />
+	DVWA version: {$git_ref}
+
 	PHP version: <em>" . phpversion() . "</em><br />
 	{$phpVersionWarning}
 	{$phpDisplayErrors}<br />
