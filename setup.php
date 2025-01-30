@@ -43,6 +43,14 @@ if( $DBMS == 'MySQL' ) {
 	$database_type_name = "PostgreSQL";
 }
 
+$git_ref = "Unknown";
+
+if (PHP_OS == "Linux") {
+	if (is_dir (".git")) {
+		$git_ref = shell_exec('cat .git/`cat .git/HEAD  | sed "s/.* \(.*\)/\1/"`');
+	}
+}
+
 $phpVersionWarning = "";
 
 if (version_compare(phpversion(), '6', '<')) {
@@ -68,6 +76,8 @@ $page[ 'body' ] .= "
 	{$SERVER_NAME}<br />
 	<br />
 	{$DVWAOS}<br />
+	<br>
+	Git reference: <em>{$git_ref}</em><br>
 	<br />
 	PHP version: <em>" . phpversion() . "</em><br />
 	{$phpVersionWarning}
