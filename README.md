@@ -230,6 +230,24 @@ And then restart Apache with:
 apachectl restart
 ```
 
+### Vendor Files
+
+If you want to use the API module you will need to install a set of vendor files using [Composer](https://getcomposer.org/).
+
+First, make sure you have Composer installed. There seem to be backward compatibility issues so I always get the latest version from here:
+
+https://getcomposer.org/doc/00-intro.md
+
+Follow the instructions the site gives to get it installed.
+
+Now go into the `vulnerabilities/api` directory and run:
+
+```
+composer.phar install
+```
+
+If you did not install Composer to the system path, make sure you reference its full location.
+
 ## Configurations
 
 ### Config File
