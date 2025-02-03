@@ -64,6 +64,13 @@ if (PHP_OS == "Linux") {
 	}
 }
 
+if (!is_dir ("./vulnerabilities/api/vendor")) {
+	$vendor = "<em><span class='failure'>Not Installed</span></em><br><br>";
+	$vendor .= "For information on how to install these, see the <a href='https://github.com/digininja/DVWA/blob/master/README.md#vendor-files'>README</a>.<br>";
+} else {
+	$vendor = "<em><span class='success'>Installed</span></em><br>";
+}
+
 $phpVersionWarning = "";
 
 if (version_compare(phpversion(), '6', '<')) {
@@ -122,6 +129,10 @@ $page[ 'body' ] .= "
 	{$MYSQL_SERVER}<br />
 	{$MYSQL_PORT}<br />
 	<br />
+	<em>API</em><br>
+	<i>This section is only important if you want to use the API module.</i><br>
+	Vendor files installed: {$vendor}<br>
+
 	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
 	<br />
 	If you see disabled on either <i>allow_url_fopen</i> or <i>allow_url_include</i>, set the following in your php.ini file and restart Apache.<br />

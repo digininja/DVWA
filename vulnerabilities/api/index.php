@@ -37,6 +37,12 @@ if (PHP_OS == "Linux") {
 	}
 }
 
+if (!is_dir ("./vendor")) {
+	$html .= "<em><span class='failure'>Warning, composer has not been run.</span></em><br>";
+	$html .= "See the <a href='https://github.com/digininja/DVWA/blob/master/README.md#vendor-files'>README</a> for more information.<br>";
+}
+	
+
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/api/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "<div class=\"body_padded\">
