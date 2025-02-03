@@ -216,6 +216,20 @@ apt install -y apache2 mariadb-server mariadb-client php php-mysqli php-gd libap
 
 The site will work with MySQL instead of MariaDB but we strongly recommend MariaDB as it works out of the box whereas you have to make changes to get MySQL to work correctly.
 
+### Apache Modules
+
+If you want to use the API lab you must have the Apache module `mod_rewrite` enabled. To do this in Linux run:
+
+```
+a2enmod rewrite
+```
+
+And then restart Apache with:
+
+```
+apachectl restart
+```
+
 ## Configurations
 
 ### Config File
