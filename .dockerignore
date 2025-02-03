@@ -3,4 +3,4 @@
 **/.github
 **/Dockerfile*
 **/.dockerignore
-**/compose*
+**/compose.yml
