@@ -2,7 +2,7 @@
 
 $message = "";
 
-$html = "
+$html .= "
 	<p>
 		Rather than try to develop a perfect API, there is a different type of challenge for this level.
 	</p>

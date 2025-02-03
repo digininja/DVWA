@@ -6,7 +6,7 @@ $messages = "";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
-$html = "
+$html .= "
 <p>
 	Versioning is important in APIs, running multiple versions of an API can allow for backward compatibility and can allow new services to be added without affecting existing users. The downside to keeping old versions alive is when those older versions contain vulnerabilities.
 </p>

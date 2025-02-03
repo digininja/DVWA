@@ -1,6 +1,6 @@
 <?php
 
-$html = "
+$html .= "
 	<script>
 		function update_username(user_json) {
 			console.log(user_json);

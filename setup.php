@@ -44,6 +44,7 @@ if( $DBMS == 'MySQL' ) {
 }
 
 $git_ref = "<em>Unknown</em><br><br>";
+$mod_rewrite = "<em>Unknown</em><br>";
 
 if (PHP_OS == "Linux") {
 	if (is_dir (".git")) {
@@ -53,6 +54,13 @@ if (PHP_OS == "Linux") {
 			$date = str_replace ("Date: ", "Date: <em>", $tmp[2]);
 			$git_ref = "<ul><li>" . str_replace ("commit ", "Git reference: <em>", $tmp[0]) . "</em></li><li>" . $date . "</em></li></ul>";
 		}
+	}
+
+	$out = shell_exec ("apachectl -M | grep rewrite_module");
+	if ($out == "") {
+		$mod_rewrite = "<em><span class='failure'>Not Enabled</span></em><br>";
+	} else {
+		$mod_rewrite = "<em><span class='success'>Enabled</span></em><br>";
 	}
 }
 
@@ -78,12 +86,24 @@ $page[ 'body' ] .= "
 
 	<h2>Setup Check</h2>
 
-	{$SERVER_NAME}<br />
-	<br />
+	<em>General</em><br />
 	{$DVWAOS}<br />
 	<br>
 	DVWA version: {$git_ref}
+	<br>
+	{$DVWARecaptcha}<br />
+	<br />
+	{$DVWAUploadsWrite}<br />
+	{$bakWritable}
+	<br />
+	<br>
 
+	<em>Apache</em><br>
+	{$SERVER_NAME}<br /><br>
+	mod_rewrite: {$mod_rewrite}
+	mod_rewrite is required for the AP labs.<br><br>
+
+	<em>PHP</em><br>
 	PHP version: <em>" . phpversion() . "</em><br />
 	{$phpVersionWarning}
 	{$phpDisplayErrors}<br />
@@ -94,18 +114,13 @@ $page[ 'body' ] .= "
 	{$phpMySQL}<br />
 	{$phpPDO}<br />
 	<br />
+	<em>Database</em><br>
 	Backend database: <em>{$database_type_name}</em><br />
 	{$MYSQL_USER}<br />
 	{$MYSQL_PASS}<br />
 	{$MYSQL_DB}<br />
 	{$MYSQL_SERVER}<br />
 	{$MYSQL_PORT}<br />
-	<br />
-	{$DVWARecaptcha}<br />
-	<br />
-	{$DVWAUploadsWrite}<br />
-	{$bakWritable}
-	<br />
 	<br />
 	<i><span class=\"failure\">Status in red</span>, indicate there will be an issue when trying to complete some modules.</i><br />
 	<br />

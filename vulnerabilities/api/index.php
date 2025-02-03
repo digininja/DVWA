@@ -29,6 +29,14 @@ switch( dvwaSecurityLevelGet() ) {
 		break;
 }
 
+if (PHP_OS == "Linux") {
+	$out = shell_exec ("apachectl -M | grep rewrite_module");
+	if ($out == "") {
+		$html .= "<em><span class='failure'>Warning, mod_rewrite is not enabled</span></em><br>";
+		$html .= "See the <a href='https://github.com/digininja/DVWA/blob/master/README.md#apache-modules'>README</a> for more information.<br>";
+	}
+}
+
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/api/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "<div class=\"body_padded\">

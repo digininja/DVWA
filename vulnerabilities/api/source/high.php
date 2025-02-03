@@ -2,7 +2,7 @@
 
 $message = "";
 
-$html = "
+$html .= "
 	<p>
 		Here is the <a href='openapi.yml'>OpenAPI</a> document, have a look the health functions and see if you can find one that has a vulnerability.
 	</p>
