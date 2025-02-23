@@ -140,15 +140,6 @@ if (file_exists($conf)) {
 
 dvwaMessagePush( "Backup file /config/config.inc.php.bak automatically created" );
 
-// Add account_enabled columns to users table
-$alter_users_dept = "ALTER TABLE users 
-    ADD COLUMN IF NOT EXISTS account_enabled TINYINT(1) DEFAULT 1;";
-if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users_dept) ) {
-    dvwaMessagePush( "Could not add account_enabled column to users table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
-    dvwaPageReload();
-}
-dvwaMessagePush( "Added account_enabled columns to users table." );
-
 // Done
 dvwaMessagePush( "<em>Setup successful</em>!" );
 
