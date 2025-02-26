@@ -367,6 +367,8 @@ _Note: This will be different if you installed DVWA into a different directory._
 
 These assume you are on a Debian based distro, such as Debian, Ubuntu and Kali. For other distros, follow along, but update the command where appropriate.
 
+If you'd rather watch a video than read words, the most common issues are covered in the video [Fixing DVWA Setup Issues](https://youtu.be/C-kig5qrPSA?si=_a4Bop505-1tXb_F).
+
 ### Containers
 
 #### I want to access the logs
@@ -441,7 +443,9 @@ When submitting error reports, problems, anything like that, please include at l
 tail -n 5 /var/log/apache2/access.log /var/log/apache2/error.log
 ```
 
-### I browsed to the site and got a 404
+### I browsed to the site and got a 404 or Apache2 default page
+
+[Video Help](https://youtu.be/C-kig5qrPSA?si=wTS3Aj8fycW3Idfr&t=141)
 
 If you are having this problem you need to understand file locations. By default, the Apache document root (the place it starts looking for web content) is `/var/www/html`. If you put the file `hello.txt` in this directory, to access it you would browse to `http://localhost/hello.txt`.
 
@@ -461,13 +465,15 @@ So after setup, if you try to visit the site and get a `404`, think about where 
 
 ### I browsed to the site and got a blank screen
 
+[Video Help](https://youtu.be/C-kig5qrPSA?si=wTS3Aj8fycW3Idfr&t=243)
+
 This is usually one configuration issue hiding another issue. By default, PHP does not display errors, and so if you forgot to turn error display on during the setup process, any other problems, such as failure to connect to the database, will stop the app from loading but the message to tell you what is wrong will be hidden.
 
 To fix this, make sure you set `display_errors` and `display_startup_errors` as covered in [PHP Configuration](#php-configuration) and then restart Apache.
 
 ### "Access denied" running setup
 
-If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database:
+If you see the following when running the setup script it means the username or password in the config file do not match those configured on the database. [Video Help](https://youtu.be/C-kig5qrPSA?si=_a4Bop505-1tXb_F&t=973)
 
 ```mariadb
 Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using password: YES).
@@ -475,7 +481,7 @@ Database Error #1045: Access denied for user 'notdvwa'@'localhost' (using passwo
 
 The error is telling you that you are using the username `notdvwa`.
 
-The following error says you have pointed the config file at the wrong database.
+The following error says you have pointed the config file at the wrong database. [Video Help](https://youtu.be/C-kig5qrPSA?si=_a4Bop505-1tXb_F&t=630)
 
 ```mariadb
 SQL: Access denied for user 'dvwa'@'localhost' to database 'notdvwa'
@@ -534,6 +540,8 @@ sudo service mysql start
 ```
 
 ### Connection Refused
+
+[Video Help](https://youtu.be/C-kig5qrPSA?si=_a4Bop505-1tXb_F&t=444)
 
 An error similar to this one:
 
@@ -642,10 +650,6 @@ This is most commonly found when you are running the latest version of MySQL as 
 For more information, see:
 
 <https://www.ryadel.com/en/fix-mysql-server-gone-away-packets-order-similar-mysql-related-errors/>
-
-### Command Injection won't work
-
-Apache may not have high enough privileges to run commands on the web server. If you are running DVWA under Linux make sure you are logged in as root. Under Windows log in as Administrator.
 
 ### Why can't the database connect on CentOS?
 
