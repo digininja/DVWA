@@ -1,0 +1,4 @@
+vendor/
+smarty_stuff/cache
+smarty_stuff/templates_c
+twig_stuff/cache

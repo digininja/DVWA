@@ -1,0 +1,6 @@
+{
+    "require": {
+        "smarty/smarty": "^5.4",
+        "twig/twig": "^3.0"
+    }
+}
