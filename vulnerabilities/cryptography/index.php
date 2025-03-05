@@ -55,6 +55,7 @@ $page[ 'body' ] .= "
 		<li>" . dvwaExternalLinkUrlGet( 'https://gchq.github.io/CyberChef/', "CyberChef") . "</li> 
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.101computing.net/xor-encryption-algorithm/', "XOR Encryption Algorithm") . "</li> 
 		<li>" . dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/XOR_cipher', "XOR Cipher") . "</li> 
+		<li>" . dvwaExternalLinkUrlGet( 'https://www.youtube.com/watch?v=7WySPRERN0Q', "Video walk-through by CryptoCat") . "</li> 
 	</ul>
 </div>\n";
 
