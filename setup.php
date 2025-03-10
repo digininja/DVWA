@@ -65,7 +65,7 @@ if (PHP_OS == "Linux") {
 }
 
 if (!is_dir ("./vulnerabilities/api/vendor")) {
-	$vendor = "<em><span class='failure'>Not Installed</span></em><br><br>";
+	$vendor = "<em><span class='failure'>Not Installed test 123</span></em><br><br>";
 	$vendor .= "For information on how to install these, see the <a href='https://github.com/digininja/DVWA/blob/master/README.md#vendor-files'>README</a>.<br>";
 } else {
 	$vendor = "<em><span class='success'>Installed</span></em><br>";
