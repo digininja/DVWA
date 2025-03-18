@@ -53,6 +53,9 @@ if (array_key_exists ("id", $_GET) && array_key_exists ("security", $_GET)) {
 		case "open_redirect" :
 			$vuln = 'Open HTTP Redirect';
 			break;
+		case "bac":
+			$vuln = 'Vulnerability: Broken Access Control';
+			break;
 		default:
 			$vuln = "Unknown Vulnerability";
 	}

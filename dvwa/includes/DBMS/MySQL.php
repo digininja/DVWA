@@ -63,42 +63,97 @@ if( !mysqli_query($GLOBALS["___mysqli_ston"],  $insert ) ) {
 }
 dvwaMessagePush( "Data inserted into 'users' table." );
 
+// Add role column to users table
+$alter_users = "ALTER TABLE users ADD COLUMN IF NOT EXISTS role VARCHAR(20) DEFAULT 'user';";
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users) ) {
+    dvwaMessagePush( "Could not add role column to users table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
+}
+dvwaMessagePush( "Added role column to users table." );
+
+// Set admin user role
+$update_admin = "UPDATE users SET role = 'admin' WHERE user = 'admin';";
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $update_admin) ) {
+    dvwaMessagePush( "Could not set admin role<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
+}
+dvwaMessagePush( "Updated admin user role." );
+
+// Create access_log table
+$create_access_log = "CREATE TABLE access_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    target_id INT NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    timestamp DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (target_id) REFERENCES users(user_id)
+) ENGINE=InnoDB;";
+
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $create_access_log) ) {
+    dvwaMessagePush( "Could not create access_log table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
+}
+dvwaMessagePush( "'access_log' table was created." );
+
+// Create security_log table
+$create_security_log = "CREATE TABLE security_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    target_id INT NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    timestamp DATETIME NOT NULL,
+    ip_address VARCHAR(45) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (target_id) REFERENCES users(user_id)
+) ENGINE=InnoDB;";
+
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $create_security_log) ) {
+    dvwaMessagePush( "Could not create security_log table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
+}
+dvwaMessagePush( "'security_log' table was created." );
 
 // Create guestbook table
 $create_tb_guestbook = "CREATE TABLE guestbook (comment_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT, comment varchar(300), name varchar(100), PRIMARY KEY (comment_id));";
-if( !mysqli_query($GLOBALS["___mysqli_ston"],  $create_tb_guestbook ) ) {
-	dvwaMessagePush( "Table could not be created<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
-	dvwaPageReload();
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $create_tb_guestbook) ) {
+    dvwaMessagePush( "Table could not be created<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
 }
 dvwaMessagePush( "'guestbook' table was created." );
 
-
 // Insert data into 'guestbook'
 $insert = "INSERT INTO guestbook VALUES ('1','This is a test comment.','test');";
-if( !mysqli_query($GLOBALS["___mysqli_ston"],  $insert ) ) {
-	dvwaMessagePush( "Data could not be inserted into 'guestbook' table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
-	dvwaPageReload();
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $insert) ) {
+    dvwaMessagePush( "Data could not be inserted into 'guestbook' table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
 }
 dvwaMessagePush( "Data inserted into 'guestbook' table." );
-
-
-
 
 // Copy .bak for a fun directory listing vuln
 $conf = DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php';
 $bakconf = DVWA_WEB_PAGE_TO_ROOT . 'config/config.inc.php.bak';
 if (file_exists($conf)) {
-	// Who cares if it fails. Suppress.
-	@copy($conf, $bakconf);
+    // Who cares if it fails. Suppress.
+    @copy($conf, $bakconf);
 }
 
 dvwaMessagePush( "Backup file /config/config.inc.php.bak automatically created" );
+
+// Add account_enabled columns to users table
+$alter_users_dept = "ALTER TABLE users 
+    ADD COLUMN IF NOT EXISTS account_enabled TINYINT(1) DEFAULT 1;";
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users_dept) ) {
+    dvwaMessagePush( "Could not add account_enabled column to users table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+    dvwaPageReload();
+}
+dvwaMessagePush( "Added account_enabled columns to users table." );
 
 // Done
 dvwaMessagePush( "<em>Setup successful</em>!" );
 
 if( !dvwaIsLoggedIn())
-	dvwaMessagePush( "Please <a href='login.php'>login</a>.<script>setTimeout(function(){window.location.href='login.php'},5000);</script>" );
+    dvwaMessagePush( "Please <a href='login.php'>login</a>.<script>setTimeout(function(){window.location.href='login.php'},5000);</script>" );
 dvwaPageReload();
 
 ?>
