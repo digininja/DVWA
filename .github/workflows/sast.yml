@@ -1,0 +1,39 @@
+name: SAST Check
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  sast-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      
+      - name: Build with Ant
+        run: ant build  # Adjust to your actual build command
+      
+      - name: Create project zip
+        run: zip -r project.zip . -x "*.git*" "*/node_modules/*" "*/vendor/*" "*.zip"
+      
+      - name: Perform SAST Scan
+        id: sast
+        run: |
+          RESPONSE=$(curl -X POST             -H "Client-ID: ${{ secrets.aa49b940-dce8-4515-a0a5-5d5dac288adb }}"             -H "Client-Secret: ${{ secrets.dd1a54d1-9beb-4d9c-8651-3858590f9a7d }}"             -F "projectZipFile=@project.zip"             -F "applicationId=${{ secrets.67a19bf51d4b47ceceda31df }}"             -F "scanName=Golang SAST Scan - ${{ github.sha }}"             -F "language=php"             https://appsecops-api.intruceptlabs.com/api/v1/integrations/sast-scans)
+          
+          # Check for error in response.
+          ERROR=$(echo "$RESPONSE" | jq -r '.error // empty')
+          if [ ! -z "$ERROR" ]; then
+             echo "Error: $ERROR"
+             exit 1
+          else
+             VULNS_TABLE=$(echo "$RESPONSE" | jq -r '.vulnsTable')
+             echo "Vulnerabilities Table:"
+             echo "$VULNS_TABLE"
+          fi 
