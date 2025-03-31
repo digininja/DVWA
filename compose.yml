@@ -10,10 +10,12 @@ services:
   dvwa:
     build: .
     image: ghcr.io/digininja/dvwa:latest
+    container_name: dvwa_app
     # Change `always` to `build` to build from local source
     pull_policy: always
     environment:
       - DB_SERVER=db
+      - DEFAULT_SECURITY_LEVEL=low
     depends_on:
       - db
     networks:
@@ -24,6 +26,7 @@ services:
 
   db:
     image: docker.io/library/mariadb:10
+    container_name: dvwa_db
     environment:
       - MYSQL_ROOT_PASSWORD=dvwa
       - MYSQL_DATABASE=dvwa
