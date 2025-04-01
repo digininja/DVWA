@@ -14,3 +14,6 @@ tests/__pycache__/
 
 # Don't include any uploaded images
 hackable/uploads/*
+
+# Security reports
+reports
