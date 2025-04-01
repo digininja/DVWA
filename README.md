@@ -197,7 +197,7 @@ If your making local changes and don't want to build the project for every chang
         #   - ./:/var/www/html
     `
 2. Run `cp config/config.inc.php.dist config/config.inc.php` to copy the default config file.
-3. Run `docker compose up -d` and every changes in local files will reflect on the container.
+3. Run `docker compose up -d` and changes to local files will reflect on the container.
 
 ### PHP Versions
 
