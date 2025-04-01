@@ -1,21 +1,14 @@
-volumes:
-  dvwa:
-
-
-networks:
-  dvwa:
-
-
 services:
   dvwa:
     build: .
     image: ghcr.io/digininja/dvwa:latest
-    container_name: dvwa_app
+    container_name: dvwa
     # Change `always` to `build` to build from local source
     pull_policy: always
     environment:
       - DB_SERVER=db
       - DEFAULT_SECURITY_LEVEL=low
+      - DISABLE_AUTHENTICATION=true
     depends_on:
       - db
     networks:
@@ -37,3 +30,12 @@ services:
     networks:
       - dvwa
     restart: unless-stopped
+
+volumes:
+  dvwa:
+    name: dvwa
+
+networks:
+  dvwa:
+    name: dvwa
+    driver: bridge
