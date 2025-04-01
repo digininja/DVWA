@@ -23,17 +23,19 @@ just _info "🕵️‍♂️ Scanning with OWASP ZAP..."
 docker run --rm --name ${ZAP_CONTAINER_NAME} --network ${DVWA_NETWORK_NAME} \
     -v $(pwd)/../reports/zap:/zap/wrk/:rw \
     zaproxy/zap-stable zap-baseline.py \
-    -t http://${DVWA_CONTAINER_NAME} \
-    -r zap_report.html \
-    -m ${ZAP_LOW}
+      -t http://${DVWA_CONTAINER_NAME} \
+      -r zap_report.html \
+      -l WARN
 
 SCAN_RESULT=$?
+just _info "${SCAN_RESULT}"
 
 just _info "🧼 Stopping DVWA..."
 just stop
 
 if [ ${SCAN_RESULT} -ne 0 ]; then
     just _error "❌ ZAP found vulnerabilities. Commit blocked!"
+    exit 1
 fi
 
 just _info "✅ No vulnerabilities found! You are allowed to commit!"
