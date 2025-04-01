@@ -4,6 +4,12 @@ DVWA_CONTAINER_NAME=dvwa
 DVWA_NETWORK_NAME=dvwa
 ZAP_CONTAINER_NAME=zap
 
+ZAP_INFO=0
+ZAP_LOW=1
+ZAP_MEDIUM=2
+ZAP_HIGH=3
+ZAP_NONE=4
+
 just _info "🔧 Starting DVWA..."
 just start
 
@@ -19,7 +25,7 @@ docker run --rm --name ${ZAP_CONTAINER_NAME} --network ${DVWA_NETWORK_NAME} \
     zaproxy/zap-stable zap-baseline.py \
     -t http://${DVWA_CONTAINER_NAME} \
     -r zap_report.html \
-    -m 4
+    -m ${ZAP_LOW}
 
 SCAN_RESULT=$?
 
