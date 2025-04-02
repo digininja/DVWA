@@ -329,3 +329,7 @@ body.home.dark .vulnerable_code_area {
 body.home.dark .message {
 	background-color: #2f2f2f;
 }
+
+body.home.dark div#guestbook_comments {
+	background-color: #2f2f2f;
+}

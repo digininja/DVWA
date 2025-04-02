@@ -473,7 +473,7 @@ function dvwaHelpHtmlEcho( $pPage ) {
 
 	</head>
 
-	<body>
+	<body class=\"" . dvwaThemeGet() . "\">
 
 	<div id=\"container\">
 
@@ -509,7 +509,7 @@ function dvwaSourceHtmlEcho( $pPage ) {
 
 	</head>
 
-	<body>
+	<body class=\"" . dvwaThemeGet() . "\">
 
 		<div id=\"container\">
 
