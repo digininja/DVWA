@@ -27,3 +27,21 @@ div#area {
 	color: #a50a0a;
 }
 
+/* === Dark theme === */
+body.dark {
+	background: #2f2f2f;
+	color: #f8fafa;
+}
+
+body.dark a {
+	color: #99cc33;
+}
+
+body.dark div#code {
+	background-color: #bdbdbd;
+}
+
+body.dark table {
+	background-color: #2f2f2f;
+	border: none !important;
+}
