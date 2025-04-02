@@ -408,7 +408,7 @@ function dvwaHtmlEcho( $pPage ) {
 			<div id=\"header\">
 
 				<img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/logo.png\" alt=\"Damn Vulnerable Web Application\" />
-                <a href=\"#\" onclick=\"javascript:toggleTheme();\" class=\"theme-icon\">
+                <a href=\"#\" onclick=\"javascript:toggleTheme();\" class=\"theme-icon\" title=\"Toggle theme between light and dark.\">
                     <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/theme-light-dark.png\" alt=\"Damn Vulnerable Web Application\" />
                 </a>
 			</div>
