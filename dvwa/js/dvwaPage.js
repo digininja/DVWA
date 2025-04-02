@@ -43,3 +43,9 @@ function toggleTheme() {
     const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
     document.cookie = "theme=" + theme + "; path=/";
 }
+
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+    document.cookie = "theme=" + theme + "; path=/";
+}

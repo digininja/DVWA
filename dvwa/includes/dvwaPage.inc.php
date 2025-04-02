@@ -190,7 +190,7 @@ function &dvwaPageNewGrab() {
 
 
 function dvwaThemeGet() {
-	if (isset($_COOKIE['theme'])) {
+	if (isset($_COOKIE['theme']) && in_array($_COOKIE['theme'], ['dark', 'light'])) {
 		return $_COOKIE[ 'theme' ];
 	}
 	return 'light';
