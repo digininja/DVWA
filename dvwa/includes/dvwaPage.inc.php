@@ -189,6 +189,14 @@ function &dvwaPageNewGrab() {
 }
 
 
+function dvwaThemeGet() {
+	if (isset($_COOKIE['theme']) && in_array($_COOKIE['theme'], ['dark', 'light'])) {
+		return $_COOKIE[ 'theme' ];
+	}
+	return 'light';
+}
+
+
 function dvwaSecurityLevelGet() {
 	global $_DVWA;
 
@@ -394,13 +402,15 @@ function dvwaHtmlEcho( $pPage ) {
 
 	</head>
 
-	<body class=\"home\">
+	<body class=\"home " . dvwaThemeGet() . "\">
 		<div id=\"container\">
 
 			<div id=\"header\">
 
 				<img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/logo.png\" alt=\"Damn Vulnerable Web Application\" />
-
+                <a href=\"#\" onclick=\"javascript:toggleTheme();\" class=\"theme-icon\">
+                    <img src=\"" . DVWA_WEB_PAGE_TO_ROOT . "dvwa/images/theme-light-dark.png\" alt=\"Damn Vulnerable Web Application\" />
+                </a>
 			</div>
 
 			<div id=\"main_menu\">
@@ -463,7 +473,7 @@ function dvwaHelpHtmlEcho( $pPage ) {
 
 	</head>
 
-	<body>
+	<body class=\"" . dvwaThemeGet() . "\">
 
 	<div id=\"container\">
 
@@ -499,7 +509,7 @@ function dvwaSourceHtmlEcho( $pPage ) {
 
 	</head>
 
-	<body>
+	<body class=\"" . dvwaThemeGet() . "\">
 
 		<div id=\"container\">
 

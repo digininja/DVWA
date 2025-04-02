@@ -132,6 +132,7 @@ div#container {
 }
 
 div#header {
+	position: relative;
 	padding: 10px;
 	overflow: hidden;
 	background: #2f2f2f;
@@ -295,4 +296,40 @@ span.success {
 span.failure {
 	color:red;
 	font-weight: bold;
+}
+
+.theme-icon {
+	position: absolute;
+	right: 0;
+}
+
+.theme-icon img {
+	height: 32px;
+	width: 32px;
+}
+
+
+/* === Dark theme === */
+body.home.dark {
+	background: #2f2f2f;
+	color: #f8fafa;
+}
+
+body.home.dark #container,
+body.home.dark #main_menu,
+body.home.dark #main_body,
+body.home.dark #system_info {
+	background: #2f2f2f;
+}
+
+body.home.dark .vulnerable_code_area {
+	background: #2f2f2f;
+}
+
+body.home.dark .message {
+	background-color: #2f2f2f;
+}
+
+body.home.dark div#guestbook_comments {
+	background-color: #2f2f2f;
 }

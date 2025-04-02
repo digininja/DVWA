@@ -37,3 +37,9 @@ with (thisform) {
 function confirmClearGuestbook() {
 	return confirm("Are you sure you want to clear the guestbook?");
 }
+
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+    document.cookie = "theme=" + theme + "; path=/";
+}
