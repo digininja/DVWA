@@ -188,6 +188,17 @@ Running `docker compose up -d` should trigger Docker to build an image from loca
 See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy
 ).
 
+#### Serve local files
+
+If your making local changes and don't want to build the project for every change :
+1. go to `compose.yml` and uncomment :
+    `
+        # volumes:
+        #   - ./:/var/www/html
+    `
+2. Run `cp config/config.inc.php.dist config/config.inc.php` to copy the default config file.
+3. Run `docker compose up -d` and changes to local files will reflect on the container.
+
 ### PHP Versions
 
 Ideally you should be using the latest stable version of PHP as that is the version that this app will be developed and tested on.
