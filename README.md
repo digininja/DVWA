@@ -185,17 +185,16 @@ If you made local changes and want to build the project from local, go to `compo
 
 Running `docker compose up -d` should trigger Docker to build an image from local regardless of what is available in the registry.
 
-See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy
-).
+See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy).
 
 #### Serve local files
 
 If your making local changes and don't want to build the project for every change :
-1. go to `compose.yml` and uncomment :
-    `
+1. Go to `compose.yml` and uncomment :
+    ```
         # volumes:
         #   - ./:/var/www/html
-    `
+    ```
 2. Run `cp config/config.inc.php.dist config/config.inc.php` to copy the default config file.
 3. Run `docker compose up -d` and changes to local files will reflect on the container.
 
