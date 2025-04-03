@@ -4,53 +4,89 @@ if (!defined('DVWA_WEB_PAGE_TO_ROOT')) {
 }
 
 // Get current user's ID
-$query = "SELECT user_id, first_name FROM users WHERE user = '" . dvwaCurrentUser() . "';";
+$query = "SELECT user_id, role FROM users WHERE user = '" . dvwaCurrentUser() . "';";
 $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-$user_info = ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_assoc($result) : ['user_id' => 0, 'first_name' => 'Unknown'];
+$row = ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_assoc($result) : array('user_id' => 0, 'role' => '');
+$current_user_id = intval($row['user_id']);
+$role = $row['role'];
 
-// Show current user's role for context
-$role = isset($_COOKIE['user_role']) ? $_COOKIE['user_role'] : 'regular_user';
-$html = "<div class='info-banner'>Current Role: {$role}</div>";
-
+// Slightly better access control (but still vulnerable)
+$html = "";
 if (isset($_GET['action']) && isset($_GET['user_id'])) {
     if (!preg_match('/^\d+$/', $_GET['user_id'])) {
         $html .= "<p>Invalid user ID format. Please enter a number.</p>";
-        exit($html);
-    }
-    
-    $id = $_GET['user_id'];
-    
-    // "Secure" role-based check (but cookie can be manipulated)
-    if ($id == $user_info['user_id'] || $role === 'admin') {
-        $query = "SELECT first_name, last_name, user_id, avatar FROM users WHERE user_id = $id;";
-        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
-        
-        if ($result && mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $html .= "
-                <div class=\"profile-info\">
-                    <h3>User Profile</h3>
-                    <p>User ID: {$row['user_id']}</p>
-                    <p>Name: {$row['first_name']} {$row['last_name']}</p>
-                    <p>Avatar: {$row['avatar']}</p>
-                    <!-- Note: User roles are managed through browser cookies -->
-                </div>";
-        } else {
-            $html .= "<p>No user found.</p>";
-        }
     } else {
-        $html .= "<p>Access denied. Regular users can only view their own profile.</p>";
-        $html .= "<p><i>Hint: Check your browser's developer tools to see how roles are managed...</i></p>";
+        $id = intval($_GET['user_id']);
+        
+        // Check if user exists first
+        $check_query = "SELECT user_id FROM users WHERE user_id = $id";
+        $check_result = mysqli_query($GLOBALS["___mysqli_ston"], $check_query);
+        $user_exists = ($check_result && mysqli_num_rows($check_result) > 0);
+        
+        if (!$user_exists) {
+            $html .= "<p>No user found with ID: {$id}</p>";
+        } else {
+            // "Secure" check that's still vulnerable
+            if (isset($_COOKIE['user_id'])) {
+                $cookie_id = intval($_COOKIE['user_id']);
+                
+                if ($id == $cookie_id || $role === 'admin') {
+                    // Access granted
+                    $query = "SELECT first_name, last_name, user_id, avatar FROM users WHERE user_id = $id;";
+                    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+                    
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $html .= "
+                            <div class=\"profile-info\">
+                                <h3>User Profile</h3>
+                                <p>User ID: {$row['user_id']}</p>
+                                <p>Name: {$row['first_name']} {$row['last_name']}</p>
+                                <p>Avatar: {$row['avatar']}</p>
+                                <!-- Hint: Cookies can be modified by users... -->
+                            </div>";
+                    }
+                } else {
+                    $html .= "<p>Access denied. You can only view your own profile.</p>";
+                }
+            } else {
+                $html .= "<p>Access denied. No user_id cookie found.</p>";
+            }
+        }
+        
+        // Log access attempts
+        try {
+            // First check if the bac_log table exists
+            $check_table = "SHOW TABLES LIKE 'bac_log'";
+            $table_exists = mysqli_query($GLOBALS["___mysqli_ston"], $check_table);
+            
+            if ($table_exists && mysqli_num_rows($table_exists) == 0) {
+                // Create the table if it doesn't exist
+                $create_table = "CREATE TABLE IF NOT EXISTS bac_log (
+                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    user_id INT(6),
+                    target_id INT(6),
+                    ip_address VARCHAR(50),
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )";
+                mysqli_query($GLOBALS["___mysqli_ston"], $create_table);
+            }
+            
+            // Log the access attempt
+            $ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+            $target_id = $user_exists ? $id : 0; // Use 0 for non-existent users
+            $log_query = "INSERT INTO bac_log (user_id, target_id, ip_address) VALUES 
+                        ({$current_user_id}, {$target_id}, '{$ip}')";
+            mysqli_query($GLOBALS["___mysqli_ston"], $log_query);
+        } catch (Exception $e) {
+            // Silently fail if logging doesn't work
+        }
     }
 }
 
-// Log access attempts with X-Forwarded-For
-if (isset($_GET['user_id'])) {
-    $ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
-    $log_query = "INSERT INTO security_log (module, action, ip_address, details) VALUES 
-                ('bac', 'profile_access', '$ip', 'Role: {$role}, Attempted access to user_id: {$_GET['user_id']}')";
-    mysqli_query($GLOBALS["___mysqli_ston"], $log_query);
-}
+// Show current user's role for context
+$role = isset($_COOKIE['user_role']) ? $_COOKIE['user_role'] : 'regular_user';
+$html .= "<div class='info-banner'>Current Role: {$role}</div>";
 
 // Set initial role cookie if not exists
 if (!isset($_COOKIE['user_role'])) {
