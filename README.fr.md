@@ -185,10 +185,10 @@ Pour plus d'informations (En anglais): [`pull_policy`](https://github.com/compos
 Si vous faites des changements et ne voulez pas avoir à reconstruire l'image après chaque changement :
 
 1. Éditer le fichier `compose.yml` et décommenter :
-   `
-       # volumes:
-       #   - ./:/var/www/html
-   `
+    ```
+        # volumes:
+        #   - ./:/var/www/html
+    ```
 2. Exécuter `cp config/config.inc.php.dist config/config.inc.php` pour copier le fichier de configuration par défaut.
 3. Exécuter `docker compose up -d` et les changements au fichiers locaux seront réfléchies sur le conteneur.
 
