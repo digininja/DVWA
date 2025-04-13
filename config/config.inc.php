@@ -17,8 +17,8 @@ $DBMS = getenv('DBMS') ?: 'MySQL';
 $_DVWA = array();
 $_DVWA[ 'db_server' ]   = getenv('DB_SERVER') ?: '127.0.0.1';
 $_DVWA[ 'db_database' ] = getenv('DB_DATABASE') ?: 'dvwa';
-$_DVWA[ 'db_user' ]     = getenv('DB_USER') ?: 'root';
-$_DVWA[ 'db_password' ] = getenv('DB_PASSWORD') ?: '';
+$_DVWA[ 'db_user' ]     = getenv('DB_USER') ?: 'dvwa';
+$_DVWA[ 'db_password' ] = getenv('DB_PASSWORD') ?: 'p@ssw0rd';
 $_DVWA[ 'db_port']      = getenv('DB_PORT') ?: '3306';
 
 # ReCAPTCHA settings
