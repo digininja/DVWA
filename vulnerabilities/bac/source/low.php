@@ -63,10 +63,11 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
             if ($table_exists && mysqli_num_rows($table_exists) == 0) {
                 // Create the table if it doesn't exist
                 $create_table = "CREATE TABLE IF NOT EXISTS bac_log (
-                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    user_id INT(6),
-                    target_id INT(6),
-                    ip_address VARCHAR(50),
+                   id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    user_id INT(6) NULL,
+                    target_id INT(6) NULL,
+                    ip_address VARCHAR(50) NULL,
+                    action VARCHAR(50) NULL,
                     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )";
                 mysqli_query($GLOBALS["___mysqli_ston"], $create_table);
