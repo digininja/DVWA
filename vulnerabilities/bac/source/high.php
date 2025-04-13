@@ -6,7 +6,9 @@ if (!defined('DVWA_WEB_PAGE_TO_ROOT')) {
 // Get current user's ID with prepared statement
 $query = "SELECT user_id, role FROM users WHERE user = ? LIMIT 1";
 $stmt = mysqli_prepare($GLOBALS["___mysqli_ston"], $query);
-mysqli_stmt_bind_param($stmt, "s", dvwaCurrentUser());
+$currentUser = dvwaCurrentUser();
+mysqli_stmt_bind_param($stmt, "s", $currentUser);
+
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $user_info = ($result && mysqli_num_rows($result) > 0) ? mysqli_fetch_assoc($result) : ['user_id' => 0, 'role' => ''];
@@ -38,7 +40,7 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
             if (isset($_SESSION['user_id'])) {
                 $session_id = intval($_SESSION['user_id']);
                 
-                if ($id == $session_id || $role === 'admin') {
+                if ($id == $session_id) {
                     // Access granted - using prepared statement
                     $query = "SELECT first_name, last_name, user_id, avatar FROM users WHERE user_id = ?";
                     $stmt = mysqli_prepare($GLOBALS["___mysqli_ston"], $query);

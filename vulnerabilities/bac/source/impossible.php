@@ -56,9 +56,10 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
                         $can_access = false;
                         if ($current_user_id === $id) {
                             $can_access = true; // Users can always view their own profile
-                        } elseif ($user_role === 'admin') {
-                            $can_access = true; // Admins can view all profiles
-                        }
+                        } 
+                        // elseif ($user_role === 'admin') {
+                        //     $can_access = true; // Admins can view all profiles
+                        // }
 
                         if ($can_access) {
                             try {

@@ -308,13 +308,13 @@ function dvwaHtmlEcho( $pPage ) {
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'xss_s', 'name' => 'XSS (Stored)', 'url' => 'vulnerabilities/xss_s/' );
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'csp', 'name' => 'CSP Bypass', 'url' => 'vulnerabilities/csp/' );
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'javascript', 'name' => 'JavaScript Attacks', 'url' => 'vulnerabilities/javascript/' );
-		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'bac', 'name' => 'Broken Access Control', 'url' => 'vulnerabilities/bac/' );
 		if (dvwaCurrentUser() == "admin") {
 			$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'authbypass', 'name' => 'Authorisation Bypass', 'url' => 'vulnerabilities/authbypass/' );
 		}
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'open_redirect', 'name' => 'Open HTTP Redirect', 'url' => 'vulnerabilities/open_redirect/' );
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'encryption', 'name' => 'Cryptography', 'url' => 'vulnerabilities/cryptography/' );
 		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'api', 'name' => 'API', 'url' => 'vulnerabilities/api/' );
+		$menuBlocks[ 'vulnerabilities' ][] = array( 'id' => 'bac', 'name' => 'Broken Access Control', 'url' => 'vulnerabilities/bac/' );
 	}
 
 	$menuBlocks[ 'meta' ] = array();
@@ -360,6 +360,7 @@ function dvwaHtmlEcho( $pPage ) {
 	// -- END (security cookie)
 
 	$userInfoHtml = '<em>Username:</em> ' . ( dvwaCurrentUser() );
+	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
 	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
 	$localeHtml = '<em>Locale:</em> ' . ( dvwaLocaleGet() );
 	$sqliDbHtml = '<em>SQLi DB:</em> ' . ( dvwaSQLiDBGet() );
