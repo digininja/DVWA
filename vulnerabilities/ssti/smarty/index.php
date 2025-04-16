@@ -20,6 +20,8 @@ $smarty->setCompileDir ('../smarty_stuff/templates_c');
 $smarty->setCacheDir ('../smarty_stuff/cache');
 $smarty->setConfigDir ('../smarty_stuff/configs');
 $smarty->debugging = true;
+// https://www.smarty.net/docsv2/en/variable.php.handling.tpl
+#$smarty->php_handling = SMARTY_PHP_ALLOW;
 $smarty->disableSecurity();
 
 
@@ -33,19 +35,18 @@ if (array_key_exists ("inject", $_GET)) {
 	$inject = $_GET['inject'];
 }
 
-$external_template = null;
-if (array_key_exists ("external_template", $_GET)) {
-	$external_template = $_GET['external_template'];
-}
-
 $smarty->assign('name', 'Ned');
 $smarty->assign('inject', $inject);
 $smarty->assign('page', $page);
-$smarty->display('index.tpl');
 
-if (!is_null ($external_template)) {
-	$out = $smarty->fetch($external_template);
-	var_dump ($out);
+// Exploit this by uploading a template using the file uploader then pass it here
+// http://dvwa.test/vulnerabilities/ssti/smarty/?template=/home/robin/dvwa/index.tpl
+
+$template = "index.tpl";
+if (array_key_exists ("template", $_GET)) {
+	$template = $_GET['template'];
 }
+
+$smarty->display($template);
 
 ?>

