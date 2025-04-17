@@ -24,7 +24,7 @@ xxx
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Each level has its own objective but the general idea is to exploit Server Side Template Injection implementations.</p>
+		<p>Each level has its own objective but the general idea is to exploit the Server Side Template system to gain access into the system.</p>
 
 		<br /><hr /><br />
 
@@ -37,83 +37,24 @@ xxx
 		<p>Use the file upload functionality of the site to upload a file containing the following contents:</p>
 		<pre><code>{include file="/etc/passwd"}</code></pre>
 
-<p>
-You can then tell the system to use it using the <code>template</code> 
-</p>
-<p>
-http://dvwa.test/vulnerabilities/ssti/smarty/?template=../../../hackable/uploads/x.tpl
-</p>
+		<p>You can then tell the system to use it using the <code>template</code>, for example:</p>
+		<p><code>http://dvwa.test/vulnerabilities/ssti/smarty/?template=../../../hackable/uploads/x.tpl</code></p>
+		<p>Alternatively, as the system will load any file as a template, you could just specify <code>/etc/passwd</code> as the template and that will be loaded directly.
+		<p><code>http://dvwa.test/vulnerabilities/ssti/smarty/?template=/etc/passwd</code></p>
 		</div>
 
 		<h3>Medium Level</h3>
 		<p>
-			Look at the call made by the site, but also look at the swagger docs and see if there are any other parameters you might be able to add that are not currently passed.
+			Notice that the description says that the engine has full access to the user object, think about what fields, beyond the ones specified in the list, could be available.
 		</p>
 		<p>
 		<button id="medium_button" onclick="show_answer('medium')">Show Answer</button>
 		</p>
 		<div id="medium_answer">
-		<p>When you update your name, a PUT request is made to <code>/vulnerabilities/api/v2/user/2</code> with the following content:</p>
+		<p>As well as the listed fields, the user object also contains the <code>password</code> field. You can load this into the template like this:
 
-<pre><code>{
-  "name":"morph"
-}</code></pre>
+<pre><code>Password: {$password}</code></pre>
 
-		<p>
-			If you look at the swagger docs, the definition for <code>UserUpdate</code> is:
-		</p>
-
-<pre><code>UserUpdate:
-  required:
-    - name
-  properties:
-    name:
-      type: string
-      example: fred
-    type: object</code></pre>
-
-		<p>
-			Which is what you are currently passing, but if you have a look at <code>UserAdd</code> you will see an extra parameter:
-		</p>
-
-<pre><code>UserAdd:
-  required:
-    - level
-    - name
-  properties:
-    name:
-      type: string
-      example: fred
-    level:
-      type: integer
-      example: user
-  type: object</code></pre>
-
-		<p>
-			Notice the extra <code>level</code> parameter?
-		</p>
-		<p>
-			In situations like this, it is always worth testing to see if extra parameters which exist on similar calls will also work on the one you are working on.
-		</p>
-
-		<p>
-			To try this, you can either intercept the request in a proxy, or you can modify the JSON before the request is sent to the server. To modify it in the page, you can set a breakpoint in the <code>update_name</code> function, right after the <code>data</code> variable has been created, and modify the variable by using the following in the console:
-		</p>
-
-<pre><code>data = JSON.stringify({name: name, level: 0})</code></pre>
-
-		<p>
-			If you do this and then check the JSON sent in the PUT request, you should see:
-		</p>
-
-<pre><code>{
-  name: "hacked",
-  level: 0
-}</code></pre>
-
-		<p>
-			And hopefully a congratulations message.
-		</p>
 		</div>
 
 		<h3>High Level</h3>

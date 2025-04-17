@@ -26,14 +26,14 @@ $html .= "
 	if (template1_button) {
 		template1_button.addEventListener('click', function() {
 			var url=template1_button.dataset.url;
-			popUp (url);
+			popUp (url, 'ssti');
 		});
 	}
 
 	if (template2_button) {
 		template2_button.addEventListener('click', function() {
 			var url=template2_button.dataset.url;
-			popUp (url);
+			popUp (url, 'ssti');
 		});
 	}
 

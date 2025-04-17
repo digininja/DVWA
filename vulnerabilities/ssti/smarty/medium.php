@@ -32,18 +32,30 @@ $smarty->setConfigDir ('../smarty_stuff/configs');
 #$smarty->debugging = true;
 // https://www.smarty.net/docsv2/en/variable.php.handling.tpl
 #$smarty->php_handling = SMARTY_PHP_ALLOW;
-$smarty->disableSecurity();
+#$smarty->disableSecurity();
 
-// Load a user
-$user = load_user(2);
+$template_string = '<p>Hello {$first_name} {$last_name}';
+$user_id = 2;
 
-// Throw the user object into Smarty variables so they can be used in the template
-foreach ($user as $key => $value) {
-	$smarty->assign($key, $value);
+if (array_key_exists ("user_id", $_GET) && is_numeric ($_GET['user_id'])) {
+	$user_id = intval ($_GET['user_id']);
 }
 
-$template = "medium.tpl";
+if (array_key_exists ("template", $_GET)) {
+	$template_string = base64_decode (str_replace (" ", "+", $_GET['template']));
+}
 
-$smarty->display($template);
+// Load a user
+$user = load_user($user_id);
 
+if (is_null ($user)) {
+	$smarty->display('string:<p>Invalid User</p>');
+} else {
+	// Throw the user object into Smarty variables so they can be used in the template
+	foreach ($user as $key => $value) {
+		$smarty->assign($key, $value);
+	}
+
+	$smarty->display('string:'.$template_string);
+}
 ?>

@@ -8,22 +8,42 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 $html .= "
 <p>
-	Click the buttons below to open two new pages which are generated from templates. See if you can abuse this process to have the system use one of your own templates and then use that to read local system files. 
+	Below is a system which allows you to create a template to show off a user's profile. The template has full access to the user object.
 </p>
+<p>
+You can use the following fields in your template:
+</p>
+
+<ul>
+	<li>first_name</li>
+	<li>last_name</li>
+	<li>user</li>
+	<li>avatar</li>
+	<li>role</li>
+</ul>
+
 ";
 
 $html .= "
+<textarea style='width:100%;height:120px' id='template' name='template'><h1>User Profile</h1>
+<p>Hello {\$first_name} {\$last_name}</p>
 
-<input type='button' value='Template One' class='' id='template1_button' data-url='smarty/medium.php' )'=''>
+<p><img src='{\$avatar}'></p></textarea>
 
+<p>
+<label for='user_id'>User ID to show:</label><input type='text' value='2' id='user_id' name='user_id'>
+
+<input type='button' value='Use Template' class='' id='template_button' data-url='smarty/medium.php' )'=''>
+</p>
 <script>
+	var template_button = document.getElementById ('template_button');
 
-	var template1_button = document.getElementById ('template1_button');
-
-	if (template1_button) {
-		template1_button.addEventListener('click', function() {
-			var url=template1_button.dataset.url;
-			popUp (url);
+	if (template_button) {
+		template_button.addEventListener('click', function() {
+			var template_string = document.getElementById ('template').value;
+			var user_id = document.getElementById ('user_id').value;
+			var url=template_button.dataset.url;
+			popUp (url+'?user_id=' + user_id + '&template='+btoa(template_string), 'ssti');
 		});
 	}
 
