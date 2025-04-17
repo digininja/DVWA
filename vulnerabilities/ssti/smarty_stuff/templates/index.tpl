@@ -13,6 +13,9 @@
 Server name: {$smarty.server.SERVER_NAME}<br>
 Maths: {7*7}<br>
 
+<p>First name: {$first_name}</p>
+<p>Password: {$password}</p>
+
 {*
 # These do not work
 

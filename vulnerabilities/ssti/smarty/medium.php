@@ -1,11 +1,5 @@
 <?php
 
-/*
- * http://dvwa.test/smarty/?inject={include%20file=%27string:{system(%22id%22)}%27}&page=%3Cb%3Ehello%3C/b%3E&external_template=/etc/passwd
- *
- * https://portswigger.net/research/server-side-template-injection
- *
- */
 define( 'DVWA_WEB_PAGE_TO_ROOT', '../../../' );
 require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
@@ -16,7 +10,7 @@ dvwaDatabaseConnect();
 // Passing in the ID just in case I want to extend this in the future
 function load_user($id) {
 	$query = "SELECT users.* FROM users WHERE user_id = '$id';";
-$result = mysqli_query($GLOBALS["___mysqli_ston"], $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
 
 	$row = mysqli_fetch_assoc ($result);
 
@@ -40,35 +34,15 @@ $smarty->setConfigDir ('../smarty_stuff/configs');
 #$smarty->php_handling = SMARTY_PHP_ALLOW;
 $smarty->disableSecurity();
 
-$page = "Page not passed";
-if (array_key_exists ("page", $_GET)) {
-	$page = $_GET['page'];
-}
-
-$inject = "Inject into me";
-if (array_key_exists ("inject", $_GET)) {
-	$inject = $_GET['inject'];
-}
-
-$smarty->assign('name', 'Ned');
-$smarty->assign('inject', $inject);
-$smarty->assign('page', $page);
-
 // Load a user
-$user = load_user(1);
+$user = load_user(2);
 
 // Throw the user object into Smarty variables so they can be used in the template
 foreach ($user as $key => $value) {
 	$smarty->assign($key, $value);
 }
 
-// Exploit this by uploading a template using the file uploader then pass it here
-// http://dvwa.test/vulnerabilities/ssti/smarty/?template=/home/robin/dvwa/index.tpl
-
-$template = "index.tpl";
-if (array_key_exists ("template", $_GET)) {
-	$template = $_GET['template'];
-}
+$template = "medium.tpl";
 
 $smarty->display($template);
 
