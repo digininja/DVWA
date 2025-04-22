@@ -7,7 +7,7 @@
 </style>
 
 <div class="body_padded">
-	<h1>Help - SSTI Security</h1>
+	<h1>Help - SST Security</h1>
 
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
@@ -15,16 +15,19 @@
 	<td><div id="code">
 		<h3>About</h3>
 		<p>
-xxx
+Web templating systems are great at separating code and design and allow for simple reuse and easy updates. However, while generally helping to improve site security, when done badly, they can introduce their own variety of vulnerabilities.
 		</p>
 		<p>
-xxx
+This lab looks at three types of issue, accessing arbitrary templates, template injection, and bad configuration, through these you will access files you should not be able to, read sensitive content, and get a sneak view behind the scenes.
+		</p>
+		<p>
+		All the examples here are based on <a href="https://www.smarty.net/">Smarty</a>, this is not because it is any better or worse than any other options, just that it was the easiest to get installed and working.
 		</p>
 
 		<br /><hr /><br />
 
 		<h3>Objective</h3>
-		<p>Each level has its own objective but the general idea is to exploit the Server Side Template system to gain access into the system.</p>
+		<p>Each level has its own objective but the general idea is to exploit the Server Side Template system to access files you should not be able to or to read secret information.</p>
 
 		<br /><hr /><br />
 
@@ -66,7 +69,7 @@ xxx
 			<button id="high_button" onclick="show_answer('high')">Show Answer</button>
 		</p>
 
-		<div id="high_answerx">
+		<div id="high_answer">
 		<p>
 			The line you are looking for in the guide is in the Setup Directories section:
 		</p>
