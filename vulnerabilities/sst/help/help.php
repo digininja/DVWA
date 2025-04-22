@@ -7,7 +7,7 @@
 </style>
 
 <div class="body_padded">
-	<h1>Help - SST Security</h1>
+	<h1>Help - Server Side Template Security</h1>
 
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
