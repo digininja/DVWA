@@ -47,6 +47,7 @@ xxx
 		<p>
 			Notice that the description says that the engine has full access to the user object, think about what fields, beyond the ones specified in the list, could be available.
 		</p>
+		<p>To get some help, you can turn on the <a href="https://www.smarty.net/docsv2/en/chapter.debugging.console.tpl">Debugging Console</a>. You might even find some extra info hidden in there.</p>
 		<p>
 		<button id="medium_button" onclick="show_answer('medium')">Show Answer</button>
 		</p>

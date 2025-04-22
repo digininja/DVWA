@@ -21,7 +21,7 @@ You can use the following fields in your template:
 	<li>avatar</li>
 	<li>role</li>
 </ul>
-
+<p>If you need to debug your template, you can enable the <a href='https://www.smarty.net/docsv2/en/chapter.debugging.console.tpl'>Debugging Console</a>.</p>
 ";
 
 $html .= "

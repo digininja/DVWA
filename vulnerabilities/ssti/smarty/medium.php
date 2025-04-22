@@ -29,10 +29,8 @@ $smarty->setTemplateDir ('../smarty_stuff/templates');
 $smarty->setCompileDir ('../smarty_stuff/templates_c');
 $smarty->setCacheDir ('../smarty_stuff/cache');
 $smarty->setConfigDir ('../smarty_stuff/configs');
-#$smarty->debugging = true;
-// https://www.smarty.net/docsv2/en/variable.php.handling.tpl
-#$smarty->php_handling = SMARTY_PHP_ALLOW;
-#$smarty->disableSecurity();
+# https://www.smarty.net/docsv2/en/chapter.debugging.console.tpl
+$smarty->debugging_ctrl = 'URL';
 
 $template_string = '<p>Hello {$first_name} {$last_name}';
 $user_id = 2;
@@ -47,6 +45,8 @@ if (array_key_exists ("template", $_GET)) {
 
 // Load a user
 $user = load_user($user_id);
+$smarty->assign ("secret_key", "8331173");
+$smarty->assign ("hidden_debug_info", "You can only find the secret key through the debug console.");
 
 if (is_null ($user)) {
 	$smarty->display('string:<p>Invalid User</p>');
