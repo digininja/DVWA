@@ -19,7 +19,7 @@ $directory_prefix = str_replace ("vulnerabilities/sst/source/high_popup.php", ""
 
 $smarty->assign('protocol', "http");
 $smarty->assign('host', $_SERVER['HTTP_HOST']);
-$smarty->assign('page', $directory_prefix . 'vulnerabilities/sst/protected/index.php');
+$smarty->assign('page', $directory_prefix . 'vulnerabilities/sst/protected/secret.php');
 
 // Specify which template to use, default to the index page
 $template = "high.tpl";
