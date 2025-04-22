@@ -51,7 +51,7 @@ xxx
 		<button id="medium_button" onclick="show_answer('medium')">Show Answer</button>
 		</p>
 		<div id="medium_answer">
-		<p>As well as the listed fields, the user object also contains the <code>password</code> field. You can load this into the template like this:
+		<p>As well as the listed fields, the user object also contains the <code>password</code> field. You can load this into the template by adding this parameter:
 
 <pre><code>Password: {$password}</code></pre>
 

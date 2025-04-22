@@ -1,9 +1,9 @@
 /* Help popup */
 
-function popUp(URL, target='help') {
+function popUp(URL, target='help', width=800, height=300) {
 	day = new Date();
 	id = day.getTime();
-	window.open(URL, target, 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=800,height=300,left=540,top=250');
+	window.open(URL, target, 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=' + width + ',height=' + height + ',left=540,top=250');
 }
 
 /* Form validation */

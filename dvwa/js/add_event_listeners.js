@@ -7,7 +7,7 @@ function addEventListeners() {
 	if (source_button) {
 		source_button.addEventListener("click", function() {
 			var url=source_button.dataset.sourceUrl;
-			popUp (url);
+			popUp (url, "source");
 		});
 	}
 
@@ -16,7 +16,7 @@ function addEventListeners() {
 	if (help_button) {
 		help_button.addEventListener("click", function() {
 			var url=help_button.dataset.helpUrl;
-			popUp (url);
+			popUp (url, "help");
 		});
 	}
 }
