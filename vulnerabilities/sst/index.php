@@ -6,7 +6,7 @@ require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Vulnerability: Server Side Template Attacks' . $page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'title' ]   = 'Vulnerability: Server Side Template Security' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'sst';
 $page[ 'help_button' ]   = 'sst';
 $page[ 'source_button' ] = 'sst';
@@ -38,7 +38,7 @@ if (!is_dir ("./vendor")) {
 require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/sst/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "<div class=\"body_padded\">
-	<h1>Vulnerability: Server Side Template Attacks</h1>
+	<h1>Vulnerability: Server Side Template Security</h1>
 
 	<div class=\"vulnerable_code_area\">
 ";

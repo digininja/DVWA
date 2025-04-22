@@ -3,8 +3,6 @@ $errors = "";
 $success = "";
 $messages = "";
 
-$template_directory = DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/sst/smarty_stuff/templates/";
-
 $html .= "<p>
 	The template used by this page brings together information from two other sources, both of which require login credentials to access.
 </p>
