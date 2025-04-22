@@ -14,9 +14,9 @@ $html .= "
 
 $html .= "
 
-<input type='button' value='Hackers' class='' id='template1_button' data-url='smarty/low.php?template=hackers.tpl' )'=''>
+<input type='button' value='Hackers' class='' id='template1_button' data-url='source/low_popup.php?template=hackers.tpl' )'=''>
 
-<input type='button' value='Sneakers' class='' id='template2_button' data-url='smarty/low.php?template=sneakers.tpl' )'=''>
+<input type='button' value='Sneakers' class='' id='template2_button' data-url='source/low_popup.php?template=sneakers.tpl' )'=''>
 
 <script>
 
@@ -26,14 +26,14 @@ $html .= "
 	if (template1_button) {
 		template1_button.addEventListener('click', function() {
 			var url=template1_button.dataset.url;
-			popUp (url, 'ssti', 800, 650);
+			popUp (url, 'sst', 800, 650);
 		});
 	}
 
 	if (template2_button) {
 		template2_button.addEventListener('click', function() {
 			var url=template2_button.dataset.url;
-			popUp (url, 'ssti', 800, 650);
+			popUp (url, 'sst', 800, 650);
 		});
 	}
 

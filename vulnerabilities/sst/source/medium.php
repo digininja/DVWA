@@ -33,7 +33,7 @@ $html .= "
 <p>
 <label for='user_id'>User ID to show:</label><input type='text' value='2' id='user_id' name='user_id'>
 
-<input type='button' value='Use Template' class='' id='template_button' data-url='smarty/medium.php' )'=''>
+<input type='button' value='Use Template' class='' id='template_button' data-url='source/medium_popup.php' )'=''>
 </p>
 <script>
 	var template_button = document.getElementById ('template_button');
@@ -43,7 +43,7 @@ $html .= "
 			var template_string = document.getElementById ('template').value;
 			var user_id = document.getElementById ('user_id').value;
 			var url=template_button.dataset.url;
-			popUp (url+'?user_id=' + user_id + '&template='+btoa(template_string), 'ssti');
+			popUp (url+'?user_id=' + user_id + '&template='+btoa(template_string), 'sst');
 		});
 	}
 

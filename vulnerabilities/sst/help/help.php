@@ -38,9 +38,9 @@ xxx
 		<pre><code>{include file="/etc/passwd"}</code></pre>
 
 		<p>You can then tell the system to use it using the <code>template</code>, for example:</p>
-		<p><code>http://dvwa.test/vulnerabilities/ssti/smarty/?template=../../../hackable/uploads/x.tpl</code></p>
+		<p><code>http://dvwa.test/vulnerabilities/sst/smarty/?template=../../../hackable/uploads/x.tpl</code></p>
 		<p>Alternatively, as the system will load any file as a template, you could just specify <code>/etc/passwd</code> as the template and that will be loaded directly.
-		<p><code>http://dvwa.test/vulnerabilities/ssti/smarty/?template=/etc/passwd</code></p>
+		<p><code>http://dvwa.test/vulnerabilities/sst/smarty/?template=/etc/passwd</code></p>
 		</div>
 
 		<h3>Medium Level</h3>
@@ -49,7 +49,7 @@ xxx
 		</p>
 		<p>To get some help, you can turn on the <a href="https://www.smarty.net/docsv2/en/chapter.debugging.console.tpl">Debugging Console</a>. You might even find some extra info hidden in there.</p>
 		<p>
-		<button id="medium_button" onclick="show_answer('medium')">Show Answer</button>
+			<button id="medium_button" onclick="show_answer('medium')">Show Answer</button>
 		</p>
 		<div id="medium_answer">
 		<p>As well as the listed fields, the user object also contains the <code>password</code> field. You can load this into the template by adding this parameter:
@@ -59,17 +59,52 @@ xxx
 		</div>
 
 		<h3>High Level</h3>
-		<p>Import the four health calls into your testing tool of choice and make sure they are running properly. When they are all working, test them for vulnerabilities.</p>
-
 		<p>
-		<button id="high_button" onclick="show_answer('high')">Show Answer</button>
+			The developer who set this site up did it in a bit of a rush, they followed the <a href="https://www.smarty.net/quick_install">Quick Install</a> guide but ignored one important step, keeping the Smarty directory out of the web root. Try to guess, or brute force, the directory, and then use information from the guide to read key files.
+		</p>
+		<p>
+			<button id="high_button" onclick="show_answer('high')">Show Answer</button>
 		</p>
 
-		<div id="high_answer">
-		<p>The connectivity call takes a target parameter and pings it to check for a connection, this is done by calling the OS ping command and is vulnerable to command injection.</p>
+		<div id="high_answerx">
 		<p>
-		For more information on how to exploit this type of issue, see the command injection module.
+			The line you are looking for in the guide is in the Setup Directories section:
 		</p>
+		<blockquote>
+			It is also recommended to place them outside of the web server document root.
+		</blockquote>
+		<p>
+			When the setup directories are in the web root without any additional protections they are able to be accessed by users. In this instance, you are looking for the <code>smarty</code> directory which is under the <code>sst</code> directory. Based on the documention, in this directory you should then find the following subdirectories:
+		</p>
+<ul>
+<li>cache</li>
+<li>configs</li>
+<li>templates</li>
+<li>templates_c</li>
+</ul>
+<p>
+If you browse to the templates directory, you will be able to see all the templates used by the site, as this is the high level, have a look in <code>high.tpl</code>. In here you will find the username and password used access the restricted web directory and the FTP server:
+</p>
+<ul>
+<li>HTTP/Basic Auth: admin / secret</li>
+<li>FTP: ftp:secretdvwaaccount@dvwa.com</li>
+</ul>
+<p>
+The missing bit is now the database credentials. To find these, look at the top of the template and you'll see this line:
+</p>
+<pre><code>{config_load file="dvwa.conf"}</code></pre>
+<p>
+If you go back to the guide, you will see that the config files live in the <code>configs</code> directory, so have a browse to <code>smarty/configs/dvwa.conf</code> and you will see the credentials.
+</p>
+<pre><code># hidden section
+[.Database]
+host=dvwa.test
+db=dvwa
+user=mydvwauser
+pass=Sup3rSecretP455w0rd</code></pre>
+<p>
+There are other directories, have a look in those and you may find some more interesting content.
+</p>
 		</div>
 
 		<h3>Impossible Level</h3>

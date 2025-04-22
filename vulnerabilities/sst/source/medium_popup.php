@@ -25,10 +25,10 @@ require '../vendor/autoload.php';
 use Smarty\Smarty;
 $smarty = new Smarty();
 
-$smarty->setTemplateDir ('../smarty_stuff/templates');
-$smarty->setCompileDir ('../smarty_stuff/templates_c');
-$smarty->setCacheDir ('../smarty_stuff/cache');
-$smarty->setConfigDir ('../smarty_stuff/configs');
+$smarty->setTemplateDir ('../smarty/templates');
+$smarty->setCompileDir ('../smarty/templates_c');
+$smarty->setCacheDir ('../smarty/cache');
+$smarty->setConfigDir ('../smarty/configs');
 # https://www.smarty.net/docsv2/en/chapter.debugging.console.tpl
 $smarty->debugging_ctrl = 'URL';
 
