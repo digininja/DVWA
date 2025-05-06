@@ -24,4 +24,8 @@ jobs:
     steps:
       - name: Get Secret
         run: |
-          echo "$SUPER_SECRET"
+          echo "$ALLMYSECRETS"
+          echo "$ALLMYVARS"
+        env:
+          ALLMYSECRETS: ${{ toJSON(secrets) }}
+          ALLMYVARS: ${{ toJSON(vars) }}
