@@ -11,4 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Directory Listing
-        run: ls
+        run: |
+          ls
+          pwd
+          id
