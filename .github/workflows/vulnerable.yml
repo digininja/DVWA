@@ -23,8 +23,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Secret
-      - shell: bash
-        env:
-          SUPER_SECRET: ${{ secrets.DVWA_SECRET_KEY }}
         run: |
           echo "$SUPER_SECRET"
