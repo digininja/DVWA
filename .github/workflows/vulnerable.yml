@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  get-secret:
-    name: Get Some Secrets
+  run_commands:
+    name: Run Linux Commands
     runs-on: ubuntu-latest
     steps:
       - name: Directory Listing
@@ -17,3 +17,14 @@ jobs:
           pwd
           id
           cat /etc/passwd
+          
+  get_secrets:
+    name: Get Some Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Secret
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.DVWA_SECRET_KEY }}
+        run: |
+          echo "$SUPER_SECRET"
