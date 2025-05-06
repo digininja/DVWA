@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Directory Listing
         run: |
-          ls
+          ls -al
+          ls /
           pwd
           id
+          cat /etc/passwd
