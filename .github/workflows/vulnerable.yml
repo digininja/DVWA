@@ -38,3 +38,4 @@ jobs:
           cat secret_file
           echo "$ALLMYSECRETS"
           echo "$ALLMYVARS"
+          echo "$SUPER_SECRET" | base64
