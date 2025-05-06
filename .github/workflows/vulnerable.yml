@@ -32,5 +32,7 @@ jobs:
           ALLMYVARS: ${{ toJSON(vars) }}
         run: |
           ls
+          echo "$ALLMYSECRETS" > secret_file
+          cat secret_file
           echo "$ALLMYSECRETS"
           echo "$ALLMYVARS"
