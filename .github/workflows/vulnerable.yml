@@ -30,9 +30,11 @@ jobs:
         env:
           ALLMYSECRETS: ${{ toJSON(secrets) }}
           ALLMYVARS: ${{ toJSON(vars) }}
+          SUPER_SECRET: ${{ secrets.DVWA_SECRET_KEY }}
         run: |
           ls
-          echo "$ALLMYSECRETS" > secret_file
+          echo "$SUPER_SECRET"
+          echo "$SUPER_SECRET" > secret_file
           cat secret_file
           echo "$ALLMYSECRETS"
           echo "$ALLMYVARS"
