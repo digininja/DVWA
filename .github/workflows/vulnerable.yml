@@ -31,5 +31,6 @@ jobs:
           ALLMYSECRETS: ${{ toJSON(secrets) }}
           ALLMYVARS: ${{ toJSON(vars) }}
         run: |
+          ls
           echo "$ALLMYSECRETS"
           echo "$ALLMYVARS"
