@@ -22,10 +22,14 @@ jobs:
     name: Get Some Secrets
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
       - name: Get Secret
-        run: |
-          echo "$ALLMYSECRETS"
-          echo "$ALLMYVARS"
         env:
           ALLMYSECRETS: ${{ toJSON(secrets) }}
           ALLMYVARS: ${{ toJSON(vars) }}
+        run: |
+          echo "$ALLMYSECRETS"
+          echo "$ALLMYVARS"
