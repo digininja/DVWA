@@ -146,7 +146,7 @@ function dvwaLogin( $pUsername ) {
 function dvwaIsLoggedIn() {
 	global $_DVWA;
 
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (array_key_exists("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
 		return true;
 	}
 	$dvwaSession =& dvwaSessionGrab();
@@ -207,7 +207,7 @@ function dvwaSecurityLevelGet() {
 
 	// If not, check to see if authentication is disabled, if it is, use
 	// the default security level.
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (array_key_exists("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
 		return $_DVWA[ 'default_security_level' ];
 	}
 
@@ -633,7 +633,7 @@ function dvwaGuestbook() {
 function checkToken( $user_token, $session_token, $returnURL ) {  # Validate the given (CSRF) token
 	global $_DVWA;
 
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (array_key_exists("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
 		return true;
 	}
 
