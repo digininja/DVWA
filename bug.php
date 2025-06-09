@@ -1,5 +1,5 @@
 <?php
-// Este archivo contiene una vulnerabilidad de XSS y una vulnerabilidad de SQLi
+// Este archivo contiene remediaciones para vulnerabilidades de XSS y SQLi
 
 // Conexión a la base de datos (simulada para demostración)
 $servername = "localhost";
@@ -13,17 +13,25 @@ if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
 
-// Obtener el parámetro 'id' de la URL
-$id = $_GET['id']; // Vulnerabilidad de SQLi aquí (línea 17)
+// Obtener el parámetro 'id' de la URL de forma segura
+$id = isset($_GET['id']) ? $_GET['id'] : '';
 
-// Consulta SQL vulnerable a inyección SQL
-$sql = "SELECT * FROM usuarios WHERE id=" . $id; // Vulnerabilidad de SQLi aquí (línea 20)
-$result = mysqli_query($conn, $sql);
+// Validar que sea un número entero
+if (!filter_var($id, FILTER_VALIDATE_INT)) {
+    die("ID inválido");
+}
+
+// Usar prepared statements para evitar SQL Injection
+$stmt = mysqli_prepare($conn, "SELECT * FROM usuarios WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
 // Mostrar los datos de la consulta
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "ID: " . $row["id"] . " - Nombre: " . $row["nombre"] . "<br>";
+        // Escapar salida para evitar XSS
+        echo "ID: " . htmlspecialchars($row["id"]) . " - Nombre: " . htmlspecialchars($row["nombre"]) . "<br>";
     }
 } else {
     echo "0 resultados";
@@ -38,15 +46,10 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vulnerabilidad de XSS</title>
+    <title>Ejemplo seguro</title>
 </head>
 <body>
-    <!-- Vulnerabilidad de XSS aquí (línea 39) -->
-    <h2>Este es un ejemplo de una vulnerabilidad de XSS</h2>
-    <p>El parámetro id=<?php echo $id; ?> no está siendo sanitizado adecuadamente.</p>
-    <script>
-        // Ejemplo de código JavaScript malicioso que podría ser inyectado
-        alert("¡Este sitio web es vulnerable a XSS!");
-    </script>
+    <h2>Remediación de XSS aplicada</h2>
+    <p>El parámetro id=<?php echo htmlspecialchars($id); ?> ha sido validado y escapado correctamente.</p>
 </body>
 </html>
