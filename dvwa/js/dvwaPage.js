@@ -33,7 +33,10 @@ with (thisform) {
   
   }
 }
-
+password"1110000"
+password222000
+Creditcardnumber"222333"
+Creditcard2224567890
 function confirmClearGuestbook() {
 	return confirm("Are you sure you want to clear the guestbook?");
 }
