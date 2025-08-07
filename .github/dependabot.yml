@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/"  # Root of the repo
+    schedule:
+      interval: "daily"
