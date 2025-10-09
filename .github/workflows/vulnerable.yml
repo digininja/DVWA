@@ -1,0 +1,54 @@
+name: Vulnerable Action
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  run_commands:
+    name: Run Linux Commands
+    runs-on: ubuntu-latest
+    steps:
+      - name: Directory Listing
+        run: |
+          ls -al
+          ls /
+          pwd
+          id
+          cat /etc/passwd
+          
+  get_secrets:
+    name: Get Some Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Get Secret
+        env:
+          ALLMYSECRETS: ${{ toJSON(secrets) }}
+          ALLMYVARS: ${{ toJSON(vars) }}
+          SUPER_SECRET: ${{ secrets.DVWA_SECRET_KEY }}
+        run: |
+          # This will just show ***
+          echo "$SUPER_SECRET"
+
+          # This will put the secret into a file and then display the file, but that
+          # will still only show ***
+          echo "$SUPER_SECRET" > secret_file
+          cat secret_file
+
+          # This will try to show all the secrets, but will show *** instead
+          echo "$ALLMYSECRETS"
+
+          # This will show the variables, because variables are public
+          echo "$ALLMYVARS"
+
+          # This will show a base64 encoded version of the one secret.
+          # Github doesn't recognise this so will allow it to be shown
+          echo "$SUPER_SECRET" | base64
+
+          # Same for all the tokens.
+          echo "$ALLMYSECRETS" | base64

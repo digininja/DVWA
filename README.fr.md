@@ -49,7 +49,7 @@ Si vous souhaitez contribuer à la traduction, faite une demande d'extraction (p
 
 - - -
 
-##Téléchargement
+## Téléchargement
 
 Même s'il y a diverses versions de BAVW, la seule version soutenue via cette source du dépôt GitHub est celle-ci. Vous pouvez la cloner depuis le dépôt suivant :
 
@@ -171,6 +171,27 @@ _Cette section du fichier à été ajouté par @thegrims, pour de l'aide à prop
 `docker run --rm -it -p 80:80 vulnerables/web-dvwa`
 
 Soyez sûrs d'utiliser AUFS à cause d'erreurs antérieurs de MySQL. Lancez `docker info` pour vérifier le stockage de votre lecteur. Si il n'est pas en AUFS, veuillez le changer. Il y a un manuel pour chaque SE (OS), mais il sont tellement différents que nous n'aborderons pas ce sujet.
+
+### Construction locale
+
+Si vous avez fais des changements et voulez construire le projet à partir de votre version locale, editez le fichier `compose.yml` et changez `pull_policy: always` par `pull_policy: build`.
+
+Exécuter la commande `docker compose up -d` va déclancher Docker à construire une image à partir de votre version locale, sans regard sur ce qui est disponible dans le registre.
+
+Pour plus d'informations (En anglais): [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy).
+
+### Servir les fichiers locaux
+
+Si vous faites des changements et ne voulez pas avoir à reconstruire l'image après chaque changement :
+
+1. Éditer le fichier `compose.yml` et décommenter :
+    ```
+        # volumes:
+        #   - ./:/var/www/html
+    ```
+2. Exécuter `cp config/config.inc.php.dist config/config.inc.php` pour copier le fichier de configuration par défaut.
+3. Exécuter `docker compose up -d` et les changements au fichiers locaux seront réfléchies sur le conteneur.
+
 - - -
 
 ## Dépannage

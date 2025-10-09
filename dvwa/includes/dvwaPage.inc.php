@@ -146,7 +146,7 @@ function dvwaLogin( $pUsername ) {
 function dvwaIsLoggedIn() {
 	global $_DVWA;
 
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (array_key_exists("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
 		return true;
 	}
 	$dvwaSession =& dvwaSessionGrab();
@@ -207,7 +207,7 @@ function dvwaSecurityLevelGet() {
 
 	// If not, check to see if authentication is disabled, if it is, use
 	// the default security level.
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (array_key_exists("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
 		return $_DVWA[ 'default_security_level' ];
 	}
 
@@ -634,7 +634,7 @@ function dvwaGuestbook() {
 function checkToken( $user_token, $session_token, $returnURL ) {  # Validate the given (CSRF) token
 	global $_DVWA;
 
-	if (in_array("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
+	if (array_key_exists("disable_authentication", $_DVWA) && $_DVWA['disable_authentication']) {
 		return true;
 	}
 
@@ -669,7 +669,7 @@ $PHPCONFIGPath       = realpath( getcwd() . DIRECTORY_SEPARATOR . DVWA_WEB_PAGE_
 $phpDisplayErrors = 'PHP function display_errors: <span class="' . ( ini_get( 'display_errors' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                                  // Verbose error messages (e.g. full path disclosure)
 $phpDisplayStartupErrors = 'PHP function display_startup_errors: <span class="' . ( ini_get( 'display_startup_errors' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                                  // Verbose error messages (e.g. full path disclosure)
 $phpDisplayErrors = 'PHP function display_errors: <span class="' . ( ini_get( 'display_errors' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                                  // Verbose error messages (e.g. full path disclosure)
-$phpURLInclude    = 'PHP function allow_url_include: <span class="' . ( ini_get( 'allow_url_include' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                   // RFI
+$phpURLInclude    = 'PHP function allow_url_include: <span class="' . ( ini_get( 'allow_url_include' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span> - Feature deprecated in PHP 7.4, see lab for more information';                                   // RFI
 $phpURLFopen      = 'PHP function allow_url_fopen: <span class="' . ( ini_get( 'allow_url_fopen' ) ? 'success">Enabled' : 'failure">Disabled' ) . '</span>';                                       // RFI
 $phpGD            = 'PHP module gd: <span class="' . ( ( extension_loaded( 'gd' ) && function_exists( 'gd_info' ) ) ? 'success">Installed' : 'failure">Missing - Only an issue if you want to play with captchas' ) . '</span>';                    // File Upload
 $phpMySQL         = 'PHP module mysql: <span class="' . ( ( extension_loaded( 'mysqli' ) && function_exists( 'mysqli_query' ) ) ? 'success">Installed' : 'failure">Missing' ) . '</span>';                // Core DVWA

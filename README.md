@@ -50,6 +50,7 @@ This file is available in multiple languages:
 - Turkish: [Türkçe](README.tr.md)
 - Indonesia: [Indonesia](README.id.md)
 - Vietnamese: [Vietnamese](README.vi.md)
+- Italian: [Italiano](README.it.md)
 
 If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected. Submit your translated version by adding a new 'README.xx.md' file where xx is the two-letter code of your desired language (based on [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
 
@@ -185,17 +186,16 @@ If you made local changes and want to build the project from local, go to `compo
 
 Running `docker compose up -d` should trigger Docker to build an image from local regardless of what is available in the registry.
 
-See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy
-).
+See also: [`pull_policy`](https://github.com/compose-spec/compose-spec/blob/master/05-services.md#pull_policy).
 
 #### Serve local files
 
 If your making local changes and don't want to build the project for every change :
-1. go to `compose.yml` and uncomment :
-    `
+1. Go to `compose.yml` and uncomment :
+    ```
         # volumes:
         #   - ./:/var/www/html
-    `
+    ```
 2. Run `cp config/config.inc.php.dist config/config.inc.php` to copy the default config file.
 3. Run `docker compose up -d` and changes to local files will reflect on the container.
 
