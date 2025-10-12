@@ -1,4 +1,7 @@
-<?php
+
+
+
+≈<?php
 
 if( isset( $_POST[ 'btnSign' ] ) ) {
 	// Get input
