@@ -23,7 +23,6 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=A multi-platform DVWA image
 
     - name : Build and push multi-arch DVWA image
       run: |
