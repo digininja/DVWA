@@ -9,12 +9,12 @@ if( !ini_get( 'allow_url_fopen' ) ) {
 	$WarningHtml .= "<div class=\"warning\">The PHP function <em>allow_url_fopen</em> is not enabled.</div>";
 }
 
-
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
 	<h1>Vulnerability: File Inclusion</h1>
 
 	<p class='notice'>This lab relies on the PHP <code>include</code> and <code>require</code> functions being able to include content from remote hosts. As this is a security risk, PHP have deprecated this in version 7.4 and it will be removed completely in a future version. If this lab is not working correctly for you, check your PHP version and roll back to version 7.4 if you are on a newer version which has lost the feature.</p>
+	<p class='notice'>You are running PHP version: " . phpversion() . "
 	<p><a href='https://www.php.net/manual/en/filesystem.configuration.php#ini.allow-url-include'>PHP Announcement</a></p>
 
 	{$WarningHtml}
