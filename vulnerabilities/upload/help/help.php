@@ -39,7 +39,7 @@
 		<br />
 
 		<h3>Impossible Level</h3>
-		<p>This will check everything from all the levels so far, as well then to re-encode the image. This will make a new image, therefor stripping
+		<p>This will check everything from all the levels so far, as well then to re-encode the image. This will make a new image, therefore stripping
 			any "non-image" code (including metadata).</p>
 	</div></td>
 	</tr>
