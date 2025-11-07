@@ -4,7 +4,7 @@ define ("KEY", "rainbowclimbinghigh");
 define ("ALGO", "aes-256-gcm");
 
 function encrypt ($plaintext, $iv) {
-	# Default padding is PKCS#7 which is interchangable with PKCS#5
+	# Default padding is PKCS#7 which is interchangeable with PKCS#5
 	# https://en.wikipedia.org/wiki/Padding_%28cryptography%29#PKCS#5_and_PKCS#7
 
 	if (strlen ($iv) != 12) {
@@ -90,7 +90,7 @@ function check_token ($data) {
 		$ciphertext = base64_decode ($data_array['token']);
 		$iv = base64_decode ($data_array['iv']);
 
-		# Asssume failure
+		# Assume failure
 		$ret = array (
 						"status" => 500,
 						"message" => "Unknown error"
