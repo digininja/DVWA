@@ -1,7 +1,9 @@
 <?php
 
 // Secure Frontend for DVWA API Lab
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $html .= "
 <script>
     const USER_ID = 2; // current authenticated user (example)
