@@ -1,70 +1,63 @@
 <?php
+header("Content-Type: application/json");
 
-require ("token_library_high.php");
+// Enable debugging
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-$message = "";
+define("SECRET_KEY", "STRONG_SECRET_2025_HMAC_KEY");
 
-$token_data = create_token();
+$input = json_decode(file_get_contents("php://input"), true);
 
-$html = "
-	<script>
-		function send_token() {
+if (!isset($input['token']) || empty($input['token'])) {
+    echo json_encode([
+        "status" => 400,
+        "message" => "No token provided."
+    ]);
+    exit;
+}
 
-			const url = 'source/check_token_high.php';
-			const data = document.getElementById ('token').value;
+$token = $input['token'];
+$decoded = base64_decode($token);
 
-			console.log (data);
-			 
-			fetch(url, { 
-					method: 'POST', 
-					headers: { 
-						'Content-Type': 'application/json' 
-					}, 
-					body: data
-				}) 
-				.then(response => { 
-					if (!response.ok) { 
-						throw new Error('Network response was not ok'); 
-				} 
-				return response.json(); 
-				}) 
-				.then(data => { 
-					console.log(data);
-					message_line = document.getElementById ('message');
-					if (data.status == 200) {
-						message_line.innerText = 'Welcome back ' + data.user + ' (' + data.level + ')';
-						message_line.setAttribute('class', 'success');
-					} else {
-						message_line.innerText = 'Error: ' + data.message;
-						message_line.setAttribute('class', 'warning');
-					}
-				}) 
-				.catch(error => { 
-					console.error('There was a problem with your fetch operation:', error); 
-			}); 
+if (!$decoded || strpos($decoded, ".") === false) {
+    echo json_encode([
+        "status" => 400,
+        "message" => "Invalid token format."
+    ]);
+    exit;
+}
 
-		}
-	</script>
-		<p>
-			You have managed to steal the following token from a user of the Prognostication application.
-		</p>
-		<p>
-			<textarea style='width: 600px; height: 23px'>" . htmlentities ($token_data) . "</textarea>
-		</p>
-		<p>
-			You can use the form below to provide the token to access the system. You have two challenges, first, decrypt the token to find out the secret it contains, and then create a new token to access the system as a other users. See if you can make yourself an administrator.
-		</p>
-		<hr>
-		<form name=\"check_token\" action=\"\">
-			<div id='message'></div>
-			<p>
-				<label for='token'>Token:</lable><br />
-				<textarea id='token' name='token' style='width: 600px; height: 23px'>" . htmlentities ($token_data) . "</textarea>
-			</p>
-			<p>
-				<input type=\"button\" value=\"Submit\" onclick='send_token();'>
-			</p>
-		</form>
-";
+list($payload, $sig) = explode(".", $decoded, 2);
 
+// Verify signature
+if (hash_hmac("sha256", $payload, SECRET_KEY) !== $sig) {
+    echo json_encode([
+        "status" => 403,
+        "message" => "Token tampering detected!"
+    ]);
+    exit;
+}
+
+$data = json_decode($payload, true);
+
+if (!$data) {
+    echo json_encode([
+        "status" => 400,
+        "message" => "Invalid token payload."
+    ]);
+    exit;
+}
+
+// Prevent privilege escalation
+$level = intval($data["level"]);
+if ($level < 1) $level = 1;
+
+echo json_encode([
+    "status" => 200,
+    "user"   => $data["user"],
+    "level"  => ($level == 1 ? "user" : "admin"),
+    "message" => "Token validated."
+]);
+exit;
 ?>
