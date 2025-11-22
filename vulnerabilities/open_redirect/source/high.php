@@ -1,21 +1,28 @@
 <?php
 
-if (array_key_exists ("redirect", $_GET) && $_GET['redirect'] != "") {
-	if (strpos($_GET['redirect'], "info.php") !== false) {
-		header ("location: " . $_GET['redirect']);
-		exit;
-	} else {
-		http_response_code (500);
-		?>
-		<p>You can only redirect to the info page.</p>
-		<?php
-		exit;
-	}
+// Check if redirect parameter exists and is not empty
+if (isset($_GET['redirect']) && $_GET['redirect'] !== '') {
+
+    // Validate destination
+    if (strpos($_GET['redirect'], "info.php") !== false) {
+
+        // Safe redirect
+        header("Location: " . $_GET['redirect']);
+        exit;
+
+    } else {
+        // Invalid redirect
+        http_response_code(500);
+        echo "<p>You can only redirect to the info page.</p>";
+        exit;
+    }
 }
 
-http_response_code (500);
-?>
-<p>Missing redirect target.</p>
-<?php
+// Missing redirect parameter
+http_response_code(500);
+echo "<p>Missing redirect target.</p>";
 exit;
+
 ?>
+
+
