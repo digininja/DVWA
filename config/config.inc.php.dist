@@ -30,7 +30,7 @@ $_DVWA[ 'recaptcha_private_key' ] = getenv('RECAPTCHA_PRIVATE_KEY') ?: '';
 # Default security level
 #   Default value for the security level with each session.
 #   The default is 'impossible'. You may wish to set this to either 'low', 'medium', 'high' or impossible'.
-$_DVWA[ 'default_security_level' ] = getenv('DEFAULT_SECURITY_LEVEL') ?: 'impossible';
+$_DVWA[ 'default_security_level' ] = 'low';
 
 # Default locale
 #   Default locale for the help page shown with each session.
