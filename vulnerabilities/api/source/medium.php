@@ -1,5 +1,8 @@
 <?php
 
+$request_url = $_SERVER['REQUEST_URI'];
+$stripped_url = str_replace ("/vulnerabilities/api/", "", $request_url);
+
 $html .= "
 	<script>
 		function update_username(user_json) {
@@ -25,7 +28,7 @@ $html .= "
 		}
 
 		function get_user() {
-			const url = '/vulnerabilities/api/v2/user/2';
+			const url = '" . $stripped_url . "/vulnerabilities/api/v2/user/2';
 			 
 			fetch(url, { 
 					method: 'GET',
@@ -45,7 +48,7 @@ $html .= "
 		}
 
 		function update_name() {
-			const url = '/vulnerabilities/api/v2/user/2';
+			const url = '" . $stripped_url . "/vulnerabilities/api/v2/user/2';
 			const name = document.getElementById ('name').value;
 			const data = JSON.stringify({name: name});
 			 

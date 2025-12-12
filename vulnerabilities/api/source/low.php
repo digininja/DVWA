@@ -6,6 +6,9 @@ $messages = "";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
+$request_url = $_SERVER['REQUEST_URI'];
+$stripped_url = str_replace ("/vulnerabilities/api/", "", $request_url);
+
 $html .= "
 <p>
 	Versioning is important in APIs, running multiple versions of an API can allow for backward compatibility and can allow new services to be added without affecting existing users. The downside to keeping old versions alive is when those older versions contain vulnerabilities.
@@ -41,7 +44,7 @@ $html .= "
 	}
 
 	function get_users() {
-		const url = '/vulnerabilities/api/v2/user/';
+		const url = '" . $stripped_url . "/vulnerabilities/api/v2/user/';
 		 
 		fetch(url, { 
 				method: 'GET',
