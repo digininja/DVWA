@@ -670,6 +670,15 @@ You may be running into problems with SELinux.  Either disable SELinux or run th
 setsebool -P httpd_can_network_connect_db 1
 ```
 
+### MariaDB Docker does not start
+
+If you see the following error in the Docker logs while trying to start MariaDB, it is likely due to the host machine not having enough memory. If you are using this in a hosted environment, the best solution is to step up a machine size to get more memory and to try again.
+
+```
+[Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:10.11.15+maria~ubu2204 started.
+[Warn] [Entrypoint]: /sys/fs/cgroup///memory.pressure not writable, functionality unavailable to MariaDB
+```
+
 ### Anything Else
 
 For the latest troubleshooting information please read both open and closed tickets in the git repo:
