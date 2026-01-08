@@ -679,6 +679,22 @@ If you see the following error in the Docker logs while trying to start MariaDB,
 [Warn] [Entrypoint]: /sys/fs/cgroup///memory.pressure not writable, functionality unavailable to MariaDB
 ```
 
+You might also need to add the following line to the volums section of your `compose.yml` file:
+
+```
+- /sys/fs/cgroup/memory.pressure:/sys/fs/cgroup/memory.pressure
+```
+
+Doing that would change the volumes section of a default config file to the following:
+
+```
+     volumes:
+       - dvwa:/var/lib/mysql
+       - /sys/fs/cgroup/memory.pressure:/sys/fs/cgroup/memory.pressure
+```
+
+For more information on why this works, see [this issue](https://github.com/MariaDB/mariadb-docker/issues/626).
+
 ### Anything Else
 
 For the latest troubleshooting information please read both open and closed tickets in the git repo:
