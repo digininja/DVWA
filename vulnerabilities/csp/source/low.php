@@ -5,7 +5,7 @@ $headerCSP = "Content-Security-Policy: script-src 'self' https://pastebin.com ha
 header($headerCSP);
 
 # These might work if you can't create your own for some reason
-# https://cdn.jsdelivr.net/gh/digininja/csp_bypass/alert.js>
+# https://cdn.jsdelivr.net/gh/digininja/csp_bypass/alert.js
 # https://unpkg.com/@digininja/csp_bypass@1.0.0/index.js
 
 ?>
