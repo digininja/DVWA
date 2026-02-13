@@ -51,6 +51,7 @@ This file is available in multiple languages:
 - Indonesia: [Indonesia](README.id.md)
 - Vietnamese: [Vietnamese](README.vi.md)
 - Italian: [Italiano](README.it.md)
+- Ukrainian: [Українська](README.uk.md)
 
 If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected. Submit your translated version by adding a new 'README.xx.md' file where xx is the two-letter code of your desired language (based on [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
 
@@ -679,7 +680,7 @@ If you see the following error in the Docker logs while trying to start MariaDB,
 [Warn] [Entrypoint]: /sys/fs/cgroup///memory.pressure not writable, functionality unavailable to MariaDB
 ```
 
-You might also need to add the following line to the volums section of your `compose.yml` file:
+You might also need to add the following line to the volumes section of your `compose.yml` file:
 
 ```
 - /sys/fs/cgroup/memory.pressure:/sys/fs/cgroup/memory.pressure
