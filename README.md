@@ -51,6 +51,7 @@ This file is available in multiple languages:
 - Indonesia: [Indonesia](README.id.md)
 - Vietnamese: [Vietnamese](README.vi.md)
 - Italian: [Italiano](README.it.md)
+- Ukrainian: [Українська](README.uk.md)
 
 If you would like to contribute a translation, please submit a PR. Note though, this does not mean just run it through Google Translate and send that in, those will be rejected. Submit your translated version by adding a new 'README.xx.md' file where xx is the two-letter code of your desired language (based on [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)).
 
@@ -607,10 +608,10 @@ You have two options, the easiest is to uninstall MySQL and install MariaDB. The
 Alternatively, follow these steps:
 
 1. As root, edit the following file: `/etc/mysql/mysql.conf.d/mysqld.cnf`
-1. Under the line `[mysqld]`, add the following:
+2. Under the line `[mysqld]`, add the following:
   `default-authentication-plugin=mysql_native_password`
-1. Restart the database: `sudo service mysql restart`
-1. Check the authentication method for your database user:
+3. Restart the database: `sudo service mysql restart`
+4. Check the authentication method for your database user:
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -622,13 +623,13 @@ Alternatively, follow these steps:
     1 rows in set (0.00 sec)
     ```
 
-1. You'll likely see `caching_sha2_password`. If you do, run the following command:
+5. You'll likely see `caching_sha2_password`. If you do, run the following command:
 
     ```sql
     mysql> ALTER USER dvwa@localhost IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';
     ```
 
-1. Re-running the check, you should now see `mysql_native_password`.
+6. Re-running the check, you should now see `mysql_native_password`.
 
     ```sql
     mysql> select Host,User, plugin from mysql.user where mysql.user.User = 'dvwa';
@@ -679,7 +680,7 @@ If you see the following error in the Docker logs while trying to start MariaDB,
 [Warn] [Entrypoint]: /sys/fs/cgroup///memory.pressure not writable, functionality unavailable to MariaDB
 ```
 
-You might also need to add the following line to the volums section of your `compose.yml` file:
+You might also need to add the following line to the volumes section of your `compose.yml` file:
 
 ```
 - /sys/fs/cgroup/memory.pressure:/sys/fs/cgroup/memory.pressure
