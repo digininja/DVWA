@@ -108,7 +108,7 @@ $page[ 'body' ] .= "
 	<em>Apache</em><br>
 	{$SERVER_NAME}<br /><br>
 	mod_rewrite: {$mod_rewrite}
-	mod_rewrite is required for the AP labs.<br><br>
+	mod_rewrite is required for the API labs.<br><br>
 
 	<em>PHP</em><br>
 	PHP version: <em>" . phpversion() . "</em><br />
