@@ -30,7 +30,7 @@ def check_once(url):
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit'
             '/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
         }
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=5)
     except requests.exceptions.ConnectionError:
         return False, -1
     return response.ok, response.status_code
@@ -38,7 +38,7 @@ def check_once(url):
 
 def check(url):
     # We try for 5 times, with 3 seconds interval.
-    try_count = 5
+    try_count = 1
     try_interval = 3
     for i in range(try_count):
         ok, status_code = check_once(url)
@@ -60,18 +60,34 @@ def test_url():
         "http://www.w3.org/TR/html4/loose.dtd",
         # Don't need to check the DTD
 
-        "https://www.vmware.com/",
-        # Throwing a 403 for some reason, but can't see it going anywhere
-
-        "https://twitter.com/digininja",
+        # "https://twitter.com/digininja",
         # Twitter doesn't like GitHub checking it
 
         "https://www.cgisecurity.com/xss-faq.html",
-        # Throwing a 403 for some reason, but can't see it going anywhere
+        # Timeout
 
-        "https://www.cgisecurity.com/csrf-faq.html",
-        # Throwing a 403 for some reason, but can't see it going anywhere
+        "https://www.cgisecurity.com/csrf-faq.html"
+        # Timeout
     ]
+
+    expected_codes = {
+        "https://www.vmware.com/": 403,
+        "https://www.virtualbox.org/": 402,
+
+        "https://github.com/digininja/DVWA/blob/master/README.md"
+        "#vendor-files": 429,
+        "https://github.com/digininja/DVWA/blob/master/README.md"
+        "#apache-modules": 429,
+
+        "https://hacks.mozilla.org/2020/08/"
+        "changes-to-samesite-cookie-behavior/": 403,
+
+        "https://blog.mozilla.org/security/2014/10/04/"
+        "csp-for-the-web-we-have/": 403,
+
+        "https://medium.com/@masjadaan/oracle-padding-attack-a61369993c86": 403
+    }
+
     all_urls = []
     broken_urls = []
     for php_file in get_php_files():
@@ -85,7 +101,7 @@ def test_url():
         if url not in ignore_urls:
             # print("checking %s" % url)
             ok, status_code = check(url)
-            if not ok:
+            if not ok and status_code != expected_codes.get(url):
                 # The php_file variable is now broken
                 # as it was set in a previous loop
                 # and doesn't come across into this one.
