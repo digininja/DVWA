@@ -76,6 +76,7 @@ def test_url():
 
         "https://github.com/digininja/DVWA/blob/master/README.md"
         "#vendor-files": 429,
+
         "https://github.com/digininja/DVWA/blob/master/README.md"
         "#apache-modules": 429,
 
@@ -85,7 +86,10 @@ def test_url():
         "https://blog.mozilla.org/security/2014/10/04/"
         "csp-for-the-web-we-have/": 403,
 
-        "https://medium.com/@masjadaan/oracle-padding-attack-a61369993c86": 403
+        "https://medium.com/@masjadaan/"
+        "oracle-padding-attack-a61369993c86": 403,
+
+        "https://www.golinuxcloud.com/brute-force-attack-web-forms": 403,
     }
 
     all_urls = []
