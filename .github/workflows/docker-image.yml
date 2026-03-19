@@ -3,13 +3,14 @@ name: Docker Image CI
 on:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6.0.2
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
