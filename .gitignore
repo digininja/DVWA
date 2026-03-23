@@ -16,3 +16,4 @@ tests/__pycache__/
 hackable/uploads/*
 .DS_Store
 .DS_Store
+./vulnerabilities/csrf/help/help.php
