@@ -1,0 +1,21 @@
+on: [push]
+
+name: Datadog Static Code Analysis
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+    name: Datadog Static Analyzer
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+    - name: Check code meets quality and security standards
+      id: datadog-static-analysis
+      uses: DataDog/datadog-static-analyzer-github-action@v3
+      with:
+        dd_api_key: ${{ secrets.DD_API_KEY }}
+        dd_app_key: ${{ secrets.DD_APP_KEY }}
+        dd_site: us5.datadoghq.com
+        secrets_enabled: false
+        static_analysis_enabled: true
+        cpu_count: 2
