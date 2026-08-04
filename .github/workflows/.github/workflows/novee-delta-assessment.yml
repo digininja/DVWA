@@ -1,0 +1,85 @@
+name: Novee Delta Assessment
+
+# Run a Novee *delta* assessment whenever real source code is merged to `main`.
+#
+# The `paths` filter restricts runs to changes in source file types (PHP / JS /
+# CSS / TXT / SQL); merges that touch only CI config, docs, etc. do not
+# trigger an assessment. `!.github/**` additionally guarantees that nothing
+# under the CI directory can trigger a run.
+#
+# A delta only assesses what changed between two refs — here the previous tip
+# of `main` and the newly merged commit — which is the recommended per-merge
+# pipeline gate.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.php'
+      - '**.js'
+      - '**.css'
+      - '**.txt'
+      - '**.sql'
+      - '!.github/**'
+  # Manual override: assess the most recent commit on `main`.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # DVWA asset in Novee.
+  NOVEE_ASSET_ID: ed76291f-441a-4cae-b17c-a02bab743326
+
+jobs:
+  delta-assessment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve baseline and target commits
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # On a push, GitHub hands us both ends of the diff directly.
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.event.after }}
+        run: |
+          set -euo pipefail
+
+          ZERO=0000000000000000000000000000000000000000
+
+          if [[ -n "${PUSH_AFTER:-}" && "${PUSH_AFTER}" != "$ZERO" ]]; then
+            # push event: previous tip of main -> the just-merged commit.
+            BASELINE="$PUSH_BEFORE"
+            TARGET="$PUSH_AFTER"
+          else
+            # Manual run: diff the most recent commit on main (its parent -> tip).
+            COMMITS_JSON=$(gh api "repos/${GITHUB_REPOSITORY}/commits?sha=main&per_page=2")
+            TARGET=$(jq -r '.[0].sha // ""' <<<"$COMMITS_JSON")
+            BASELINE=$(jq -r '.[1].sha // ""' <<<"$COMMITS_JSON")
+          fi
+
+          {
+            echo "baseline=${BASELINE}"
+            echo "target=${TARGET}"
+          } >> "$GITHUB_OUTPUT"
+          echo "Diffing baseline='${BASELINE:-<none>}' -> target='${TARGET:-<none>}'"
+
+      # The delta step is intentionally a single, plain `docker run` — all the
+      # ref wrangling happened above so this reads exactly like the Novee docs.
+      # Skipped when there is no baseline to diff against (e.g. the very first
+      # commit on the branch, where `before` is the all-zero SHA).
+      - name: Novee delta assessment
+        if: steps.refs.outputs.baseline != '' && steps.refs.outputs.baseline != '0000000000000000000000000000000000000000'
+        env:
+          # Forwarded into the container by the bare `-e NOVEE_SERVICE_KEY` flag,
+          # so the secret never appears on the command line.
+          NOVEE_SERVICE_KEY: ${{ secrets.NOVEE_SERVICE_KEY }}
+          BASELINE: ${{ steps.refs.outputs.baseline }}
+          TARGET: ${{ steps.refs.outputs.target }}
+        run: |
+          docker run --rm -e NOVEE_SERVICE_KEY \
+            public.ecr.aws/novee/novee-cli:latest \
+            assessment delta \
+            --asset "$NOVEE_ASSET_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --baseline "$BASELINE" \
+            --target "$TARGET"
