@@ -28,7 +28,7 @@ permissions:
 
 env:
   # DVWA asset in Novee.
-  NOVEE_ASSET_ID: ed76291f-441a-4cae-b17c-a02bab743326
+  NOVEE_ASSET_ID: 27973136-ae6d-4905-a147-9077e19fb9e1
 
 jobs:
   delta-assessment:
