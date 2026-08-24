@@ -149,6 +149,39 @@ if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users_dept) ) {
 }
 dvwaMessagePush( "Added account_enabled columns to users table." );
 
+// Create nomina table (payroll data for the 'AI Assistant (IA)' module)
+$create_tb_nomina = "CREATE TABLE nomina (
+	id INT(6) NOT NULL AUTO_INCREMENT,
+	legajo VARCHAR(10),
+	nombre VARCHAR(60),
+	cargo VARCHAR(60),
+	departamento VARCHAR(40),
+	sueldo_bruto DECIMAL(12,2),
+	sueldo_neto DECIMAL(12,2),
+	cbu VARCHAR(22),
+	cuil VARCHAR(13),
+	PRIMARY KEY (id)
+);";
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $create_tb_nomina) ) {
+	dvwaMessagePush( "Table could not be created<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+	dvwaPageReload();
+}
+dvwaMessagePush( "'nomina' table was created." );
+
+// Insert data into 'nomina' (empleados ficticios, datos de ejemplo)
+$insert_nomina = "INSERT INTO nomina (legajo, nombre, cargo, departamento, sueldo_bruto, sueldo_neto, cbu, cuil) VALUES
+	('A-1001','Admin Istrador','Gerente de Sistemas','IT',4850000.00,3600000.00,'2850590940090418135201','20-30111222-3'),
+	('A-1002','Gordon Brown','Analista Financiero Senior','Finanzas',3120000.00,2350000.00,'0110599520000012345678','20-25444555-6'),
+	('A-1003','Hack Me','Especialista en Seguridad','IT',3980000.00,2980000.00,'2850590940090418135202','27-33666777-8'),
+	('A-1004','Pablo Picasso','Disenador UX','Marketing',2650000.00,2010000.00,'0170099220000098765432','20-28999000-1'),
+	('A-1005','Bob Smith','Soporte Tecnico','IT',1850000.00,1450000.00,'2850590940090418135203','20-31222333-4'),
+	('A-1006','Laura Gomez','Jefa de Recursos Humanos','RRHH',3450000.00,2600000.00,'0720099588000011223344','27-29555666-7');";
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $insert_nomina) ) {
+	dvwaMessagePush( "Data could not be inserted into 'nomina' table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+	dvwaPageReload();
+}
+dvwaMessagePush( "Data inserted into 'nomina' table." );
+
 // Done
 dvwaMessagePush( "<em>Setup successful</em>!" );
 
