@@ -70,7 +70,14 @@ function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
 	if( empty( $apiKey ) ) {
 		return array(
 			'ok'   => false,
-			'text' => 'No hay API key de Gemini configurada. Definí $_DVWA[\'gemini_api_key\'] en config/config.inc.php o la variable de entorno GEMINI_API_KEY.'
+			'text' => "No hay API key de Google Gemini configurada.\n\n"
+				. "Cómo obtener una (Google ofrece un tier gratuito suficiente para este lab):\n"
+				. "1) Entrá a https://aistudio.google.com/app/apikey e iniciá sesión con una cuenta de Google.\n"
+				. "2) Hacé clic en \"Create API key\" y copiá la clave (empieza con \"AIza...\").\n\n"
+				. "Cómo configurarla en DVWA (cualquiera de las dos opciones):\n"
+				. "- Editá config/config.inc.php y poné:  \$_DVWA['gemini_api_key'] = 'TU_API_KEY';\n"
+				. "- O definí la variable de entorno GEMINI_API_KEY (útil en Docker).\n\n"
+				. "Más detalles en el README, sección \"Google Gemini API (AI Assistant module)\"."
 		);
 	}
 	if( !function_exists( 'curl_init' ) ) {
