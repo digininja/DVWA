@@ -149,38 +149,38 @@ if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users_dept) ) {
 }
 dvwaMessagePush( "Added account_enabled columns to users table." );
 
-// Create nomina table (payroll data for the 'AI Assistant (IA)' module)
-$create_tb_nomina = "CREATE TABLE nomina (
+// Create payroll table (data for the 'AI Assistant (IA)' module)
+$create_tb_payroll = "CREATE TABLE payroll (
 	id INT(6) NOT NULL AUTO_INCREMENT,
-	legajo VARCHAR(10),
-	nombre VARCHAR(60),
-	cargo VARCHAR(60),
-	departamento VARCHAR(40),
-	sueldo_bruto DECIMAL(12,2),
-	sueldo_neto DECIMAL(12,2),
-	cbu VARCHAR(22),
-	cuil VARCHAR(13),
+	employee_id VARCHAR(10),
+	full_name VARCHAR(60),
+	position VARCHAR(60),
+	department VARCHAR(40),
+	gross_salary DECIMAL(12,2),
+	net_salary DECIMAL(12,2),
+	bank_account VARCHAR(34),
+	national_id VARCHAR(20),
 	PRIMARY KEY (id)
 );";
-if( !mysqli_query($GLOBALS["___mysqli_ston"], $create_tb_nomina) ) {
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $create_tb_payroll) ) {
 	dvwaMessagePush( "Table could not be created<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
 	dvwaPageReload();
 }
-dvwaMessagePush( "'nomina' table was created." );
+dvwaMessagePush( "'payroll' table was created." );
 
-// Insert data into 'nomina' (empleados ficticios, datos de ejemplo)
-$insert_nomina = "INSERT INTO nomina (legajo, nombre, cargo, departamento, sueldo_bruto, sueldo_neto, cbu, cuil) VALUES
-	('A-1001','Admin Istrador','Gerente de Sistemas','IT',4850000.00,3600000.00,'2850590940090418135201','20-30111222-3'),
-	('A-1002','Gordon Brown','Analista Financiero Senior','Finanzas',3120000.00,2350000.00,'0110599520000012345678','20-25444555-6'),
-	('A-1003','Hack Me','Especialista en Seguridad','IT',3980000.00,2980000.00,'2850590940090418135202','27-33666777-8'),
-	('A-1004','Pablo Picasso','Disenador UX','Marketing',2650000.00,2010000.00,'0170099220000098765432','20-28999000-1'),
-	('A-1005','Bob Smith','Soporte Tecnico','IT',1850000.00,1450000.00,'2850590940090418135203','20-31222333-4'),
-	('A-1006','Laura Gomez','Jefa de Recursos Humanos','RRHH',3450000.00,2600000.00,'0720099588000011223344','27-29555666-7');";
-if( !mysqli_query($GLOBALS["___mysqli_ston"], $insert_nomina) ) {
-	dvwaMessagePush( "Data could not be inserted into 'nomina' table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
+// Insert data into 'payroll' (fictional employees, sample data)
+$insert_payroll = "INSERT INTO payroll (employee_id, full_name, position, department, gross_salary, net_salary, bank_account, national_id) VALUES
+	('E-1001','Admin Istrator','Systems Manager','IT',98000.00,74000.00,'GB29NWBK60161331926819','AB123456C'),
+	('E-1002','Gordon Brown','Senior Financial Analyst','Finance',82000.00,61000.00,'GB29NWBK60161331926820','AB234567C'),
+	('E-1003','Hack Me','Security Specialist','IT',90000.00,67000.00,'GB29NWBK60161331926821','AB345678C'),
+	('E-1004','Pablo Picasso','UX Designer','Marketing',68000.00,51000.00,'GB29NWBK60161331926822','AB456789C'),
+	('E-1005','Bob Smith','Technical Support','IT',52000.00,40000.00,'GB29NWBK60161331926823','AB567890C'),
+	('E-1006','Laura Gomez','Head of Human Resources','HR',88000.00,65000.00,'GB29NWBK60161331926824','AB678901C');";
+if( !mysqli_query($GLOBALS["___mysqli_ston"], $insert_payroll) ) {
+	dvwaMessagePush( "Data could not be inserted into 'payroll' table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
 	dvwaPageReload();
 }
-dvwaMessagePush( "Data inserted into 'nomina' table." );
+dvwaMessagePush( "Data inserted into 'payroll' table." );
 
 // Done
 dvwaMessagePush( "<em>Setup successful</em>!" );

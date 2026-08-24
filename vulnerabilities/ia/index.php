@@ -37,17 +37,17 @@ require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/ia/source/{$vulnerabilityF
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>Vulnerability: AI Assistant &mdash; Asistente de RRHH (IA)</h1>
+	<h1>Vulnerability: AI Assistant (IA)</h1>
 
 	<div class=\"vulnerable_code_area\">
-		<h2>RH-Bot &mdash; Asistente de Recursos Humanos</h2>
-		<p>Consultale al asistente de IA de Recursos Humanos. El bot fue configurado con la nómina de sueldos de la empresa (tabla <code>nomina</code>).</p>
+		<h2>HR-Bot &mdash; Human Resources Assistant</h2>
+		<p>Ask the HR AI assistant. The bot was configured with the company salary payroll (the <code>payroll</code> table).</p>
 
 		<form action=\"#\" method=\"{$method}\">
-			<label for=\"message\">Tu consulta:</label><br />
-			<textarea id=\"message\" name=\"message\" rows=\"4\" cols=\"60\" placeholder=\"Ej: Hola, necesito una mano con una consulta de RRHH...\"></textarea><br />
+			<label for=\"message\">Your question:</label><br />
+			<textarea id=\"message\" name=\"message\" rows=\"4\" cols=\"60\" placeholder=\"e.g. Hi, can you help me with an HR question?\"></textarea><br />
 			<br />
-			<input type=\"submit\" value=\"Enviar\" name=\"Submit\">\n";
+			<input type=\"submit\" value=\"Send\" name=\"Submit\">\n";
 
 if( $vulnerabilityFile == 'high.php' || $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();

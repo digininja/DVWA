@@ -1,34 +1,34 @@
 <?php
 
 /*
- * Helpers compartidos del módulo 'AI Assistant (IA)'.
+ * Shared helpers for the 'AI Assistant (IA)' module.
  *
- * Este archivo contiene la infraestructura reutilizable del módulo:
- *   - ia_get_nomina()      -> lee la nómina de sueldos desde la base de datos.
- *   - ia_nomina_to_text()  -> formatea la nómina como texto para el prompt.
- *   - ia_gemini_request()  -> hace la llamada HTTP real a la API de Gemini.
- *   - ia_render_chat()     -> renderiza el intercambio usuario / RH-Bot.
+ * This file holds the module's reusable infrastructure:
+ *   - ia_get_payroll()     -> reads the salary payroll from the database.
+ *   - ia_payroll_to_text() -> formats the payroll as text for the prompt.
+ *   - ia_gemini_request()  -> makes the real HTTP call to the Gemini API.
+ *   - ia_render_chat()     -> renders the user / HR-Bot exchange.
  *
- * La lógica de seguridad que cambia entre niveles (el system prompt y los
- * controles) vive en source/{low,medium,high,impossible}.php, que es lo que
- * muestra el botón "View Source".
+ * The security logic that changes between levels (the system prompt and the
+ * guardrails) lives in source/{low,medium,high,impossible}.php, which is what
+ * the "View Source" button shows.
  */
 
-// Modelo de Gemini a utilizar.
+// Gemini model to use.
 if( !defined( 'IA_GEMINI_MODEL' ) ) {
 	define( 'IA_GEMINI_MODEL', 'gemini-2.5-flash' );
 }
 
 /**
- * Trae la nómina completa de sueldos desde la tabla `nomina`.
+ * Reads the full salary payroll from the `payroll` table.
  *
- * @param PDO $db Conexión PDO de DVWA.
- * @return array  Filas de la nómina (o array vacío si la tabla no existe).
+ * @param PDO $db DVWA PDO connection.
+ * @return array  Payroll rows (or an empty array if the table is missing).
  */
-function ia_get_nomina( $db ) {
+function ia_get_payroll( $db ) {
 	$rows = array();
 	try {
-		$stmt = $db->query( 'SELECT legajo, nombre, cargo, departamento, sueldo_bruto, sueldo_neto, cbu, cuil FROM nomina ORDER BY id;' );
+		$stmt = $db->query( 'SELECT employee_id, full_name, position, department, gross_salary, net_salary, bank_account, national_id FROM payroll ORDER BY id;' );
 		if( $stmt ) {
 			$rows = $stmt->fetchAll( PDO::FETCH_ASSOC );
 		}
@@ -39,51 +39,51 @@ function ia_get_nomina( $db ) {
 }
 
 /**
- * Convierte las filas de la nómina en un bloque de texto legible para el LLM.
+ * Turns the payroll rows into a readable text block for the LLM.
  */
-function ia_nomina_to_text( $rows ) {
+function ia_payroll_to_text( $rows ) {
 	if( empty( $rows ) ) {
-		return '(no hay datos de nómina cargados; ejecutá "Setup / Reset DB")';
+		return '(no payroll data loaded; run "Setup / Reset DB")';
 	}
 	$lines = array();
 	foreach( $rows as $r ) {
 		$lines[] = sprintf(
-			'- Legajo %s | %s | %s (%s) | Sueldo bruto: $%s | Sueldo neto: $%s | CBU: %s | CUIL: %s',
-			$r['legajo'], $r['nombre'], $r['cargo'], $r['departamento'],
-			$r['sueldo_bruto'], $r['sueldo_neto'], $r['cbu'], $r['cuil']
+			'- ID %s | %s | %s (%s) | Gross salary: $%s | Net salary: $%s | Bank account: %s | National ID: %s',
+			$r['employee_id'], $r['full_name'], $r['position'], $r['department'],
+			$r['gross_salary'], $r['net_salary'], $r['bank_account'], $r['national_id']
 		);
 	}
 	return implode( "\n", $lines );
 }
 
 /**
- * Realiza la llamada real a la API de Google Gemini.
+ * Performs the real call to the Google Gemini API.
  *
- * La API key se envía por header (x-goog-api-key), nunca en la URL.
+ * The API key is sent as a header (x-goog-api-key), never in the URL.
  *
- * @param string $apiKey        Clave de la API de Gemini.
- * @param string $systemPrompt  Instrucciones de sistema (rol + guardrails).
- * @param string $userMessage   Mensaje del usuario.
+ * @param string $apiKey        Gemini API key.
+ * @param string $systemPrompt  System instructions (role + guardrails).
+ * @param string $userMessage   User message.
  * @return array{ok: bool, text: string}
  */
 function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
 	if( empty( $apiKey ) ) {
 		return array(
 			'ok'   => false,
-			'text' => "No hay API key de Google Gemini configurada.\n\n"
-				. "Cómo obtener una (Google ofrece un tier gratuito suficiente para este lab):\n"
-				. "1) Entrá a https://aistudio.google.com/app/apikey e iniciá sesión con una cuenta de Google.\n"
-				. "2) Hacé clic en \"Create API key\" y copiá la clave (empieza con \"AIza...\").\n\n"
-				. "Cómo configurarla en DVWA (cualquiera de las dos opciones):\n"
-				. "- Editá config/config.inc.php y poné:  \$_DVWA['gemini_api_key'] = 'TU_API_KEY';\n"
-				. "- O definí la variable de entorno GEMINI_API_KEY (útil en Docker).\n\n"
-				. "Más detalles en el README, sección \"Google Gemini API (AI Assistant module)\"."
+			'text' => "No Google Gemini API key is configured.\n\n"
+				. "How to get one (Google offers a free tier that is plenty for this lab):\n"
+				. "1) Go to https://aistudio.google.com/app/apikey and sign in with a Google account.\n"
+				. "2) Click \"Create API key\" and copy the key (it starts with \"AIza...\").\n\n"
+				. "How to configure it in DVWA (either option):\n"
+				. "- Edit config/config.inc.php and set:  \$_DVWA['gemini_api_key'] = 'YOUR_API_KEY';\n"
+				. "- Or set the GEMINI_API_KEY environment variable (handy for Docker).\n\n"
+				. "See the README, section \"Google Gemini API (AI Assistant module)\", for more details."
 		);
 	}
 	if( !function_exists( 'curl_init' ) ) {
 		return array(
 			'ok'   => false,
-			'text' => 'La extensión cURL de PHP no está disponible. Habilitala para poder llamar a la API de Gemini.'
+			'text' => 'The PHP cURL extension is not available. Enable it to be able to call the Gemini API.'
 		);
 	}
 
@@ -120,45 +120,45 @@ function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
 	$response = curl_exec( $ch );
 	$httpCode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 	$curlErr  = curl_error( $ch );
-	// Nota: no se llama a curl_close(): desde PHP 8.0 el handle es un objeto
-	// que se libera solo, y curl_close() quedó deprecado en PHP 8.5.
+	// Note: curl_close() is not called: since PHP 8.0 the handle is an object
+	// that is freed automatically, and curl_close() was deprecated in PHP 8.5.
 
 	if( $response === false ) {
-		return array( 'ok' => false, 'text' => 'Error de conexión con la API de Gemini: ' . $curlErr );
+		return array( 'ok' => false, 'text' => 'Connection error while calling the Gemini API: ' . $curlErr );
 	}
 
 	$data = json_decode( $response, true );
 
 	if( $httpCode !== 200 ) {
 		$msg = isset( $data['error']['message'] ) ? $data['error']['message'] : $response;
-		return array( 'ok' => false, 'text' => 'La API de Gemini devolvió un error (HTTP ' . $httpCode . '): ' . $msg );
+		return array( 'ok' => false, 'text' => 'The Gemini API returned an error (HTTP ' . $httpCode . '): ' . $msg );
 	}
 
 	if( isset( $data['candidates'][0]['content']['parts'][0]['text'] ) ) {
 		return array( 'ok' => true, 'text' => $data['candidates'][0]['content']['parts'][0]['text'] );
 	}
 
-	// Puede venir vacío por filtros de seguridad del propio modelo.
-	$finish = isset( $data['candidates'][0]['finishReason'] ) ? $data['candidates'][0]['finishReason'] : 'desconocido';
-	return array( 'ok' => false, 'text' => 'El modelo no devolvió texto (finishReason: ' . $finish . ').' );
+	// It may come back empty due to the model's own safety filters.
+	$finish = isset( $data['candidates'][0]['finishReason'] ) ? $data['candidates'][0]['finishReason'] : 'unknown';
+	return array( 'ok' => false, 'text' => 'The model returned no text (finishReason: ' . $finish . ').' );
 }
 
 /**
- * Renderiza el intercambio de chat (mensaje del usuario + respuesta del bot).
- * Escapa toda salida para que el foco quede en la vulnerabilidad del LLM y no
- * en un XSS accidental.
+ * Renders the chat exchange (user message + bot reply).
+ * Escapes all output so the focus stays on the LLM vulnerability and not on an
+ * accidental XSS.
  */
-function ia_render_chat( $userMessage, $respuesta ) {
+function ia_render_chat( $userMessage, $reply ) {
 	$userSafe = nl2br( htmlspecialchars( $userMessage, ENT_QUOTES, 'UTF-8' ) );
-	$botSafe  = nl2br( htmlspecialchars( $respuesta['text'], ENT_QUOTES, 'UTF-8' ) );
-	$botStyle = $respuesta['ok']
+	$botSafe  = nl2br( htmlspecialchars( $reply['text'], ENT_QUOTES, 'UTF-8' ) );
+	$botStyle = $reply['ok']
 		? 'background:#eef6ff;border-left:4px solid #3b82f6;'
 		: 'background:#fff0f0;border-left:4px solid #dc2626;';
 
 	return "
 	<div class=\"ia-chat\" style=\"margin-top:1em;\">
-		<p style=\"background:#f3f4f6;border-left:4px solid #9ca3af;padding:.6em .8em;margin:.4em 0;\"><strong>Vos:</strong><br />{$userSafe}</p>
-		<p style=\"{$botStyle}padding:.6em .8em;margin:.4em 0;\"><strong>RH-Bot:</strong><br />{$botSafe}</p>
+		<p style=\"background:#f3f4f6;border-left:4px solid #9ca3af;padding:.6em .8em;margin:.4em 0;\"><strong>You:</strong><br />{$userSafe}</p>
+		<p style=\"{$botStyle}padding:.6em .8em;margin:.4em 0;\"><strong>HR-Bot:</strong><br />{$botSafe}</p>
 	</div>";
 }
 
