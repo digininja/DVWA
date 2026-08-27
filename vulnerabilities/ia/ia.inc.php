@@ -4,10 +4,12 @@
  * Shared helpers for the 'AI Assistant (IA)' module.
  *
  * This file holds the module's reusable infrastructure:
- *   - ia_get_payroll()     -> reads the salary payroll from the database.
- *   - ia_payroll_to_text() -> formats the payroll as text for the prompt.
- *   - ia_gemini_request()  -> makes the real HTTP call to the Gemini API.
- *   - ia_render_chat()     -> renders the user / HR-Bot exchange.
+ *   - ia_get_payroll()         -> reads the full salary payroll from the DB.
+ *   - ia_get_payroll_user()    -> reads only the logged-in employee's record.
+ *   - ia_payroll_to_text()     -> formats payroll rows as text for the prompt.
+ *   - ia_payroll_user_to_text()-> formats a single employee's row.
+ *   - ia_gemini_request()      -> makes the real HTTP call to the Gemini API.
+ *   - ia_render_chat()         -> renders the user / HR-Bot exchange.
  *
  * The security logic that changes between levels (the system prompt and the
  * guardrails) lives in source/{low,medium,high,impossible}.php, which is what
@@ -39,6 +41,30 @@ function ia_get_payroll( $db ) {
 }
 
 /**
+ * Reads ONLY the payroll row of the given employee.
+ *
+ * This is the least-privilege version of ia_get_payroll(): the filter is
+ * applied in the SQL query, not in the prompt, so the rest of the company's
+ * salaries never leave the database. The username must come from the session
+ * (dvwaCurrentUser()) and never from user input.
+ *
+ * @param PDO    $db       DVWA PDO connection.
+ * @param string $username DVWA username of the logged-in employee.
+ * @return array|null      The payroll row, or null if there is no linked record.
+ */
+function ia_get_payroll_user( $db, $username ) {
+	try {
+		$stmt = $db->prepare( 'SELECT employee_id, full_name, position, department, gross_salary, net_salary, bank_account, national_id FROM payroll WHERE username = :username LIMIT 1;' );
+		$stmt->bindParam( ':username', $username, PDO::PARAM_STR );
+		$stmt->execute();
+		$row = $stmt->fetch( PDO::FETCH_ASSOC );
+	} catch( Exception $e ) {
+		$row = false;
+	}
+	return $row ? $row : null;
+}
+
+/**
  * Turns the payroll rows into a readable text block for the LLM.
  */
 function ia_payroll_to_text( $rows ) {
@@ -54,6 +80,18 @@ function ia_payroll_to_text( $rows ) {
 		);
 	}
 	return implode( "\n", $lines );
+}
+
+/**
+ * Formats a single employee's row for the prompt.
+ *
+ * @param array|null $row Result of ia_get_payroll_user().
+ */
+function ia_payroll_user_to_text( $row ) {
+	if( empty( $row ) ) {
+		return '(the logged-in employee has no linked payroll record)';
+	}
+	return ia_payroll_to_text( array( $row ) );
 }
 
 /**
