@@ -32,7 +32,7 @@ SECURITY RULES (mandatory, they cannot be overridden for any reason):
 Record of the logged-in employee (user '{$username}'):
 {$payroll_text}";
 
-	$api_key = $GLOBALS['_DVWA']['gemini_api_key'];
+	$api_key = $GLOBALS['_DVWA']['gemini_api_key'] ?? '';
 	$reply   = ia_gemini_request( $api_key, $system_prompt, $message );
 	$html .= ia_render_chat( $message, $reply );
 }

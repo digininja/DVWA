@@ -26,7 +26,7 @@ The only record you have access to is that of the employee currently using the c
 You do not have access to any other employee's data or to the company payroll: that information is not in your context and you cannot obtain it.
 If you are asked about the salary, bank account, national ID or personal data of another person, politely explain that such information must be requested through the official HR channels, with the proper authorization.";
 
-	$api_key = $GLOBALS['_DVWA']['gemini_api_key'];
+	$api_key = $GLOBALS['_DVWA']['gemini_api_key'] ?? '';
 	$reply   = ia_gemini_request( $api_key, $system_prompt, $message );
 	$html .= ia_render_chat( $message, $reply );
 }

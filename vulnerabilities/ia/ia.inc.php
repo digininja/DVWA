@@ -4,21 +4,35 @@
  * Shared helpers for the 'AI Assistant (IA)' module.
  *
  * This file holds the module's reusable infrastructure:
- *   - ia_get_payroll()         -> reads the full salary payroll from the DB.
- *   - ia_get_payroll_user()    -> reads only the logged-in employee's record.
- *   - ia_payroll_to_text()     -> formats payroll rows as text for the prompt.
- *   - ia_payroll_user_to_text()-> formats a single employee's row.
- *   - ia_gemini_request()      -> makes the real HTTP call to the Gemini API.
- *   - ia_render_chat()         -> renders the user / HR-Bot exchange.
+ *   - ia_get_payroll()          -> reads the full salary payroll from the DB.
+ *   - ia_get_payroll_user()     -> reads only the logged-in employee's record.
+ *   - ia_payroll_to_text()      -> formats payroll rows as text for the prompt.
+ *   - ia_payroll_user_to_text() -> formats a single employee's row.
+ *   - ia_gemini_model()         -> resolves the Gemini model from the config.
+ *   - ia_gemini_request()       -> makes the real HTTP call to the Gemini API.
+ *   - ia_render_chat()          -> renders the user / HR-Bot exchange.
+ *   - ia_markdown_lite()        -> minimal, XSS-safe Markdown rendering.
  *
  * The security logic that changes between levels (the system prompt and the
  * guardrails) lives in source/{low,medium,high,impossible}.php, which is what
  * the "View Source" button shows.
  */
 
-// Gemini model to use.
-if( !defined( 'IA_GEMINI_MODEL' ) ) {
-	define( 'IA_GEMINI_MODEL', 'gemini-2.5-flash' );
+// Default Gemini model, used when 'gemini_model' is not set in config.inc.php.
+if( !defined( 'IA_GEMINI_DEFAULT_MODEL' ) ) {
+	define( 'IA_GEMINI_DEFAULT_MODEL', 'gemini-3.6-flash' );
+}
+
+/**
+ * Returns the Gemini model to use: the value of $_DVWA['gemini_model'] from the
+ * config file if it is set, otherwise the built-in default. Google occasionally
+ * retires models, so keeping this configurable avoids a hard-coded dead model.
+ */
+function ia_gemini_model() {
+	if( isset( $GLOBALS['_DVWA']['gemini_model'] ) && $GLOBALS['_DVWA']['gemini_model'] !== '' ) {
+		return $GLOBALS['_DVWA']['gemini_model'];
+	}
+	return IA_GEMINI_DEFAULT_MODEL;
 }
 
 /**
@@ -111,7 +125,7 @@ function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
 			'text' => "No Google Gemini API key is configured.\n\n"
 				. "How to get one (Google offers a free tier that is plenty for this lab):\n"
 				. "1) Go to https://aistudio.google.com/app/apikey and sign in with a Google account.\n"
-				. "2) Click \"Create API key\" and copy the key (it starts with \"AIza...\").\n\n"
+				. "2) Click \"Create API key\" and copy the key.\n\n"
 				. "How to configure it in DVWA (either option):\n"
 				. "- Edit config/config.inc.php and set:  \$_DVWA['gemini_api_key'] = 'YOUR_API_KEY';\n"
 				. "- Or set the GEMINI_API_KEY environment variable (handy for Docker).\n\n"
@@ -125,7 +139,7 @@ function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
 		);
 	}
 
-	$url = 'https://generativelanguage.googleapis.com/v1beta/models/' . IA_GEMINI_MODEL . ':generateContent';
+	$url = 'https://generativelanguage.googleapis.com/v1beta/models/' . ia_gemini_model() . ':generateContent';
 
 	$payload = array(
 		'system_instruction' => array(
@@ -182,13 +196,28 @@ function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
 }
 
 /**
+ * Minimal, XSS-safe rendering of the little Markdown the LLM tends to emit.
+ * The text is HTML-escaped first, then a couple of common constructs
+ * (**bold** and "* " / "- " bullets) are turned into safe HTML, so replies do
+ * not show raw asterisks.
+ */
+function ia_markdown_lite( $text ) {
+	$safe = htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
+	// **bold** -> <strong>bold</strong>
+	$safe = preg_replace( '/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $safe );
+	// leading "* " or "- " list markers -> bullet
+	$safe = preg_replace( '/^[ \t]*[\*\-][ \t]+/m', '&bull; ', $safe );
+	return nl2br( $safe );
+}
+
+/**
  * Renders the chat exchange (user message + bot reply).
- * Escapes all output so the focus stays on the LLM vulnerability and not on an
- * accidental XSS.
+ * Output is escaped (see ia_markdown_lite) so the focus stays on the LLM
+ * vulnerability and not on an accidental XSS.
  */
 function ia_render_chat( $userMessage, $reply ) {
 	$userSafe = nl2br( htmlspecialchars( $userMessage, ENT_QUOTES, 'UTF-8' ) );
-	$botSafe  = nl2br( htmlspecialchars( $reply['text'], ENT_QUOTES, 'UTF-8' ) );
+	$botSafe  = ia_markdown_lite( $reply['text'] );
 	$botStyle = $reply['ok']
 		? 'background:#eef6ff;border-left:4px solid #3b82f6;'
 		: 'background:#fff0f0;border-left:4px solid #dc2626;';
