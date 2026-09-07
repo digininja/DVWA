@@ -85,9 +85,17 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
     }
 }
 
+// Set user_id cookie if not exists
+if (!isset($_COOKIE['user_id'])) {
+    setcookie('user_id', $current_user_id, time() + 3600, '/');
+}
+
 // Show current user's role for context
 $role = isset($_COOKIE['user_role']) ? $_COOKIE['user_role'] : 'regular_user';
 $html .= "<div class='info-banner'>Current Role: {$role}</div>";
+
+// Show current user's ID cookie for debugging
+$html .= "<div class='info-banner'>Current User ID Cookie: " . (isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 'Not set') . "</div>";
 
 // Set initial role cookie if not exists
 if (!isset($_COOKIE['user_role'])) {
