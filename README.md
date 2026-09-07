@@ -362,6 +362,26 @@ These then go in the following sections of `./config/config.inc.php`:
 - `$_DVWA[ 'recaptcha_public_key' ]`
 - `$_DVWA[ 'recaptcha_private_key' ]`
 
+### Google Gemini API (AI Assistant module)
+
+This is only required for the "AI Assistant (IA)" lab, if you aren't playing with that lab, you can ignore this section.
+
+The module talks to Google's Gemini API, so it needs an API key. Google offers a free tier that is more than enough for this lab:
+
+1. Go to <https://aistudio.google.com/app/apikey> and sign in with a Google account.
+2. Click **Create API key** (you can create it in a new project).
+3. Copy the generated key.
+
+Then add the key using **either** method:
+
+- Put it in `./config/config.inc.php`:
+  - `$_DVWA[ 'gemini_api_key' ]`
+- Or set the `GEMINI_API_KEY` environment variable (handy for Docker, see the [Config with environment variables](#config-with-environment-variables) section).
+
+Without a key the module still loads; it simply replies with a message telling you the key is missing and how to get one, so nothing else breaks.
+
+If the default model (`gemini-3.6-flash`) is not available for your account, set a different one via `$_DVWA[ 'gemini_model' ]` in `config/config.inc.php` (or the `GEMINI_MODEL` environment variable). The module's error message tells you which model Google recommends.
+
 ### Default Credentials
 
 **Default username = `admin`**

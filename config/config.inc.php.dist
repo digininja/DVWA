@@ -27,6 +27,16 @@ $_DVWA[ 'db_port']      = getenv('DB_PORT') ?: '3306';
 $_DVWA[ 'recaptcha_public_key' ]  = getenv('RECAPTCHA_PUBLIC_KEY') ?: '';
 $_DVWA[ 'recaptcha_private_key' ] = getenv('RECAPTCHA_PRIVATE_KEY') ?: '';
 
+# Google Gemini API settings
+#   Used for the 'AI Assistant (IA)' module.
+#   Get an API key at: https://aistudio.google.com/app/apikey
+$_DVWA[ 'gemini_api_key' ] = getenv('GEMINI_API_KEY') ?: '';
+
+# Gemini model used by the 'AI Assistant (IA)' module.
+#   Change this if the default model is not available for your account; the
+#   module's error message will tell you which model Google recommends instead.
+$_DVWA[ 'gemini_model' ] = getenv('GEMINI_MODEL') ?: 'gemini-3.6-flash';
+
 # Default security level
 #   Default value for the security level with each session.
 #   The default is 'impossible'. You may wish to set this to either 'low', 'medium', 'high' or impossible'.
