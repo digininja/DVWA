@@ -1,6 +1,10 @@
 <div class="body_padded">
 	<h1>Help - AI Assistant (IA)</h1>
 
+	<p><strong>Note:</strong> the example prompts below are suggestions of things to try — they may
+	or may not work depending on the mood of the AI. Model behaviour changes over time, so feel free
+	to experiment and adapt them.</p>
+
 	<div id="code">
 	<table width='100%' bgcolor='white' style="border:2px #C0C0C0 solid">
 	<tr>
