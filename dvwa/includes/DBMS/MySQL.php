@@ -39,7 +39,7 @@ if( !@((bool)mysqli_query($GLOBALS["___mysqli_ston"], "USE " . $_DVWA[ 'db_datab
 	dvwaPageReload();
 }
 
-$create_tb = "CREATE TABLE users (user_id int(6),first_name varchar(15),last_name varchar(15), user varchar(15), password varchar(32),avatar varchar(70), last_login TIMESTAMP, failed_login INT(3), PRIMARY KEY (user_id));";
+$create_tb = "CREATE TABLE users (user_id int(6),first_name varchar(15),last_name varchar(15), user varchar(15), password varchar(32),avatar varchar(70), last_login TIMESTAMP, failed_login INT(3), role VARCHAR(20) DEFAULT 'user', account_enabled TINYINT(1) DEFAULT 1, PRIMARY KEY (user_id));";
 if( !mysqli_query($GLOBALS["___mysqli_ston"],  $create_tb ) ) {
 	dvwaMessagePush( "Table could not be created<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
 	dvwaPageReload();
@@ -51,7 +51,7 @@ dvwaMessagePush( "'users' table was created." );
 $base_dir= str_replace ("setup.php", "", $_SERVER['SCRIPT_NAME']);
 $avatarUrl  = $base_dir . 'hackable/users/';
 
-$insert = "INSERT INTO users VALUES
+$insert = "INSERT INTO users (user_id, first_name, last_name, user, password, avatar, last_login, failed_login) VALUES
 	('1','admin','admin','admin',MD5('password'),'{$avatarUrl}admin.jpg', NOW(), '0'),
 	('2','Gordon','Brown','gordonb',MD5('abc123'),'{$avatarUrl}gordonb.jpg', NOW(), '0'),
 	('3','Hack','Me','1337',MD5('charley'),'{$avatarUrl}1337.jpg', NOW(), '0'),
@@ -62,14 +62,6 @@ if( !mysqli_query($GLOBALS["___mysqli_ston"],  $insert ) ) {
 	dvwaPageReload();
 }
 dvwaMessagePush( "Data inserted into 'users' table." );
-
-// Add role column to users table
-$alter_users = "ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user';";
-if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users) ) {
-    dvwaMessagePush( "Could not add role column to users table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
-    dvwaPageReload();
-}
-dvwaMessagePush( "Added role column to users table." );
 
 // Set admin user role
 $update_admin = "UPDATE users SET role = 'admin' WHERE user = 'admin';";
@@ -139,15 +131,6 @@ if (file_exists($conf)) {
 }
 
 dvwaMessagePush( "Backup file /config/config.inc.php.bak automatically created" );
-
-// Add account_enabled columns to users table
-$alter_users_dept = "ALTER TABLE users 
-    ADD COLUMN account_enabled TINYINT(1) DEFAULT 1;";
-if( !mysqli_query($GLOBALS["___mysqli_ston"], $alter_users_dept) ) {
-    dvwaMessagePush( "Could not add account_enabled column to users table<br />SQL: " . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) );
-    dvwaPageReload();
-}
-dvwaMessagePush( "Added account_enabled columns to users table." );
 
 // Done
 dvwaMessagePush( "<em>Setup successful</em>!" );
