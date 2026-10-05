@@ -24,7 +24,7 @@ Nous ne sommes pas responsables de la manière dont vous utilisez BAWV. Nous avo
 
 ## License
 
-Ce fichier fait parie du bordel d'application web vulnérable (BAWV)
+Ce fichier fait partie du bordel d'application web vulnérable (BAWV)
 
 Bordel d'application web vulnérable (BAWV) est un logiciel libre: vous pouvez le re-distribuer et/ou le modifier en respectant les termes de la licence publique générale GNU (GNU General Public License) tel que publié par
 La fondation des logiciels libres (the Free Software Foundation),
