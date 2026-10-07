@@ -26,6 +26,13 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	$pass = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"],  $pass ) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
 	$pass = md5( $pass );
 
+	// Validate that username and password are not empty (improved login validation).
+	if( trim( $user ) === '' || trim( $_POST[ 'password' ] ) === '' ) {
+		dvwaMessagePush( 'Username and password cannot be empty. Login failed.' );
+		dvwaRedirect( 'login.php' );
+		exit;
+	}
+
 	$query = ("SELECT table_schema, table_name, create_time
 				FROM information_schema.tables
 				WHERE table_schema='{$_DVWA['db_database']}' AND table_name='users'
