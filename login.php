@@ -27,7 +27,6 @@ if( isset( $_POST[ 'Login' ] ) ) {
 	$pass = md5( $pass );
 
 	// Validate that username and password are not empty (improved login validation).
-	// Uses a single generic message so attackers cannot enumerate valid usernames.
 	if( trim( $user ) === '' || trim( $_POST[ 'password' ] ) === '' ) {
 		dvwaMessagePush( 'Username and password cannot be empty. Login failed.' );
 		dvwaRedirect( 'login.php' );
