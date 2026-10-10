@@ -14,7 +14,7 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
     if (!preg_match('/^\d+$/', $_GET['user_id'])) {
         $html .= "<p>Invalid user ID format. Please enter a number.</p>";
     } else {
-        $id = $_GET['user_id'];
+        $id = intval($_GET['user_id']);
         $user_exists = false;
         
         // Check if user exists first
@@ -22,8 +22,26 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
         $check_result = mysqli_query($GLOBALS["___mysqli_ston"], $check_query);
         $user_exists = ($check_result && mysqli_num_rows($check_result) > 0);
         
-        // "Secure" check that's easily bypassed
-        if (isset($_GET['token']) && $_GET['token'] == 'user_token') {
+        // Allow users to view their own profile without a token
+        if ($id == $current_user_id) {
+            // User can always view their own profile
+            $query = "SELECT first_name, last_name, user_id, avatar FROM users WHERE user_id = '$id';";
+            $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+            
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $html .= "
+                    <div class=\"profile-info\">
+                        <h3>User Profile</h3>
+                        <p>User ID: {$row['user_id']}</p>
+                        <p>Name: {$row['first_name']} {$row['last_name']}</p>
+                        <p>Avatar: {$row['avatar']}</p>
+                        <p><em>This is your own profile, so you can view it without a token.</em></p>
+                    </div>";
+            }
+        }
+        // "Secure" check that's easily bypassed for other profiles
+        else if (isset($_GET['token']) && $_GET['token'] == 'user_token') {
             if ($user_exists) {
                 $query = "SELECT first_name, last_name, user_id, avatar FROM users WHERE user_id = '$id';";
                 $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
@@ -43,7 +61,9 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
                 $html .= "<p>No user found with ID: {$id}</p>";
             }
         } else {
-            $html .= "<p>Access denied. Valid token required. <!-- Try using token=user_token --></p>";
+            if ($id != $current_user_id) {
+                $html .= "<p>Access denied. Valid token required to view other users' profiles. <!-- Try adding ?token=user_token to the URL --></p>";
+            }
         }
         
         // Log access attempts
@@ -76,4 +96,8 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
         }
     }
 }
+
+// Add a hint about the token parameter
+$html .= "<div class='info-banner'>Hint: You can view your own profile without a token. To view other users' profiles, you need a valid token. Try looking at the error message for clues.</div>";
+$html .= "<div class='info-banner'>Your user ID is: {$current_user_id}</div>";
 ?>
