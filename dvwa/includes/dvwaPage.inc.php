@@ -361,7 +361,6 @@ function dvwaHtmlEcho( $pPage ) {
 
 	$userInfoHtml = '<em>Username:</em> ' . ( dvwaCurrentUser() );
 	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
-	$securityLevelHtml = "<em>Security Level:</em> {$securityLevelHtml}";
 	$localeHtml = '<em>Locale:</em> ' . ( dvwaLocaleGet() );
 	$sqliDbHtml = '<em>SQLi DB:</em> ' . ( dvwaSQLiDBGet() );
 
