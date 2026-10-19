@@ -1,0 +1,55 @@
+name: SentinelOne CNS Scan
+
+on:
+  # Triggers the workflow when pull_request created on master/main branch
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches: [ master, main ]
+
+jobs:
+  s1-shift-left-cli:
+    runs-on: ubuntu-latest
+    container:
+      image: pingsafe/s1-shift-left-cli:1.0.4
+      options: --entrypoint ""
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Configure SentinelOne Shift Left CLI
+        run: s1-cns-cli config --service-user-api-token ${{ secrets.S1_SERVICE_USER_API_TOKEN }} --management-console-url https://usea1-purple.sentinelone.net --scope-type SITE --scope-id 2470881036424888396 --policy-id 01M50K8CAXGWEWAZW1BFNEY01Y
+
+      - name: Configure git config
+        run: git config --global --add safe.directory $PWD
+
+      - name: Run Secret Detector
+        id: secret-detector
+        run:  s1-cns-cli scan secret -d $PWD --pull-request origin/$SRC $DEST --publish-result --repo-full-name $REPO_FULL_NAME  --repo-url $REPO_URL/$REPO_FULL_NAME --provider GITHUB
+        continue-on-error: true
+        env:
+          DEST: ${{ github.event.pull_request.base.sha }}
+          SRC: ${{ github.event.pull_request.head.ref }}
+          REPO_FULL_NAME: ${{ github.repository }}
+          REPO_URL: ${{ github.server_url }}
+
+      - name: Run IaC Scanner
+        run:  s1-cns-cli scan iac -d $PWD --pull-request origin/$SRC $DEST --publish-result --branch $SRC --repo-full-name $REPO_FULL_NAME  --repo-url $REPO_URL/$REPO_FULL_NAME --provider GITHUB
+        id: iac-scanner
+        continue-on-error: true
+        env:
+          DEST: ${{ github.event.pull_request.base.sha }}
+          SRC: ${{ github.event.pull_request.head.ref }}
+          REPO_FULL_NAME: ${{ github.repository }}
+          REPO_URL: ${{ github.server_url }}
+
+      - name: Run Vulnerability Scanner
+        id: vuln-scanner
+        continue-on-error: true
+        run:  s1-cns-cli scan vuln -d $PWD
+
+      - name: Check for failures
+        if: steps.secret-detector.outcome == 'failure' || steps.iac-scanner.outcome == 'failure' || steps.vuln-scanner.outcome == 'failure'
+        run: exit 1
