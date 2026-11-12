@@ -43,7 +43,6 @@ $page[ 'body' ] .= "
 
 	<h2>More Information</h2>
 	<ul>
-		<li>" . dvwaExternalLinkUrlGet( 'https://exploit-notes.hdks.org/exploit/cryptography/algorithm/aes-ecb-padding-attack', "AES-ECB Padding Attack" ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.scottbrady91.com/cryptopals/implementing-and-breaking-aes-ecb', "Implementing and breaking AES ECB") . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation', "Wikipedia - Block cipher mode of operation" ) . "</li>
 		<li>" . dvwaExternalLinkUrlGet( 'https://www.nccgroup.com/us/research-blog/cryptopals-exploiting-cbc-padding-oracles/', "Cryptopals: Exploiting CBC Padding Oracles - Best article") . "</li> 

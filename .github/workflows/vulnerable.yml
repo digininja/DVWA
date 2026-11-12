@@ -1,6 +1,11 @@
 name: Vulnerable Action
 
 on:
+  workflow_dispatch:
+      tags:
+        description: 'Run it manually'
+        required: false
+        type: boolean
   push:
     branches:
       - master
