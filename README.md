@@ -362,25 +362,52 @@ These then go in the following sections of `./config/config.inc.php`:
 - `$_DVWA[ 'recaptcha_public_key' ]`
 - `$_DVWA[ 'recaptcha_private_key' ]`
 
-### Google Gemini API (AI Assistant module)
+### AI Models (AI Assistant module)
 
-This is only required for the "AI Assistant (IA)" lab, if you aren't playing with that lab, you can ignore this section.
+This is only required for the "AI Assistant (IA)" lab. If you aren't playing with that lab, you can ignore this section.
 
-The module talks to Google's Gemini API, so it needs an API key. Google offers a free tier that is more than enough for this lab:
+The module uses any LLM that exposes an OpenAI-compatible chat completions endpoint. Configure one or more models in `$_DVWA['ai_models']` inside `./config/config.inc.php`. Each entry needs `name`, `url`, `model` and `key`. The first entry is the default; when more than one is configured, a dropdown lets you switch between them.
 
-1. Go to <https://aistudio.google.com/app/apikey> and sign in with a Google account.
-2. Click **Create API key** (you can create it in a new project).
-3. Copy the generated key.
+**Gemini** (Google offers a free tier):
 
-Then add the key using **either** method:
+```php
+[
+    'name'  => 'Gemini',
+    'url'   => 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+    'model' => 'gemini-3.6-flash',
+    'key'   => 'YOUR_GEMINI_API_KEY',  // https://aistudio.google.com/app/apikey
+],
+```
 
-- Put it in `./config/config.inc.php`:
-  - `$_DVWA[ 'gemini_api_key' ]`
-- Or set the `GEMINI_API_KEY` environment variable (handy for Docker, see the [Config with environment variables](#config-with-environment-variables) section).
+**OpenAI:**
 
-Without a key the module still loads; it simply replies with a message telling you the key is missing and how to get one, so nothing else breaks.
+```php
+[
+    'name'  => 'OpenAI',
+    'url'   => 'https://api.openai.com/v1/chat/completions',
+    'model' => 'gpt-4o-mini',
+    'key'   => 'YOUR_OPENAI_API_KEY',
+],
+```
 
-If the default model (`gemini-3.6-flash`) is not available for your account, set a different one via `$_DVWA[ 'gemini_model' ]` in `config/config.inc.php` (or the `GEMINI_MODEL` environment variable). The module's error message tells you which model Google recommends.
+**Ollama** (local, no API key needed):
+
+```php
+[
+    'name'  => 'Ollama',
+    'url'   => 'http://localhost:11434/v1/chat/completions',  // from Docker: http://host.docker.internal:11434/v1/chat/completions
+    'model' => 'llama3.2',
+    'key'   => '',
+],
+```
+
+The first entry can also be set via environment variables (`AI_MODEL_NAME`, `AI_MODEL_URL`, `AI_MODEL_ID`, `AI_MODEL_KEY`), which is handy for Docker (see the [Config with environment variables](#config-with-environment-variables) section). The included [`compose.yml`](./compose.yml) already passes these four variables to the container, so you can put them in a `.env` file next to `compose.yml` (it is ignored by git):
+
+```sh
+AI_MODEL_KEY=YOUR_API_KEY
+```
+
+Without any model configured the module still loads; it replies with a message explaining how to set one up.
 
 ### Default Credentials
 

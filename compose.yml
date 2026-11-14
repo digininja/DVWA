@@ -14,6 +14,10 @@ services:
     pull_policy: always
     environment:
       - DB_SERVER=db
+      - AI_MODEL_NAME=${AI_MODEL_NAME:-}
+      - AI_MODEL_URL=${AI_MODEL_URL:-}
+      - AI_MODEL_ID=${AI_MODEL_ID:-}
+      - AI_MODEL_KEY=${AI_MODEL_KEY:-}
     depends_on:
       - db
     # Uncomment the next 2 lines to serve local source

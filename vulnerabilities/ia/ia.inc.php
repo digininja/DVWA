@@ -8,8 +8,6 @@
  *   - ia_get_payroll_user()     -> reads only the logged-in employee's record.
  *   - ia_payroll_to_text()      -> formats payroll rows as text for the prompt.
  *   - ia_payroll_user_to_text() -> formats a single employee's row.
- *   - ia_gemini_model()         -> resolves the Gemini model from the config.
- *   - ia_gemini_request()       -> makes the real HTTP call to the Gemini API.
  *   - ia_render_chat()          -> renders the user / HR-Bot exchange.
  *   - ia_markdown_lite()        -> minimal, XSS-safe Markdown rendering.
  *
@@ -18,21 +16,29 @@
  * the "View Source" button shows.
  */
 
-// Default Gemini model, used when 'gemini_model' is not set in config.inc.php.
-if( !defined( 'IA_GEMINI_DEFAULT_MODEL' ) ) {
-	define( 'IA_GEMINI_DEFAULT_MODEL', 'gemini-3.6-flash' );
+function ia_get_models() {
+	if( !isset( $GLOBALS['_DVWA']['ai_models'] ) || !is_array( $GLOBALS['_DVWA']['ai_models'] ) ) {
+		return array();
+	}
+	$models = array();
+	foreach( $GLOBALS['_DVWA']['ai_models'] as $entry ) {
+		if( !empty( $entry['url'] ) && !empty( $entry['model'] ) ) {
+			if( empty( $entry['name'] ) ) {
+				$entry['name'] = $entry['model'];
+			}
+			$models[] = $entry;
+		}
+	}
+	return $models;
 }
 
-/**
- * Returns the Gemini model to use: the value of $_DVWA['gemini_model'] from the
- * config file if it is set, otherwise the built-in default. Google occasionally
- * retires models, so keeping this configurable avoids a hard-coded dead model.
- */
-function ia_gemini_model() {
-	if( isset( $GLOBALS['_DVWA']['gemini_model'] ) && $GLOBALS['_DVWA']['gemini_model'] !== '' ) {
-		return $GLOBALS['_DVWA']['gemini_model'];
+function ia_get_model( $index ) {
+	$models = ia_get_models();
+	$i = intval( $index );
+	if( $i < 0 || $i >= count( $models ) ) {
+		return null;
 	}
-	return IA_GEMINI_DEFAULT_MODEL;
+	return $models[$i];
 }
 
 /**
@@ -108,91 +114,82 @@ function ia_payroll_user_to_text( $row ) {
 	return ia_payroll_to_text( array( $row ) );
 }
 
-/**
- * Performs the real call to the Google Gemini API.
- *
- * The API key is sent as a header (x-goog-api-key), never in the URL.
- *
- * @param string $apiKey        Gemini API key.
- * @param string $systemPrompt  System instructions (role + guardrails).
- * @param string $userMessage   User message.
- * @return array{ok: bool, text: string}
- */
-function ia_gemini_request( $apiKey, $systemPrompt, $userMessage ) {
-	if( empty( $apiKey ) ) {
+function ia_chat_request( $modelEntry, $systemPrompt, $userMessage ) {
+	if( empty( $modelEntry ) ) {
 		return array(
 			'ok'   => false,
-			'text' => "No Google Gemini API key is configured.\n\n"
-				. "How to get one (Google offers a free tier that is plenty for this lab):\n"
-				. "1) Go to https://aistudio.google.com/app/apikey and sign in with a Google account.\n"
-				. "2) Click \"Create API key\" and copy the key.\n\n"
-				. "How to configure it in DVWA (either option):\n"
-				. "- Edit config/config.inc.php and set:  \$_DVWA['gemini_api_key'] = 'YOUR_API_KEY';\n"
-				. "- Or set the GEMINI_API_KEY environment variable (handy for Docker).\n\n"
-				. "See the README, section \"Google Gemini API (AI Assistant module)\", for more details."
+			'text' => "No AI model is configured.\n\n"
+				. "Edit config/config.inc.php and add at least one entry to \$_DVWA['ai_models'].\n"
+				. "Each entry needs: name, url (OpenAI-compatible chat completions endpoint), model and key.\n\n"
+				. "You can also set the AI_MODEL_URL, AI_MODEL_ID and AI_MODEL_KEY environment variables.\n\n"
+				. "See the README for examples with Gemini, OpenAI and Ollama."
 		);
 	}
 	if( !function_exists( 'curl_init' ) ) {
 		return array(
 			'ok'   => false,
-			'text' => 'The PHP cURL extension is not available. Enable it to be able to call the Gemini API.'
+			'text' => 'The PHP cURL extension is not available. Enable it to call the AI model.'
 		);
 	}
 
-	$url = 'https://generativelanguage.googleapis.com/v1beta/models/' . ia_gemini_model() . ':generateContent';
-
 	$payload = array(
-		'system_instruction' => array(
-			'parts' => array( array( 'text' => $systemPrompt ) )
+		'model'    => $modelEntry['model'],
+		'messages' => array(
+			array( 'role' => 'system',  'content' => $systemPrompt ),
+			array( 'role' => 'user',    'content' => $userMessage ),
 		),
-		'contents' => array(
-			array(
-				'role'  => 'user',
-				'parts' => array( array( 'text' => $userMessage ) )
-			)
-		),
-		'generationConfig' => array(
-			'temperature'     => 0.2,
-			'maxOutputTokens' => 1024
-		)
 	);
 
-	$ch = curl_init( $url );
+	if( isset( $modelEntry['params'] ) && is_array( $modelEntry['params'] ) ) {
+		$payload = array_merge( $payload, $modelEntry['params'] );
+	}
+
+	$headers = array( 'Content-Type: application/json' );
+	if( !empty( $modelEntry['key'] ) ) {
+		$headers[] = 'Authorization: Bearer ' . $modelEntry['key'];
+	}
+
+	$ch = curl_init( $modelEntry['url'] );
 	curl_setopt_array( $ch, array(
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_POST           => true,
-		CURLOPT_HTTPHEADER     => array(
-			'Content-Type: application/json',
-			'x-goog-api-key: ' . $apiKey,
-		),
+		CURLOPT_HTTPHEADER     => $headers,
 		CURLOPT_POSTFIELDS     => json_encode( $payload, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE ),
-		CURLOPT_TIMEOUT        => 30,
+		CURLOPT_TIMEOUT        => 60,
 	) );
 
 	$response = curl_exec( $ch );
 	$httpCode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 	$curlErr  = curl_error( $ch );
-	// Note: curl_close() is not called: since PHP 8.0 the handle is an object
-	// that is freed automatically, and curl_close() was deprecated in PHP 8.5.
 
 	if( $response === false ) {
-		return array( 'ok' => false, 'text' => 'Connection error while calling the Gemini API: ' . $curlErr );
+		return array( 'ok' => false, 'text' => 'Connection error while calling ' . $modelEntry['name'] . ': ' . $curlErr );
 	}
 
 	$data = json_decode( $response, true );
 
 	if( $httpCode !== 200 ) {
-		$msg = isset( $data['error']['message'] ) ? $data['error']['message'] : $response;
-		return array( 'ok' => false, 'text' => 'The Gemini API returned an error (HTTP ' . $httpCode . '): ' . $msg );
+		$err  = isset( $data['error'] ) ? $data['error'] : ( isset( $data[0]['error'] ) ? $data[0]['error'] : null );
+		$msg  = isset( $err['message'] ) ? $err['message'] : ( is_string( $err ) ? $err : $response );
+		$text = $modelEntry['name'] . ' returned an error (HTTP ' . $httpCode . '): ' . $msg;
+		if( empty( $modelEntry['key'] ) && in_array( $httpCode, array( 400, 401, 403 ) ) ) {
+			$text = "No API key is configured for this model, and the provider rejected the request.\n\n"
+				. "This module works with any provider that offers an OpenAI-compatible chat API:\n"
+				. "- A hosted provider such as Gemini or OpenAI. Google Gemini has a free tier that is plenty for this lab: get a key at https://aistudio.google.com/app/apikey.\n"
+				. "- A local model, for example with Ollama, which needs no key at all.\n\n"
+				. "To set it up, edit config/config.inc.php and fill in 'url', 'model' and 'key' for this model in \$_DVWA['ai_models']. For the first model you can use the AI_MODEL_URL, AI_MODEL_ID and AI_MODEL_KEY environment variables instead (handy for Docker).\n\n"
+				. "See the README, section \"AI Models (AI Assistant module)\", for examples.\n\n"
+				. $text;
+		}
+		return array( 'ok' => false, 'text' => $text );
 	}
 
-	if( isset( $data['candidates'][0]['content']['parts'][0]['text'] ) ) {
-		return array( 'ok' => true, 'text' => $data['candidates'][0]['content']['parts'][0]['text'] );
+	if( isset( $data['choices'][0]['message']['content'] ) ) {
+		return array( 'ok' => true, 'text' => $data['choices'][0]['message']['content'] );
 	}
 
-	// It may come back empty due to the model's own safety filters.
-	$finish = isset( $data['candidates'][0]['finishReason'] ) ? $data['candidates'][0]['finishReason'] : 'unknown';
-	return array( 'ok' => false, 'text' => 'The model returned no text (finishReason: ' . $finish . ').' );
+	$finish = isset( $data['choices'][0]['finish_reason'] ) ? $data['choices'][0]['finish_reason'] : 'unknown';
+	return array( 'ok' => false, 'text' => 'The model returned no text (finish_reason: ' . $finish . ').' );
 }
 
 /**
