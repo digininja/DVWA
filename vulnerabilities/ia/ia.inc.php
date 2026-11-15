@@ -41,6 +41,59 @@ function ia_get_model( $index ) {
 	return $models[$i];
 }
 
+function ia_employee_label( $record ) {
+	if( empty( $record ) ) {
+		return 'an employee with no payroll record';
+	}
+	return "{$record['full_name']} (employee ID {$record['employee_id']})";
+}
+
+function ia_hr_policy_text() {
+	return "HR information (general, can be shared with any employee):
+- Office hours: Monday to Friday, 09:00 to 17:30.
+- Vacation: 25 paid days per calendar year, plus public holidays. Requests go through the HR portal and need manager approval.
+- Sick leave: tell your manager before 10:00 on the first day. A medical certificate is required after 3 days.
+- Parental leave: 16 weeks of paid leave.
+- Contact: hr@company.example";
+}
+
+function ia_looks_like_injection( $message ) {
+	$patterns = array(
+		'/ignore\s+(all\s+|any\s+)?(the\s+)?(previous|prior|above|earlier)\s+(instructions|rules|prompts?)/i',
+		'/(reveal|print|show|repeat|output|display)\s+(your|the)\s+(full\s+|exact\s+)?(system\s+)?(prompt|instructions|rules)/i',
+		'/system\s+(prompt|notice|override|message)/i',
+		'/(debug|developer|admin|maintenance)\s+mode/i',
+		'/you\s+are\s+now\s+/i',
+		'/-{3,}\s*end\s+of/i',
+		'/\[\s*(system|admin|developer)\b/i',
+	);
+	foreach( $patterns as $pattern ) {
+		if( preg_match( $pattern, $message ) ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function ia_reply_leaks_payroll( $reply, $payroll, $own_employee_id ) {
+	$text = str_replace( ',', '', $reply );
+	foreach( $payroll as $row ) {
+		if( $row['employee_id'] === $own_employee_id ) {
+			continue;
+		}
+		if( strpos( $text, $row['bank_account'] ) !== false || strpos( $text, $row['national_id'] ) !== false ) {
+			return true;
+		}
+		foreach( array( 'gross_salary', 'net_salary' ) as $field ) {
+			$amount = (string) intval( $row[$field] );
+			if( preg_match( '/(?<![\w.])' . $amount . '(?:\.\d+)?(?!\w)/', $text ) ) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 /**
  * Reads the full salary payroll from the `payroll` table.
  *
@@ -155,7 +208,7 @@ function ia_chat_request( $modelEntry, $systemPrompt, $userMessage ) {
 		CURLOPT_POST           => true,
 		CURLOPT_HTTPHEADER     => $headers,
 		CURLOPT_POSTFIELDS     => json_encode( $payload, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE ),
-		CURLOPT_TIMEOUT        => 60,
+		CURLOPT_TIMEOUT        => !empty( $modelEntry['timeout'] ) ? intval( $modelEntry['timeout'] ) : 60,
 	) );
 
 	$response = curl_exec( $ch );

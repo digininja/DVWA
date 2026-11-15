@@ -1,8 +1,8 @@
 <div class="body_padded">
 	<h1>Help - AI Assistant (IA)</h1>
 
-	<p><strong>Note:</strong> the example prompts below are suggestions of things to try — they may
-	or may not work depending on the mood of the AI. Model behaviour changes over time, so feel free
+	<p><strong>Note:</strong> the hints below are suggestions of things to try — they may
+	or may not work depending on the model and its mood. Model behaviour changes over time, so feel free
 	to experiment and adapt them.</p>
 
 	<div id="code">
@@ -35,21 +35,26 @@
 		<br />
 
 		<h3>Medium Level</h3>
-		<p>A weak control is added: a blocklist of words ("salary", "payslip", "payroll", "wage", ...) on the user's
-			message. The full payroll is still loaded into the model context, so it is easily bypassed using synonyms,
-			another language, or a prompt injection that does not use any of the blocked words.</p>
-		<p><em>Hint:</em> the blocklist only checks a few English words. Think about synonyms, other languages,
-			or ways to make the model ignore the filter entirely.</p>
+		<p>A single rule in the system prompt is the only control: the model is told not to share other employees'
+			salary, bank account or national ID, but the full payroll is loaded into its context and nothing else
+			enforces the rule. A direct question will probably be refused, but an indirect request or a prompt injection
+			is likely to get past it.</p>
+		<p><em>Hint:</em> the rule is just text in the prompt, with no priority over your message. Think about asking for
+			the data in an indirect way, or about making your message look like part of the instructions.</p>
 
 		<br />
 
 		<h3>High Level</h3>
-		<p>The full payroll is loaded into the model context, just like Low and Medium. The only defense is a hardened
-			system prompt with strict refusal rules, an identity check and instructions to ignore override attempts.
-			The model knows who the logged-in employee is and is told to only share that employee's own data — but
-			the entire company's payroll is in the context, so an elaborate prompt injection can bypass those rules.</p>
-		<p><em>Hint:</em> the rules are in the system prompt. Think about how to make the model treat your message
-			as higher priority than its instructions.</p>
+		<p>The full payroll is loaded into the model context, just like Low and Medium. The defense is a hardened
+			system prompt with strict refusal rules, plus two filters in code: one rejects messages that contain
+			well-known injection phrases, and the other blocks any reply that contains another employee's salary,
+			bank account or national ID. The model knows who the logged-in employee is and is told to only share that
+			employee's own data, but the entire company's payroll is still in the context.
+			How hard the prompt rules are to break depends heavily on the model: larger models follow them much more
+			closely, while smaller ones are easier to trick.</p>
+		<p><em>Hint:</em> both filters only look for patterns they already know. Think about what they cannot recognise:
+			a request that does not use the phrases they watch for, or an answer written in a form they do not
+			expect.</p>
 
 		<br />
 
