@@ -14,11 +14,12 @@ services:
     pull_policy: always
     environment:
       - DB_SERVER=db
+      # 32-byte AES key, base64. Set it in a local .env file (see .env.example); never commit the real key.
+      - CRYPTO_KEY_B64=${CRYPTO_KEY_B64:?set CRYPTO_KEY_B64 in .env}
     depends_on:
       - db
-    # Uncomment the next 2 lines to serve local source
-    # volumes:
-    #   - ./:/var/www/html
+    volumes:
+      - ./:/var/www/html
     networks:
       - dvwa
     ports:

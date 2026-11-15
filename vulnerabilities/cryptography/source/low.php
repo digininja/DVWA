@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/secure_crypto.php';
+
 function xor_this($cleartext, $key) {
     // Our output text
     $outText = '';
@@ -13,7 +15,7 @@ function xor_this($cleartext, $key) {
     return $outText;
 }
 
-$key = "wachtwoord";
+$key = sc_load_key();
 
 $errors = "";
 $success = "";
@@ -28,16 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		if (array_key_exists ('message', $_POST)) {
 			$message = $_POST['message'];
 			if (array_key_exists ('direction', $_POST) && $_POST['direction'] == "decode") {
-				$encoded = xor_this (base64_decode ($message), $key);
+				$encoded = sc_decrypt($message, $key);
+				if ($encoded === false) {
+					$errors = "Message rejected: it failed the authentication check.";
+					$encoded = null;
+				}
 				$encode_radio_selected = " ";
 				$decode_radio_selected = " checked='checked' ";
 			} else {
-				$encoded = base64_encode(xor_this ($message, $key));
+				$encoded = sc_encrypt($message, $key);
 			}
 		}
 		if (array_key_exists ('password', $_POST)) {
 			$password = $_POST['password'];
-			$decoded = xor_this (base64_decode ($password), $key);
 			if ($password == "Olifant") {
 				$success = "Welcome back user";
 			} else {
