@@ -362,6 +362,54 @@ These then go in the following sections of `./config/config.inc.php`:
 - `$_DVWA[ 'recaptcha_public_key' ]`
 - `$_DVWA[ 'recaptcha_private_key' ]`
 
+### AI Models (AI Assistant module)
+
+This is only required for the "AI Assistant" lab. If you aren't playing with that lab, you can ignore this section.
+
+The module uses any LLM that exposes an OpenAI-compatible chat completions endpoint. Configure one or more models in `$_DVWA['ai_models']` inside `./config/config.inc.php`. Each entry needs `name`, `url`, `model` and `key`. Two optional keys are also supported: `timeout`, the seconds to wait for the model (60 by default, raise it for slow local models), and `params`, extra fields added to the request such as `reasoning_effort`. The first entry is the default; when more than one is configured, a dropdown lets you switch between them.
+
+**Gemini** (Google offers a free tier):
+
+```php
+[
+    'name'   => 'Gemini',
+    'url'    => 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+    'model'  => 'gemini-3.8-flash',
+    'key'    => 'YOUR_GEMINI_API_KEY',  // https://aistudio.google.com/app/apikey
+    'params' => array( 'reasoning_effort' => 'low' ),
+],
+```
+
+**OpenAI:**
+
+```php
+[
+    'name'  => 'OpenAI',
+    'url'   => 'https://api.openai.com/v1/chat/completions',
+    'model' => 'gpt-4o-mini',
+    'key'   => 'YOUR_OPENAI_API_KEY',
+],
+```
+
+**Ollama** (local, no API key needed):
+
+```php
+[
+    'name'  => 'Ollama',
+    'url'   => 'http://localhost:11434/v1/chat/completions',  // from Docker: http://host.docker.internal:11434/v1/chat/completions
+    'model' => 'llama3.2',
+    'key'   => '',
+],
+```
+
+The first entry can also be set via environment variables (`AI_MODEL_NAME`, `AI_MODEL_URL`, `AI_MODEL_ID`, `AI_MODEL_KEY`), which is handy for Docker (see the [Config with environment variables](#config-with-environment-variables) section). The included [`compose.yml`](./compose.yml) already passes these four variables to the container, so you can put them in a `.env` file next to `compose.yml` (it is ignored by git):
+
+```sh
+AI_MODEL_KEY=YOUR_API_KEY
+```
+
+`config/config.inc.php.dist` ships with two "Dummy" entries (Gemini without a key, and a local Ollama), so the dropdown shows up straight away. Until you add a key or start Ollama, the module replies with a message explaining what is missing.
+
 ### Default Credentials
 
 **Default username = `admin`**

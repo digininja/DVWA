@@ -2,6 +2,7 @@
 # into the repo.
 config/config.inc.php.bak
 config/config.inc.php
+.env
 
 # Vim swap files
 .*swp

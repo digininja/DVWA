@@ -27,6 +27,24 @@ $_DVWA[ 'db_port']      = getenv('DB_PORT') ?: '3306';
 $_DVWA[ 'recaptcha_public_key' ]  = getenv('RECAPTCHA_PUBLIC_KEY') ?: '';
 $_DVWA[ 'recaptcha_private_key' ] = getenv('RECAPTCHA_PRIVATE_KEY') ?: '';
 
+# AI models for the 'AI Assistant' module
+#   See README.md for configuration examples (Gemini, OpenAI, Ollama).
+$_DVWA[ 'ai_models' ] = [
+	[
+		'name'   => getenv('AI_MODEL_NAME')  ?: 'Dummy - Gemini (add your key)',
+		'url'    => getenv('AI_MODEL_URL')   ?: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+		'model'  => getenv('AI_MODEL_ID')    ?: 'gemini-3.8-flash',
+		'key'    => getenv('AI_MODEL_KEY')   ?: '',
+		'params' => array( 'reasoning_effort' => 'low' ),
+	],
+	[
+		'name'  => 'Dummy - Ollama (local, no key)',
+		'url'   => 'http://localhost:11434/v1/chat/completions',
+		'model' => 'llama3.2',
+		'key'   => '',
+	],
+];
+
 # Default security level
 #   Default value for the security level with each session.
 #   The default is 'impossible'. You may wish to set this to either 'low', 'medium', 'high' or impossible'.

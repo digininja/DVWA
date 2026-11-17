@@ -56,6 +56,9 @@ if (array_key_exists ("id", $_GET) && array_key_exists ("security", $_GET)) {
 		case "bac":
 			$vuln = 'Vulnerability: Broken Access Control';
 			break;
+		case "ai":
+			$vuln = 'Vulnerability: AI Assistant';
+			break;
 		default:
 			$vuln = "Unknown Vulnerability";
 	}
