@@ -132,7 +132,7 @@ if (file_exists($conf)) {
 
 dvwaMessagePush( "Backup file /config/config.inc.php.bak automatically created" );
 
-// Create payroll table (data for the 'AI Assistant (IA)' module)
+// Create payroll table (data for the 'AI Assistant' module)
 $create_tb_payroll = "CREATE TABLE payroll (
 	id INT(6) NOT NULL AUTO_INCREMENT,
 	employee_id VARCHAR(10),
@@ -154,7 +154,7 @@ dvwaMessagePush( "'payroll' table was created." );
 
 // Insert data into 'payroll' (fictional employees, sample data).
 // The 'username' column links each record to a login in the `users` table,
-// which is what lets the high/impossible levels of the 'ia' module load only
+// which is what lets the impossible level of the 'ai' module load only
 // the payslip of the employee who is logged in. Laura Gomez has no DVWA
 // account, so her 'username' is left NULL.
 $insert_payroll = "INSERT INTO payroll (employee_id, username, full_name, position, department, gross_salary, net_salary, bank_account, national_id) VALUES

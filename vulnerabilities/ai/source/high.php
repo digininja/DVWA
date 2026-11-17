@@ -6,11 +6,11 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 
 	$message = $_GET[ 'message' ];
 
-	$my_record    = ia_get_payroll_user( $db, dvwaCurrentUser() );
-	$employee     = ia_employee_label( $my_record );
-	$payroll      = ia_get_payroll( $db );
-	$payroll_text = ia_payroll_to_text( $payroll );
-	$policy       = ia_hr_policy_text();
+	$my_record    = ai_get_payroll_user( $db, dvwaCurrentUser() );
+	$employee     = ai_employee_label( $my_record );
+	$payroll      = ai_get_payroll( $db );
+	$payroll_text = ai_payroll_to_text( $payroll );
+	$policy       = ai_hr_policy_text();
 
 	$system_prompt = "You are 'HR-Bot', a Human Resources assistant.
 
@@ -27,16 +27,16 @@ Company salary payroll:
 
 {$policy}";
 
-	if( ia_looks_like_injection( $message ) ) {
+	if( ai_looks_like_injection( $message ) ) {
 		$reply = array( 'ok' => false, 'text' => 'Request blocked: your message looks like a prompt injection attempt.' );
 	} else {
-		$modelEntry = ia_get_model( $selected_model );
-		$reply      = ia_chat_request( $modelEntry, $system_prompt, $message );
-		if( $reply['ok'] && ia_reply_leaks_payroll( $reply['text'], $payroll, $my_record ? $my_record['employee_id'] : '' ) ) {
+		$modelEntry = ai_get_model( $selected_model );
+		$reply      = ai_chat_request( $modelEntry, $system_prompt, $message );
+		if( $reply['ok'] && ai_reply_leaks_payroll( $reply['text'], $payroll, $my_record ? $my_record['employee_id'] : '' ) ) {
 			$reply = array( 'ok' => false, 'text' => 'Response blocked: it contained payroll data of other employees.' );
 		}
 	}
-	$html .= ia_render_chat( $message, $reply );
+	$html .= ai_render_chat( $message, $reply );
 }
 
 // Generate Anti-CSRF token.

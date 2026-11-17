@@ -1,22 +1,22 @@
 <?php
 
 /*
- * Shared helpers for the 'AI Assistant (IA)' module.
+ * Shared helpers for the 'AI Assistant' module.
  *
  * This file holds the module's reusable infrastructure:
- *   - ia_get_payroll()          -> reads the full salary payroll from the DB.
- *   - ia_get_payroll_user()     -> reads only the logged-in employee's record.
- *   - ia_payroll_to_text()      -> formats payroll rows as text for the prompt.
- *   - ia_payroll_user_to_text() -> formats a single employee's row.
- *   - ia_render_chat()          -> renders the user / HR-Bot exchange.
- *   - ia_markdown_lite()        -> minimal, XSS-safe Markdown rendering.
+ *   - ai_get_payroll()          -> reads the full salary payroll from the DB.
+ *   - ai_get_payroll_user()     -> reads only the logged-in employee's record.
+ *   - ai_payroll_to_text()      -> formats payroll rows as text for the prompt.
+ *   - ai_payroll_user_to_text() -> formats a single employee's row.
+ *   - ai_render_chat()          -> renders the user / HR-Bot exchange.
+ *   - ai_markdown_lite()        -> minimal, XSS-safe Markdown rendering.
  *
  * The security logic that changes between levels (the system prompt and the
  * guardrails) lives in source/{low,medium,high,impossible}.php, which is what
  * the "View Source" button shows.
  */
 
-function ia_get_models() {
+function ai_get_models() {
 	if( !isset( $GLOBALS['_DVWA']['ai_models'] ) || !is_array( $GLOBALS['_DVWA']['ai_models'] ) ) {
 		return array();
 	}
@@ -32,8 +32,8 @@ function ia_get_models() {
 	return $models;
 }
 
-function ia_get_model( $index ) {
-	$models = ia_get_models();
+function ai_get_model( $index ) {
+	$models = ai_get_models();
 	$i = intval( $index );
 	if( $i < 0 || $i >= count( $models ) ) {
 		return null;
@@ -41,14 +41,14 @@ function ia_get_model( $index ) {
 	return $models[$i];
 }
 
-function ia_employee_label( $record ) {
+function ai_employee_label( $record ) {
 	if( empty( $record ) ) {
 		return 'an employee with no payroll record';
 	}
 	return "{$record['full_name']} (employee ID {$record['employee_id']})";
 }
 
-function ia_hr_policy_text() {
+function ai_hr_policy_text() {
 	return "HR information (general, can be shared with any employee):
 - Office hours: Monday to Friday, 09:00 to 17:30.
 - Vacation: 25 paid days per calendar year, plus public holidays. Requests go through the HR portal and need manager approval.
@@ -57,7 +57,7 @@ function ia_hr_policy_text() {
 - Contact: hr@company.example";
 }
 
-function ia_looks_like_injection( $message ) {
+function ai_looks_like_injection( $message ) {
 	$patterns = array(
 		'/ignore\s+(all\s+|any\s+)?(the\s+)?(previous|prior|above|earlier)\s+(instructions|rules|prompts?)/i',
 		'/(reveal|print|show|repeat|output|display)\s+(your|the)\s+(full\s+|exact\s+)?(system\s+)?(prompt|instructions|rules)/i',
@@ -75,7 +75,7 @@ function ia_looks_like_injection( $message ) {
 	return false;
 }
 
-function ia_reply_leaks_payroll( $reply, $payroll, $own_employee_id ) {
+function ai_reply_leaks_payroll( $reply, $payroll, $own_employee_id ) {
 	$text = str_replace( ',', '', $reply );
 	foreach( $payroll as $row ) {
 		if( $row['employee_id'] === $own_employee_id ) {
@@ -100,7 +100,7 @@ function ia_reply_leaks_payroll( $reply, $payroll, $own_employee_id ) {
  * @param PDO $db DVWA PDO connection.
  * @return array  Payroll rows (or an empty array if the table is missing).
  */
-function ia_get_payroll( $db ) {
+function ai_get_payroll( $db ) {
 	$rows = array();
 	try {
 		$stmt = $db->query( 'SELECT employee_id, full_name, position, department, gross_salary, net_salary, bank_account, national_id FROM payroll ORDER BY id;' );
@@ -116,7 +116,7 @@ function ia_get_payroll( $db ) {
 /**
  * Reads ONLY the payroll row of the given employee.
  *
- * This is the least-privilege version of ia_get_payroll(): the filter is
+ * This is the least-privilege version of ai_get_payroll(): the filter is
  * applied in the SQL query, not in the prompt, so the rest of the company's
  * salaries never leave the database. The username must come from the session
  * (dvwaCurrentUser()) and never from user input.
@@ -125,7 +125,7 @@ function ia_get_payroll( $db ) {
  * @param string $username DVWA username of the logged-in employee.
  * @return array|null      The payroll row, or null if there is no linked record.
  */
-function ia_get_payroll_user( $db, $username ) {
+function ai_get_payroll_user( $db, $username ) {
 	try {
 		$stmt = $db->prepare( 'SELECT employee_id, full_name, position, department, gross_salary, net_salary, bank_account, national_id FROM payroll WHERE username = :username LIMIT 1;' );
 		$stmt->bindParam( ':username', $username, PDO::PARAM_STR );
@@ -140,7 +140,7 @@ function ia_get_payroll_user( $db, $username ) {
 /**
  * Turns the payroll rows into a readable text block for the LLM.
  */
-function ia_payroll_to_text( $rows ) {
+function ai_payroll_to_text( $rows ) {
 	if( empty( $rows ) ) {
 		return '(no payroll data loaded; run "Setup / Reset DB")';
 	}
@@ -158,16 +158,16 @@ function ia_payroll_to_text( $rows ) {
 /**
  * Formats a single employee's row for the prompt.
  *
- * @param array|null $row Result of ia_get_payroll_user().
+ * @param array|null $row Result of ai_get_payroll_user().
  */
-function ia_payroll_user_to_text( $row ) {
+function ai_payroll_user_to_text( $row ) {
 	if( empty( $row ) ) {
 		return '(the logged-in employee has no linked payroll record)';
 	}
-	return ia_payroll_to_text( array( $row ) );
+	return ai_payroll_to_text( array( $row ) );
 }
 
-function ia_chat_request( $modelEntry, $systemPrompt, $userMessage ) {
+function ai_chat_request( $modelEntry, $systemPrompt, $userMessage ) {
 	if( empty( $modelEntry ) ) {
 		return array(
 			'ok'   => false,
@@ -216,7 +216,7 @@ function ia_chat_request( $modelEntry, $systemPrompt, $userMessage ) {
 	$curlErr  = curl_error( $ch );
 
 	if( $response === false ) {
-		return array( 'ok' => false, 'text' => 'Connection error while calling ' . $modelEntry['name'] . ': ' . $curlErr );
+		return array( 'ok' => false, 'text' => 'Connection error while calling ' . $modelEntry['name'] . ': ' . $curlErr . "\n\nCheck that the model server is running and that the 'url' and 'timeout' for this model in config/config.inc.php are correct." );
 	}
 
 	$data = json_decode( $response, true );
@@ -251,7 +251,7 @@ function ia_chat_request( $modelEntry, $systemPrompt, $userMessage ) {
  * (**bold** and "* " / "- " bullets) are turned into safe HTML, so replies do
  * not show raw asterisks.
  */
-function ia_markdown_lite( $text ) {
+function ai_markdown_lite( $text ) {
 	$safe = htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
 	// **bold** -> <strong>bold</strong>
 	$safe = preg_replace( '/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $safe );
@@ -262,18 +262,18 @@ function ia_markdown_lite( $text ) {
 
 /**
  * Renders the chat exchange (user message + bot reply).
- * Output is escaped (see ia_markdown_lite) so the focus stays on the LLM
+ * Output is escaped (see ai_markdown_lite) so the focus stays on the LLM
  * vulnerability and not on an accidental XSS.
  */
-function ia_render_chat( $userMessage, $reply ) {
+function ai_render_chat( $userMessage, $reply ) {
 	$userSafe = nl2br( htmlspecialchars( $userMessage, ENT_QUOTES, 'UTF-8' ) );
-	$botSafe  = ia_markdown_lite( $reply['text'] );
+	$botSafe  = ai_markdown_lite( $reply['text'] );
 	$botStyle = $reply['ok']
 		? 'background:#eef6ff;border-left:4px solid #3b82f6;'
 		: 'background:#fff0f0;border-left:4px solid #dc2626;';
 
 	return "
-	<div class=\"ia-chat\" style=\"margin-top:1em;\">
+	<div class=\"ai-chat\" style=\"margin-top:1em;\">
 		<p style=\"background:#f3f4f6;border-left:4px solid #9ca3af;padding:.6em .8em;margin:.4em 0;\"><strong>You:</strong><br />{$userSafe}</p>
 		<p style=\"{$botStyle}padding:.6em .8em;margin:.4em 0;\"><strong>HR-Bot:</strong><br />{$botSafe}</p>
 	</div>";

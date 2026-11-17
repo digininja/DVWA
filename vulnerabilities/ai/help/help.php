@@ -1,5 +1,5 @@
 <div class="body_padded">
-	<h1>Help - AI Assistant (IA)</h1>
+	<h1>Help - AI Assistant</h1>
 
 	<p><strong>Note:</strong> the hints below are suggestions of things to try — they may
 	or may not work depending on the model and its mood. Model behaviour changes over time, so feel free
@@ -16,7 +16,7 @@
 			in the database).</p>
 
 		<p>The vulnerability demonstrated is <strong>prompt injection</strong> and <strong>sensitive information disclosure</strong>
-			through an LLM (OWASP LLM01 / LLM06). When the prompt guardrail is weak, an attacker can make the model leak
+			through an LLM (OWASP LLM01 / LLM02). When the prompt guardrail is weak, an attacker can make the model leak
 			confidential data such as salaries, bank accounts and national IDs.</p>
 
 		<br /><hr /><br />

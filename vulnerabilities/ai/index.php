@@ -6,20 +6,20 @@ require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 dvwaPageStartup( array( 'authenticated' ) );
 
 $page = dvwaPageNewGrab();
-$page[ 'title' ]   = 'Vulnerability: AI Assistant (IA)' . $page[ 'title_separator' ].$page[ 'title' ];
-$page[ 'page_id' ] = 'ia';
-$page[ 'help_button' ]   = 'ia';
-$page[ 'source_button' ] = 'ia';
+$page[ 'title' ]   = 'Vulnerability: AI Assistant' . $page[ 'title_separator' ].$page[ 'title' ];
+$page[ 'page_id' ] = 'ai';
+$page[ 'help_button' ]   = 'ai';
+$page[ 'source_button' ] = 'ai';
 dvwaDatabaseConnect();
 
-require_once DVWA_WEB_PAGE_TO_ROOT . 'vulnerabilities/ia/ia.inc.php';
+require_once DVWA_WEB_PAGE_TO_ROOT . 'vulnerabilities/ai/ai.inc.php';
 
-$ai_models = ia_get_models();
+$ai_models = ai_get_models();
 
 if( isset( $_REQUEST['model'] ) ) {
-	$_SESSION['ia_model'] = intval( $_REQUEST['model'] );
+	$_SESSION['ai_model'] = intval( $_REQUEST['model'] );
 }
-$selected_model = isset( $_SESSION['ia_model'] ) ? intval( $_SESSION['ia_model'] ) : 0;
+$selected_model = isset( $_SESSION['ai_model'] ) ? intval( $_SESSION['ai_model'] ) : 0;
 if( $selected_model < 0 || $selected_model >= count( $ai_models ) ) {
 	$selected_model = 0;
 }
@@ -43,11 +43,11 @@ switch( dvwaSecurityLevelGet() ) {
 }
 
 $html = '';
-require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/ia/source/{$vulnerabilityFile}";
+require_once DVWA_WEB_PAGE_TO_ROOT . "vulnerabilities/ai/source/{$vulnerabilityFile}";
 
 $page[ 'body' ] .= "
 <div class=\"body_padded\">
-	<h1>Vulnerability: AI Assistant (IA)</h1>
+	<h1>Vulnerability: AI Assistant</h1>
 
 	<div class=\"vulnerable_code_area\">
 		<h2>HR-Bot &mdash; Human Resources Assistant</h2>
