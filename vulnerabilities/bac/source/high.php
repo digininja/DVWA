@@ -107,4 +107,7 @@ if (isset($_GET['action']) && isset($_GET['user_id'])) {
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['user_id'] = $current_user_id;
 }
+
+// Display current session information for debugging
+$html .= "<div class='info-banner'>Current Session User ID: " . (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'Not set') . "</div>";
 ?>
